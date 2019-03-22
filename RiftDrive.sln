@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28714.193
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Server", "src\RiftDrive.Server\RiftDrive.Server.csproj", "{F5A390E2-FB98-4D7F-9712-4312689BD0DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client", "src\RiftDrive.Client\RiftDrive.Client.csproj", "{8C80D884-83CE-4D93-8CFD-C0B23354594D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared", "src\RiftDrive.Shared\RiftDrive.Shared.csproj", "{34AA2507-C75E-4CC1-ADE8-A1D5E389C024}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{FE6FF765-7B16-41DC-B49C-820223D6E7EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F2C27DD-A6A3-4AC5-9E9F-7A2565D1CC1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{77A259CD-E77F-42D1-A85C-298C2967FDA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{74D9CF76-90D4-43F6-A330-33509497A7F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8042951F-818F-4F8D-8D8D-6A18D783D27A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5A390E2-FB98-4D7F-9712-4312689BD0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5A390E2-FB98-4D7F-9712-4312689BD0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5A390E2-FB98-4D7F-9712-4312689BD0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5A390E2-FB98-4D7F-9712-4312689BD0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C80D884-83CE-4D93-8CFD-C0B23354594D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C80D884-83CE-4D93-8CFD-C0B23354594D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C80D884-83CE-4D93-8CFD-C0B23354594D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C80D884-83CE-4D93-8CFD-C0B23354594D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34AA2507-C75E-4CC1-ADE8-A1D5E389C024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34AA2507-C75E-4CC1-ADE8-A1D5E389C024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34AA2507-C75E-4CC1-ADE8-A1D5E389C024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34AA2507-C75E-4CC1-ADE8-A1D5E389C024}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F5A390E2-FB98-4D7F-9712-4312689BD0DC} = {74D9CF76-90D4-43F6-A330-33509497A7F1}
+		{8C80D884-83CE-4D93-8CFD-C0B23354594D} = {FE6FF765-7B16-41DC-B49C-820223D6E7EB}
+		{34AA2507-C75E-4CC1-ADE8-A1D5E389C024} = {9F2C27DD-A6A3-4AC5-9E9F-7A2565D1CC1D}
+		{FE6FF765-7B16-41DC-B49C-820223D6E7EB} = {9F2C27DD-A6A3-4AC5-9E9F-7A2565D1CC1D}
+		{74D9CF76-90D4-43F6-A330-33509497A7F1} = {9F2C27DD-A6A3-4AC5-9E9F-7A2565D1CC1D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9752C3A-0480-43E1-BE90-C8FE58795EB4}
+	EndGlobalSection
+EndGlobal
