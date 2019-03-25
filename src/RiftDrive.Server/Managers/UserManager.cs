@@ -55,10 +55,10 @@ namespace RiftDrive.Server.Managers {
 
 		public async Task<string> SetAvatar( string userId, string contentType, string content ) {
 			using( var image = LaborImage.Load( Convert.FromBase64String( content ) ) ) {
-				if( ( image.Width != 64 ) || ( image.Height != 64 ) ) {
+				if( ( image.Width != 256 ) || ( image.Height != 256 ) ) {
 					var options = new ResizeOptions() {
 						Mode = ResizeMode.Max,
-						Size = new Size( 64, 64 )
+						Size = new Size( 256, 256 )
 					};
 					content = image.Clone( x => x.Resize( options ) ).ToBase64String( PngFormat.Instance ).Split( ',' )[ 1 ];
 					contentType = "image/png";

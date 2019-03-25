@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
@@ -34,14 +35,28 @@ namespace RiftDrive.Client.Pages.Auth {
 
 		[Inject] private ITokenService _tokenService { get; set; }
 
+		protected List<string> Messages { get; set; } = new List<string>();
+
+		protected int Progress { get; set; }
+
 		protected override async Task OnInitAsync() {
 			var code = _uriHelper.GetParameter( "code" );
 
+			Messages.Add( "...retrieving tokens..." );
+			StateHasChanged();
 			var tokens = await _tokenService.GetToken( code );
 			await _accessTokenProvider.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+
+			Progress = 50;
+			Messages.Add( "...recording login..." );
+			StateHasChanged();
 			await _userApiService.RecordLogin();
 
+			Progress = 75;
+			Messages.Add( "...retrieving user information..." );
+			StateHasChanged();
 			var userInfo = await _userApiService.GetUserInformation();
+
 			await _state.SetUsername( userInfo.Username );
 			await _state.SetName( userInfo.Name );
 			_uriHelper.NavigateTo( IndexComponent.Url );

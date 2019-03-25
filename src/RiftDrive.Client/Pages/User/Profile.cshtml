@@ -1,0 +1,46 @@
+﻿@inherits ProfileComponent
+@layout MainLayout
+@page "/user/profile"
+
+    <Row>
+        <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
+            <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
+                <CardBody>
+                    <CardTitle Size="5">@Name</CardTitle>
+                </CardBody>
+                @if (!string.IsNullOrWhiteSpace(AvatarUrl))
+                {
+                    <CardImage Source=@AvatarUrl Alt="Avatar Image">
+                    </CardImage>
+                }
+                <CardBody>
+                    <CardText>
+                        <TableContainer IsBordered="true" IsStriped="true">
+                            <TableBody>
+                                <TableRow>
+                                    <TableRowCell>User Id:</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableRowCell>@UserId</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableRowCell>Last Login:</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableRowCell>@LastLogin</TableRowCell>
+                                </TableRow>
+                            </TableBody>
+                        </TableContainer>
+                    </CardText>
+                @if (ChangingAvatar)
+                {
+                    <input type="file" onchange="@UploadFile" ref="FileUploadRef" />
+                }
+                else
+                {
+                    <SimpleButton Clicked=@ChangeAvatarClicked Color="Color.Primary">Change Avatar</SimpleButton>
+                }
+                </CardBody>
+            </Card>
+        </Column>
+    </Row>

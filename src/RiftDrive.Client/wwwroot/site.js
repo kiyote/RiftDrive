@@ -1,5 +1,5 @@
 ﻿
-window.profileFiles = {
+window.profile = {
     readUploadedFileAsText: function (inputFile) {
         const temporaryFileReader = new FileReader();
         return new Promise((resolve, reject) => {

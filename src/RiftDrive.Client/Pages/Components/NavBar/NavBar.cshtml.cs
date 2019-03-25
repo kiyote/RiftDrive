@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Pages.Auth;
+using RiftDrive.Client.Pages.User;
 
 namespace RiftDrive.Client.Pages.Components.NavBar {
 	public class NavBarComponent : ComponentBase {
@@ -15,6 +16,12 @@ namespace RiftDrive.Client.Pages.Components.NavBar {
 		[Parameter] protected string Name { get; set; }
 
 		[Parameter] protected bool IsAuthenticated { get; set; }
+
+		public string ProfileUrl {
+			get {
+				return ProfileComponent.Url;
+			}
+		}
 
 		public string LogInUrl {
 			get {

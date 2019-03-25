@@ -16,8 +16,10 @@ limitations under the License.
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RiftDrive.Client.Model;
 using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
+using ClientUser = RiftDrive.Client.Model.User;
 
 namespace RiftDrive.Server.Controllers {
 	[Authorize]
@@ -43,7 +45,7 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<User>> GetUserInformation() {
+		public async Task<ActionResult<ClientUser>> GetUserInformation() {
 			var result = await _userManager.GetUser( _contextInformation.UserId );
 
 			if( result != default ) {
@@ -53,13 +55,12 @@ namespace RiftDrive.Server.Controllers {
 				return NotFound();
 			}
 		}
-		/*
+		
 		[HttpPost( "avatar" )]
 		public async Task<ActionResult<AvatarUrl>> SetAvatar( [FromBody] AvatarImage request ) {
 
 			var url = await _userManager.SetAvatar( _contextInformation.UserId, request.ContentType, request.Content );
 			return Ok( new AvatarUrl( url ) );
-		}
-		*/
+		}		
 	}
 }

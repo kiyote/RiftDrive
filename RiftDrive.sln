@@ -24,11 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Server.Model", "src\RiftDrive.Server.Model\RiftDrive.Server.Model.csproj", "{EA887D20-4692-4B73-8F35-50353F1EAF38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Server.Service", "src\RiftDrive.Server.Service\RiftDrive.Server.Service.csproj", "{2E5400DA-F10F-447B-8D4A-A96383296F73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Server.Service", "src\RiftDrive.Server.Service\RiftDrive.Server.Service.csproj", "{2E5400DA-F10F-447B-8D4A-A96383296F73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Server.Repository", "src\RiftDrive.Server.Repository\RiftDrive.Server.Repository.csproj", "{113AFCE6-96C0-4916-BB29-88D4BC2DF9F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Server.Repository", "src\RiftDrive.Server.Repository\RiftDrive.Server.Repository.csproj", "{113AFCE6-96C0-4916-BB29-88D4BC2DF9F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Client.Model", "src\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj", "{0B84927B-94A4-46A7-94FC-587797920FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Model", "src\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj", "{0B84927B-94A4-46A7-94FC-587797920FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
