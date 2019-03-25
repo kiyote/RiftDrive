@@ -13,20 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-namespace RiftDrive.Client {
-	public interface IConfig {
-		string Host { get; }
+namespace RiftDrive.Server.Repository.S3 {
+	public sealed class S3Options {
 
-		string CongnitoUrl { get; }
+		public string CredentialsFile { get; set; }
 
-		string TokenUrl { get; }
+		public string CredentialsProfile { get; set; }
 
-		string LogInUrl { get; }
+		public string RegionEndpoint { get; set; }
 
-		string SignUpUrl { get; }
+		public string ServiceUrl { get; set; }
 
-		string LogOutUrl { get; }
+		public string Role { get; set; }
 
-		string CognitoClientId { get; }
+		public string Bucket { get; set; }
 	}
 }

@@ -68,6 +68,14 @@ namespace RiftDrive.Client {
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
+		public async Task<string> GetName() {
+			return await _js.InvokeAsync<string>( "appState.getItem", "Name" );
+		}
+
+		public async Task SetName(string value) {
+			await _js.InvokeAsync<string>( "appState.setItem", "Name", value );
+		}
+
 		public async Task<bool> GetIsAuthenticated() {
 			var tokensExpireAt = await GetTokensExpireAt();
 			return tokensExpireAt > DateTime.UtcNow;

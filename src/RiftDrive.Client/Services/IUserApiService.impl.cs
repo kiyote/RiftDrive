@@ -16,10 +16,11 @@ limitations under the License.
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client.Services {
 	internal sealed class UserApiService : IUserApiService {
-		/*
+		
 		private readonly HttpClient _http;
 		private readonly IAccessTokenProvider _accessTokenProvider;
 		private readonly IConfig _config;
@@ -63,6 +64,6 @@ namespace RiftDrive.Client.Services {
 
 			return response.Url;
 		}
-		*/
+		
 	}
 }

@@ -25,12 +25,27 @@
                 </BarItem>
             </BarStart>
             <BarEnd>
-                <BarItem>
-                    <BarLink To=@SignUpUrl>Sign Up</BarLink>
-                </BarItem>
-                <BarItem>
-                    <BarLink To=@LogInUrl>Log in</BarLink>
-                </BarItem>
+                @if (!IsAuthenticated)
+                {
+                    <BarItem>
+                        <BarLink To=@SignUpUrl>Sign Up</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To=@LogInUrl>Log in</BarLink>
+                    </BarItem>
+                }
+                else
+                {
+                    <BarItem>
+                        <BarDropdown>
+                            <BarDropdownToggle>@Name</BarDropdownToggle>
+                            <BarDropdownMenu>
+                                <BarDropdownItem>Profile</BarDropdownItem>
+                                <BarDropdownItem To=@LogOutUrl>Log Out</BarDropdownItem>
+                            </BarDropdownMenu>
+                        </BarDropdown>
+                    </BarItem>
+                }
             </BarEnd>
         </BarMenu>
     </Bar>

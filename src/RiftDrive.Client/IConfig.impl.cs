@@ -32,6 +32,8 @@ namespace RiftDrive.Client {
 
 		private static readonly string _signUpUrl = $"{_cognitoUrl}/signup?response_type=code&client_id={_cognitoClientId}";
 
+		private static readonly string _logOutUrl = $"{_cognitoUrl}/logout?client_id={_cognitoClientId}";
+
 		string IConfig.Host => _host;
 
 		string IConfig.CongnitoUrl => _cognitoUrl;
@@ -41,6 +43,8 @@ namespace RiftDrive.Client {
 		string IConfig.LogInUrl => _logInUrl;
 
 		string IConfig.SignUpUrl => _signUpUrl;
+
+		string IConfig.LogOutUrl => _logOutUrl;
 
 		string IConfig.CognitoClientId => _cognitoClientId;
 	}

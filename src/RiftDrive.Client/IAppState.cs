@@ -25,9 +25,11 @@ namespace RiftDrive.Client {
 		Task<string> GetRefeshToken();
 		Task<DateTime> GetTokensExpireAt();
 		Task<string> GetUsername();
+		Task<string> GetName();
 		Task SetAccessToken( string value );
 		Task SetRefreshToken( string value );
 		Task SetTokensExpireAt( DateTime value );
 		Task SetUsername( string value );
+		Task SetName( string value );
 	}
 }

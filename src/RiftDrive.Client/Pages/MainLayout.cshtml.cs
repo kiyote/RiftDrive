@@ -23,7 +23,7 @@ namespace RiftDrive.Client.Pages {
 
 		[Inject] private IAppState _state { get; set; }
 
-		public string Username { get; set; }
+		public string Name { get; set; }
 
 		public bool IsAuthenticated { get; set; }
 
@@ -32,7 +32,7 @@ namespace RiftDrive.Client.Pages {
 		}
 
 		protected override async Task OnInitAsync() {
-			Username = await _state.GetUsername();
+			Name = await _state.GetName();
 			IsAuthenticated = await _state.GetIsAuthenticated();
 		}
 

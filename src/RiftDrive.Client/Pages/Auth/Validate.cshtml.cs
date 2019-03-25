@@ -39,10 +39,11 @@ namespace RiftDrive.Client.Pages.Auth {
 
 			var tokens = await _tokenService.GetToken( code );
 			await _accessTokenProvider.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
-			//TODO: await _userApiService.RecordLogin();
+			await _userApiService.RecordLogin();
 
-			//TODO: var userInfo = await _userApiService.GetUserInformation();
-			//TODO: await _state.SetUsername( userInfo.Name );
+			var userInfo = await _userApiService.GetUserInformation();
+			await _state.SetUsername( userInfo.Username );
+			await _state.SetName( userInfo.Name );
 			_uriHelper.NavigateTo( IndexComponent.Url );
 		}
 	}

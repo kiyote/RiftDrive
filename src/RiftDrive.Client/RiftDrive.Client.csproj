@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
   </ItemGroup>
 

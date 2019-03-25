@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Threading.Tasks;
+using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client.Services {
 	public interface IUserApiService {
-		/*
+		
 		Task<User> GetUserInformation();
 
 		Task<string> SetAvatar( string contentType, string content );
 
-		Task RecordLogin();
-		*/
+		Task RecordLogin();		
 	}
 }

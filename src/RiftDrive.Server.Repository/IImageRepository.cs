@@ -13,20 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-namespace RiftDrive.Client {
-	public interface IConfig {
-		string Host { get; }
+using System.Threading.Tasks;
+using RiftDrive.Server.Model;
+using RiftDrive.Shared;
 
-		string CongnitoUrl { get; }
+namespace RiftDrive.Server.Repository {
+	public interface IImageRepository {
+		Task<Image> Add( Id<Image> id, string contentType, string content );
 
-		string TokenUrl { get; }
+		Task<Image> Update( Id<Image> id, string contentType, string content );
 
-		string LogInUrl { get; }
+		Task Remove( Id<Image> id );
 
-		string SignUpUrl { get; }
+		Task<Image> Get( Id<Image> id );
 
-		string LogOutUrl { get; }
-
-		string CognitoClientId { get; }
+		Task<bool> Exists( Id<Image> id );
 	}
 }

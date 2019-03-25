@@ -13,20 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-namespace RiftDrive.Client {
-	public interface IConfig {
-		string Host { get; }
+using Newtonsoft.Json;
 
-		string CongnitoUrl { get; }
+namespace RiftDrive.Client.Model {
 
-		string TokenUrl { get; }
+	public class AvatarUrl {
 
-		string LogInUrl { get; }
+		[JsonConstructor]
+		public AvatarUrl(
+			string url
+		) {
+			Url = url;
+		}
 
-		string SignUpUrl { get; }
-
-		string LogOutUrl { get; }
-
-		string CognitoClientId { get; }
+		public string Url { get; }
 	}
 }

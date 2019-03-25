@@ -13,20 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-namespace RiftDrive.Client {
-	public interface IConfig {
-		string Host { get; }
+namespace RiftDrive.Server {
+	public interface IContextInformation {
+		string Username { get; }
 
-		string CongnitoUrl { get; }
+		string Name { get; }
 
-		string TokenUrl { get; }
-
-		string LogInUrl { get; }
-
-		string SignUpUrl { get; }
-
-		string LogOutUrl { get; }
-
-		string CognitoClientId { get; }
+		string UserId { get; }
 	}
 }

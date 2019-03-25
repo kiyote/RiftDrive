@@ -26,7 +26,6 @@ namespace RiftDrive.Client
 			services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
 			services.AddScoped<ISignalService, SignalService>();
 			services.AddScoped<IUserApiService, UserApiService>();
-			services.AddScoped<IStructureApiService, StructureApiService>();
 		}
 
         public void Configure(IComponentsApplicationBuilder app)

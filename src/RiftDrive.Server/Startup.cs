@@ -1,3 +1,9 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using BlazorSpa.Server.Repository.DynamoDb;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,11 +15,12 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RiftDrive.Server.Hubs;
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
+using RiftDrive.Server.Managers;
+using RiftDrive.Server.Middleware;
+using RiftDrive.Server.Repository;
+using RiftDrive.Server.Repository.Cognito;
+using RiftDrive.Server.Repository.S3;
+using RiftDrive.Server.Service;
 
 namespace RiftDrive.Server {
 	public class Startup {
@@ -63,11 +70,22 @@ namespace RiftDrive.Server {
 			} );
 
 			services.AddHttpContextAccessor();
+
+			services.AddDynamoDb( Configuration.GetSection( "DynamoDb" ).Get<DynamoDbOptions>() );
+			services.AddCognito( Configuration.GetSection( "Cognito" ).Get<CognitoOptions>() );
+			services.AddS3( Configuration.GetSection( "S3" ).Get<S3Options>() );
+			services.RegisterRepositories();
+			services.RegisterServices();
+
+			services.AddSingleton<IContextInformation, ContextInformation>();
+			services.AddSingleton<UserManager>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure( IApplicationBuilder app, IWebHostEnvironment env ) {
 			app.UseResponseCompression();
+			app.UseAuthentication();
+			app.UseIdentificationMiddleware();
 
 			if( env.IsDevelopment() ) {
 				app.UseDeveloperExceptionPage();

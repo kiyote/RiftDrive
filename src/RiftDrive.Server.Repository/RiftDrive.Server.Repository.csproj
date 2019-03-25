@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.100.1" />
+    <PackageReference Include="AWSSDK.Extensions.CognitoAuthentication" Version="0.9.4" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.100.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview3.19153.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RiftDrive.Server.Model\RiftDrive.Server.Model.csproj" />
+    <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Cognito\" />
+    <Folder Include="S3\" />
+  </ItemGroup>
+
+</Project>

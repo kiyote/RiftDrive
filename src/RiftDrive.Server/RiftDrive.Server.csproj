@@ -14,10 +14,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Server" Version="3.0.0-preview3-19153-02" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview3-19153-02" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
     <ProjectReference Include="..\RiftDrive.Client\RiftDrive.Client.csproj" />
+    <ProjectReference Include="..\RiftDrive.Server.Model\RiftDrive.Server.Model.csproj" />
+    <ProjectReference Include="..\RiftDrive.Server.Repository\RiftDrive.Server.Repository.csproj" />
+    <ProjectReference Include="..\RiftDrive.Server.Service\RiftDrive.Server.Service.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
   </ItemGroup>
 
