@@ -1,3 +1,13 @@
 ﻿@page "/"
 @layout MainLayout
 @inherits IndexComponent
+
+@if(IsAuthenticated)
+{
+    <Row>
+        <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
+            <UserGames Name=@Name />
+        </Column>
+    </Row>
+}
+

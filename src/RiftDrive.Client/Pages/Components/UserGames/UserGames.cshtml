@@ -1,0 +1,39 @@
+﻿@inherits UserGamesComponent
+
+<Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
+    <CardBody>
+        <CardTitle Size="5">Games for @Name</CardTitle>
+    </CardBody>
+    <CardBody>
+        <CardText>
+            @foreach (var game in Games)
+            {
+                @game.Name
+            }
+        </CardText>
+        <SimpleButton Clicked=@ShowModal Color="Color.Primary">Create Game</SimpleButton>
+    </CardBody>
+</Card>
+
+<Modal ref="ModalRef">
+    <ModalBackdrop />
+    <ModalContent Size="ModalSize.Small" IsCentered="true">
+        <ModalHeader>
+            <ModalTitle>
+                <Icon Name="IconName.Edit" />
+                Game Name
+            </ModalTitle>
+            <CloseButton Clicked=@CancelCreate2 />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Name</FieldLabel>
+                <TextEdit Placeholder="Enter name..." bind-Text=@GameName />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <SimpleButton Color="Color.Secondary" Clicked=@CancelCreate>Cancel</SimpleButton>
+            <SimpleButton Color="Color.Primary" Clicked=@CreateGame>Create</SimpleButton>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

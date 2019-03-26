@@ -66,7 +66,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task<IEnumerable<Game>> IGameRepository.GetGames( Id<User> userId ) {
-			var query = _context.QueryAsync<GameRecord>(
+			var query = _context.QueryAsync<PlayerRecord>(
 				UserRecord.GetKey( userId.Value ),
 				QueryOperator.BeginsWith,
 				new List<object>() { GameRecord.ItemType },
@@ -75,12 +75,18 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				}
 			);
 
-			var games = await query.GetRemainingAsync();
-			return games.Select( g => new Game(
-				 new Id<Game>( g.GameId ),
-				 g.Name,
-				 g.CreatedOn )
-			);
+			var playerRecords = await query.GetRemainingAsync();
+
+			var batchGet = _context.CreateBatchGet<GameRecord>();
+			foreach( var record in playerRecords ) {
+				batchGet.AddKey( GameRecord.GetKey( record.GameId ), GameRecord.GetKey( record.GameId ) );
+			}
+			await batchGet.ExecuteAsync();
+
+			return batchGet.Results.Select( r => new Game(
+				new Id<Game>( r.GameId ),
+				r.Name,
+				r.CreatedOn ) );
 		}
 
 		private async Task AddStatistic(string statistic, int amount) {

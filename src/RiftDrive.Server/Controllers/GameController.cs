@@ -30,23 +30,30 @@ namespace RiftDrive.Server.Controllers {
 	public class GameController : Controller {
 
 		private readonly GameManager _gameManager;
+		private readonly IContextInformation _context;
 
 		public GameController(
-			GameManager gameManager
+			GameManager gameManager,
+			IContextInformation context
 		) {
 			_gameManager = gameManager;
+			_context = context;
 		}
 
 		[HttpPost()]
 		public async Task<ActionResult<ClientGame>> CreateGame([FromBody] ClientGame clientGame) {
+			var userId = new Id<User>( _context.UserId );
+			var result = await _gameManager.CreateGame( userId, clientGame.Name, _context.Name );
 
-			var result = await _gameManager.CreateGame( clientGame.Name );
-
-			return Ok( ToClient(result) );
+			return Ok( result );
 		}
 
-		private ClientGame ToClient(Game game) {
-			return new ClientGame( new Id<ClientGame>(game.Id.Value), game.Name, game.CreatedOn );
+		[HttpGet()]
+		public async Task<ActionResult<IEnumerable<ClientGame>>> GetGames() {
+			var userId = new Id<User>( _context.UserId );
+			var games = await _gameManager.GetGames( userId );
+
+			return Ok( games );
 		}
 	}
 }

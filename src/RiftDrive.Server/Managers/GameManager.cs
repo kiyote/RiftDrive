@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
 using RiftDrive.Shared;
+using ClientGame = RiftDrive.Client.Model.Game;
 
 namespace RiftDrive.Server.Managers {
 	public class GameManager {
@@ -32,8 +33,24 @@ namespace RiftDrive.Server.Managers {
 			_gameService = gameService;
 		}
 
-		public async Task<Game> CreateGame(string name) {
-			return await _gameService.CreateGame( new Id<Game>(), name, DateTime.UtcNow );
+		public async Task<ClientGame> CreateGame(Id<User> userId, string gameName, string playerName) {
+			var game = await _gameService.CreateGame( new Id<Game>(), gameName, DateTime.UtcNow );
+			var player = await _gameService.AddPlayer( game.Id, new Id<Player>(), userId, playerName, DateTime.UtcNow );
+
+			return ToClientGame( game );
+		}
+
+		public async Task<IEnumerable<ClientGame>> GetGames(Id<User> userId) {
+			var games = await _gameService.GetGames( userId );
+
+			return games.Select( g => ToClientGame( g ) );
+		}
+
+		private ClientGame ToClientGame(Game game) {
+			return new ClientGame(
+				new Id<ClientGame>( game.Id.Value ),
+				game.Name,
+				game.CreatedOn );
 		}
 	}
 }

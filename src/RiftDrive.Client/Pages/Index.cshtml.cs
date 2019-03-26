@@ -21,5 +21,16 @@ namespace RiftDrive.Client.Pages {
 	public class IndexComponent: ComponentBase {
 
 		public static string Url = "/";
+
+		[Inject] private IAppState _appState { get; set; }
+
+		protected string Name { get; set; }
+
+		protected bool IsAuthenticated { get; set; }
+
+		protected override async Task OnInitAsync() {
+			Name = await _appState.GetName();
+			IsAuthenticated = await _appState.GetIsAuthenticated();
+		}
 	}
 }
