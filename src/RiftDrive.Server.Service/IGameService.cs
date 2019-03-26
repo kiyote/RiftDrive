@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +15,26 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Services;
-using RiftDrive.Client.Services;
+using RiftDrive.Server.Model;
+using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Pages.Auth
-{
-    public class LogOutComponent : ComponentBase
-    {
-		public const string Url = "/auth/logout";
+namespace RiftDrive.Server.Service {
+	public interface IGameService {
 
-		[Inject] private IUriHelper _uriHelper { get; set; }
+		Task<IEnumerable<Game>> GetGames( Id<User> userId );
 
-		[Inject] private IAccessTokenProvider _tokens { get; set; }
+		Task<Player> GetPlayer( Id<Game> gameId, Id<User> userId );
 
-		protected override async Task OnInitAsync() {
-			await _tokens.SetTokens( default, default, DateTime.MinValue );
-			_uriHelper.NavigateTo( IndexComponent.Url );
-		}
+		Task<Game> CreateGame( Id<Game> gameId, string name, DateTime createdOn );
+
+		Task<Player> AddPlayer( Id<Game> gameId, Id<Player> playerId, Id<User> userId, string name, DateTime createdOn );
+
+		Task RemovePlayer( Id<Game> gameId, Id<Player> playerId );
+
+		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
+
+		Task DeleteGame( Id<Game> gameId );
 	}
-
 }

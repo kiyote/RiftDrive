@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
 namespace RiftDrive.Client.Pages {
 	public class IndexComponent: ComponentBase {
 
 		public static string Url = "/";
-
 	}
 }

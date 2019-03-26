@@ -27,13 +27,16 @@ namespace BlazorSpa.Server.Repository.DynamoDb {
 		public static IServiceCollection AddDynamoDb( this IServiceCollection services, DynamoDbOptions options ) {
 			services.AddSingleton( options );
 
-			var provider = CreateProvider( options );
-			services.AddSingleton( provider );
+			var client = CreateClient( options );
+			var provider = new DynamoDBContext( client );
+
+			services.AddSingleton<IAmazonDynamoDB>( client );
+			services.AddSingleton<IDynamoDBContext>( provider );
 
 			return services;
 		}
 
-		public static IDynamoDBContext CreateProvider( DynamoDbOptions options ) {
+		public static AmazonDynamoDBClient CreateClient( DynamoDbOptions options ) {
 			var chain = new CredentialProfileStoreChain( options.CredentialsFile );
 			if( !chain.TryGetAWSCredentials( options.CredentialsProfile, out AWSCredentials credentials ) ) {
 				throw new InvalidOperationException();
@@ -48,8 +51,7 @@ namespace BlazorSpa.Server.Repository.DynamoDb {
 			config.ServiceURL = options.ServiceUrl;
 			config.LogMetrics = true;
 			config.DisableLogging = false;
-			var client = new AmazonDynamoDBClient( roleCredentials, config );
-			return new DynamoDBContext( client );
+			return new AmazonDynamoDBClient( roleCredentials, config );
 		}
 	}
 }

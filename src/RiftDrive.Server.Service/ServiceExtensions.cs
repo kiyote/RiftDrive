@@ -20,6 +20,7 @@ namespace RiftDrive.Server.Service {
 		public static IServiceCollection RegisterServices(this IServiceCollection services) {
 			services.AddSingleton<IImageService, ImageService>();
 			services.AddSingleton<IIdentificationService, IdentificationService>();
+			services.AddSingleton<IGameService, GameService>();
 
 			return services;
 		}

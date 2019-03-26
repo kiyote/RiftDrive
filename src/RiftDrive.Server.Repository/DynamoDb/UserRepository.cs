@@ -20,12 +20,11 @@ using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using RiftDrive.Server.Model;
-using RiftDrive.Server.Repository;
 using RiftDrive.Server.Repository.DynamoDb.Model;
 using RiftDrive.Shared;
 
-namespace BlazorSpa.Server.Repository.DynamoDb {
-	public sealed class UserRepository : IUserRepository {
+namespace RiftDrive.Server.Repository.DynamoDb {
+	internal sealed class UserRepository : IUserRepository {
 
 		private readonly IDynamoDBContext _context;
 

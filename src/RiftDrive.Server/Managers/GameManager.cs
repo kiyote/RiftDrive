@@ -13,19 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Microsoft.AspNetCore.Blazor.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using RiftDrive.Server.Model;
+using RiftDrive.Server.Service;
+using RiftDrive.Shared;
 
-namespace RiftDrive.Client
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+namespace RiftDrive.Server.Managers {
+	public class GameManager {
 
-        public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args) =>
-            BlazorWebAssemblyHost.CreateDefaultBuilder()
-                .UseBlazorStartup<Startup>();
-    }
+		private readonly IGameService _gameService;
+
+		public GameManager(
+			IGameService gameService
+		) {
+			_gameService = gameService;
+		}
+
+		public async Task<Game> CreateGame(string name) {
+			return await _gameService.CreateGame( new Id<Game>(), name, DateTime.UtcNow );
+		}
+	}
 }
