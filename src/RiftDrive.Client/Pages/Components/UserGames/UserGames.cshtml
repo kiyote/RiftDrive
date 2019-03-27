@@ -6,10 +6,19 @@
     </CardBody>
     <CardBody>
         <CardText>
-            @foreach (var game in Games)
-            {
-                @game.Name
-            }
+            <TableContainer IsBordered="true" IsStriped="true">
+                <TableBody>
+                    @foreach (var game in Games)
+                    {
+                    <TableRow>
+                        <TableRowCell>@game.Name</TableRowCell>
+                        <TableRowCell>
+                            <SimpleButton Clicked=@(async () => { await PlayGame(game.Id); })>Play</SimpleButton>
+                        </TableRowCell>
+                    </TableRow>
+                    }
+                </TableBody>
+            </TableContainer>
         </CardText>
         <SimpleButton Clicked=@ShowModal Color="Color.Primary">Create Game</SimpleButton>
     </CardBody>

@@ -80,5 +80,13 @@ namespace RiftDrive.Client {
 			var tokensExpireAt = await GetTokensExpireAt();
 			return tokensExpireAt > DateTime.UtcNow;
 		}
+
+		public async Task<string> GetPlayGameId() {
+			return await _js.InvokeAsync<string>( "appState.getItem", "PlayGameId" );
+		}
+
+		public async Task SetPlayGameId( string value ) {
+			await _js.InvokeAsync<string>( "appState.setItem", "PlayGameId", value );
+		}
 	}
 }

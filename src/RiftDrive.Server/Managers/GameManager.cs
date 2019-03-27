@@ -21,6 +21,7 @@ using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
 using RiftDrive.Shared;
 using ClientGame = RiftDrive.Client.Model.Game;
+using ClientPlayer = RiftDrive.Client.Model.Player;
 
 namespace RiftDrive.Server.Managers {
 	public class GameManager {
@@ -46,11 +47,24 @@ namespace RiftDrive.Server.Managers {
 			return games.Select( g => ToClientGame( g ) );
 		}
 
+		public async Task<IEnumerable<ClientPlayer>> GetPlayers(Id<Game> gameId) {
+			var players = await _gameService.GetPlayers( gameId );
+
+			return players.Select( p => ToClientPlayer( p ) );
+		}
+
 		private ClientGame ToClientGame(Game game) {
 			return new ClientGame(
 				new Id<ClientGame>( game.Id.Value ),
 				game.Name,
 				game.CreatedOn );
+		}
+
+		private ClientPlayer ToClientPlayer(Player player) {
+			return new ClientPlayer(
+				new Id<ClientPlayer>( player.Id.Value ),
+				new Id<ClientGame>( player.GameId.Value ),
+				player.Name );
 		}
 	}
 }

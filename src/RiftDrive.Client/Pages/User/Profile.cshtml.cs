@@ -14,18 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using RiftDrive.Client.Services;
 
-namespace RiftDrive.Client.Pages.User
-{
-    public class ProfileComponent : ComponentBase
-    {
+namespace RiftDrive.Client.Pages.User {
+	public class ProfileComponent : ComponentBase {
 		public const string Url = "/user/profile";
 
 		[Inject] private IUserApiService _userService { get; set; }

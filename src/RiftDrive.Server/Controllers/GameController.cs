@@ -23,6 +23,7 @@ using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
 using RiftDrive.Shared;
 using ClientGame = RiftDrive.Client.Model.Game;
+using ClientPlayer = RiftDrive.Client.Model.Player;
 
 namespace RiftDrive.Server.Controllers {
 	[Authorize]
@@ -54,6 +55,13 @@ namespace RiftDrive.Server.Controllers {
 			var games = await _gameManager.GetGames( userId );
 
 			return Ok( games );
+		}
+
+		[HttpGet("{gameId}/player")]
+		public async Task<ActionResult<IEnumerable<ClientPlayer>>> GetPlayers(string gameId) {
+			var players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );
+
+			return Ok( players );
 		}
 	}
 }

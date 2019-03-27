@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Model;
+using RiftDrive.Client.Pages.Play;
 using RiftDrive.Client.Services;
+using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Components.UserGames
 {
@@ -14,6 +17,10 @@ namespace RiftDrive.Client.Pages.Components.UserGames
 		[Parameter] protected string Name { get; set; }
 
 		[Inject] private IGameApiService _gameService { get; set; }
+
+		[Inject] private IUriHelper _uriHelper { get; set; }
+
+		[Inject] private IAppState _state { get; set; }
 
 		protected Modal ModalRef { get; set; }
 
@@ -30,6 +37,11 @@ namespace RiftDrive.Client.Pages.Components.UserGames
 			await _gameService.CreateGame( GameName );
 			GameName = default;
 			Games = await _gameService.GetGames();
+		}
+
+		public async Task PlayGame(Id<Game> gameId) {
+			await _state.SetPlayGameId( gameId.Value );
+			_uriHelper.NavigateTo( GameSummaryComponent.Url );
 		}
 
 		public async Task ShowModal() {

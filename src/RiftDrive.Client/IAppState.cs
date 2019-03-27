@@ -31,5 +31,9 @@ namespace RiftDrive.Client {
 		Task SetTokensExpireAt( DateTime value );
 		Task SetUsername( string value );
 		Task SetName( string value );
+
+		Task SetPlayGameId( string value );
+
+		Task<string> GetPlayGameId();
 	}
 }
