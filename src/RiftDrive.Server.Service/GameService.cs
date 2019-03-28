@@ -39,6 +39,10 @@ namespace RiftDrive.Server.Service {
 			return await _gameRepository.GetGames( userId );
 		}
 
+		async Task<Game> IGameService.GetGame( Id<Game> gameId ) {
+			return await _gameRepository.GetGame( gameId );
+		}
+
 		async Task<Player> IGameService.GetPlayer( Id<Game> gameId, Id<User> userId ) {
 			var players = await _playerRepository.GetPlayers( gameId );
 			return players.FirstOrDefault( p => p.UserId == userId );

@@ -2,4 +2,4 @@
 @layout MainLayout
 @page "/game/summary"
 
-    <GamePlayersSummary GameId=@GameId></GamePlayersSummary>
+    <GamePlayersSummary GameId=@Game?.Id.Value GameName=@Game?.Name></GamePlayersSummary>

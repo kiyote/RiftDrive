@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
 using RiftDrive.Shared;
@@ -12,5 +10,7 @@ namespace RiftDrive.Client.Services {
 		Task<IEnumerable<Game>> GetGames();
 
 		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
+
+		Task<Game> GetGame( Id<Game> gameId );
 	}
 }

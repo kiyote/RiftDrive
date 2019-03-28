@@ -47,6 +47,12 @@ namespace RiftDrive.Server.Managers {
 			return games.Select( g => ToClientGame( g ) );
 		}
 
+		public async Task<ClientGame> GetGame( Id<Game> gameId ) {
+			var game = await _gameService.GetGame( gameId );
+
+			return ToClientGame( game );
+		}
+
 		public async Task<IEnumerable<ClientPlayer>> GetPlayers(Id<Game> gameId) {
 			var players = await _gameService.GetPlayers( gameId );
 

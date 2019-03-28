@@ -17,14 +17,16 @@ namespace RiftDrive.Client.Pages.Play {
 
 		[Inject] private IUriHelper _uriHelper { get; set; }
 
-		protected string GameId { get; set; }
+		[Inject] private IGameApiService _gameService { get; set; }
+
+		protected Game Game { get; set; }
 
 		protected override async Task OnInitAsync() {
 			var gameIdValue = await _state.GetPlayGameId();
 			if( string.IsNullOrWhiteSpace(gameIdValue)) {
 				_uriHelper.NavigateTo( IndexComponent.Url );
 			}
-			GameId = gameIdValue;
+			Game = await _gameService.GetGame( new Id<Game>( gameIdValue ) );
 		}
 	}
 }

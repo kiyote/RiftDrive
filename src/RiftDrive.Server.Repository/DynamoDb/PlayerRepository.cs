@@ -52,6 +52,8 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				CreatedOn = createdOn
 			};
 
+			await _context.SaveAsync( playerRecord );
+
 			return new Player(
 				playerId,
 				gameId,

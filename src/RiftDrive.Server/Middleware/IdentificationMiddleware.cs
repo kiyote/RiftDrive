@@ -46,6 +46,7 @@ namespace RiftDrive.Server.Middleware {
 				var user = await _userRepository.GetByUsername( username );
 				if (user != default) {
 					httpContext.Items[ "UserId" ] = user.Id.Value;
+					httpContext.Items["Name"] = user.Name;
 				}
 			}
 

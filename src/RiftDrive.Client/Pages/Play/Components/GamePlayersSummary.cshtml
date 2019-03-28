@@ -2,7 +2,7 @@
 
 <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
     <CardBody>
-        <CardTitle Size="5">Players for (game.Name)</CardTitle>
+        <CardTitle Size="5">Players in @GameName</CardTitle>
     </CardBody>
     <CardBody>
         <CardText>
@@ -13,9 +13,7 @@
                         <TableRow>
                             <TableRowCell>@player.Name</TableRowCell>
                             <TableRowCell>
-                                <SimpleButton>
-                                    <SimpleButton Clicked=@(async () => { await EditPlayer(player);}) Color="Color.Primary">Edit</SimpleButton>
-                                </SimpleButton>
+                                <SimpleButton Clicked=@(async () => { await EditPlayer(player);}) Color="Color.Primary">Edit</SimpleButton>
                             </TableRowCell>
                         </TableRow>
                     }

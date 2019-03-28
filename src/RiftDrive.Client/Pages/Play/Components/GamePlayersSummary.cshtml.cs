@@ -21,12 +21,14 @@ namespace RiftDrive.Client.Pages.Play.Components
 
 		[Parameter] protected string GameId { get; set; }
 
+		[Parameter] protected string GameName { get; set; }
+
 		[Inject] private IGameApiService _gameService { get; set; }
 
-		protected override async Task OnInitAsync() {
-			Console.WriteLine( $"GamePlayersSummary: {GameId}" );
-			if (!string.IsNullOrWhiteSpace(GameId)) {
+		protected override async Task OnParametersSetAsync() {
+			if( !string.IsNullOrWhiteSpace( GameId ) ) {
 				Players = await _gameService.GetPlayers( new Id<Game>( GameId ) );
+				Console.WriteLine( $"Set Players : {Players.Count()}" );
 			}
 		}
 

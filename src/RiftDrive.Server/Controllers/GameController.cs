@@ -57,6 +57,13 @@ namespace RiftDrive.Server.Controllers {
 			return Ok( games );
 		}
 
+		[HttpGet("{gameId}")]
+		public async Task<ActionResult<ClientGame>> GetGame(string gameId) {
+			var game = await _gameManager.GetGame( new Id<Game>(gameId) );
+
+			return Ok( game );
+		}
+
 		[HttpGet("{gameId}/player")]
 		public async Task<ActionResult<IEnumerable<ClientPlayer>>> GetPlayers(string gameId) {
 			var players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );

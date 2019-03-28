@@ -26,6 +26,8 @@ namespace RiftDrive.Server.Repository {
 
 		Task<IEnumerable<Game>> GetGames( Id<User> userId );
 
+		Task<Game> GetGame( Id<Game> gameId );
+
 		Task Delete( Id<Game> gameId );
 	}
 }

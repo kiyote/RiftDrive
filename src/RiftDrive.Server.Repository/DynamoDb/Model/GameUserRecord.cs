@@ -50,7 +50,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBIgnore]
 		public string UserId { get; set; }
 
-		[DynamoDBIgnore]
+		[DynamoDBProperty( "PlayerId" )]
 		public string PlayerId { get; set; }
 
 		[DynamoDBProperty( "CreatedOn" )]

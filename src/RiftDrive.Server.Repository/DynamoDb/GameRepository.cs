@@ -16,6 +16,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
@@ -53,10 +54,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 
 			await AddStatistic( "TotalCount", 1 );
 
-			return new Game(
-				gameId,
-				name,
-				createdOn );
+			return ToGame( gameRecord );
 		}
 
 		async Task IGameRepository.Delete( Id<Game> gameId ) {
@@ -83,10 +81,13 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			}
 			await batchGet.ExecuteAsync();
 
-			return batchGet.Results.Select( r => new Game(
-				new Id<Game>( r.GameId ),
-				r.Name,
-				r.CreatedOn ) );
+			return batchGet.Results.Select( r => ToGame( r ) );
+		}
+
+		async Task<Game> IGameRepository.GetGame( Id<Game> gameId ) {
+			var gameRecord = await _context.LoadAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
+
+			return ToGame( gameRecord );
 		}
 
 		private async Task AddStatistic(string statistic, int amount) {
@@ -107,6 +108,13 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				}
 			};
 			await _client.UpdateItemAsync( request );
+		}
+
+		private static Game ToGame( GameRecord r ) {
+			return new Game(
+				new Id<Game>( r.GameId ),
+				r.Name,
+				r.CreatedOn );
 		}
 	}
 }
