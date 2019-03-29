@@ -28,5 +28,13 @@ namespace RiftDrive.Client.Pages.Play {
 			}
 			Game = await _gameService.GetGame( new Id<Game>( gameIdValue ) );
 		}
+
+		protected async Task StartGame() {
+
+		}
+
+		protected async Task PlayGame() {
+
+		}
 	}
 }

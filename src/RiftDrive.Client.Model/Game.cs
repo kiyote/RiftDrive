@@ -24,11 +24,13 @@ namespace RiftDrive.Client.Model {
 		public Game(
 			Id<Game> id,
 			string name,
-			DateTime createdOn
+			DateTime createdOn,
+			GameState state
 		) {
 			Id = id;
 			Name = name;
 			CreatedOn = createdOn;
+			State = state;
 		}
 
 		public Id<Game> Id { get; }
@@ -36,6 +38,8 @@ namespace RiftDrive.Client.Model {
 		public string Name { get; }
 
 		public DateTime CreatedOn { get; }
+
+		public GameState State { get; }
 
 		public bool Equals( Game other ) {
 			if( ReferenceEquals( other, null ) ) {
@@ -48,7 +52,8 @@ namespace RiftDrive.Client.Model {
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& DateTime.Equals( CreatedOn, other.CreatedOn );
+				&& DateTime.Equals( CreatedOn, other.CreatedOn )
+				&& State.Equals( other.State );
 		}
 
 		public override bool Equals( object obj ) {
@@ -61,6 +66,7 @@ namespace RiftDrive.Client.Model {
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 13 ) + Name.GetHashCode();
 				result = ( result * 31 ) + CreatedOn.GetHashCode();
+				result = ( result * 31 ) + State.GetHashCode();
 
 				return result;
 			}

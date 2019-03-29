@@ -5,7 +5,7 @@ using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Services {
 	public interface IGameApiService {
-		Task<Game> CreateGame( string name );
+		Task<Game> CreateGame( string gameName, string playerName );
 
 		Task<IEnumerable<Game>> GetGames();
 

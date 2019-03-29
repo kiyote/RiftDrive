@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
 using RiftDrive.Shared;
+using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
 using ClientGame = RiftDrive.Client.Model.Game;
 using ClientPlayer = RiftDrive.Client.Model.Player;
 
@@ -42,9 +43,9 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpPost()]
-		public async Task<ActionResult<ClientGame>> CreateGame([FromBody] ClientGame clientGame) {
+		public async Task<ActionResult<ClientGame>> CreateGame([FromBody] GameCreationInformation gameInfo) {
 			var userId = new Id<User>( _context.UserId );
-			var result = await _gameManager.CreateGame( userId, clientGame.Name, _context.Name );
+			var result = await _gameManager.CreateGame( userId, gameInfo.GameName, gameInfo.PlayerName );
 
 			return Ok( result );
 		}

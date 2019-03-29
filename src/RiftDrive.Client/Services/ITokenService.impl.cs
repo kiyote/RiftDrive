@@ -16,7 +16,7 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using RiftDrive.Shared;
+using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.Auth;
 
 namespace RiftDrive.Client.Services {

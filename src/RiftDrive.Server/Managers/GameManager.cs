@@ -63,7 +63,8 @@ namespace RiftDrive.Server.Managers {
 			return new ClientGame(
 				new Id<ClientGame>( game.Id.Value ),
 				game.Name,
-				game.CreatedOn );
+				game.CreatedOn,
+				game.State );
 		}
 
 		private ClientPlayer ToClientPlayer(Player player) {

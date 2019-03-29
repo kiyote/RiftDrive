@@ -16,7 +16,6 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
@@ -48,7 +47,8 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			var gameRecord = new GameRecord {
 				GameId = gameId.Value,
 				Name = name,
-				CreatedOn = createdOn.ToUniversalTime()
+				CreatedOn = createdOn.ToUniversalTime(),
+				State = GameState.WaitingForPlayers.ToString()
 			};
 			await _context.SaveAsync( gameRecord );
 
@@ -114,7 +114,8 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return new Game(
 				new Id<Game>( r.GameId ),
 				r.Name,
-				r.CreatedOn );
+				r.CreatedOn,
+				(GameState)Enum.Parse(typeof(GameState), r.State));
 		}
 	}
 }

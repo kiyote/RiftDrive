@@ -13,14 +13,14 @@
                     <TableRow>
                         <TableRowCell>@game.Name</TableRowCell>
                         <TableRowCell>
-                            <SimpleButton Clicked=@(async () => { await PlayGame(game.Id); })>Play</SimpleButton>
+                            <SimpleButton Clicked=@(async () => { await PlayGame(game.Id); }) IsActive=@(!Busy)>Play</SimpleButton>
                         </TableRowCell>
                     </TableRow>
                     }
                 </TableBody>
             </TableContainer>
         </CardText>
-        <SimpleButton Clicked=@ShowModal Color="Color.Primary">Create Game</SimpleButton>
+        <SimpleButton Clicked=@ShowModal Color="Color.Primary" IsActive=@(!Busy)>Create Game</SimpleButton>
     </CardBody>
 </Card>
 
@@ -30,14 +30,18 @@
         <ModalHeader>
             <ModalTitle>
                 <Icon Name="IconName.Edit" />
-                Game Name
+                Create Game
             </ModalTitle>
             <CloseButton Clicked=@CancelCreate2 />
         </ModalHeader>
         <ModalBody>
             <Field>
-                <FieldLabel>Name</FieldLabel>
+                <FieldLabel>Game Name</FieldLabel>
                 <TextEdit Placeholder="Enter name..." bind-Text=@GameName />
+            </Field>
+            <Field>
+                <FieldLabel>Player Name</FieldLabel>
+                <TextEdit Placeholder="Enter name..." bind-Text=@PlayerName />
             </Field>
         </ModalBody>
         <ModalFooter>

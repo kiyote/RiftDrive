@@ -42,14 +42,13 @@ namespace RiftDrive.Client.Services {
 			_json = json;
 		}
 
-		async Task<Game> IGameApiService.CreateGame( string name ) {
-			var game = new Game(
-				Id<Game>.Empty,
-				name,
-				DateTime.MinValue );
+		async Task<Game> IGameApiService.CreateGame( string gameName, string playerName ) {
+			var gameInfo = new GameCreationInformation(
+				gameName,
+				playerName );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
 			var response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
-				game,
+				gameInfo,
 				( g ) => { return _json.Serialize( g ); },
 				( s ) => { return _json.Deserialize<Game>( s ); } );
 

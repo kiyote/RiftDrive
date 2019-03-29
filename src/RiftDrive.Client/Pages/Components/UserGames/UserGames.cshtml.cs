@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
@@ -28,15 +27,22 @@ namespace RiftDrive.Client.Pages.Components.UserGames
 
 		public string GameName { get; set; }
 
+		public string PlayerName { get; set; }
+
+		public bool Busy { get; set; }
+
 		protected override async Task OnInitAsync() {
 			Games = await _gameService.GetGames();
 		}
 
 		public async Task CreateGame() {
 			ModalRef.Hide();
-			await _gameService.CreateGame( GameName );
+			Busy = true;
+			await _gameService.CreateGame( GameName, PlayerName );
 			GameName = default;
+			PlayerName = default;
 			Games = await _gameService.GetGames();
+			Busy = false;
 		}
 
 		public async Task PlayGame(Id<Game> gameId) {
@@ -54,7 +60,6 @@ namespace RiftDrive.Client.Pages.Components.UserGames
 
 		public void CancelCreate2() {
 			ModalRef.Hide();
-			Console.WriteLine( "Hide Modal 2" );
 		}
 	}
 }

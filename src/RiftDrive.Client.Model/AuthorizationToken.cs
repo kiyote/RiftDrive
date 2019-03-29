@@ -15,7 +15,7 @@ limitations under the License.
 */
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Client.Model {
 	public class AuthorizationToken {
 
 		[JsonConstructor]

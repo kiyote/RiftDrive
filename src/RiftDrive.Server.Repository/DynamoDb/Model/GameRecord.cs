@@ -55,6 +55,9 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty( "CreatedOn" )]
 		public DateTime CreatedOn { get; set; }
 
+		[DynamoDBProperty("Status")]
+		public string State { get; set; }
+
 		public static string GetKey( string gameId ) {
 			return $"{ItemType}{gameId}";
 		}
