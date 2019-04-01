@@ -7,6 +7,8 @@ namespace RiftDrive.Client.Service {
 	public interface IGameApiService {
 		Task<Game> CreateGame( string gameName, string playerName );
 
+		Task<Game> StartGame( Id<Game> gameId, string message );
+
 		Task<IEnumerable<Game>> GetGames();
 
 		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );

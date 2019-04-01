@@ -26,13 +26,16 @@ namespace RiftDrive.Server.Service {
 
 		private readonly IGameRepository _gameRepository;
 		private readonly IPlayerRepository _playerRepository;
+		private readonly IActorRepository _actorRepository;
 
 		public GameService(
 			IGameRepository gameRepository,
-			IPlayerRepository playerRepository
+			IPlayerRepository playerRepository,
+			IActorRepository actorRepository
 		) {
 			_gameRepository = gameRepository;
 			_playerRepository = playerRepository;
+			_actorRepository = actorRepository;
 		}
 
 		async Task<IEnumerable<Game>> IGameService.GetGames( Id<User> userId ) {
@@ -43,8 +46,12 @@ namespace RiftDrive.Server.Service {
 			return await _gameRepository.GetGame( gameId );
 		}
 
+		async Task<Game> IGameService.StartGame(Id<Game> gameId ) {
+			return await _gameRepository.StartGame( gameId );
+		}
+
 		async Task<Player> IGameService.GetPlayer( Id<Game> gameId, Id<User> userId ) {
-			var players = await _playerRepository.GetPlayers( gameId );
+			IEnumerable<Player> players = await _playerRepository.GetPlayers( gameId );
 			return players.FirstOrDefault( p => p.UserId == userId );
 		}
 
@@ -64,9 +71,17 @@ namespace RiftDrive.Server.Service {
 			return await _playerRepository.GetPlayers( gameId );
 		}
 
+		async Task<Actor> IGameService.CreateActor(Id<Game> gameId, Id<Actor> actorId, string name, DateTime createdOn) {
+			return await _actorRepository.Create( gameId, actorId, name, createdOn );
+		}
+
 		async Task IGameService.DeleteGame(Id<Game> gameId) {
-			var players = await _playerRepository.GetPlayers( gameId );
-			foreach (var player in players) {
+			IEnumerable<Actor> actors = await _actorRepository.GetActors( gameId );
+			foreach (Actor actor in actors) {
+				await _actorRepository.Delete( gameId, actor.Id );
+			}
+			IEnumerable<Player> players = await _playerRepository.GetPlayers( gameId );
+			foreach (Player player in players) {
 				await _playerRepository.Delete( gameId, player.Id );
 			}
 			await _gameRepository.Delete( gameId );

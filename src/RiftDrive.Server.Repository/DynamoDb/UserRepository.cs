@@ -46,15 +46,15 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				return default;
 			}
 
-			var userKey = UserRecord.GetKey( authentication.UserId );
-			var search = _context.QueryAsync<UserRecord>(
+			string userKey = UserRecord.GetKey( authentication.UserId );
+			AsyncSearch<UserRecord> search = _context.QueryAsync<UserRecord>(
 				userKey,
 				QueryOperator.Equal,
 				new List<object>() { userKey }
 			);
 
-			var userRecords = await search.GetRemainingAsync();
-			var userRecord = userRecords.FirstOrDefault();
+			List<UserRecord> userRecords = await search.GetRemainingAsync();
+			UserRecord userRecord = userRecords.FirstOrDefault();
 
 			if( userRecord == default ) {
 				return default;
@@ -108,7 +108,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		async Task<User> IUserRepository.GetUser(
 			Id<User> userId
 		) {
-			var userRecord = await GetById( userId );
+			UserRecord userRecord = await GetById( userId );
 			return ToUser( userId, userRecord );
 		}
 
@@ -116,7 +116,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			Id<User> userId,
 			bool hasAvatar
 		) {
-			var userRecord = await GetById( userId );
+			UserRecord userRecord = await GetById( userId );
 			userRecord.HasAvatar = true;
 			await _context.SaveAsync( userRecord );
 
@@ -127,7 +127,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			Id<User> userId,
 			DateTime lastLogin
 		) {
-			var userRecord = await GetById( userId );
+			UserRecord userRecord = await GetById( userId );
 			userRecord.PreviousLogin = userRecord.LastLogin;
 			userRecord.LastLogin = lastLogin.ToUniversalTime();
 			await _context.SaveAsync( userRecord );
@@ -138,15 +138,15 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		private async Task<UserRecord> GetById(
 			Id<User> userId
 		) {
-			var userKey = UserRecord.GetKey( userId.Value );
-			var search = _context.QueryAsync<UserRecord>(
+			string userKey = UserRecord.GetKey( userId.Value );
+			AsyncSearch<UserRecord> search = _context.QueryAsync<UserRecord>(
 				userKey,
 				QueryOperator.Equal,
 				new List<object>() { userKey }
 			);
 
-			var userRecords = await search.GetRemainingAsync();
-			var userRecord = userRecords.FirstOrDefault();
+			List<UserRecord> userRecords = await search.GetRemainingAsync();
+			UserRecord userRecord = userRecords.FirstOrDefault();
 
 			return userRecord;
 		}

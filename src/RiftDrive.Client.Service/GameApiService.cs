@@ -54,6 +54,18 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
+		async Task<Game> IGameApiService.StartGame( Id<Game> gameId, string message ) {
+			var startInfo = new GameStartInformation(
+				message );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
+				startInfo,
+				( g ) => { return _json.Serialize( g ); },
+				( s ) => { return _json.Deserialize<Game>( s ); } );
+
+			return response;
+		}
+
 		async Task<IEnumerable<Game>> IGameApiService.GetGames() {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
 			Game[] response = await _http.GetJsonAsync( $@"{_config.Host}/api/game",

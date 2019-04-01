@@ -64,7 +64,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task<IEnumerable<Game>> IGameRepository.GetGames( Id<User> userId ) {
-			var query = _context.QueryAsync<PlayerRecord>(
+			AsyncSearch<PlayerRecord> query = _context.QueryAsync<PlayerRecord>(
 				UserRecord.GetKey( userId.Value ),
 				QueryOperator.BeginsWith,
 				new List<object>() { GameRecord.ItemType },
@@ -73,10 +73,10 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				}
 			);
 
-			var playerRecords = await query.GetRemainingAsync();
+			List<PlayerRecord> playerRecords = await query.GetRemainingAsync();
 
-			var batchGet = _context.CreateBatchGet<GameRecord>();
-			foreach( var record in playerRecords ) {
+			BatchGet<GameRecord> batchGet = _context.CreateBatchGet<GameRecord>();
+			foreach( PlayerRecord record in playerRecords ) {
 				batchGet.AddKey( GameRecord.GetKey( record.GameId ), GameRecord.GetKey( record.GameId ) );
 			}
 			await batchGet.ExecuteAsync();
@@ -85,7 +85,15 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task<Game> IGameRepository.GetGame( Id<Game> gameId ) {
-			var gameRecord = await _context.LoadAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
+			GameRecord gameRecord = await _context.LoadAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
+
+			return ToGame( gameRecord );
+		}
+
+		async Task<Game> IGameRepository.StartGame( Id<Game> gameId ) {
+			GameRecord gameRecord = await _context.LoadAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
+			gameRecord.State = GameState.Active.ToString();
+			await _context.SaveAsync( gameRecord );
 
 			return ToGame( gameRecord );
 		}

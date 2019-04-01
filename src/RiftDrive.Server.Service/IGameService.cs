@@ -26,6 +26,8 @@ namespace RiftDrive.Server.Service {
 
 		Task<Game> GetGame( Id<Game> gameId );
 
+		Task<Game> StartGame( Id<Game> gameId );
+
 		Task<Player> GetPlayer( Id<Game> gameId, Id<User> userId );
 
 		Task<Game> CreateGame( Id<Game> gameId, string name, DateTime createdOn );
@@ -37,5 +39,7 @@ namespace RiftDrive.Server.Service {
 		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
 
 		Task DeleteGame( Id<Game> gameId );
+
+		Task<Actor> CreateActor( Id<Game> gameId, Id<Actor> actorId, string name, DateTime createdOn );
 	}
 }

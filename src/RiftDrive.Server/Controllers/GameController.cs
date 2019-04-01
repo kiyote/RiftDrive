@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
 using RiftDrive.Shared;
+using GameStartInformation = RiftDrive.Client.Model.GameStartInformation;
 using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
 using ClientGame = RiftDrive.Client.Model.Game;
 using ClientPlayer = RiftDrive.Client.Model.Player;
@@ -45,7 +46,7 @@ namespace RiftDrive.Server.Controllers {
 		[HttpPost()]
 		public async Task<ActionResult<ClientGame>> CreateGame([FromBody] GameCreationInformation gameInfo) {
 			var userId = new Id<User>( _context.UserId );
-			var result = await _gameManager.CreateGame( userId, gameInfo.GameName, gameInfo.PlayerName );
+			ClientGame result = await _gameManager.CreateGame( userId, gameInfo.GameName, gameInfo.PlayerName );
 
 			return Ok( result );
 		}
@@ -53,21 +54,29 @@ namespace RiftDrive.Server.Controllers {
 		[HttpGet()]
 		public async Task<ActionResult<IEnumerable<ClientGame>>> GetGames() {
 			var userId = new Id<User>( _context.UserId );
-			var games = await _gameManager.GetGames( userId );
+			IEnumerable<ClientGame> games = await _gameManager.GetGames( userId );
 
 			return Ok( games );
 		}
 
+
+		[HttpPost( "{gameId}" )]
+		public async Task<ActionResult<ClientGame>> GetGame( string gameId, [FromBody] GameStartInformation gameInfo ) {
+			ClientGame game = await _gameManager.StartGame( new Id<Game>( gameId ) );
+
+			return Ok( game );
+		}
+
 		[HttpGet("{gameId}")]
 		public async Task<ActionResult<ClientGame>> GetGame(string gameId) {
-			var game = await _gameManager.GetGame( new Id<Game>(gameId) );
+			ClientGame game = await _gameManager.GetGame( new Id<Game>(gameId) );
 
 			return Ok( game );
 		}
 
 		[HttpGet("{gameId}/player")]
 		public async Task<ActionResult<IEnumerable<ClientPlayer>>> GetPlayers(string gameId) {
-			var players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );
+			IEnumerable<ClientPlayer> players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );
 
 			return Ok( players );
 		}

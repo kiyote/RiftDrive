@@ -15,21 +15,18 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Repository {
-	public interface IGameRepository {
-		Task<Game> Create( Id<Game> gameId, string name, DateTime createdOn );
+	public interface IActorRepository {
+		Task<Actor> Create( Id<Game> gameId, Id<Actor> actorId, string name, DateTime createdOn );
 
-		Task<IEnumerable<Game>> GetGames( Id<User> userId );
+		Task<IEnumerable<Actor>> GetActors( Id<Game> gameId );
 
-		Task<Game> GetGame( Id<Game> gameId );
+		Task<Actor> GetActor( Id<Game> gameId, Id<Actor> actorId );
 
-		Task Delete( Id<Game> gameId );
-
-		Task<Game> StartGame( Id<Game> gameId );
+		Task Delete( Id<Game> gameId, Id<Actor> actorId );
 	}
 }

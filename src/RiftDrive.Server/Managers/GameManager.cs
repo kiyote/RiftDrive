@@ -35,26 +35,32 @@ namespace RiftDrive.Server.Managers {
 		}
 
 		public async Task<ClientGame> CreateGame(Id<User> userId, string gameName, string playerName) {
-			var game = await _gameService.CreateGame( new Id<Game>(), gameName, DateTime.UtcNow );
-			var player = await _gameService.AddPlayer( game.Id, new Id<Player>(), userId, playerName, DateTime.UtcNow );
+			Game game = await _gameService.CreateGame( new Id<Game>(), gameName, DateTime.UtcNow );
+			await _gameService.AddPlayer( game.Id, new Id<Player>(), userId, playerName, DateTime.UtcNow );
 
 			return ToClientGame( game );
 		}
 
 		public async Task<IEnumerable<ClientGame>> GetGames(Id<User> userId) {
-			var games = await _gameService.GetGames( userId );
+			IEnumerable<Game> games = await _gameService.GetGames( userId );
 
 			return games.Select( g => ToClientGame( g ) );
 		}
 
 		public async Task<ClientGame> GetGame( Id<Game> gameId ) {
-			var game = await _gameService.GetGame( gameId );
+			Game game = await _gameService.GetGame( gameId );
+
+			return ToClientGame( game );
+		}
+
+		public async Task<ClientGame> StartGame( Id<Game> gameId ) {
+			Game game = await _gameService.StartGame( gameId );
 
 			return ToClientGame( game );
 		}
 
 		public async Task<IEnumerable<ClientPlayer>> GetPlayers(Id<Game> gameId) {
-			var players = await _gameService.GetPlayers( gameId );
+			IEnumerable<Player> players = await _gameService.GetPlayers( gameId );
 
 			return players.Select( p => ToClientPlayer( p ) );
 		}

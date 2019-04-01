@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Server.Repository
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Model", "src\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj", "{0B84927B-94A4-46A7-94FC-587797920FB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Client.Service", "src\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj", "{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Service", "src\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj", "{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

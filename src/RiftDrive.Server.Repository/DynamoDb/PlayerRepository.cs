@@ -63,7 +63,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task IPlayerRepository.Delete( Id<Game> gameId, Id<Player> playerId ) {
-			var player = await GetById( gameId, playerId );
+			Player player = await GetById( gameId, playerId );
 
 			await _context.DeleteAsync<PlayerRecord>( GameRecord.GetKey( gameId.Value ), PlayerRecord.GetKey( playerId.Value ) );
 			await _context.DeleteAsync<GameUserRecord>( GameRecord.GetKey( gameId.Value ), UserRecord.GetKey( player.UserId.Value ) );
@@ -74,7 +74,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		private async Task<Player> GetById( Id<Game> gameId, Id<Player> playerId ) {
-			var playerRecord = await _context.LoadAsync<PlayerRecord>(
+			PlayerRecord playerRecord = await _context.LoadAsync<PlayerRecord>(
 				GameRecord.GetKey( gameId.Value ),
 				PlayerRecord.GetKey( playerId.Value ) );
 
@@ -87,11 +87,11 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task<IEnumerable<Player>> IPlayerRepository.GetPlayers( Id<Game> gameId ) {
-			var query = _context.QueryAsync<PlayerRecord>(GameRecord.GetKey(gameId.Value),
+			AsyncSearch<PlayerRecord> query = _context.QueryAsync<PlayerRecord>(GameRecord.GetKey(gameId.Value),
 				QueryOperator.BeginsWith,
 				new List<object>() { PlayerRecord.ItemType } );
 
-			var results = await query.GetRemainingAsync();
+			List<PlayerRecord> results = await query.GetRemainingAsync();
 
 			return results.Select( r => new Player(
 				new Id<Player>( r.PlayerId ),
