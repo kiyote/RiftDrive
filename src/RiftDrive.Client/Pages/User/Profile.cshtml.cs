@@ -18,15 +18,15 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using RiftDrive.Client.Services;
+using RiftDrive.Client.Service;
 
 namespace RiftDrive.Client.Pages.User {
 	public class ProfileComponent : ComponentBase {
 		public const string Url = "/user/profile";
 
-		[Inject] private IUserApiService _userService { get; set; }
+		[Inject] protected IUserApiService UserService { get; set; }
 
-		[Inject] private IJSRuntime _jsRuntime { get; set; }
+		[Inject] protected IJSRuntime JsRuntime { get; set; }
 
 		protected string AvatarUrl { get; private set; }
 
@@ -41,7 +41,7 @@ namespace RiftDrive.Client.Pages.User {
 		protected bool ChangingAvatar { get; set; }
 
 		protected override async Task OnInitAsync() {
-			var userInformation = await _userService.GetUserInformation();
+			Model.User userInformation = await UserService.GetUserInformation();
 			Name = userInformation.Name;
 			UserId = userInformation.Id.Value;
 			AvatarUrl = userInformation.AvatarUrl;
@@ -60,17 +60,17 @@ namespace RiftDrive.Client.Pages.User {
 		protected async Task UploadFile() {
 			ChangingAvatar = false;
 
-			var data = await _jsRuntime.InvokeAsync<string>( "profile.readUploadedFileAsText", FileUploadRef );
+			string data = await JsRuntime.InvokeAsync<string>( "profile.readUploadedFileAsText", FileUploadRef );
 			if( !data.StartsWith( "data:" ) ) {
 				// No idea what to do here, the browser is behaving strangely...
 				return;
 			}
 			data = data.Substring( "data:".Length );
-			var parts = data.Split( ',' );
-			var descriptor = parts[0].Split( ';' );
-			var mimeType = descriptor[0];
-			var encoding = descriptor[1];
-			var content = parts[1];
+			string[] parts = data.Split( ',' );
+			string[] descriptor = parts[0].Split( ';' );
+			string mimeType = descriptor[0];
+			//string encoding = descriptor[1];
+			string content = parts[1];
 
 			/*
 			using( var ms = new System.IO.MemoryStream( 10000 ) ) {
@@ -87,7 +87,7 @@ namespace RiftDrive.Client.Pages.User {
 				//	content = image.Clone( x => x.Resize( 64, 64 ) ).ToBase64String( ImageFormats.Png ).Split( ',' )[ 1 ];
 				//	mimeType = "image/png";
 				//}
-				AvatarUrl = await _userService.SetAvatar( mimeType, content );
+				AvatarUrl = await UserService.SetAvatar( mimeType, content );
 			}
 		}
 	}

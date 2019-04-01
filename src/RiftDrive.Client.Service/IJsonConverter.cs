@@ -13,18 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Threading.Tasks;
+namespace RiftDrive.Client.Service {
+	public interface IJsonConverter {
+		T Deserialize<T>( string value );
 
-namespace RiftDrive.Client.Services {
-	public interface ISignalService {
-
-		Task Connect();
-
-		IDisposable Register<T>( string name, Action<T> callback );
-
-		Task Invoke<T>( string name, T payload );
-
-		Task Invoke<S, T>( string name, S arg1, T arg2 );
+		string Serialize( object value );
 	}
 }

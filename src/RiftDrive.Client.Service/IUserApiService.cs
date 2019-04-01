@@ -13,27 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Threading.Tasks;
+using RiftDrive.Client.Model;
 
-namespace RiftDrive.Client {
-	public interface IAppState {
-		event EventHandler OnStateChanged;
+namespace RiftDrive.Client.Service {
+	public interface IUserApiService {
+		
+		Task<User> GetUserInformation();
 
-		Task<string> GetAccessToken();
-		Task<bool> GetIsAuthenticated();
-		Task<string> GetRefeshToken();
-		Task<DateTime> GetTokensExpireAt();
-		Task<string> GetUsername();
-		Task<string> GetName();
-		Task SetAccessToken( string value );
-		Task SetRefreshToken( string value );
-		Task SetTokensExpireAt( DateTime value );
-		Task SetUsername( string value );
-		Task SetName( string value );
+		Task<string> SetAvatar( string contentType, string content );
 
-		Task SetPlayGameId( string value );
-
-		Task<string> GetPlayGameId();
+		Task RecordLogin();		
 	}
 }

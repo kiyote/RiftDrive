@@ -53,7 +53,7 @@ namespace RiftDrive.Client.Model {
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& DateTime.Equals( CreatedOn, other.CreatedOn )
-				&& State.Equals( other.State );
+				&& State == other.State;
 		}
 
 		public override bool Equals( object obj ) {

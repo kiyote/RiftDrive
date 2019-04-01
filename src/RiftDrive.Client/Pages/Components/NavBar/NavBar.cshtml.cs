@@ -13,20 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.Auth;
 using RiftDrive.Client.Pages.User;
 
 namespace RiftDrive.Client.Pages.Components.NavBar {
 	public class NavBarComponent : ComponentBase {
 
-		[Inject] private IConfig _config { get; set; }
+		[Inject] protected IConfig Config { get; set; }
 
-		[Inject] private IAppState _appState { get; set; }
+		[Inject] protected IAppState AppState { get; set; }
 
 		[Parameter] protected string Name { get; set; }
 
@@ -40,19 +37,19 @@ namespace RiftDrive.Client.Pages.Components.NavBar {
 
 		public string LogInUrl {
 			get {
-				return $"{_config.LogInUrl}&redirect_uri={_config.Host}{ValidateComponent.Url}";
+				return $"{Config.LogInUrl}&redirect_uri={Config.RedirectUrl}";
 			}
 		}
 
 		public string SignUpUrl {
 			get {
-				return $"{_config.SignUpUrl}&redirect_uri={_config.Host}{ValidateComponent.Url}";
+				return $"{Config.SignUpUrl}&redirect_uri={Config.RedirectUrl}";
 			}
 		}
 
 		public string LogOutUrl {
 			get {
-				return $"{_config.LogOutUrl}&logout_uri={_config.Host}{LogOutComponent.Url}";
+				return $"{Config.LogOutUrl}&logout_uri={Config.Host}{LogOutComponent.Url}";
 			}
 		}
 	}

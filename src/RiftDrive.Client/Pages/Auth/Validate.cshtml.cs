@@ -18,48 +18,49 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
-using RiftDrive.Client.Services;
+using RiftDrive.Client.Model;
+using RiftDrive.Client.Service;
 
 namespace RiftDrive.Client.Pages.Auth {
 	public class ValidateComponent : ComponentBase {
 
 		public static string Url = "/auth/validate";
 
-		[Inject] private IUriHelper _uriHelper { get; set; }
+		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] private IAccessTokenProvider _accessTokenProvider { get; set; }
+		[Inject] protected IAccessTokenProvider AccessTokenProvider { get; set; }
 
-		[Inject] private IUserApiService _userApiService { get; set; }
+		[Inject] protected IUserApiService UserApiService { get; set; }
 
-		[Inject] private IAppState _state { get; set; }
+		[Inject] protected IAppState State { get; set; }
 
-		[Inject] private ITokenService _tokenService { get; set; }
+		[Inject] protected ITokenService TokenService { get; set; }
 
 		protected List<string> Messages { get; set; } = new List<string>();
 
 		protected int Progress { get; set; }
 
 		protected override async Task OnInitAsync() {
-			var code = _uriHelper.GetParameter( "code" );
+			string code = UriHelper.GetParameter( "code" );
 
 			Messages.Add( "...retrieving tokens..." );
 			StateHasChanged();
-			var tokens = await _tokenService.GetToken( code );
-			await _accessTokenProvider.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+			AuthorizationToken tokens = await TokenService.GetToken( code );
+			await AccessTokenProvider.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
 			Progress = 50;
 			Messages.Add( "...recording login..." );
 			StateHasChanged();
-			await _userApiService.RecordLogin();
+			await UserApiService.RecordLogin();
 
 			Progress = 75;
 			Messages.Add( "...retrieving user information..." );
 			StateHasChanged();
-			var userInfo = await _userApiService.GetUserInformation();
+			Model.User userInfo = await UserApiService.GetUserInformation();
 
-			await _state.SetUsername( userInfo.Username );
-			await _state.SetName( userInfo.Name );
-			_uriHelper.NavigateTo( IndexComponent.Url );
+			await State.SetUsername( userInfo.Username );
+			await State.SetName( userInfo.Name );
+			UriHelper.NavigateTo( IndexComponent.Url );
 		}
 	}
 }

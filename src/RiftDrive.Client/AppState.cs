@@ -16,6 +16,7 @@ limitations under the License.
 using System;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
+using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client {
 	internal sealed class AppState : IAppState {
@@ -72,7 +73,7 @@ namespace RiftDrive.Client {
 			return await _js.InvokeAsync<string>( "appState.getItem", "Name" );
 		}
 
-		public async Task SetName(string value) {
+		public async Task SetName( string value ) {
 			await _js.InvokeAsync<string>( "appState.setItem", "Name", value );
 		}
 

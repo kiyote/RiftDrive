@@ -17,9 +17,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
-using RiftDrive.Client.Pages.Auth;
 
-namespace RiftDrive.Client.Services {
+namespace RiftDrive.Client.Service {
 	internal sealed class TokenService : ITokenService {
 
 		private readonly HttpClient _http;
@@ -37,18 +36,16 @@ namespace RiftDrive.Client.Services {
 		}
 
 		async Task<AuthorizationToken> ITokenService.GetToken( string code ) {
-			var redirectUrl = _config.Host + ValidateComponent.Url;
-
 			var content = new FormUrlEncodedContent( new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("grant_type", "authorization_code"),
 				new KeyValuePair<string, string>("client_id", _config.CognitoClientId),
 				new KeyValuePair<string, string>("code", code),
-				new KeyValuePair<string, string>("redirect_uri", redirectUrl)
+				new KeyValuePair<string, string>("redirect_uri", _config.RedirectUrl)
 			} );
-			var response = await _http.PostAsync( _config.TokenUrl, content );
+			HttpResponseMessage response = await _http.PostAsync( _config.TokenUrl, content );
 			if( response.IsSuccessStatusCode ) {
-				var payload = await response.Content.ReadAsStringAsync();
-				var tokens = _json.Deserialize<AuthorizationToken>( payload );
+				string payload = await response.Content.ReadAsStringAsync();
+				AuthorizationToken tokens = _json.Deserialize<AuthorizationToken>( payload );
 
 				return tokens;
 			}
@@ -62,10 +59,10 @@ namespace RiftDrive.Client.Services {
 				new KeyValuePair<string, string>("client_id", _config.CognitoClientId),
 				new KeyValuePair<string, string>("refresh_token", refreshToken)
 			} );
-			var response = await _http.PostAsync( _config.TokenUrl, content );
+			HttpResponseMessage response = await _http.PostAsync( _config.TokenUrl, content );
 			if( response.IsSuccessStatusCode ) {
-				var payload = await response.Content.ReadAsStringAsync();
-				var tokens = _json.Deserialize<AuthorizationToken>( payload );
+				string payload = await response.Content.ReadAsStringAsync();
+				AuthorizationToken tokens = _json.Deserialize<AuthorizationToken>( payload );
 
 				return tokens;
 			}

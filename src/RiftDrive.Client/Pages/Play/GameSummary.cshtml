@@ -4,12 +4,12 @@
 
     <GamePlayersSummary GameId=@Game?.Id.Value GameName=@Game?.Name></GamePlayersSummary>
 
-@if(Game.State == Shared.GameState.WaitingForPlayers)
+@if((Game?.State ?? Shared.GameState.Unknown) == Shared.GameState.WaitingForPlayers)
 {
 <SimpleButton Clicked=@StartGame>Start Game</SimpleButton>
 }
 
-@if (Game.State == Shared.GameState.Active)
+@if ((Game?.State ?? Shared.GameState.Unknown) == Shared.GameState.Active)
 {
     <SimpleButton Clicked=@PlayGame>Play Game</SimpleButton>
 }

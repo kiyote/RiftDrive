@@ -13,10 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-namespace RiftDrive.Client {
-	public interface IJsonConverter {
-		T Deserialize<T>( string value );
+namespace RiftDrive.Client.Model {
+	public interface IConfig {
+		string Host { get; }
 
-		string Serialize( object value );
+		string CongnitoUrl { get; }
+
+		string TokenUrl { get; }
+
+		string LogInUrl { get; }
+
+		string SignUpUrl { get; }
+
+		string LogOutUrl { get; }
+
+		string RedirectUrl { get; }
+
+		string CognitoClientId { get; }
 	}
 }

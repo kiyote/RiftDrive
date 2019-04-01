@@ -13,20 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
+using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Services {
-	internal sealed class UserApiService : IUserApiService {
-		
+namespace RiftDrive.Client.Service {
+	internal sealed class GameApiService: IGameApiService {
+
 		private readonly HttpClient _http;
 		private readonly IAccessTokenProvider _accessTokenProvider;
 		private readonly IConfig _config;
 		private readonly IJsonConverter _json;
 
-		public UserApiService(
+		public GameApiService(
 			HttpClient http,
 			IAccessTokenProvider accessTokenProvider,
 			IConfig config,
@@ -38,32 +41,41 @@ namespace RiftDrive.Client.Services {
 			_json = json;
 		}
 
-		async Task IUserApiService.RecordLogin() {
+		async Task<Game> IGameApiService.CreateGame( string gameName, string playerName ) {
+			var gameInfo = new GameCreationInformation(
+				gameName,
+				playerName );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			var response = await _http.GetJsonAsync( $@"{_config.Host}/api/user/login",
-				( s ) => { return _json.Deserialize<User>( s ); } );
-		}
-
-		async Task<User> IUserApiService.GetUserInformation() {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			var response = await _http.GetJsonAsync( $@"{_config.Host}/api/user",
-				( s ) => { return _json.Deserialize<User>( s ); } );
+			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
+				gameInfo,
+				( g ) => { return _json.Serialize( g ); },
+				( s ) => { return _json.Deserialize<Game>( s ); } );
 
 			return response;
 		}
 
-		async Task<string> IUserApiService.SetAvatar( string contentType, string content ) {
+		async Task<IEnumerable<Game>> IGameApiService.GetGames() {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			var request = new AvatarImage(
-				contentType,
-				content
-			);
-			var response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
-				( r ) => { return _json.Serialize( r ); },
-				( s ) => { return _json.Deserialize<AvatarUrl>( s ); } );
+			Game[] response = await _http.GetJsonAsync( $@"{_config.Host}/api/game",
+				( s ) => { return _json.Deserialize<Game[]>( s ); } );
 
-			return response.Url;
+			return response;
 		}
-		
+
+		async Task<Game> IGameApiService.GetGame(Id<Game> gameId) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Game response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
+				( s ) => { return _json.Deserialize<Game>( s ); } );
+
+			return response;
+		}
+
+		async Task<IEnumerable<Player>> IGameApiService.GetPlayers(Id<Game> gameId) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Player[] response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/player",
+				( s ) => { return _json.Deserialize<Player[]>( s ); } );
+
+			return response;
+		}
 	}
 }

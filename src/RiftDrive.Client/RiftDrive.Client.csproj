@@ -10,8 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Icons.Material" Version="0.6.1-preview1-19154-02" />
-    <PackageReference Include="Blazorise.Material" Version="0.6.1-preview1-19154-02" />
+    <PackageReference Include="Blazorise.Icons.Material" Version="0.6.2-preview1-19154-02" />
+    <PackageReference Include="Blazorise.Material" Version="0.6.2-preview1-19154-02" />
     <PackageReference Include="BlazorSignalR" Version="0.5.0-blazor-0.9.0-preview3-19154-02" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="0.9.0-preview3-19154-02" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.9.0-preview3-19154-02" PrivateAssets="all" />
@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
+    <ProjectReference Include="..\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
   </ItemGroup>
 

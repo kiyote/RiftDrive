@@ -16,11 +16,24 @@ limitations under the License.
 using System;
 using System.Threading.Tasks;
 
-namespace RiftDrive.Client.Services {
-	public interface IAccessTokenProvider {
+namespace RiftDrive.Client.Model {
+	public interface IAppState {
+		event EventHandler OnStateChanged;
 
-		Task SetTokens( string accessToken, string refreshToken, DateTime expiresAt );
+		Task<string> GetAccessToken();
+		Task<bool> GetIsAuthenticated();
+		Task<string> GetRefeshToken();
+		Task<DateTime> GetTokensExpireAt();
+		Task<string> GetUsername();
+		Task<string> GetName();
+		Task SetAccessToken( string value );
+		Task SetRefreshToken( string value );
+		Task SetTokensExpireAt( DateTime value );
+		Task SetUsername( string value );
+		Task SetName( string value );
 
-		Task<string> GetJwtToken();
+		Task SetPlayGameId( string value );
+
+		Task<string> GetPlayGameId();
 	}
 }

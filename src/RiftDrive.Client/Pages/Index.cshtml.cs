@@ -16,21 +16,22 @@ limitations under the License.
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client.Pages {
-	public class IndexComponent: ComponentBase {
+	public class IndexComponent : ComponentBase {
 
 		public static string Url = "/";
 
-		[Inject] private IAppState _appState { get; set; }
+		[Inject] protected IAppState AppState { get; set; }
 
 		protected string Name { get; set; }
 
 		protected bool IsAuthenticated { get; set; }
 
 		protected override async Task OnInitAsync() {
-			Name = await _appState.GetName();
-			IsAuthenticated = await _appState.GetIsAuthenticated();
+			Name = await AppState.GetName();
+			IsAuthenticated = await AppState.GetIsAuthenticated();
 		}
 	}
 }

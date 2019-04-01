@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Services {
+namespace RiftDrive.Client.Service {
 	public interface IGameApiService {
 		Task<Game> CreateGame( string gameName, string playerName );
 

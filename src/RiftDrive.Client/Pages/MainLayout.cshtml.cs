@@ -17,23 +17,24 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Layouts;
+using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client.Pages {
 	public class MainLayoutComponent : LayoutComponentBase, IDisposable {
 
-		[Inject] private IAppState _state { get; set; }
+		[Inject] protected IAppState State { get; set; }
 
 		public string Name { get; set; }
 
 		public bool IsAuthenticated { get; set; }
 
 		protected override void OnInit() {
-			_state.OnStateChanged += AppState_OnStateChanged;
+			State.OnStateChanged += AppState_OnStateChanged;
 		}
 
 		protected override async Task OnInitAsync() {
-			Name = await _state.GetName();
-			IsAuthenticated = await _state.GetIsAuthenticated();
+			Name = await State.GetName();
+			IsAuthenticated = await State.GetIsAuthenticated();
 		}
 
 		private void AppState_OnStateChanged( object sender, EventArgs e ) {
@@ -41,7 +42,7 @@ namespace RiftDrive.Client.Pages {
 		}
 
 		public void Dispose() {
-			_state.OnStateChanged -= AppState_OnStateChanged;
+			State.OnStateChanged -= AppState_OnStateChanged;
 		}
 	}
 }

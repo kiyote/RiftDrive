@@ -15,8 +15,8 @@ limitations under the License.
 */
 using Newtonsoft.Json;
 
-namespace RiftDrive.Client {
-	public class JsonConverter : IJsonConverter {
+namespace RiftDrive.Client.Service {
+	internal sealed class JsonConverter : IJsonConverter {
 
 		private readonly JsonSerializerSettings _settings;
 

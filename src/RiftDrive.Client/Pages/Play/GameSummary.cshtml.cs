@@ -1,11 +1,9 @@
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
-using Microsoft.JSInterop;
 using RiftDrive.Client.Model;
-using RiftDrive.Client.Services;
+using RiftDrive.Client.Service;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Play {
@@ -13,20 +11,20 @@ namespace RiftDrive.Client.Pages.Play {
 
 		public const string Url = "/game/summary";
 
-		[Inject] private IAppState _state { get; set; }
+		[Inject] protected IAppState State { get; set; }
 
-		[Inject] private IUriHelper _uriHelper { get; set; }
+		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] private IGameApiService _gameService { get; set; }
+		[Inject] protected IGameApiService GameService { get; set; }
 
 		protected Game Game { get; set; }
 
 		protected override async Task OnInitAsync() {
-			var gameIdValue = await _state.GetPlayGameId();
-			if( string.IsNullOrWhiteSpace(gameIdValue)) {
-				_uriHelper.NavigateTo( IndexComponent.Url );
+			string gameIdValue = await State.GetPlayGameId();
+			if( string.IsNullOrWhiteSpace( gameIdValue ) ) {
+				UriHelper.NavigateTo( IndexComponent.Url );
 			}
-			Game = await _gameService.GetGame( new Id<Game>( gameIdValue ) );
+			Game = await GameService.GetGame( new Id<Game>( gameIdValue ) );
 		}
 
 		protected async Task StartGame() {
