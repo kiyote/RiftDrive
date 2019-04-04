@@ -27,6 +27,7 @@ namespace RiftDrive.Server.Repository {
 			services.AddSingleton<IGameRepository, GameRepository>();
 			services.AddSingleton<IPlayerRepository, PlayerRepository>();
 			services.AddSingleton<IActorRepository, ActorRepository>();
+			services.AddSingleton<IMothershipRepository, MothershipRepository>();
 
 			return services;
 		}

@@ -14,24 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using RiftDrive.Server.Model;
-using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Service {
-	public interface IGameService {
-
-		Task<IEnumerable<Game>> GetGames( Id<User> userId );
-
-		Task<Game> GetGame( Id<Game> gameId );
-
-		Task<Game> StartGame( Id<Game> gameId );
-
-		Task<Game> CreateGame( CreateGameConfiguration config );
-
-		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
-
-		Task DeleteGame( Id<Game> gameId );
+namespace RiftDrive.Shared.Provider {
+	public interface INameProvider {
+		string CreateMothershipName();
 	}
 }

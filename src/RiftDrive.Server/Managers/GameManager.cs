@@ -35,8 +35,13 @@ namespace RiftDrive.Server.Managers {
 		}
 
 		public async Task<ClientGame> CreateGame(Id<User> userId, string gameName, string playerName) {
-			Game game = await _gameService.CreateGame( new Id<Game>(), gameName, DateTime.UtcNow );
-			await _gameService.AddPlayer( game.Id, new Id<Player>(), userId, playerName, DateTime.UtcNow );
+			var config = new CreateGameConfiguration(
+				userId,
+				DateTime.UtcNow,
+				gameName,
+				playerName
+				);
+			Game game = await _gameService.CreateGame( config );
 
 			return ToClientGame( game );
 		}

@@ -13,25 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace RiftDrive.Server.Service {
-	public interface IGameService {
+namespace RiftDrive.Shared.Provider {
+	public static class ProviderExtensions {
+		public static IServiceCollection RegisterProviders( this IServiceCollection services ) {
+			services.AddSingleton<IRandomProvider, RandomProvider>();
 
-		Task<IEnumerable<Game>> GetGames( Id<User> userId );
-
-		Task<Game> GetGame( Id<Game> gameId );
-
-		Task<Game> StartGame( Id<Game> gameId );
-
-		Task<Game> CreateGame( CreateGameConfiguration config );
-
-		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
-
-		Task DeleteGame( Id<Game> gameId );
+			return services;
+		}
 	}
 }

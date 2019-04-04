@@ -15,23 +15,12 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using System.Text;
 
-namespace RiftDrive.Server.Service {
-	public interface IGameService {
+namespace RiftDrive.Shared.Provider {
+	public interface IRandomProvider {
+		int Next( int max );
 
-		Task<IEnumerable<Game>> GetGames( Id<User> userId );
-
-		Task<Game> GetGame( Id<Game> gameId );
-
-		Task<Game> StartGame( Id<Game> gameId );
-
-		Task<Game> CreateGame( CreateGameConfiguration config );
-
-		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
-
-		Task DeleteGame( Id<Game> gameId );
+		bool Flip();
 	}
 }

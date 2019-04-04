@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{74D9CF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8042951F-818F-4F8D-8D8D-6A18D783D27A}"
 	ProjectSection(SolutionItems) = preProject
+		NOTES.md = NOTES.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -31,6 +32,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Model", "src\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj", "{0B84927B-94A4-46A7-94FC-587797920FB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Service", "src\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj", "{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Shared.Provider", "src\RiftDrive.Shared.Provider\RiftDrive.Shared.Provider.csproj", "{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Shared.Provider.Tests", "test\RiftDrive.Shared.Provider.Tests\RiftDrive.Shared.Provider.Tests.csproj", "{272A21DA-F173-4B30-888A-2613AB1A0E75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +75,14 @@ Global
 		{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +98,8 @@ Global
 		{113AFCE6-96C0-4916-BB29-88D4BC2DF9F7} = {74D9CF76-90D4-43F6-A330-33509497A7F1}
 		{0B84927B-94A4-46A7-94FC-587797920FB9} = {FE6FF765-7B16-41DC-B49C-820223D6E7EB}
 		{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F} = {FE6FF765-7B16-41DC-B49C-820223D6E7EB}
+		{F9FB80FE-9B73-44F4-B093-5762FCEA95B6} = {9F2C27DD-A6A3-4AC5-9E9F-7A2565D1CC1D}
+		{272A21DA-F173-4B30-888A-2613AB1A0E75} = {77A259CD-E77F-42D1-A85C-298C2967FDA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9752C3A-0480-43E1-BE90-C8FE58795EB4}

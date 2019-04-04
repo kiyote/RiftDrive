@@ -36,6 +36,7 @@ using RiftDrive.Server.Repository;
 using RiftDrive.Server.Repository.Cognito;
 using RiftDrive.Server.Repository.S3;
 using RiftDrive.Server.Service;
+using RiftDrive.Shared.Provider;
 
 namespace RiftDrive.Server {
 	public class Startup {
@@ -90,6 +91,7 @@ namespace RiftDrive.Server {
 			services.AddCognito( Configuration.GetSection( "Cognito" ).Get<CognitoOptions>() );
 			services.AddS3( Configuration.GetSection( "S3" ).Get<S3Options>() );
 			services.RegisterRepositories();
+			services.RegisterProviders();
 			services.RegisterServices();
 
 			services.AddSingleton<IContextInformation, ContextInformation>();

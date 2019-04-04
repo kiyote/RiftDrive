@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository;
 using RiftDrive.Shared;
+using RiftDrive.Shared.Provider;
 
 namespace RiftDrive.Server.Service {
 	internal sealed class GameService : IGameService {
@@ -27,15 +28,21 @@ namespace RiftDrive.Server.Service {
 		private readonly IGameRepository _gameRepository;
 		private readonly IPlayerRepository _playerRepository;
 		private readonly IActorRepository _actorRepository;
+		private readonly IMothershipRepository _mothershipRepository;
+		private readonly INameProvider _nameProvider;
 
 		public GameService(
 			IGameRepository gameRepository,
 			IPlayerRepository playerRepository,
-			IActorRepository actorRepository
+			IActorRepository actorRepository,
+			IMothershipRepository mothershipRepository,
+			INameProvider nameProvider
 		) {
 			_gameRepository = gameRepository;
 			_playerRepository = playerRepository;
 			_actorRepository = actorRepository;
+			_mothershipRepository = mothershipRepository;
+			_nameProvider = nameProvider;
 		}
 
 		async Task<IEnumerable<Game>> IGameService.GetGames( Id<User> userId ) {
@@ -46,42 +53,30 @@ namespace RiftDrive.Server.Service {
 			return await _gameRepository.GetGame( gameId );
 		}
 
-		async Task<Game> IGameService.StartGame(Id<Game> gameId ) {
+		async Task<Game> IGameService.StartGame( Id<Game> gameId ) {
 			return await _gameRepository.StartGame( gameId );
 		}
 
-		async Task<Player> IGameService.GetPlayer( Id<Game> gameId, Id<User> userId ) {
-			IEnumerable<Player> players = await _playerRepository.GetPlayers( gameId );
-			return players.FirstOrDefault( p => p.UserId == userId );
-		}
+		async Task<Game> IGameService.CreateGame( CreateGameConfiguration config ) {
+			Game game = await _gameRepository.Create( new Id<Game>(), config.GameName, config.CreatedOn );
+			await _playerRepository.Create( game.Id, new Id<Player>(), config.CreatedBy, config.PlayerName, config.CreatedOn );
 
-		async Task<Game> IGameService.CreateGame( Id<Game> gameId, string name, DateTime createdOn ) {
-			return await _gameRepository.Create( gameId, name, createdOn );
-		}
+			await _mothershipRepository.Create( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), config.CreatedOn );
 
-		async Task<Player> IGameService.AddPlayer( Id<Game> gameId, Id<Player> playerId, Id<User> userId, string name, DateTime createdOn ) {
-			return await _playerRepository.Create( gameId, playerId, userId, name, createdOn );
-		}
-
-		async Task IGameService.RemovePlayer( Id<Game> gameId, Id<Player> playerId ) {
-			await _playerRepository.Delete( gameId, playerId );
+			return game;
 		}
 
 		async Task<IEnumerable<Player>> IGameService.GetPlayers( Id<Game> gameId ) {
 			return await _playerRepository.GetPlayers( gameId );
 		}
 
-		async Task<Actor> IGameService.CreateActor(Id<Game> gameId, Id<Actor> actorId, string name, DateTime createdOn) {
-			return await _actorRepository.Create( gameId, actorId, name, createdOn );
-		}
-
-		async Task IGameService.DeleteGame(Id<Game> gameId) {
+		async Task IGameService.DeleteGame( Id<Game> gameId ) {
 			IEnumerable<Actor> actors = await _actorRepository.GetActors( gameId );
-			foreach (Actor actor in actors) {
+			foreach( Actor actor in actors ) {
 				await _actorRepository.Delete( gameId, actor.Id );
 			}
 			IEnumerable<Player> players = await _playerRepository.GetPlayers( gameId );
-			foreach (Player player in players) {
+			foreach( Player player in players ) {
 				await _playerRepository.Delete( gameId, player.Id );
 			}
 			await _gameRepository.Delete( gameId );
