@@ -18,5 +18,7 @@ using System;
 namespace RiftDrive.Shared.Provider {
 	public interface INameProvider {
 		string CreateMothershipName();
+
+		string CreateActorName();
 	}
 }

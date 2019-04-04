@@ -13,9 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository;
@@ -63,6 +61,11 @@ namespace RiftDrive.Server.Service {
 
 			await _mothershipRepository.Create( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), config.CreatedOn );
 
+			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Command, 1, 1, 1, config.CreatedOn );
+			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Engineer, 1, 1, 1, config.CreatedOn );
+			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Science, 1, 1, 1, config.CreatedOn );
+			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Security, 1, 1, 1, config.CreatedOn );
+
 			return game;
 		}
 
@@ -75,6 +78,7 @@ namespace RiftDrive.Server.Service {
 			foreach( Actor actor in actors ) {
 				await _actorRepository.Delete( gameId, actor.Id );
 			}
+			await _mothershipRepository.Delete( gameId );
 			IEnumerable<Player> players = await _playerRepository.GetPlayers( gameId );
 			foreach( Player player in players ) {
 				await _playerRepository.Delete( gameId, player.Id );

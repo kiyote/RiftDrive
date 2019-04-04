@@ -24,8 +24,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #endif
 	internal sealed class MothershipRecord {
 
-		private const string ItemType = "Mothership-";
-		public readonly static string Active = "Active";
+		public const string ItemType = "Mothership-";
 
 		[DynamoDBHashKey( "PK" )]
 		private string PK {

@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * Copyright 2018-2019 Todd Lang
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+using System;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Model {
@@ -7,11 +22,19 @@ namespace RiftDrive.Server.Model {
 		public Actor(
 			Id<Actor> id,
 			Id<Game> gameId,
-			string name
+			string name,
+			Role role,
+			int intelligence,
+			int talent,
+			int training
 		) {
 			Id = id;
 			GameId = gameId;
 			Name = name;
+			Role = role;
+			Intelligence = intelligence;
+			Talent = talent;
+			Training = training;
 		}
 
 		public Id<Actor> Id { get; }
@@ -19,6 +42,8 @@ namespace RiftDrive.Server.Model {
 		public Id<Game> GameId { get; }
 
 		public string Name { get; }
+
+		public Role Role { get; }
 
 		/// <summary>
 		/// The number of cards you can draw.
@@ -46,7 +71,11 @@ namespace RiftDrive.Server.Model {
 
 			return Id.Equals( other.Id )
 				&& GameId.Equals( other.GameId )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
+				&& Role == other.Role
+				&& Intelligence == other.Intelligence
+				&& Talent == other.Talent
+				&& Training == other.Training;
 		}
 
 		public override bool Equals( object obj ) {
@@ -59,6 +88,10 @@ namespace RiftDrive.Server.Model {
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + GameId.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + Role.GetHashCode();
+				result = ( result * 31 ) + Intelligence.GetHashCode();
+				result = ( result * 31 ) + Talent.GetHashCode();
+				result = ( result * 31 ) + Training.GetHashCode();
 
 				return result;
 			}

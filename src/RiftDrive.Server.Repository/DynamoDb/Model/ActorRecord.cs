@@ -58,6 +58,18 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty( "CreatedOn" )]
 		public DateTime CreatedOn { get; set; }
 
+		[DynamoDBProperty("Role")]
+		public string Role { get; set; }
+
+		[DynamoDBProperty("Intelligence")]
+		public int Intelligence { get; set; }
+
+		[DynamoDBProperty( "Talent" )]
+		public int Talent { get; set; }
+
+		[DynamoDBProperty( "Training" )]
+		public int Training { get; set; }
+
 		public static string GetKey( string actorId ) {
 			return $"{ItemType}{actorId}";
 		}

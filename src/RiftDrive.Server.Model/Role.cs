@@ -13,28 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace RiftDrive.Server.Repository {
-	public interface IActorRepository {
-		Task<Actor> Create(
-			Id<Game> gameId,
-			Id<Actor> actorId,
-			string name,
-			Role role,
-			int intelligence,
-			int talent,
-			int training,
-			DateTime createdOn );
+namespace RiftDrive.Server.Model {
+	[JsonConverter( typeof( StringEnumConverter ) )]
+	public enum Role {
+		Unknown,
 
-		Task<IEnumerable<Actor>> GetActors( Id<Game> gameId );
+		Command,
 
-		Task<Actor> GetActor( Id<Game> gameId, Id<Actor> actorId );
+		Security,
 
-		Task Delete( Id<Game> gameId, Id<Actor> actorId );
+		Engineer,
+
+		Science
 	}
 }

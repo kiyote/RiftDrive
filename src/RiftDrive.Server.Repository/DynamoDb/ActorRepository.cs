@@ -34,11 +34,24 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			_context = context;
 		}
 
-		async Task<Actor> IActorRepository.Create( Id<Game> gameId, Id<Actor> actorId, string name, DateTime createdOn ) {
+		async Task<Actor> IActorRepository.Create(
+			Id<Game> gameId,
+			Id<Actor> actorId,
+			string name,
+			Role role,
+			int intelligence,
+			int talent,
+			int training,
+			DateTime createdOn
+		) {
 			var actorRecord = new ActorRecord {
 				GameId = gameId.Value,
 				ActorId = actorId.Value,
 				Name = name,
+				Role = role.ToString(),
+				Intelligence = intelligence,
+				Talent = talent,
+				Training = training,
 				CreatedOn = createdOn.ToUniversalTime()
 			};
 			await _context.SaveAsync( actorRecord );
@@ -70,7 +83,11 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return new Actor(
 				new Id<Actor>( r.ActorId ),
 				new Id<Game>( r.GameId ),
-				r.Name );
+				r.Name,
+				(Role)Enum.Parse( typeof( Role ), r.Role ),
+				r.Intelligence,
+				r.Talent,
+				r.Training );
 		}
 	}
 }
