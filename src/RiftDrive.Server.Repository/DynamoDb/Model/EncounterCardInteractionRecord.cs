@@ -22,54 +22,53 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #else
 	[DynamoDBTable( "RiftDrive" )]
 #endif
-	internal sealed class UserRecord {
+	internal sealed class EncounterCardInteractionRecord {
 
-		private const string ItemType = "User-";
-		public readonly static string Active = "Active";
+		public const string ItemType = "Interaction-";
 
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {
-				return GetKey( UserId );
+				return GetKey( EncounterCardId );
 			}
 			set {
-				UserId = GetIdFromKey( value );
+				EncounterCardId = GetIdFromKey( value );
 			}
 		}
 
 		[DynamoDBRangeKey( "SK" )]
 		private string SK {
 			get {
-				return PK;
+				return GetKey( InteractionId );
 			}
 			set {
-				// Do nothing
+				InteractionId = GetIdFromKey( value );
 			}
 		}
 
 		[DynamoDBIgnore]
-		public string UserId { get; set; }
+		public string EncounterCardId { get; set; }
 
-		[DynamoDBProperty("Username")]
-		public string Username { get; set; }
+		[DynamoDBIgnore]
+		public string InteractionId { get; set; }
 
-		[DynamoDBProperty("Name")]
-		public string Name { get; set; }
+		[DynamoDBProperty("Description")]
+		public string Description { get; set; }
 
-		[DynamoDBProperty("HasAvatar")]
-		public bool HasAvatar { get; set; }
+		[DynamoDBProperty("OutcomeSkill")]
+		public string OutcomeSkill { get; set; }
 
-		[DynamoDBProperty("LastLogin")]
-		public DateTime LastLogin { get; set; }
+		[DynamoDBProperty( "OutcomeTarget" )]
+		public int OutcomeTarget { get; set; }
 
-		[DynamoDBProperty("PreviousLogin")]
-		public DateTime? PreviousLogin { get; set; }
+		[DynamoDBProperty( "OutcomeSuccess" )]
+		public int OutcomeSuccess { get; set; }
 
-		[DynamoDBProperty( "Status" )]
-		public string Status { get; set; }
+		[DynamoDBProperty( "OutcomeFailure" )]
+		public int OutcomeFailure { get; set; }
 
-		public static string GetKey(string userId) {
-			return $"{ItemType}{userId}";
+		public static string GetKey( string interactionId ) {
+			return $"{ItemType}{interactionId}";
 		}
 
 		public static string GetIdFromKey( string key ) {

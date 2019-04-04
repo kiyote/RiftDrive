@@ -22,18 +22,17 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #else
 	[DynamoDBTable( "RiftDrive" )]
 #endif
-	internal sealed class UserRecord {
+	internal sealed class DeckRecord {
 
-		private const string ItemType = "User-";
-		public readonly static string Active = "Active";
+		private const string ItemType = "Deck-";
 
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {
-				return GetKey( UserId );
+				return GetKey( DeckId );
 			}
 			set {
-				UserId = GetIdFromKey( value );
+				DeckId = GetIdFromKey( value );
 			}
 		}
 
@@ -48,28 +47,13 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		}
 
 		[DynamoDBIgnore]
-		public string UserId { get; set; }
+		public string DeckId { get; set; }
 
-		[DynamoDBProperty("Username")]
-		public string Username { get; set; }
-
-		[DynamoDBProperty("Name")]
+		[DynamoDBProperty]
 		public string Name { get; set; }
 
-		[DynamoDBProperty("HasAvatar")]
-		public bool HasAvatar { get; set; }
-
-		[DynamoDBProperty("LastLogin")]
-		public DateTime LastLogin { get; set; }
-
-		[DynamoDBProperty("PreviousLogin")]
-		public DateTime? PreviousLogin { get; set; }
-
-		[DynamoDBProperty( "Status" )]
-		public string Status { get; set; }
-
-		public static string GetKey(string userId) {
-			return $"{ItemType}{userId}";
+		public static string GetKey( string deckId ) {
+			return $"{ItemType}{deckId}";
 		}
 
 		public static string GetIdFromKey( string key ) {

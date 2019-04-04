@@ -20,6 +20,21 @@ namespace RiftDrive.Server.Model {
 
 		public string Name { get; }
 
+		/// <summary>
+		/// The number of cards you can draw.
+		/// </summary>
+		public int Intelligence { get; }
+
+		/// <summary>
+		/// The number of cards you can hold.
+		/// </summary>
+		public int Talent { get; }
+
+		/// <summary>
+		/// The number of cards you can play.
+		/// </summary>
+		public int Training { get; }
+
 		public bool Equals( Actor other ) {
 			if (other is null ) {
 				return false;

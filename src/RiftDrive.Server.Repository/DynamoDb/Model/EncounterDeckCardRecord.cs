@@ -22,58 +22,32 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #else
 	[DynamoDBTable( "RiftDrive" )]
 #endif
-	internal sealed class UserRecord {
-
-		private const string ItemType = "User-";
-		public readonly static string Active = "Active";
+	internal sealed class EncounterDeckCardRecord {
 
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {
-				return GetKey( UserId );
+				return DeckRecord.GetKey( DeckId );
 			}
 			set {
-				UserId = GetIdFromKey( value );
+				DeckId = DeckRecord.GetIdFromKey( value );
 			}
 		}
 
 		[DynamoDBRangeKey( "SK" )]
 		private string SK {
 			get {
-				return PK;
+				return EncounterCardRecord.GetKey( EncounterCardId );
 			}
 			set {
-				// Do nothing
+				EncounterCardId = EncounterCardRecord.GetIdFromKey( EncounterCardId );
 			}
 		}
 
 		[DynamoDBIgnore]
-		public string UserId { get; set; }
+		public string DeckId { get; set; }
 
-		[DynamoDBProperty("Username")]
-		public string Username { get; set; }
-
-		[DynamoDBProperty("Name")]
-		public string Name { get; set; }
-
-		[DynamoDBProperty("HasAvatar")]
-		public bool HasAvatar { get; set; }
-
-		[DynamoDBProperty("LastLogin")]
-		public DateTime LastLogin { get; set; }
-
-		[DynamoDBProperty("PreviousLogin")]
-		public DateTime? PreviousLogin { get; set; }
-
-		[DynamoDBProperty( "Status" )]
-		public string Status { get; set; }
-
-		public static string GetKey(string userId) {
-			return $"{ItemType}{userId}";
-		}
-
-		public static string GetIdFromKey( string key ) {
-			return key.Substring( ItemType.Length );
-		}
+		[DynamoDBIgnore]
+		public string EncounterCardId { get; set; }
 	}
 }

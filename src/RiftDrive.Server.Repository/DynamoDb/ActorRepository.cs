@@ -57,8 +57,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task<Actor> IActorRepository.GetActor( Id<Game> gameId, Id<Actor> actorId ) {
-
-			ActorRecord actorRecord = await _context.LoadAsync<ActorRecord>( GameRecord.GetKey(gameId.Value), ActorRecord.GetKey(actorId.Value) );
+			ActorRecord actorRecord = await _context.LoadAsync<ActorRecord>( GameRecord.GetKey( gameId.Value ), ActorRecord.GetKey( actorId.Value ) );
 
 			return ToActor( actorRecord );
 		}
