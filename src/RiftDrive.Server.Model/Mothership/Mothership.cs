@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Server.Model.Mothership {
 	public sealed class Mothership : IEquatable<Mothership> {
 
 		public Mothership(

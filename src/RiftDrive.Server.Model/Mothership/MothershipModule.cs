@@ -14,24 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model {
-	public sealed class MothershipModule: IEquatable<MothershipModule> {
+namespace RiftDrive.Server.Model.Mothership {
+	public sealed partial class MothershipModule: IEquatable<MothershipModule> {
 
 		public MothershipModule(
 			Id<MothershipModule> id,
-			string name
+			string name,
+			string description
 		) {
 			Id = id;
 			Name = name;
+			Description = description;
 		}
 
 		public Id<MothershipModule> Id { get; }
 
 		public string Name { get; }
+
+		public string Description { get; }
 
 		public bool Equals( MothershipModule other ) {
 			if (other is null) {

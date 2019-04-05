@@ -70,7 +70,8 @@ namespace RiftDrive.Shared.Provider {
 				"Fury",
 				"Galaxy",
 				"Quantum",
-				"Shield"
+				"Shield",
+				"Ether"
 			};
 
 			return prefixes[_random.Next( prefixes.Count )];
@@ -89,7 +90,8 @@ namespace RiftDrive.Shared.Provider {
 				"eater",
 				"stealer",
 				"stopper",
-				"bearer"
+				"bearer",
+				"cleaver"
 			};
 
 			return suffixes[_random.Next( suffixes.Count )];

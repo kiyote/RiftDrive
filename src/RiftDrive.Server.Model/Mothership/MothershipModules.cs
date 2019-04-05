@@ -13,21 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using RiftDrive.Server.Model;
-using RiftDrive.Server.Model.Mothership;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Repository {
-	public interface IMothershipRepository {
-		Task<Mothership> Create( Id<Game> gameId, Id<Mothership> mothershipId, string name, DateTime createdOn );
+namespace RiftDrive.Server.Model.Mothership {
+	public sealed partial class MothershipModule {
+		public static List<MothershipModule> All = new List<MothershipModule> {
+			Hanger
+		};
 
-		Task Delete( Id<Game> gameId );
-
-		Task Attach( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId );
-
-		Task<IEnumerable<Id<MothershipModule>>> GetAttachedModuleIds( Id<Mothership> mothershipId );
+		public static MothershipModule AtmosphereProcessor = new MothershipModule( new Id<MothershipModule>( "21351bbe9814419d9d3c45d85242a029" ), "Atmosphere Processor", "Atmosphere Processor" );
+		public static MothershipModule Hanger = new MothershipModule( new Id<MothershipModule>( "3f27c324bd954c49aab11d38fc5fd1c0" ), "Hanger", "Hanger" );
 	}
 }
