@@ -33,12 +33,16 @@ namespace RiftDrive.Server.Repository.S3 {
 			IAmazonS3 client,
 			S3Options options
 		) {
+			if (options.Bucket == default) {
+				throw new InvalidOperationException();
+			}
+
 			_client = client;
 			_bucket = options.Bucket;
 		}
 
-		async Task<Image> IImageRepository.Add( Id<Image> id, string contentType, string content ) {
-			var key = GetKey( id );
+		async Task<Image?> IImageRepository.Add( Id<Image> id, string contentType, string content ) {
+			string key = GetKey( id );
 			if (await PutImage(key, contentType, content)) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
@@ -47,12 +51,12 @@ namespace RiftDrive.Server.Repository.S3 {
 		}
 
 		async Task<bool> IImageRepository.Exists(Id<Image> id) {
-			var key = GetKey( id );
+			string key = GetKey( id );
 			return await Exists( key );
 		}
 
-		async Task<Image> IImageRepository.Get( Id<Image> id ) {
-			var key = GetKey( id );
+		async Task<Image?> IImageRepository.Get( Id<Image> id ) {
+			string key = GetKey( id );
 			if (await Exists( key )) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
@@ -61,7 +65,7 @@ namespace RiftDrive.Server.Repository.S3 {
 		}
 
 		async Task IImageRepository.Remove( Id<Image> id ) {
-			var key = GetKey( id );
+			string key = GetKey( id );
 			var request = new DeleteObjectRequest() {
 				BucketName = _bucket,
 				Key = key
@@ -69,8 +73,8 @@ namespace RiftDrive.Server.Repository.S3 {
 			await _client.DeleteObjectAsync( request );
 		}
 
-		async Task<Image> IImageRepository.Update( Id<Image> id, string contentType, string content ) {
-			var key = GetKey( id );
+		async Task<Image?> IImageRepository.Update( Id<Image> id, string contentType, string content ) {
+			string key = GetKey( id );
 			if( await PutImage( key, contentType, content ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
@@ -110,7 +114,7 @@ namespace RiftDrive.Server.Repository.S3 {
 				bool isOk = true;
 				int attemptNumber = 1;
 				do {
-					var response = await _client.PutObjectAsync( request );
+					PutObjectResponse response = await _client.PutObjectAsync( request );
 					if( response.HttpStatusCode != HttpStatusCode.OK ) {
 						Task.Delay( 100 * attemptNumber ).Wait();
 						attemptNumber += 1;

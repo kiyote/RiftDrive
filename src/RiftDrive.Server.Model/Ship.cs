@@ -47,7 +47,11 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Ship );
+			if( !( obj is Ship target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

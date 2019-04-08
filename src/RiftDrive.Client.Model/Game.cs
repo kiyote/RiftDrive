@@ -20,6 +20,8 @@ using Newtonsoft.Json;
 namespace RiftDrive.Client.Model {
 	public class Game : IEquatable<Game> {
 
+		public static Game None = new Game( Id<Game>.Empty, "", DateTime.MinValue, GameState.Unknown );
+
 		[JsonConstructor]
 		public Game(
 			Id<Game> id,
@@ -42,7 +44,7 @@ namespace RiftDrive.Client.Model {
 		public GameState State { get; }
 
 		public bool Equals( Game other ) {
-			if( ReferenceEquals( other, null ) ) {
+			if (other is null) {
 				return false;
 			}
 
@@ -57,12 +59,16 @@ namespace RiftDrive.Client.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Game );
+			if( !( obj is Game target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
-				var result = 17;
+				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 13 ) + Name.GetHashCode();
 				result = ( result * 31 ) + CreatedOn.GetHashCode();

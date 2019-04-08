@@ -12,7 +12,7 @@ namespace RiftDrive.Shared.Provider.Tests {
 
 		[Test]
 		public void CreateMothershipName_ValidRandom_NameGenerated() {
-			var actual = _nameProvider.CreateMothershipName();
+			string actual = _nameProvider.CreateMothershipName();
 
 			Assert.IsFalse( string.IsNullOrWhiteSpace( actual ) );
 		}

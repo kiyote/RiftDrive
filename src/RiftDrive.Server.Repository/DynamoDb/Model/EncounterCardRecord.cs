@@ -26,6 +26,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		public const string ItemType = "EncounterCard-";
 
+		public EncounterCardRecord() {
+			EncounterCardId = "";
+			Description = "";
+			RevealRaceSkill = "";
+		}
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

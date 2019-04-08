@@ -11,11 +11,17 @@ namespace RiftDrive.Client.Pages.Play {
 
 		public const string Url = "/game/summary";
 
+		public GameSummaryComponent() {
+			Game = Game.None;
+		}
+
+#nullable disable
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Inject] protected IGameApiService GameService { get; set; }
+#nullable enable
 
 		protected Game Game { get; set; }
 
@@ -27,12 +33,12 @@ namespace RiftDrive.Client.Pages.Play {
 			Game = await GameService.GetGame( new Id<Game>( gameIdValue ) );
 		}
 
-		protected async Task StartGame() {
-
+		protected Task StartGame() {
+			return Task.CompletedTask;
 		}
 
-		protected async Task PlayGame() {
-
+		protected Task PlayGame() {
+			return Task.CompletedTask;
 		}
 	}
 }

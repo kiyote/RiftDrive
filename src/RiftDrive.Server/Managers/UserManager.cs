@@ -41,14 +41,14 @@ namespace RiftDrive.Server.Managers {
 		}
 
 		public async Task<ClientUser> RecordLogin( string username ) {
-			var user = await _identificationService.RecordLogin( username );
+			User user = await _identificationService.RecordLogin( username );
 
 			return ToApiUser( user, await GetAvatarUrl( user ) );
 		}
 
 		public async Task<ClientUser> GetUser( string userId ) {
 			var id = new Id<User>( userId );
-			var user = await _identificationService.GetUser( id );
+			User user = await _identificationService.GetUser( id );
 
 			return ToApiUser( user, await GetAvatarUrl( user ) );
 		}
@@ -67,13 +67,16 @@ namespace RiftDrive.Server.Managers {
 
 			// Not a mistake, we're reusing the userId as the imageId for their avatar
 			var id = new Id<Image>( userId );
-			var avatar = await _imageService.Update( id, contentType, content );
+			Image? avatar = await _imageService.Update( id, contentType, content );
+			if (avatar == default) {
+				throw new InvalidOperationException();
+			}
 			await _identificationService.SetAvatarStatus( new Id<User>( userId ), true );
 
 			return avatar.Url;
 		}
 
-		private static ClientUser ToApiUser( User user, string avatarUrl ) {
+		private static ClientUser ToApiUser( User user, string? avatarUrl ) {
 			return new ClientUser(
 				new Id<ClientUser>(user.Id.Value),
 				user.Username,
@@ -84,15 +87,13 @@ namespace RiftDrive.Server.Managers {
 			);
 		}
 
-		private async Task<string> GetAvatarUrl( User user ) {
-			string result = default;
-
+		private async Task<string?> GetAvatarUrl( User user ) {
 			if( user.HasAvatar ) {
 				// Not a mistake, we're reusing the userId as the imageId for their avatar
-				result = ( await _imageService.Get( new Id<Image>( user.Id.Value ) ) )?.Url;
+				return ( await _imageService.Get( new Id<Image>( user.Id.Value ) ) )?.Url;
 			}
 
-			return result;
+			return default;
 		}
 	}
 }

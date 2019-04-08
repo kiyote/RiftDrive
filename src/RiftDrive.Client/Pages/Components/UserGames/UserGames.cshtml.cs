@@ -11,6 +11,8 @@ using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Components.UserGames {
 	public class UserGamesComponent : ComponentBase {
+
+#nullable disable
 		[Parameter] protected string Name { get; set; }
 
 		[Inject] protected IGameApiService GameService { get; set; }
@@ -20,6 +22,7 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 		[Inject] protected IAppState State { get; set; }
 
 		protected Modal ModalRef { get; set; }
+#nullable enable
 
 		protected IEnumerable<Game> Games { get; set; } = new List<Game>();
 
@@ -29,6 +32,11 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 
 		public bool Busy { get; set; }
 
+		public UserGamesComponent() {
+			GameName = "";
+			PlayerName = "";
+		}
+
 		protected override async Task OnInitAsync() {
 			Games = await GameService.GetGames();
 		}
@@ -37,8 +45,8 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 			ModalRef.Hide();
 			Busy = true;
 			await GameService.CreateGame( GameName, PlayerName );
-			GameName = default;
-			PlayerName = default;
+			GameName = "";
+			PlayerName = "";
 			Games = await GameService.GetGames();
 			Busy = false;
 		}
@@ -48,12 +56,14 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 			UriHelper.NavigateTo( GameSummaryComponent.Url );
 		}
 
-		public async Task ShowModal() {
+		public Task ShowModal() {
 			ModalRef.Show();
+			return Task.CompletedTask;
 		}
 
-		public async Task CancelCreate() {
+		public Task CancelCreate() {
 			ModalRef.Hide();
+			return Task.CompletedTask;
 		}
 	}
 }

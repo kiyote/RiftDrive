@@ -27,6 +27,13 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		private const string ItemType = "User-";
 		public readonly static string Active = "Active";
 
+		public UserRecord() {
+			UserId = "";
+			Username = "";
+			Name = "";
+			Status = "";
+		}
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

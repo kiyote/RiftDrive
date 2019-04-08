@@ -23,12 +23,14 @@ namespace RiftDrive.Client.Pages.Auth {
 	public class LogOutComponent : ComponentBase {
 		public const string Url = "/auth/logout";
 
+#nullable disable
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Inject] protected IAccessTokenProvider Tokens { get; set; }
+#nullable enable
 
 		protected override async Task OnInitAsync() {
-			await Tokens.SetTokens( default, default, DateTime.MinValue );
+			await Tokens.ClearTokens();
 			UriHelper.NavigateTo( IndexComponent.Url );
 		}
 	}

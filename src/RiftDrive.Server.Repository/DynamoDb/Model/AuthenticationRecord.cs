@@ -27,6 +27,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		private const string AuthenticationItemType = "Authentication-";
 		public static readonly string StatusActive = "Active";
 
+		public AuthenticationRecord() {
+			Username = "";
+			UserId = "";
+			Status = "";
+		}
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

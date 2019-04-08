@@ -46,10 +46,14 @@ namespace RiftDrive.Client.Service {
 				gameName,
 				playerName );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
+			Game? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
 				gameInfo,
 				( g ) => { return _json.Serialize( g ); },
 				( s ) => { return _json.Deserialize<Game>( s ); } );
+
+			if (response == default) {
+				throw new InvalidOperationException();
+			}
 
 			return response;
 		}
@@ -58,10 +62,14 @@ namespace RiftDrive.Client.Service {
 			var startInfo = new GameStartInformation(
 				message );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
+			Game? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
 				startInfo,
 				( g ) => { return _json.Serialize( g ); },
 				( s ) => { return _json.Deserialize<Game>( s ); } );
+
+			if (response == default) {
+				throw new InvalidOperationException();
+			}
 
 			return response;
 		}

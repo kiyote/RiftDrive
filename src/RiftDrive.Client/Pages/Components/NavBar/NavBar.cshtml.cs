@@ -21,6 +21,7 @@ using RiftDrive.Client.Pages.User;
 namespace RiftDrive.Client.Pages.Components.NavBar {
 	public class NavBarComponent : ComponentBase {
 
+#nullable disable
 		[Inject] protected IConfig Config { get; set; }
 
 		[Inject] protected IAppState AppState { get; set; }
@@ -28,6 +29,7 @@ namespace RiftDrive.Client.Pages.Components.NavBar {
 		[Parameter] protected string Name { get; set; }
 
 		[Parameter] protected bool IsAuthenticated { get; set; }
+#nullable enable
 
 		public string ProfileUrl {
 			get {

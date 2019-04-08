@@ -24,6 +24,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #endif
 	internal sealed class GameUserRecord {
 
+		public GameUserRecord() {
+			GameId = "";
+			UserId = "";
+			PlayerId = "";
+		}
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

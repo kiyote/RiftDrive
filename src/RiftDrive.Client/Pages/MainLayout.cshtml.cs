@@ -22,7 +22,13 @@ using RiftDrive.Client.Model;
 namespace RiftDrive.Client.Pages {
 	public class MainLayoutComponent : LayoutComponentBase, IDisposable {
 
+		public MainLayoutComponent() {
+			Name = "";
+		}
+
+#nullable disable
 		[Inject] protected IAppState State { get; set; }
+#nullable enable
 
 		public string Name { get; set; }
 

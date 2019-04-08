@@ -26,6 +26,7 @@ namespace RiftDrive.Client.Pages.Auth {
 
 		public static string Url = "/auth/validate";
 
+#nullable disable
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Inject] protected IAccessTokenProvider AccessTokenProvider { get; set; }
@@ -35,6 +36,7 @@ namespace RiftDrive.Client.Pages.Auth {
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected ITokenService TokenService { get; set; }
+#nullable enable
 
 		protected List<string> Messages { get; set; } = new List<string>();
 
@@ -45,7 +47,11 @@ namespace RiftDrive.Client.Pages.Auth {
 
 			Messages.Add( "...retrieving tokens..." );
 			StateHasChanged();
-			AuthorizationToken tokens = await TokenService.GetToken( code );
+			AuthorizationToken? tokens = await TokenService.GetToken( code );
+			if (tokens == default) {
+				//TODO: Do something here
+				throw new InvalidOperationException();
+			}
 			await AccessTokenProvider.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
 			Progress = 50;

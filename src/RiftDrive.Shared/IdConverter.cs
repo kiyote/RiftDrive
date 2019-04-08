@@ -31,11 +31,13 @@ namespace RiftDrive.Shared {
 		}
 
 		public override object ReadJson( JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer ) {
-			if( reader.Value == default ) {
+			string? value = reader.Value as string;
+
+			if( string.IsNullOrWhiteSpace( value ) ) {
 				return Activator.CreateInstance( objectType, new object[] { Guid.Empty.ToString( "N" ) } );
 			}
 
-			return Activator.CreateInstance( objectType, new object[] { reader.Value as string } );
+			return Activator.CreateInstance( objectType, new object[] { value } );
 		}
 	}
 }

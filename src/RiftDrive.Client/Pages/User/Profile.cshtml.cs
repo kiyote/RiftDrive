@@ -24,11 +24,13 @@ namespace RiftDrive.Client.Pages.User {
 	public class ProfileComponent : ComponentBase {
 		public const string Url = "/user/profile";
 
+#nullable disable
 		[Inject] protected IUserApiService UserService { get; set; }
 
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
+#nullable enable
 
-		protected string AvatarUrl { get; private set; }
+		protected string? AvatarUrl { get; private set; }
 
 		protected string UserId { get; private set; }
 
@@ -39,6 +41,12 @@ namespace RiftDrive.Client.Pages.User {
 		protected ElementRef FileUploadRef { get; set; }
 
 		protected bool ChangingAvatar { get; set; }
+
+		public ProfileComponent() {
+			UserId = "";
+			Name = "";
+			LastLogin = "";
+		}
 
 		protected override async Task OnInitAsync() {
 			Model.User userInformation = await UserService.GetUserInformation();

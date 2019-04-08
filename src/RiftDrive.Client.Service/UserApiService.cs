@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -58,9 +59,13 @@ namespace RiftDrive.Client.Service {
 				contentType,
 				content
 			);
-			AvatarUrl response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
+			AvatarUrl? response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
 				( r ) => { return _json.Serialize( r ); },
 				( s ) => { return _json.Deserialize<AvatarUrl>( s ); } );
+
+			if (response == default) {
+				throw new InvalidOperationException();
+			}
 
 			return response.Url;
 		}

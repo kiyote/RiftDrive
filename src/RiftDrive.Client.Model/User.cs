@@ -24,7 +24,7 @@ namespace RiftDrive.Client.Model {
 		public User(
 			Id<User> id,
 			string username,
-			string avatarUrl,
+			string? avatarUrl,
 			DateTime lastLogin,
 			DateTime? previousLogin,
 			string name
@@ -41,7 +41,7 @@ namespace RiftDrive.Client.Model {
 
 		public string Username { get; }
 
-		public string AvatarUrl { get; }
+		public string? AvatarUrl { get; }
 
 		public DateTime LastLogin { get; }
 
@@ -50,7 +50,7 @@ namespace RiftDrive.Client.Model {
 		public string Name { get; }
 
 		public bool Equals( User other ) {
-			if( ReferenceEquals( other, null ) ) {
+			if (other is null) {
 				return false;
 			}
 
@@ -67,15 +67,19 @@ namespace RiftDrive.Client.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as User );
+			if( !( obj is User target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
-				var result = 17;
+				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Username.GetHashCode();
-				result = ( result * 31 ) + AvatarUrl.GetHashCode();
+				result = ( result * 31 ) + AvatarUrl?.GetHashCode() ?? 0;
 				result = ( result * 31 ) + LastLogin.GetHashCode();
 				result = ( result * 31 ) + PreviousLogin?.GetHashCode() ?? 0;
 				result = ( result * 13 ) + Name.GetHashCode();

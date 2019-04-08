@@ -38,7 +38,7 @@ namespace RiftDrive.Client.Model {
 		public string Name { get; }
 
 		public bool Equals( Player other ) {
-			if( ReferenceEquals( other, null ) ) {
+			if (other is null) {
 				return false;
 			}
 
@@ -52,12 +52,16 @@ namespace RiftDrive.Client.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Player );
+			if( !( obj is Player target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
-				var result = 17;
+				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + GameId.GetHashCode();
 				result = ( result * 13 ) + Name.GetHashCode();

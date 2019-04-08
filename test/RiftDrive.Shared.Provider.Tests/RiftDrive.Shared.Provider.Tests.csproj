@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-
+	<NullableContextOptions>disable</NullableContextOptions>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

@@ -16,18 +16,18 @@ limitations under the License.
 namespace RiftDrive.Server.Repository.Cognito {
 	public sealed class CognitoOptions {
 
-		public string CredentialsProfile { get; set; }
+		public string? CredentialsProfile { get; set; }
 
-		public string UserPoolId { get; set; }
+		public string? UserPoolId { get; set; }
 
-		public string ClientId { get; set; }
+		public string? ClientId { get; set; }
 
-		public string RegionEndpoint { get; set; }
+		public string? RegionEndpoint { get; set; }
 
-		public string ServiceUrl { get; set; }
+		public string? ServiceUrl { get; set; }
 
-		public string CredentialsFile { get; set; }
+		public string? CredentialsFile { get; set; }
 
-		public string Role { get; set; }
+		public string? Role { get; set; }
 	}
 }

@@ -26,6 +26,7 @@ namespace RiftDrive.Server.Model.Mothership {
 		) {
 			Id = id;
 			Name = name;
+			GameId = gameId;
 		}
 
 		public Id<Mothership> Id { get; }
@@ -49,7 +50,11 @@ namespace RiftDrive.Server.Model.Mothership {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Mothership );
+			if( !( obj is Mothership target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

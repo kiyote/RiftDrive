@@ -43,7 +43,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			authentication = await _context.LoadAsync( authentication );
 
 			if( !( authentication?.Status == AuthenticationRecord.StatusActive ) ) {
-				return default;
+				return User.None;
 			}
 
 			string userKey = UserRecord.GetKey( authentication.UserId );
@@ -57,7 +57,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			UserRecord userRecord = userRecords.FirstOrDefault();
 
 			if( userRecord == default ) {
-				return default;
+				return User.None;
 			}
 
 			return new User(

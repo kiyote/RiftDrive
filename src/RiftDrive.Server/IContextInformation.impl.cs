@@ -26,22 +26,22 @@ namespace RiftDrive.Server {
 
 		public string Username {
 			get {
-				var context = _httpContextAccessor.HttpContext;
-				return context.Items[ "Username" ] as string;
+				HttpContext context = _httpContextAccessor.HttpContext;
+				return (context.Items[ "Username" ] as string) ?? "";
 			}
 		}
 
 		public string Name {
 			get {
-				var context = _httpContextAccessor.HttpContext;
-				return context.Items["Name"] as string;
+				HttpContext context = _httpContextAccessor.HttpContext;
+				return (context.Items["Name"] as string) ?? "";
 			}
 		}
 
 		public string UserId {
 			get {
-				var context = _httpContextAccessor.HttpContext;
-				return context.Items[ "UserId" ] as string;
+				HttpContext context = _httpContextAccessor.HttpContext;
+				return (context.Items[ "UserId" ] as string) ?? "";
 			}
 		}
 	}

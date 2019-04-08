@@ -42,7 +42,7 @@ namespace RiftDrive.Server.Model {
 		public GameState State { get; }
 
 		public bool Equals( Game other ) {
-			if (ReferenceEquals(other, null)) {
+			if (other is null) {
 				return false;
 			}
 
@@ -57,12 +57,16 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Game );
+			if( !( obj is Game target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
-				var result = 17;
+				int result = 17;
 				result = ( 31 * result ) + Id.GetHashCode();
 				result = ( 31 * result ) + Name.GetHashCode();
 				result = ( 31 * result ) + CreatedOn.GetHashCode();

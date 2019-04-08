@@ -46,7 +46,11 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as SkillCheck );
+			if( !( obj is SkillCheck target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

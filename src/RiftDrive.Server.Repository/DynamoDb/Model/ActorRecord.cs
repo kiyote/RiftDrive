@@ -26,6 +26,13 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		public const string ItemType = "Actor-";
 
+		public ActorRecord() {
+			GameId = "";
+			ActorId = "";
+			Name = "";
+			Role = "";
+		}
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

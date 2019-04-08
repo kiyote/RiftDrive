@@ -49,7 +49,11 @@ namespace RiftDrive.Server.Model.Mothership {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as MothershipModule );
+			if( !( obj is MothershipModule target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

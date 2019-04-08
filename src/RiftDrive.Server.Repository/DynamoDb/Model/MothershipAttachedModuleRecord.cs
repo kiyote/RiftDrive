@@ -25,6 +25,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		public const string ItemType = "MothershipModule-";
 
+		public MothershipAttachedModuleRecord() {
+			MothershipId = "";
+			MothershipModuleId = "";
+		}
+
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

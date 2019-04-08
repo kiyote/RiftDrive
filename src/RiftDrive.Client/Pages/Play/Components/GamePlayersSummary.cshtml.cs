@@ -10,15 +10,22 @@ using RiftDrive.Shared;
 namespace RiftDrive.Client.Pages.Play.Components {
 	public class GamePlayersSummaryComponent : ComponentBase {
 
+		public GamePlayersSummaryComponent() {
+			EditPlayerName = "";
+			Players = new List<Player>();
+		}
+
+#nullable disable
 		[Parameter] protected string GameId { get; set; }
 
 		[Parameter] protected string GameName { get; set; }
 
 		[Inject] protected IGameApiService GameService { get; set; }
 
-		protected IEnumerable<Player> Players { get; set; } = new List<Player>();
-
 		protected Modal ModalRef { get; set; }
+#nullable enable
+
+		protected IEnumerable<Player> Players { get; set; }
 
 		protected string EditPlayerName { get; set; }
 
@@ -28,16 +35,19 @@ namespace RiftDrive.Client.Pages.Play.Components {
 			}
 		}
 
-		public async Task EditPlayer( Player player ) {
+		public Task EditPlayer( Player player ) {
 			ModalRef.Show();
+			return Task.CompletedTask;
 		}
 
-		public async Task CancelEdit() {
+		public Task CancelEdit() {
 			ModalRef.Hide();
+			return Task.CompletedTask;
 		}
 
-		public async Task ApplyChanges() {
+		public Task ApplyChanges() {
 			ModalRef.Hide();
+			return Task.CompletedTask;
 		}
 	}
 }

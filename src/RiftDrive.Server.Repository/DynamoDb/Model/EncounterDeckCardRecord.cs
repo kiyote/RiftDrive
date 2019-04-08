@@ -24,6 +24,11 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #endif
 	internal sealed class EncounterDeckCardRecord {
 
+		public EncounterDeckCardRecord() {
+			DeckId = "";
+			EncounterCardId = "";
+		}
+
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {

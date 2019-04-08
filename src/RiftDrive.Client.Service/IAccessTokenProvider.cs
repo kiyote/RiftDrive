@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 namespace RiftDrive.Client.Service {
 	public interface IAccessTokenProvider {
 
+		Task ClearTokens();
+
 		Task SetTokens( string accessToken, string refreshToken, DateTime expiresAt );
 
 		Task<string> GetJwtToken();

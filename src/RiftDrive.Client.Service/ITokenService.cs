@@ -18,8 +18,8 @@ using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client.Service {
 	public interface ITokenService {
-		Task<AuthorizationToken> GetToken( string code );
+		Task<AuthorizationToken?> GetToken( string code );
 
-		Task<AuthorizationToken> RefreshToken( string refreshToken );
+		Task<AuthorizationToken?> RefreshToken( string refreshToken );
 	}
 }

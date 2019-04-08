@@ -39,12 +39,18 @@ namespace RiftDrive.Client.Service {
 
 		async Task<string> IAccessTokenProvider.GetJwtToken() {
 			if( await _state.GetTokensExpireAt() < DateTimeOffset.Now ) {
-				AuthorizationToken tokens = await _tokenService.RefreshToken( await _state.GetAccessToken() );
+				AuthorizationToken? tokens = await _tokenService.RefreshToken( await _state.GetAccessToken() );
 				if( tokens != default ) {
 					await SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 				}
 			}
 			return await _state.GetAccessToken();
+		}
+
+		async Task IAccessTokenProvider.ClearTokens() {
+			await _state.SetAccessToken( "" );
+			await _state.SetRefreshToken( "" );
+			await _state.SetTokensExpireAt( DateTime.MinValue );
 		}
 	}
 }

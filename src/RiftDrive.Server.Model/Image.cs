@@ -32,7 +32,7 @@ namespace RiftDrive.Server.Model {
 		public string Url { get; }
 
 		public bool Equals( Image other ) {
-			if (ReferenceEquals(other, default)) {
+			if (other is null) {
 				return false;
 			}
 
@@ -45,12 +45,16 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Image );
+			if( !( obj is Image target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
-				var result = 17;
+				int result = 17;
 				result = ( result * 31) + Id.GetHashCode();
 				result = ( result * 31 ) + StringComparer.OrdinalIgnoreCase.GetHashCode( Url );
 

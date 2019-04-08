@@ -19,11 +19,11 @@ using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Service {
 	public interface IImageService {
-		Task<Image> Add( string contentType, string content );
+		Task<Image?> Add( string contentType, string content );
 
-		Task<Image> Update( Id<Image> id, string contentType, string content );
+		Task<Image?> Update( Id<Image> id, string contentType, string content );
 
-		Task<Image> Get( Id<Image> id );
+		Task<Image?> Get( Id<Image> id );
 
 		Task Remove( Id<Image> id );
 	}

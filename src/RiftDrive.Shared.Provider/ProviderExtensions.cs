@@ -19,6 +19,7 @@ namespace RiftDrive.Shared.Provider {
 	public static class ProviderExtensions {
 		public static IServiceCollection RegisterProviders( this IServiceCollection services ) {
 			services.AddSingleton<IRandomProvider, RandomProvider>();
+			services.AddSingleton<INameProvider, NameProvider>();
 
 			return services;
 		}

@@ -73,11 +73,15 @@ namespace RiftDrive.Shared {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Id<T> );
+			if( !( obj is Id<T> target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public bool Equals( Id<T> other ) {
-			if( ReferenceEquals( other, default( Id<T> ) ) ) {
+			if (other is null) {
 				return false;
 			}
 

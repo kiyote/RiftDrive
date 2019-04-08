@@ -60,7 +60,7 @@ namespace RiftDrive.Server.Service {
 			Game game = await _gameRepository.Create( new Id<Game>(), config.GameName, config.CreatedOn );
 			await _playerRepository.Create( game.Id, new Id<Player>(), config.CreatedBy, config.PlayerName, config.CreatedOn );
 
-			var mothership = await _mothershipRepository.Create( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), config.CreatedOn );
+			Mothership mothership = await _mothershipRepository.Create( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), config.CreatedOn );
 			await _mothershipRepository.Attach( mothership.Id, MothershipModule.AtmosphereProcessor.Id );
 			await _mothershipRepository.Attach( mothership.Id, MothershipModule.Hanger.Id );
 

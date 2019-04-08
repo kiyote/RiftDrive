@@ -17,15 +17,15 @@ using System.Linq;
 namespace RiftDrive.Shared {
 	public static class ExtensionMethods {
 
-		public static bool Similar<T>( this IEnumerable<T> source, IEnumerable<T> other ) {
+		public static bool Similar<T>( this IEnumerable<T> source, IEnumerable<T> other ) where T: class {
 			return ( source.Count() == other.Count() )
 				&& ( source.Intersect( other ).Count() == source.Count() );
 		}
 
-		public static int GetFinalHashCode<T>( this IEnumerable<T> source ) {
+		public static int GetFinalHashCode<T>( this IEnumerable<T> source ) where T: class {
 			unchecked {
-				var result = 17;
-				foreach( var item in source ) {
+				int result = 17;
+				foreach( T item in source ) {
 					result = ( result * 31 ) + item.GetHashCode();
 				}
 

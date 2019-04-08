@@ -19,6 +19,9 @@ using RiftDrive.Shared;
 namespace RiftDrive.Server.Model {
 	public sealed class User : IEquatable<User> {
 
+		public static User None = new User( Id<User>.Empty, "", false, DateTime.MinValue, default, "" );
+
+
 		public User(
 			Id<User> id,
 			string username,
@@ -52,12 +55,12 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public bool Equals( User other ) {
-			if( ReferenceEquals( other, this ) ) {
-				return true;
+			if (other is null) {
+				return false;
 			}
 
-			if( ReferenceEquals( other, null ) ) {
-				return false;
+			if( ReferenceEquals( other, this ) ) {
+				return true;
 			}
 
 			return Id.Equals( other.Id )
@@ -69,12 +72,16 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as User );
+			if( !( obj is User target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
-				var result = 17;
+				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Username.GetHashCode();
 				result = ( result * 31 ) + HasAvatar.GetHashCode();

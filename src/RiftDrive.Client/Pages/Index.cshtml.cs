@@ -23,7 +23,14 @@ namespace RiftDrive.Client.Pages {
 
 		public static string Url = "/";
 
+		public IndexComponent() {
+			Name = "";
+		}
+
+#nullable disable
+
 		[Inject] protected IAppState AppState { get; set; }
+#nullable enable
 
 		protected string Name { get; set; }
 
