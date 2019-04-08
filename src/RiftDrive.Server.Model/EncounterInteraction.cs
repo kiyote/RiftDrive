@@ -36,10 +36,6 @@ namespace RiftDrive.Server.Model {
 		public SkillCheckOutcomes Outcomes { get; }
 
 		bool IEquatable<EncounterInteraction>.Equals( EncounterInteraction other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

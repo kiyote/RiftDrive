@@ -38,10 +38,6 @@ namespace RiftDrive.Server.Model {
 		public int CrewLimit { get; }
 
 		public bool Equals( ShipModule other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

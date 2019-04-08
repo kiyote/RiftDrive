@@ -46,10 +46,6 @@ namespace RiftDrive.Server.Model {
 		public DateTime CreatedOn { get; }
 
 		public bool Equals( Player other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

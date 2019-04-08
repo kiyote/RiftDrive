@@ -41,10 +41,6 @@ namespace RiftDrive.Server.Model {
 		public IEnumerable<EncounterInteraction> Interactions { get; }
 
 		public bool Equals( EncounterCard other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

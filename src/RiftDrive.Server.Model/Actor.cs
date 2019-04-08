@@ -61,10 +61,6 @@ namespace RiftDrive.Server.Model {
 		public int Training { get; }
 
 		public bool Equals( Actor other ) {
-			if (other is null ) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

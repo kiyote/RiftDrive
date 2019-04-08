@@ -55,10 +55,6 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public bool Equals( User other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}

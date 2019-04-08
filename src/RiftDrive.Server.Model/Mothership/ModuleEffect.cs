@@ -15,16 +15,12 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using System.Text;
 
-namespace RiftDrive.Server.Repository {
-	public interface IMothershipRepository {
-		Task<Mothership> Create( Id<Game> gameId, Id<Mothership> mothershipId, string name, DateTime createdOn );
+namespace RiftDrive.Server.Model {
+	public enum ModuleEffect {
+		Unknown,
 
-		Task Delete( Id<Game> gameId );
-
-		Task<MothershipAttachedModule> Create( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId, int remainingPower );
+		AdjustPower
 	}
 }

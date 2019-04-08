@@ -16,7 +16,6 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
-using RiftDrive.Server.Model.Mothership;
 using RiftDrive.Server.Repository;
 using RiftDrive.Shared;
 using RiftDrive.Shared.Provider;
@@ -63,6 +62,7 @@ namespace RiftDrive.Server.Service {
 			Mothership mothership = await _mothershipRepository.Create( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), config.CreatedOn );
 			await _mothershipRepository.Attach( mothership.Id, MothershipModule.AtmosphereProcessor.Id );
 			await _mothershipRepository.Attach( mothership.Id, MothershipModule.Hanger.Id );
+			await _mothershipRepository.Attach( mothership.Id, MothershipModule.Cryogenics.Id );
 
 			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Command, 1, 1, 1, config.CreatedOn );
 			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Engineer, 1, 1, 1, config.CreatedOn );

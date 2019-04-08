@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using RiftDrive.Server.Model;
-using RiftDrive.Server.Model.Mothership;
 using RiftDrive.Server.Repository.DynamoDb.Model;
 using RiftDrive.Shared;
 
@@ -72,20 +71,20 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 
 		}
 
-		async Task IMothershipRepository.Attach(
+		async Task<MothershipAttachedModule> IMothershipRepository.Create(
 			Id<Mothership> mothershipId,
-			Id<MothershipModule> mothershipModuleId
+			Id<MothershipModule> mothershipModuleId,
+			int remainingPower
 		) {
 			var record = new MothershipAttachedModuleRecord {
 				MothershipId = mothershipId.Value,
-				MothershipModuleId = mothershipModuleId.Value
+				MothershipModuleId = mothershipModuleId.Value,
+				RemainingPower = remainingPower
 			};
 
 			await _context.SaveAsync( record );
-		}
 
-		async Task<IEnumerable<Id<MothershipModule>>> IMothershipRepository.GetAttachedModuleIds( Id<Mothership> mothershipId ) {
-			return await GetAttachedModuleIds( mothershipId );
+			return ToMothershipAttachedModule(record);
 		}
 
 		private async Task<IEnumerable<Id<MothershipModule>>> GetAttachedModuleIds( Id<Mothership> mothershipId ) {
@@ -110,11 +109,18 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			await _context.DeleteAsync( record );
 		}
 
-		private Mothership ToMothership( MothershipRecord r ) {
+		private static Mothership ToMothership( MothershipRecord r ) {
 			return new Mothership(
 				new Id<Mothership>( r.MothershipId ),
 				new Id<Game>( r.GameId ),
 				r.Name );
+		}
+
+		private static MothershipAttachedModule ToMothershipAttachedModule( MothershipAttachedModuleRecord r ) {
+			return new MothershipAttachedModule(
+				new Id<Mothership>( r.MothershipId ),
+				new Id<MothershipModule>( r.MothershipModuleId ),
+				r.RemainingPower );
 		}
 	}
 }

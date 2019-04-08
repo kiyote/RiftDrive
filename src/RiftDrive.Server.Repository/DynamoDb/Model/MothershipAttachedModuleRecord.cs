@@ -57,6 +57,9 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBIgnore]
 		public string MothershipModuleId { get; set; }
 
+		[DynamoDBProperty("RemainingPower")]
+		public int RemainingPower { get; set; }
+
 		private static string GetKey( string mothershipModuleId ) {
 			return $"{ItemType}{mothershipModuleId}";
 		}

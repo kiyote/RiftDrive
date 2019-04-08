@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model.Mothership {
+namespace RiftDrive.Server.Model {
 	public sealed class Mothership : IEquatable<Mothership> {
 
 		public Mothership(
@@ -36,10 +36,6 @@ namespace RiftDrive.Server.Model.Mothership {
 		public string Name { get; }
 
 		public bool Equals( Mothership other ) {
-			if( other is null ) {
-				return false;
-			}
-
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}

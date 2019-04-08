@@ -14,40 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Model {
-	public sealed class ShipInstalledModule: IEquatable<ShipInstalledModule> {
+	public sealed class MothershipAttachedModule : IEquatable<MothershipAttachedModule> {
 
-		public ShipInstalledModule(
-			Id<Ship> shipId,
-			Id<ShipModule> moduleId
+		public MothershipAttachedModule(
+			Id<Mothership> mothershipId,
+			Id<MothershipModule> mothershipModuleId,
+			int remainingPower
 		) {
-			ShipId = shipId;
-			ModuleId = moduleId;
+			MothershipId = mothershipId;
+			MothershipModuleId = mothershipModuleId;
+			RemainingPower = remainingPower;
 		}
 
-		public Id<Ship> ShipId { get; }
+		public Id<Mothership> MothershipId { get; }
 
-		public Id<ShipModule> ModuleId { get; }
+		public Id<MothershipModule> MothershipModuleId { get; }
 
-		public bool Equals( ShipInstalledModule other ) {
-			if (other is null) {
-				return false;
-			}
+		public int RemainingPower { get; }
 
+		public bool Equals( MothershipAttachedModule other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return ShipId.Equals( other.ShipId )
-				&& ModuleId.Equals( other.ModuleId );
+			return MothershipId.Equals( other.MothershipId )
+				&& MothershipModuleId.Equals( other.MothershipModuleId )
+				&& RemainingPower == other.RemainingPower;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is ShipInstalledModule target ) ) {
+			if( !( obj is MothershipAttachedModule target ) ) {
 				return false;
 			}
 
@@ -57,8 +56,9 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + ShipId.GetHashCode();
-				result = ( result * 31 ) + ModuleId.GetHashCode();
+				result = ( result * 31 ) + MothershipId.GetHashCode();
+				result = ( result * 31 ) + MothershipModuleId.GetHashCode();
+				result = ( result * 31 ) + RemainingPower.GetHashCode();
 
 				return result;
 			}

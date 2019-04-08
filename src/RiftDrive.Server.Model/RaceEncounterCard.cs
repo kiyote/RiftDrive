@@ -32,10 +32,6 @@ namespace RiftDrive.Server.Model {
 		public Id<Race> RaceId { get; }
 
 		public bool Equals( RaceEncounterCard other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

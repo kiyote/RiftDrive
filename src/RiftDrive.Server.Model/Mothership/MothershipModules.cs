@@ -16,13 +16,45 @@ limitations under the License.
 using System.Collections.Generic;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model.Mothership {
+namespace RiftDrive.Server.Model {
 	public sealed partial class MothershipModule {
 		public static List<MothershipModule> All = new List<MothershipModule> {
 			Hanger
 		};
 
-		public static MothershipModule AtmosphereProcessor = new MothershipModule( new Id<MothershipModule>( "21351bbe9814419d9d3c45d85242a029" ), "Atmosphere Processor", "Atmosphere Processor" );
-		public static MothershipModule Hanger = new MothershipModule( new Id<MothershipModule>( "3f27c324bd954c49aab11d38fc5fd1c0" ), "Hanger", "Hanger" );
+		public static MothershipModule AtmosphereProcessor = new MothershipModule(
+			new Id<MothershipModule>( "21351bbe9814419d9d3c45d85242a029" ),
+			"Atmosphere Processor",
+			"Atmosphere Processor",
+			new List<MothershipModuleAction>() {
+			} );
+
+
+		public static MothershipModule Hanger = new MothershipModule(
+			new Id<MothershipModule>( "3f27c324bd954c49aab11d38fc5fd1c0" ),
+			"Hanger",
+			"Hanger",
+			new List<MothershipModuleAction>() {
+			} );
+
+
+		public static MothershipModule Cryogenics = new MothershipModule(
+			new Id<MothershipModule>( "fe9e336e4620488186726d57bfa0ba24" ),
+			"Cryogenics",
+			"Cryogenics",
+			new List<MothershipModuleAction>() {
+			} );
+
+
+		public static MothershipModule Reactor = new MothershipModule(
+			new Id<MothershipModule>( "a5d9728d326949b6a85a0e545cb9ba20" ),
+			"Reactor",
+			"Reactor",
+			new List<MothershipModuleAction>() {
+				new MothershipModuleAction(
+					new Id<MothershipModule>( "a5d9728d326949b6a85a0e545cb9ba20" ),
+					ModuleEffect.AdjustPower,
+					5)
+			} );
 	}
 }

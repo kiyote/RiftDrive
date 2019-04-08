@@ -41,10 +41,6 @@ namespace RiftDrive.Server.Model {
 		public int Failure { get; }
 
 		public bool Equals( SkillCheckOutcomes other ) {
-			if( other is null ) {
-				return false;
-			}
-
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}

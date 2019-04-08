@@ -81,16 +81,12 @@ namespace RiftDrive.Shared {
 		}
 
 		public bool Equals( Id<T> other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
 			return
-				string.CompareOrdinal( Value, other.Value ) == 0;
+				string.Equals( Value, other.Value, StringComparison.Ordinal );
 		}
 
 		public static bool IsValid( string value ) {

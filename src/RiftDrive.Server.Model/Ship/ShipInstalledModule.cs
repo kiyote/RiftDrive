@@ -19,35 +19,31 @@ using System.Text;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Model {
-	public sealed class Ship: IEquatable<Ship> {
+	public sealed class ShipInstalledModule: IEquatable<ShipInstalledModule> {
 
-		public Ship(
+		public ShipInstalledModule(
 			Id<Ship> shipId,
-			string name
+			Id<ShipModule> moduleId
 		) {
-			Id = shipId;
-			Name = name;
+			ShipId = shipId;
+			ModuleId = moduleId;
 		}
 
-		public Id<Ship> Id { get; }
+		public Id<Ship> ShipId { get; }
 
-		public string Name { get; }
+		public Id<ShipModule> ModuleId { get; }
 
-		public bool Equals( Ship other ) {
-			if (other is null) {
-				return false;
-			}
-
+		public bool Equals( ShipInstalledModule other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return Id.Equals( other.Id )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
+			return ShipId.Equals( other.ShipId )
+				&& ModuleId.Equals( other.ModuleId );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Ship target ) ) {
+			if( !( obj is ShipInstalledModule target ) ) {
 				return false;
 			}
 
@@ -57,8 +53,8 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + ShipId.GetHashCode();
+				result = ( result * 31 ) + ModuleId.GetHashCode();
 
 				return result;
 			}

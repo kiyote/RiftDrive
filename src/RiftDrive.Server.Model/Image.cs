@@ -32,10 +32,6 @@ namespace RiftDrive.Server.Model {
 		public string Url { get; }
 
 		public bool Equals( Image other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

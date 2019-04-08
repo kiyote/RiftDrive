@@ -14,19 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model.Mothership {
+namespace RiftDrive.Server.Model {
 	public sealed partial class MothershipModule: IEquatable<MothershipModule> {
 
 		public MothershipModule(
 			Id<MothershipModule> id,
 			string name,
-			string description
+			string description,
+			IEnumerable<MothershipModuleAction> actions
 		) {
 			Id = id;
 			Name = name;
 			Description = description;
+			Actions = actions;
 		}
 
 		public Id<MothershipModule> Id { get; }
@@ -35,17 +38,16 @@ namespace RiftDrive.Server.Model.Mothership {
 
 		public string Description { get; }
 
-		public bool Equals( MothershipModule other ) {
-			if (other is null) {
-				return false;
-			}
+		public IEnumerable<MothershipModuleAction> Actions { get; }
 
+		public bool Equals( MothershipModule other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
+				&& Actions.Similar( other.Actions );
 		}
 
 		public override bool Equals( object obj ) {
@@ -61,6 +63,7 @@ namespace RiftDrive.Server.Model.Mothership {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + Actions.GetFinalHashCode();
 
 				return result;
 			}

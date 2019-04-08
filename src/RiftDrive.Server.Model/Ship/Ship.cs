@@ -19,41 +19,31 @@ using System.Text;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Model {
-	public sealed class Game: IEquatable<Game> {
+	public sealed class Ship: IEquatable<Ship> {
 
-		public Game(
-			Id<Game> gameId,
-			string name,
-			DateTime createdOn,
-			GameState state
+		public Ship(
+			Id<Ship> shipId,
+			string name
 		) {
-			Id = gameId;
+			Id = shipId;
 			Name = name;
-			CreatedOn = createdOn.ToUniversalTime();
-			State = state;
 		}
 
-		public Id<Game> Id { get; }
+		public Id<Ship> Id { get; }
 
 		public string Name { get; }
 
-		public DateTime CreatedOn { get; }
-
-		public GameState State { get; }
-
-		public bool Equals( Game other ) {
+		public bool Equals( Ship other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& DateTime.Equals( CreatedOn, other.CreatedOn )
-				&& State.Equals( other.State );
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Game target ) ) {
+			if( !( obj is Ship target ) ) {
 				return false;
 			}
 
@@ -63,10 +53,8 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( 31 * result ) + Id.GetHashCode();
-				result = ( 31 * result ) + Name.GetHashCode();
-				result = ( 31 * result ) + CreatedOn.GetHashCode();
-				result = ( 31 * result ) + State.GetHashCode();
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + Name.GetHashCode();
 
 				return result;
 			}

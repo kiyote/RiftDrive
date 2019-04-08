@@ -19,41 +19,36 @@ using System.Text;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Model {
-	public sealed class Game: IEquatable<Game> {
+	public sealed class MothershipModuleAction : IEquatable<MothershipModuleAction> {
 
-		public Game(
-			Id<Game> gameId,
-			string name,
-			DateTime createdOn,
-			GameState state
+		public MothershipModuleAction(
+			Id<MothershipModule> mothershipModuleId,
+			ModuleEffect effect,
+			int magnitude
 		) {
-			Id = gameId;
-			Name = name;
-			CreatedOn = createdOn.ToUniversalTime();
-			State = state;
+			MothershipModuleId = mothershipModuleId;
+			Effect = effect;
+			Magnitude = magnitude;
 		}
 
-		public Id<Game> Id { get; }
+		public Id<MothershipModule> MothershipModuleId { get; }
 
-		public string Name { get; }
+		public ModuleEffect Effect { get; }
 
-		public DateTime CreatedOn { get; }
+		public int Magnitude { get; }
 
-		public GameState State { get; }
-
-		public bool Equals( Game other ) {
+		public bool Equals( MothershipModuleAction other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return Id.Equals( other.Id )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& DateTime.Equals( CreatedOn, other.CreatedOn )
-				&& State.Equals( other.State );
+			return MothershipModuleId.Equals( other.MothershipModuleId )
+				&& Effect == other.Effect
+				&& Magnitude == other.Magnitude;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Game target ) ) {
+			if( !( obj is MothershipModuleAction target ) ) {
 				return false;
 			}
 
@@ -63,10 +58,9 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( 31 * result ) + Id.GetHashCode();
-				result = ( 31 * result ) + Name.GetHashCode();
-				result = ( 31 * result ) + CreatedOn.GetHashCode();
-				result = ( 31 * result ) + State.GetHashCode();
+				result = ( result * 31 ) + MothershipModuleId.GetHashCode();
+				result = ( result * 31 ) + Effect.GetHashCode();
+				result = ( result * 31 ) + Magnitude.GetHashCode();
 
 				return result;
 			}

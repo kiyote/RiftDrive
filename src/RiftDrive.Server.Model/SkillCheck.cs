@@ -33,10 +33,6 @@ namespace RiftDrive.Server.Model {
 		public int Target { get; }
 
 		public bool Equals( SkillCheck other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}

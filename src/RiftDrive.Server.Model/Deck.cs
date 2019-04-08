@@ -32,10 +32,6 @@ namespace RiftDrive.Server.Model {
 		public string Name { get; }
 
 		public bool Equals( Deck other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
