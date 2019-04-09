@@ -22,11 +22,15 @@ namespace RiftDrive.Server.Model {
 		public Mothership(
 			Id<Mothership> id,
 			Id<Game> gameId,
-			string name
+			string name,
+			int availableCrew,
+			int remainingFuel
 		) {
 			Id = id;
 			Name = name;
 			GameId = gameId;
+			AvailableCrew = availableCrew;
+			RemainingFuel = remainingFuel;
 		}
 
 		public Id<Mothership> Id { get; }
@@ -35,6 +39,10 @@ namespace RiftDrive.Server.Model {
 
 		public string Name { get; }
 
+		public int AvailableCrew { get; }
+
+		public int RemainingFuel { get; }
+
 		public bool Equals( Mothership other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
@@ -42,7 +50,9 @@ namespace RiftDrive.Server.Model {
 
 			return Id.Equals( other.Id )
 				&& GameId.Equals( other.GameId )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
+				&& AvailableCrew == other.AvailableCrew
+				&& RemainingFuel == other.RemainingFuel;
 		}
 
 		public override bool Equals( object obj ) {
@@ -59,6 +69,8 @@ namespace RiftDrive.Server.Model {
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + GameId.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + AvailableCrew.GetHashCode();
+				result = ( result * 31 ) + RemainingFuel.GetHashCode();
 
 				return result;
 			}

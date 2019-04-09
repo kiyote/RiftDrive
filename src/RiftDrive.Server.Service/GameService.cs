@@ -59,10 +59,9 @@ namespace RiftDrive.Server.Service {
 			Game game = await _gameRepository.Create( new Id<Game>(), config.GameName, config.CreatedOn );
 			await _playerRepository.Create( game.Id, new Id<Player>(), config.CreatedBy, config.PlayerName, config.CreatedOn );
 
-			Mothership mothership = await _mothershipRepository.Create( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), config.CreatedOn );
-			await _mothershipRepository.Attach( mothership.Id, MothershipModule.AtmosphereProcessor.Id );
-			await _mothershipRepository.Attach( mothership.Id, MothershipModule.Hanger.Id );
-			await _mothershipRepository.Attach( mothership.Id, MothershipModule.Cryogenics.Id );
+			Mothership mothership = await _mothershipRepository.CreateMothership( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), 4, 6, config.CreatedOn );
+			await _mothershipRepository.CreateModule( mothership.Id, MothershipModule.Hanger.Id, 5, config.CreatedOn );
+			await _mothershipRepository.CreateModule( mothership.Id, MothershipModule.Cryogenics.Id, 5, config.CreatedOn );
 
 			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Command, 1, 1, 1, config.CreatedOn );
 			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Engineer, 1, 1, 1, config.CreatedOn );
@@ -81,7 +80,7 @@ namespace RiftDrive.Server.Service {
 			foreach( Actor actor in actors ) {
 				await _actorRepository.Delete( gameId, actor.Id );
 			}
-			await _mothershipRepository.Delete( gameId );
+			await _mothershipRepository.DeleteMothership( gameId );
 			IEnumerable<Player> players = await _playerRepository.GetPlayers( gameId );
 			foreach( Player player in players ) {
 				await _playerRepository.Delete( gameId, player.Id );

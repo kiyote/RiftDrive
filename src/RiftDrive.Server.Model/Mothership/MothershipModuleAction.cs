@@ -22,29 +22,29 @@ namespace RiftDrive.Server.Model {
 	public sealed class MothershipModuleAction : IEquatable<MothershipModuleAction> {
 
 		public MothershipModuleAction(
-			Id<MothershipModule> mothershipModuleId,
-			ModuleEffect effect,
-			int magnitude
+			string name,
+			string description,
+			IEnumerable<MothershipModuleEffect> effects
 		) {
-			MothershipModuleId = mothershipModuleId;
-			Effect = effect;
-			Magnitude = magnitude;
+			Name = name;
+			Description = description;
+			Effects = effects;
 		}
 
-		public Id<MothershipModule> MothershipModuleId { get; }
+		public string Name { get; }
 
-		public ModuleEffect Effect { get; }
+		public string Description { get; }
 
-		public int Magnitude { get; }
+		public IEnumerable<MothershipModuleEffect> Effects { get; }
 
 		public bool Equals( MothershipModuleAction other ) {
-			if (ReferenceEquals(other, this)) {
+			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return MothershipModuleId.Equals( other.MothershipModuleId )
-				&& Effect == other.Effect
-				&& Magnitude == other.Magnitude;
+			return string.Equals( Name, other.Name, StringComparison.Ordinal )
+				&& string.Equals( Description, other.Description, StringComparison.Ordinal )
+				&& Effects.Similar( other.Effects );
 		}
 
 		public override bool Equals( object obj ) {
@@ -58,9 +58,9 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + MothershipModuleId.GetHashCode();
-				result = ( result * 31 ) + Effect.GetHashCode();
-				result = ( result * 31 ) + Magnitude.GetHashCode();
+				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + Description.GetHashCode();
+				result = ( result * 31 ) + Effects.GetFinalHashCode();
 
 				return result;
 			}

@@ -21,6 +21,12 @@ namespace RiftDrive.Server.Model {
 	public enum ModuleEffect {
 		Unknown,
 
-		AdjustPower
+		ProducePower,
+
+		ConsumePower,
+
+		ConsumeFuel,
+
+		AddCrew
 	}
 }

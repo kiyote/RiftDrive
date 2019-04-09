@@ -27,6 +27,9 @@ namespace RiftDrive.Server.Model {
 			"Atmosphere Processor",
 			"Atmosphere Processor",
 			new List<MothershipModuleAction>() {
+			},
+			new List<MothershipModuleEffect>() {
+				new MothershipModuleEffect( ModuleEffect.ConsumePower, 1 )
 			} );
 
 
@@ -35,6 +38,9 @@ namespace RiftDrive.Server.Model {
 			"Hanger",
 			"Hanger",
 			new List<MothershipModuleAction>() {
+			},
+			new List<MothershipModuleEffect>() {
+				new MothershipModuleEffect( ModuleEffect.ConsumePower, 1 )
 			} );
 
 
@@ -43,6 +49,16 @@ namespace RiftDrive.Server.Model {
 			"Cryogenics",
 			"Cryogenics",
 			new List<MothershipModuleAction>() {
+				new MothershipModuleAction(
+					"Revive Crew",
+					"Find functional pods and attempt to revive the crew.",
+					new List<MothershipModuleEffect>() {
+						new MothershipModuleEffect( ModuleEffect.ConsumePower, 3 ),
+						new MothershipModuleEffect( ModuleEffect.AddCrew, 0, 2 )
+					})
+			},
+			new List<MothershipModuleEffect>() {
+				new MothershipModuleEffect( ModuleEffect.ConsumePower, 1 )
 			} );
 
 
@@ -52,9 +68,16 @@ namespace RiftDrive.Server.Model {
 			"Reactor",
 			new List<MothershipModuleAction>() {
 				new MothershipModuleAction(
-					new Id<MothershipModule>( "a5d9728d326949b6a85a0e545cb9ba20" ),
-					ModuleEffect.AdjustPower,
-					5)
+					"Produce Power",
+					"Run the reactor to produce power.",
+					new List<MothershipModuleEffect>() {
+						new MothershipModuleEffect( ModuleEffect.ProducePower, 5 ),
+						new MothershipModuleEffect( ModuleEffect.ConsumeFuel, 10 )
+					}),
+
+			},
+			new List<MothershipModuleEffect>() {
+
 			} );
 	}
 }

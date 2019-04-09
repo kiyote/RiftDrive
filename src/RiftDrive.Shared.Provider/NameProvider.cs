@@ -47,11 +47,36 @@ namespace RiftDrive.Shared.Provider {
 		}
 
 		string INameProvider.CreateMothershipName() {
-			return $"{GetPrefix()}{GetSuffix()}";
+			if (_random.Flip()) {
+				return $"{GetSubject()}{GetAction()}";
+			} else {
+				return $"{GetObject()} of the {GetSubject()}";
+			}
 		}
 
-		private string GetPrefix() {
+		private string GetObject() {
+			var words = new List<string>() {
+				"Pillar",
+				"Column",
+				"Sword",
+				"Shield",
+				"Cloak",
+				"Armour",
+				"Arrow",
+				"Spear",
+				"Axe",
+				"Fortress"
+			};
+
+			return words[_random.Next( words.Count )];
+		}
+
+		private string GetSubject() {
 			var prefixes = new List<string>() {
+				"Spring",
+				"Summer",
+				"Autumn",
+				"Winter",
 				"Dawn",
 				"Void",
 				"Earth",
@@ -71,13 +96,14 @@ namespace RiftDrive.Shared.Provider {
 				"Galaxy",
 				"Quantum",
 				"Shield",
-				"Ether"
+				"Ether",
+				"Shadow"
 			};
 
 			return prefixes[_random.Next( prefixes.Count )];
 		}
 
-		private string GetSuffix() {
+		private string GetAction() {
 			var suffixes = new List<string>() {
 				"strider",
 				"striker",
@@ -91,7 +117,8 @@ namespace RiftDrive.Shared.Provider {
 				"stealer",
 				"stopper",
 				"bearer",
-				"cleaver"
+				"cleaver",
+				"treader"
 			};
 
 			return suffixes[_random.Next( suffixes.Count )];

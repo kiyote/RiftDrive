@@ -61,6 +61,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty( "Name" )]
 		public string Name { get; set; }
 
+		[DynamoDBProperty( "AvailableCrew" )]
+		public int AvailableCrew { get; set; }
+
+		[DynamoDBProperty( "RemainingFuel" )]
+		public int RemainingFuel { get; set; }
+
 
 		[DynamoDBProperty( "CreatedOn" )]
 		public DateTime CreatedOn { get; set; }

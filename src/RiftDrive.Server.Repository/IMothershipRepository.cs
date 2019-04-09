@@ -21,10 +21,10 @@ using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Repository {
 	public interface IMothershipRepository {
-		Task<Mothership> Create( Id<Game> gameId, Id<Mothership> mothershipId, string name, DateTime createdOn );
+		Task<Mothership> CreateMothership( Id<Game> gameId, Id<Mothership> mothershipId, string name, int availableCrew, int remainingFuel, DateTime createdOn );
 
-		Task Delete( Id<Game> gameId );
+		Task DeleteMothership( Id<Game> gameId );
 
-		Task<MothershipAttachedModule> Create( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId, int remainingPower );
+		Task<MothershipAttachedModule> CreateModule( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId, int remainingPower, DateTime createdOn );
 	}
 }

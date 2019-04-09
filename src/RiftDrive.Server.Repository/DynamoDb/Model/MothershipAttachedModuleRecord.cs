@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using Amazon.DynamoDBv2.DataModel;
 
 namespace RiftDrive.Server.Repository.DynamoDb.Model {
@@ -59,6 +60,9 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		[DynamoDBProperty("RemainingPower")]
 		public int RemainingPower { get; set; }
+
+		[DynamoDBProperty("CreatedOn")]
+		public DateTime CreatedOn { get; set; }
 
 		private static string GetKey( string mothershipModuleId ) {
 			return $"{ItemType}{mothershipModuleId}";

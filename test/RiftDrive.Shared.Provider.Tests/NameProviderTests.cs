@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace RiftDrive.Shared.Provider.Tests {
@@ -15,6 +16,13 @@ namespace RiftDrive.Shared.Provider.Tests {
 			string actual = _nameProvider.CreateMothershipName();
 
 			Assert.IsFalse( string.IsNullOrWhiteSpace( actual ) );
+
+			var result = new List<string>();
+			for (int i = 0; i < 100; i++ ) {
+				result.Add( _nameProvider.CreateMothershipName() );
+			}
+
+			CollectionAssert.DoesNotContain( result, null );
 		}
 	}
 }

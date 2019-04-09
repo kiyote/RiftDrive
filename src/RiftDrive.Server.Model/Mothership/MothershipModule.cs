@@ -24,12 +24,14 @@ namespace RiftDrive.Server.Model {
 			Id<MothershipModule> id,
 			string name,
 			string description,
-			IEnumerable<MothershipModuleAction> actions
+			IEnumerable<MothershipModuleAction> actions,
+			IEnumerable<MothershipModuleEffect> effects
 		) {
 			Id = id;
 			Name = name;
 			Description = description;
 			Actions = actions;
+			Effects = effects;
 		}
 
 		public Id<MothershipModule> Id { get; }
@@ -40,6 +42,8 @@ namespace RiftDrive.Server.Model {
 
 		public IEnumerable<MothershipModuleAction> Actions { get; }
 
+		public IEnumerable<MothershipModuleEffect> Effects { get; }
+
 		public bool Equals( MothershipModule other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
@@ -47,7 +51,8 @@ namespace RiftDrive.Server.Model {
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& Actions.Similar( other.Actions );
+				&& Actions.Similar( other.Actions )
+				&& Effects.Similar( other.Effects );
 		}
 
 		public override bool Equals( object obj ) {
@@ -64,6 +69,7 @@ namespace RiftDrive.Server.Model {
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + Actions.GetFinalHashCode();
+				result = ( result * 31 ) + Effects.GetFinalHashCode();
 
 				return result;
 			}
