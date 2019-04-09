@@ -26,6 +26,7 @@ using GameStartInformation = RiftDrive.Client.Model.GameStartInformation;
 using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
 using ClientGame = RiftDrive.Client.Model.Game;
 using ClientPlayer = RiftDrive.Client.Model.Player;
+using ClientMothership = RiftDrive.Client.Model.Mothership;
 
 namespace RiftDrive.Server.Controllers {
 	[Authorize]
@@ -61,7 +62,7 @@ namespace RiftDrive.Server.Controllers {
 
 
 		[HttpPost( "{gameId}" )]
-		public async Task<ActionResult<ClientGame>> GetGame( string gameId, [FromBody] GameStartInformation gameInfo ) {
+		public async Task<ActionResult<ClientGame>> StartGame( string gameId, [FromBody] GameStartInformation gameInfo ) {
 			ClientGame game = await _gameManager.StartGame( new Id<Game>( gameId ) );
 
 			return Ok( game );
@@ -79,6 +80,13 @@ namespace RiftDrive.Server.Controllers {
 			IEnumerable<ClientPlayer> players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );
 
 			return Ok( players );
+		}
+
+		[HttpGet("{gameId}/mothership")]
+		public async Task<ActionResult<ClientMothership>> GetMothership(string gameId) {
+			ClientMothership mothership = await _gameManager.GetMothership( new Id<Game>( gameId ) );
+
+			return Ok( mothership );
 		}
 	}
 }

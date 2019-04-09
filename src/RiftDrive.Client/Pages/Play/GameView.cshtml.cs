@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
@@ -6,12 +8,13 @@ using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Pages.Play {
-	public class GameSummaryComponent : ComponentBase {
+namespace RiftDrive.Client.Pages.Play
+{
+    public class GameViewComponent : ComponentBase
+    {
+		public const string Url = "/game/view";
 
-		public const string Url = "/game/summary";
-
-		public GameSummaryComponent() {
+		public GameViewComponent() {
 			Game = Game.None;
 		}
 
@@ -31,16 +34,6 @@ namespace RiftDrive.Client.Pages.Play {
 				UriHelper.NavigateTo( IndexComponent.Url );
 			}
 			Game = await GameService.GetGame( new Id<Game>( gameIdValue ) );
-		}
-
-		protected async Task StartGame() {
-			await GameService.StartGame( Game.Id, "Game has started!" );
-			UriHelper.NavigateTo( GameViewComponent.Url );
-		}
-
-		protected Task PlayGame() {
-			UriHelper.NavigateTo( GameViewComponent.Url );
-			return Task.CompletedTask;
 		}
 	}
 }

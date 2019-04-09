@@ -26,5 +26,7 @@ namespace RiftDrive.Server.Repository {
 		Task DeleteMothership( Id<Game> gameId );
 
 		Task<MothershipAttachedModule> CreateModule( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId, int remainingPower, DateTime createdOn );
+
+		Task<Mothership> GetMothership( Id<Game> gameId );
 	}
 }

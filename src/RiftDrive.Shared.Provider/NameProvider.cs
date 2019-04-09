@@ -50,7 +50,7 @@ namespace RiftDrive.Shared.Provider {
 			if (_random.Flip()) {
 				return $"{GetSubject()}{GetAction()}";
 			} else {
-				return $"{GetObject()} of the {GetSubject()}";
+				return $"{GetObject()} of {GetSubject()}";
 			}
 		}
 

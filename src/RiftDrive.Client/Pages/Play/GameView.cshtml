@@ -1,0 +1,12 @@
+﻿@page "/game/view"
+@inherits GameViewComponent
+@layout MainLayout
+
+@if (Game == Model.Game.None)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <MothershipSummary GameId=@Game.Id.Value></MothershipSummary> 
+}

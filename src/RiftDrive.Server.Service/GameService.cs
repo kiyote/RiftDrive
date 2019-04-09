@@ -59,7 +59,7 @@ namespace RiftDrive.Server.Service {
 			Game game = await _gameRepository.Create( new Id<Game>(), config.GameName, config.CreatedOn );
 			await _playerRepository.Create( game.Id, new Id<Player>(), config.CreatedBy, config.PlayerName, config.CreatedOn );
 
-			Mothership mothership = await _mothershipRepository.CreateMothership( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), 4, 6, config.CreatedOn );
+			Mothership mothership = await _mothershipRepository.CreateMothership( game.Id, new Id<Mothership>(), _nameProvider.CreateMothershipName(), 4, 10, config.CreatedOn );
 			await _mothershipRepository.CreateModule( mothership.Id, MothershipModule.Hanger.Id, 5, config.CreatedOn );
 			await _mothershipRepository.CreateModule( mothership.Id, MothershipModule.Cryogenics.Id, 5, config.CreatedOn );
 
@@ -86,6 +86,10 @@ namespace RiftDrive.Server.Service {
 				await _playerRepository.Delete( gameId, player.Id );
 			}
 			await _gameRepository.Delete( gameId );
+		}
+
+		async Task<Mothership> IGameService.GetMothership(Id<Game> gameId) {
+			return await _mothershipRepository.GetMothership( gameId );
 		}
 	}
 }

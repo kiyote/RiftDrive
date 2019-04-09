@@ -52,6 +52,30 @@
     --font-family-serif: "Roboto Slab", Georgia, "Times New Roman", Times, serif;
 }
 
+.modal-footer .btn-primary {
+    color: #78909c
+}
+
+.modal-footer .btn-primary.active {
+    color: #78909c
+}
+
+.modal-footer .btn-primary:hover {
+    color: #78909c
+}
+
+.modal-footer .btn-secondary {
+    color: #607d8b
+}
+
+.modal-footer .btn-secondary.active {
+    color: #607d8b
+}
+
+.modal-footer .btn-secondary:hover {
+    color: #607d8b
+}
+
 .btn-primary.active {
     background-color: #78909c
 }

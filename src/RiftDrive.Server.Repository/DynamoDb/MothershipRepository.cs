@@ -92,6 +92,18 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMothershipAttachedModule( record );
 		}
 
+		async Task<Mothership> IMothershipRepository.GetMothership( Id<Game> gameId ) {
+			AsyncSearch<MothershipRecord> query = _context.QueryAsync<MothershipRecord>(
+				GameRecord.GetKey( gameId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					MothershipRecord.ItemType
+				} );
+
+			List<MothershipRecord> records = await query.GetRemainingAsync();
+			return ToMothership( records.First() );
+		}
+
 		private async Task<IEnumerable<Id<MothershipModule>>> GetAttachedModuleIds( Id<Mothership> mothershipId ) {
 			AsyncSearch<MothershipAttachedModuleRecord> query = _context.QueryAsync<MothershipAttachedModuleRecord>(
 				MothershipRecord.GetKey( mothershipId.Value ),

@@ -22,6 +22,7 @@ using RiftDrive.Server.Service;
 using RiftDrive.Shared;
 using ClientGame = RiftDrive.Client.Model.Game;
 using ClientPlayer = RiftDrive.Client.Model.Player;
+using ClientMothership = RiftDrive.Client.Model.Mothership;
 
 namespace RiftDrive.Server.Managers {
 	public class GameManager {
@@ -34,7 +35,7 @@ namespace RiftDrive.Server.Managers {
 			_gameService = gameService;
 		}
 
-		public async Task<ClientGame> CreateGame(Id<User> userId, string gameName, string playerName) {
+		public async Task<ClientGame> CreateGame( Id<User> userId, string gameName, string playerName ) {
 			var config = new CreateGameConfiguration(
 				userId,
 				DateTime.UtcNow,
@@ -46,7 +47,7 @@ namespace RiftDrive.Server.Managers {
 			return ToClientGame( game );
 		}
 
-		public async Task<IEnumerable<ClientGame>> GetGames(Id<User> userId) {
+		public async Task<IEnumerable<ClientGame>> GetGames( Id<User> userId ) {
 			IEnumerable<Game> games = await _gameService.GetGames( userId );
 
 			return games.Select( g => ToClientGame( g ) );
@@ -64,13 +65,18 @@ namespace RiftDrive.Server.Managers {
 			return ToClientGame( game );
 		}
 
-		public async Task<IEnumerable<ClientPlayer>> GetPlayers(Id<Game> gameId) {
+		public async Task<IEnumerable<ClientPlayer>> GetPlayers( Id<Game> gameId ) {
 			IEnumerable<Player> players = await _gameService.GetPlayers( gameId );
 
 			return players.Select( p => ToClientPlayer( p ) );
 		}
 
-		private ClientGame ToClientGame(Game game) {
+		public async Task<ClientMothership> GetMothership( Id<Game> gameId ) {
+			Mothership mothership = await _gameService.GetMothership( gameId );
+			return ToClientMothership( mothership );
+		}
+
+		private ClientGame ToClientGame( Game game ) {
 			return new ClientGame(
 				new Id<ClientGame>( game.Id.Value ),
 				game.Name,
@@ -78,11 +84,20 @@ namespace RiftDrive.Server.Managers {
 				game.State );
 		}
 
-		private ClientPlayer ToClientPlayer(Player player) {
+		private ClientPlayer ToClientPlayer( Player player ) {
 			return new ClientPlayer(
 				new Id<ClientPlayer>( player.Id.Value ),
 				new Id<ClientGame>( player.GameId.Value ),
 				player.Name );
+		}
+
+		private ClientMothership ToClientMothership( Mothership mothership ) {
+			return new ClientMothership(
+				new Id<ClientMothership>( mothership.Id.Value ),
+				new Id<ClientGame>( mothership.GameId.Value ),
+				mothership.Name,
+				mothership.AvailableCrew,
+				mothership.RemainingFuel );
 		}
 	}
 }

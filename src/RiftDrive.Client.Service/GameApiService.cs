@@ -97,5 +97,13 @@ namespace RiftDrive.Client.Service {
 
 			return response;
 		}
+
+		async Task<Mothership> IGameApiService.GetMothership( Id<Game> gameId ) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Mothership response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership",
+				( s ) => { return _json.Deserialize<Mothership>( s ); } );
+
+			return response;
+		}
 	}
 }

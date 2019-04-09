@@ -33,5 +33,7 @@ namespace RiftDrive.Server.Service {
 		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
 
 		Task DeleteGame( Id<Game> gameId );
+
+		Task<Mothership> GetMothership( Id<Game> gameId );
 	}
 }

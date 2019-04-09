@@ -1,0 +1,30 @@
+﻿@inherits MothershipSummaryComponent
+
+@if (Mothership == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <Card>
+        <CardHeader>
+            <CardTitle>@Mothership.Name</CardTitle>
+        </CardHeader>
+        <CardBody>
+            <CardText>
+                <TableContainer IsBordered="true" IsStriped="true">
+                    <TableBody>
+                        <TableRow>
+                            <TableRowCell>Crew</TableRowCell>
+                            <TableRowCell>@Mothership.AvailableCrew</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowCell>Fuel</TableRowCell>
+                            <TableRowCell>@Mothership.RemainingFuel</TableRowCell>
+                        </TableRow>
+                    </TableBody>
+                </TableContainer>
+            </CardText>
+        </CardBody>
+    </Card>
+}

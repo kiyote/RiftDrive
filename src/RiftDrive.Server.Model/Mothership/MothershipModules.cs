@@ -38,6 +38,12 @@ namespace RiftDrive.Server.Model {
 			"Hanger",
 			"Hanger",
 			new List<MothershipModuleAction>() {
+				new MothershipModuleAction(
+					"Launch Mission",
+					"Send out the ship to have an encounter.",
+					new List<MothershipModuleEffect>() {
+						new MothershipModuleEffect(ModuleEffect.ConsumeFuel, 5)
+					} )
 			},
 			new List<MothershipModuleEffect>() {
 				new MothershipModuleEffect( ModuleEffect.ConsumePower, 1 )

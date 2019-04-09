@@ -33,9 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Model", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client.Service", "src\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj", "{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Shared.Provider", "src\RiftDrive.Shared.Provider\RiftDrive.Shared.Provider.csproj", "{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Provider", "src\RiftDrive.Shared.Provider\RiftDrive.Shared.Provider.csproj", "{F9FB80FE-9B73-44F4-B093-5762FCEA95B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Shared.Provider.Tests", "test\RiftDrive.Shared.Provider.Tests\RiftDrive.Shared.Provider.Tests.csproj", "{272A21DA-F173-4B30-888A-2613AB1A0E75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Provider.Tests", "test\RiftDrive.Shared.Provider.Tests\RiftDrive.Shared.Provider.Tests.csproj", "{272A21DA-F173-4B30-888A-2613AB1A0E75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
