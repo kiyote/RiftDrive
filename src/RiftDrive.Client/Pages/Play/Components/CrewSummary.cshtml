@@ -1,0 +1,31 @@
+﻿@inherits CrewSummaryComponent
+
+<Card>
+    <CardHeader>
+        <CardTitle>Crew</CardTitle>
+    </CardHeader>
+    <CardBody>
+        <CardText>
+            <TableContainer IsBordered="true" IsStriped="true">
+                <TableHeader>
+                    <TableHeaderCell>Name</TableHeaderCell>
+                    <TableHeaderCell>Intelligence</TableHeaderCell>
+                    <TableHeaderCell>Talent</TableHeaderCell>
+                    <TableHeaderCell>Training</TableHeaderCell>
+                </TableHeader>
+                <TableBody>
+                    @foreach (var crew in Crew)
+                    {
+                        <TableRow>
+                            <TableRowCell>@crew.Name</TableRowCell>
+                            <TableRowCell>@crew.Intelligence</TableRowCell>
+                            <TableRowCell>@crew.Talent</TableRowCell>
+                            <TableRowCell>@crew.Training</TableRowCell>
+                        </TableRow>
+                    }
+                </TableBody>
+            </TableContainer>
+        </CardText>
+    </CardBody>
+</Card>
+

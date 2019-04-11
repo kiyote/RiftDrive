@@ -9,18 +9,22 @@ using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Play.Components
 {
-    public class MothershipSummaryComponent : ComponentBase
+    public class CrewSummaryComponent: ComponentBase
     {
+		public CrewSummaryComponent() {
+			Crew = new List<Actor>();
+		}
+
 #nullable disable
-        [Inject] protected IGameApiService GameService { get; set; }
+		[Inject] protected IGameApiService GameService { get; set; }
 
 		[Parameter] protected Game Game { get; set; }
 #nullable enable
 
-		protected Mothership? Mothership { get; set; }
+		public IEnumerable<Actor> Crew { get; set; }
 
 		protected override async Task OnInitAsync() {
-			Mothership = await GameService.GetMothership( Game.Id );
+			Crew = await GameService.GetCrew( Game.Id );
 		}
 	}
 }

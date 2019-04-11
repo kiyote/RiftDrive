@@ -82,9 +82,9 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
-		async Task<Game> IGameApiService.GetGame(Id<Game> gameId) {
+		async Task<Game?> IGameApiService.GetGame(Id<Game> gameId) {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Game response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
+			Game? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
 				( s ) => { return _json.Deserialize<Game>( s ); } );
 
 			return response;
@@ -102,6 +102,14 @@ namespace RiftDrive.Client.Service {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
 			Mothership response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership",
 				( s ) => { return _json.Deserialize<Mothership>( s ); } );
+
+			return response;
+		}
+
+		async Task<IEnumerable<Actor>> IGameApiService.GetCrew( Id<Game> gameId ) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Actor[] response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/crew",
+				( s ) => { return _json.Deserialize<Actor[]>( s ); } );
 
 			return response;
 		}

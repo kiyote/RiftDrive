@@ -16,23 +16,21 @@ namespace RiftDrive.Client.Pages.Play.Components {
 		}
 
 #nullable disable
-		[Parameter] protected string GameId { get; set; }
-
-		[Parameter] protected string GameName { get; set; }
-
 		[Inject] protected IGameApiService GameService { get; set; }
 
 		protected Modal ModalRef { get; set; }
 #nullable enable
+
+		[Parameter] protected Game? Game { get; set; }
 
 		protected IEnumerable<Player> Players { get; set; }
 
 		protected string EditPlayerName { get; set; }
 
 		protected override async Task OnParametersSetAsync() {
-			if( !string.IsNullOrWhiteSpace( GameId ) ) {
-				Players = await GameService.GetPlayers( new Id<Game>( GameId ) );
-			}
+			if( Game != null ) {
+				Players = await GameService.GetPlayers( Game.Id );
+			} 
 		}
 
 		public Task EditPlayer( Player player ) {

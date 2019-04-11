@@ -11,10 +11,6 @@ namespace RiftDrive.Client.Pages.Play {
 
 		public const string Url = "/game/summary";
 
-		public GameSummaryComponent() {
-			Game = Game.None;
-		}
-
 #nullable disable
 		[Inject] protected IAppState State { get; set; }
 
@@ -22,8 +18,7 @@ namespace RiftDrive.Client.Pages.Play {
 
 		[Inject] protected IGameApiService GameService { get; set; }
 #nullable enable
-
-		protected Game Game { get; set; }
+		protected Game? Game { get; set; }
 
 		protected override async Task OnInitAsync() {
 			string gameIdValue = await State.GetPlayGameId();
@@ -31,10 +26,14 @@ namespace RiftDrive.Client.Pages.Play {
 				UriHelper.NavigateTo( IndexComponent.Url );
 			}
 			Game = await GameService.GetGame( new Id<Game>( gameIdValue ) );
+
+			if (Game == default) {
+				UriHelper.NavigateTo( IndexComponent.Url );
+			}
 		}
 
 		protected async Task StartGame() {
-			await GameService.StartGame( Game.Id, "Game has started!" );
+			await GameService.StartGame( Game!.Id, "Game has started!" );
 			UriHelper.NavigateTo( GameViewComponent.Url );
 		}
 

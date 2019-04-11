@@ -13,8 +13,10 @@ namespace RiftDrive.Client.Service {
 
 		Task<IEnumerable<Player>> GetPlayers( Id<Game> gameId );
 
-		Task<Game> GetGame( Id<Game> gameId );
+		Task<Game?> GetGame( Id<Game> gameId );
 
 		Task<Mothership> GetMothership( Id<Game> gameId );
+
+		Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId );
 	}
 }

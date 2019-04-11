@@ -2,11 +2,19 @@
 @inherits GameViewComponent
 @layout MainLayout
 
-@if (Game == Model.Game.None)
+@if (Game == default)
 {
     <span>Loading...</span>
 }
 else
 {
-    <MothershipSummary GameId=@Game.Id.Value></MothershipSummary> 
+    <Row>
+        <Column>
+            <MothershipSummary Game=@Game></MothershipSummary>
+
+        </Column>
+        <Column>
+            <CrewSummary Game=@Game></CrewSummary>
+        </Column>
+    </Row>
 }

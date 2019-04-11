@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using Newtonsoft.Json;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared {
 	public sealed class Actor: IEquatable<Actor> {
 
+		[JsonConstructor]
 		public Actor(
 			Id<Actor> id,
 			Id<Game> gameId,

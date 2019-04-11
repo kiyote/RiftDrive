@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Shared;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
-	public sealed class Game: IEquatable<Game> {
+namespace RiftDrive.Shared {
+	public class Game : IEquatable<Game> {
 
+		[JsonConstructor]
 		public Game(
-			Id<Game> gameId,
+			Id<Game> id,
 			string name,
 			DateTime createdOn,
 			GameState state
 		) {
-			Id = gameId;
+			Id = id;
 			Name = name;
-			CreatedOn = createdOn.ToUniversalTime();
+			CreatedOn = createdOn;
 			State = state;
 		}
 
@@ -42,14 +42,18 @@ namespace RiftDrive.Server.Model {
 		public GameState State { get; }
 
 		public bool Equals( Game other ) {
-			if (ReferenceEquals(other, this)) {
+			if (other is null) {
+				return false;
+			}
+
+			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& DateTime.Equals( CreatedOn, other.CreatedOn )
-				&& State.Equals( other.State );
+				&& State == other.State;
 		}
 
 		public override bool Equals( object obj ) {
@@ -63,10 +67,10 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( 31 * result ) + Id.GetHashCode();
-				result = ( 31 * result ) + Name.GetHashCode();
-				result = ( 31 * result ) + CreatedOn.GetHashCode();
-				result = ( 31 * result ) + State.GetHashCode();
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 13 ) + Name.GetHashCode();
+				result = ( result * 31 ) + CreatedOn.GetHashCode();
+				result = ( result * 31 ) + State.GetHashCode();
 
 				return result;
 			}

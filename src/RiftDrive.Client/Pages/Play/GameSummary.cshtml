@@ -2,13 +2,13 @@
 @layout MainLayout
 @page "/game/summary"
 
-@if (Game == Model.Game.None)
+@if (Game == default)
 {
     <span>Loading...</span>
 }
 else
 {
-    <GamePlayersSummary GameId=@Game.Id.Value GameName=@Game.Name></GamePlayersSummary>
+    <GamePlayersSummary Game=@Game></GamePlayersSummary>
 
     @if (Game.State == Shared.GameState.WaitingForPlayers)
     {
