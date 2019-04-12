@@ -41,10 +41,10 @@ namespace BlazorSpa.Server.Repository.DynamoDb {
 			if( !chain.TryGetAWSCredentials( options.CredentialsProfile, out AWSCredentials credentials ) ) {
 				throw new InvalidOperationException();
 			}
-			var roleCredentials = new AssumeRoleAWSCredentials( 
-				credentials, 
-				options.Role, 
-				Guid.NewGuid().ToString("N") );
+			var roleCredentials = new AssumeRoleAWSCredentials(
+				credentials,
+				options.Role,
+				Guid.NewGuid().ToString( "N" ) );
 
 			AmazonDynamoDBConfig config = new AmazonDynamoDBConfig();
 			config.RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint );

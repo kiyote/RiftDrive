@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RiftDrive.Server.Service {
 	public static class ServiceExtensions {
-		public static IServiceCollection RegisterServices(this IServiceCollection services) {
+		public static IServiceCollection RegisterServices( this IServiceCollection services ) {
 			services.AddSingleton<IImageService, ImageService>();
 			services.AddSingleton<IIdentificationService, IdentificationService>();
 			services.AddSingleton<IGameService, GameService>();

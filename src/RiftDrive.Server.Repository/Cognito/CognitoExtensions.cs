@@ -22,7 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RiftDrive.Server.Repository.Cognito {
 	public static class CognitoExtensions {
-		public static IServiceCollection AddCognito( this IServiceCollection services, CognitoOptions options) {
+		public static IServiceCollection AddCognito( this IServiceCollection services, CognitoOptions options ) {
 			services.AddSingleton( options );
 
 			var provider = CreateProvider( options );
@@ -31,7 +31,7 @@ namespace RiftDrive.Server.Repository.Cognito {
 			return services;
 		}
 
-		public static IAmazonCognitoIdentityProvider CreateProvider(CognitoOptions options) {
+		public static IAmazonCognitoIdentityProvider CreateProvider( CognitoOptions options ) {
 			var chain = new CredentialProfileStoreChain( options.CredentialsFile );
 			AWSCredentials credentials;
 			if( !chain.TryGetAWSCredentials( options.CredentialsProfile, out credentials ) ) {

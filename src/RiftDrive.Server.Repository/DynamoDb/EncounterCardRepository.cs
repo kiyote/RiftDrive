@@ -50,7 +50,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			await _context.SaveAsync( record );
 
 			var interactionRecords = new List<EncounterCardInteractionRecord>();
-			foreach (var interaction in interactions) {
+			foreach( var interaction in interactions ) {
 				var interactionRecord = new EncounterCardInteractionRecord {
 					EncounterCardId = id.Value,
 					InteractionId = interaction.Id.Value,
@@ -68,7 +68,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToEncounterCard( record, interactionRecords );
 		}
 
-		async Task<IEnumerable<Id<EncounterCard>>> IEncounterCardRepository.GetCardIds(Id<Deck> deckId) {
+		async Task<IEnumerable<Id<EncounterCard>>> IEncounterCardRepository.GetCardIds( Id<Deck> deckId ) {
 			AsyncSearch<EncounterDeckCardRecord> cardRecords = _context.QueryAsync<EncounterDeckCardRecord>(
 				DeckRecord.GetKey( deckId.Value ),
 				QueryOperator.BeginsWith,
@@ -83,28 +83,28 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			IEnumerable<Id<EncounterCard>> cardIds
 		) {
 			var batchGet = _context.CreateBatchGet<EncounterCardRecord>();
-			foreach (var cardId in cardIds) {
+			foreach( var cardId in cardIds ) {
 				batchGet.AddKey( EncounterCardRecord.GetKey( cardId.Value ), EncounterCardRecord.GetKey( cardId.Value ) );
 			}
 			await batchGet.ExecuteAsync();
 
 			var result = new List<EncounterCard>();
-			foreach (var card in batchGet.Results) {
+			foreach( var card in batchGet.Results ) {
 
-				result.Add( ToEncounterCard( card, await GetInteractions(card.EncounterCardId) ));
+				result.Add( ToEncounterCard( card, await GetInteractions( card.EncounterCardId ) ) );
 			}
 
 			return result;
 		}
 
-		async Task<EncounterCard> IEncounterCardRepository.GetCard( Id<EncounterCard> cardId) {
+		async Task<EncounterCard> IEncounterCardRepository.GetCard( Id<EncounterCard> cardId ) {
 			EncounterCardRecord encounterCardRecord = await _context.LoadAsync<EncounterCardRecord>( EncounterCardRecord.GetKey( cardId.Value ), EncounterCardRecord.GetKey( cardId.Value ) );
 			IEnumerable<EncounterCardInteractionRecord> interactionRecords = await GetInteractions( cardId.Value );
 
 			return ToEncounterCard( encounterCardRecord, interactionRecords );
 		}
 
-		private async Task<IEnumerable<EncounterCardInteractionRecord>> GetInteractions(string encounterCardId) {
+		private async Task<IEnumerable<EncounterCardInteractionRecord>> GetInteractions( string encounterCardId ) {
 			AsyncSearch<EncounterCardInteractionRecord> query = _context.QueryAsync<EncounterCardInteractionRecord>(
 				EncounterCardRecord.GetKey( encounterCardId ),
 				QueryOperator.BeginsWith,
@@ -118,13 +118,13 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			IEnumerable<EncounterCardInteractionRecord> ir
 		) {
 			var interactions = ir.Select( i => new EncounterInteraction(
-				new Id<EncounterInteraction>(i.InteractionId),
+				new Id<EncounterInteraction>( i.InteractionId ),
 				i.Description,
 				new SkillCheckOutcomes(
-					(Skill)Enum.Parse(typeof(Skill), i.OutcomeSkill),
+					(Skill)Enum.Parse( typeof( Skill ), i.OutcomeSkill ),
 					i.OutcomeTarget,
 					i.OutcomeSuccess,
-					i.OutcomeFailure)
+					i.OutcomeFailure )
 				) );
 			return new EncounterCard(
 				new Id<EncounterCard>( r.EncounterCardId ),

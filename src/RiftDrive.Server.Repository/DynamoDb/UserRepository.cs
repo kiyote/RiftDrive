@@ -68,7 +68,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				userRecord.PreviousLogin,
 				userRecord.Name );
 		}
-		
+
 
 		async Task<User> IUserRepository.AddUser(
 			Id<User> userId,

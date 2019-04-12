@@ -33,7 +33,7 @@ namespace RiftDrive.Server.Repository.S3 {
 			IAmazonS3 client,
 			S3Options options
 		) {
-			if (options.Bucket == default) {
+			if( options.Bucket == default ) {
 				throw new InvalidOperationException();
 			}
 
@@ -43,21 +43,21 @@ namespace RiftDrive.Server.Repository.S3 {
 
 		async Task<Image?> IImageRepository.Add( Id<Image> id, string contentType, string content ) {
 			string key = GetKey( id );
-			if (await PutImage(key, contentType, content)) {
+			if( await PutImage( key, contentType, content ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
 
 			return default;
 		}
 
-		async Task<bool> IImageRepository.Exists(Id<Image> id) {
+		async Task<bool> IImageRepository.Exists( Id<Image> id ) {
 			string key = GetKey( id );
 			return await Exists( key );
 		}
 
 		async Task<Image?> IImageRepository.Get( Id<Image> id ) {
 			string key = GetKey( id );
-			if (await Exists( key )) {
+			if( await Exists( key ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
 
@@ -82,7 +82,7 @@ namespace RiftDrive.Server.Repository.S3 {
 			return default;
 		}
 
-		private async Task<bool> Exists(string key) {
+		private async Task<bool> Exists( string key ) {
 			try {
 				var request = new GetObjectMetadataRequest {
 					BucketName = _bucket,
@@ -93,16 +93,16 @@ namespace RiftDrive.Server.Repository.S3 {
 				await _client.GetObjectMetadataAsync( request );
 				return true;
 			} catch( AmazonS3Exception e ) {
-				if(  string.Equals( e.ErrorCode, "NoSuchBucket" )  
-				  ||  string.Equals( e.ErrorCode, "NotFound" ) 
-				  ||  string.Equals( e.ErrorCode, "Forbidden" )  ) { 
+				if( string.Equals( e.ErrorCode, "NoSuchBucket" )
+				  || string.Equals( e.ErrorCode, "NotFound" )
+				  || string.Equals( e.ErrorCode, "Forbidden" ) ) {
 					return false;
 				}
 				throw;
 			}
 		}
 
-		private async Task<bool> PutImage(string key, string contentType, string content) {
+		private async Task<bool> PutImage( string key, string contentType, string content ) {
 			using( var ms = new MemoryStream( Convert.FromBase64String( content ) ) ) {
 				var request = new PutObjectRequest() {
 					BucketName = _bucket,

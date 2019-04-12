@@ -87,7 +87,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task<IEnumerable<Player>> IPlayerRepository.GetPlayers( Id<Game> gameId ) {
-			AsyncSearch<PlayerRecord> query = _context.QueryAsync<PlayerRecord>(GameRecord.GetKey(gameId.Value),
+			AsyncSearch<PlayerRecord> query = _context.QueryAsync<PlayerRecord>( GameRecord.GetKey( gameId.Value ),
 				QueryOperator.BeginsWith,
 				new List<object>() { PlayerRecord.ItemType } );
 

@@ -55,12 +55,12 @@ namespace RiftDrive.Server.Controllers {
 				return NotFound();
 			}
 		}
-		
+
 		[HttpPost( "avatar" )]
 		public async Task<ActionResult<AvatarUrl>> SetAvatar( [FromBody] AvatarImage request ) {
 
 			var url = await _userManager.SetAvatar( _contextInformation.UserId, request.ContentType, request.Content );
 			return Ok( new AvatarUrl( url ) );
-		}		
+		}
 	}
 }

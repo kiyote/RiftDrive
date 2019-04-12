@@ -34,8 +34,8 @@ namespace RiftDrive.Server.Repository.Cognito {
 			_cognitoOptions = cognitoOptions;
 		}
 
-		async Task<AuthenticationUserInformation> IAuthenticationRepository.GetUserInformation(string username) {
-			var response = await _client.AdminGetUserAsync( new AdminGetUserRequest() {				
+		async Task<AuthenticationUserInformation> IAuthenticationRepository.GetUserInformation( string username ) {
+			var response = await _client.AdminGetUserAsync( new AdminGetUserRequest() {
 				Username = username,
 				UserPoolId = _cognitoOptions.UserPoolId
 			} );

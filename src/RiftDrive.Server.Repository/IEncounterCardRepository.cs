@@ -24,7 +24,7 @@ namespace RiftDrive.Server.Repository {
 			Id<EncounterCard> id,
 			string description,
 			SkillCheck skillCheck,
-			IEnumerable<EncounterInteraction> interactions);
+			IEnumerable<EncounterInteraction> interactions );
 
 		Task<IEnumerable<Id<EncounterCard>>> GetCardIds( Id<Deck> deckId );
 

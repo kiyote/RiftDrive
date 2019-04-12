@@ -88,7 +88,7 @@ namespace RiftDrive.Server.Service {
 			await _gameRepository.Delete( gameId );
 		}
 
-		async Task<Mothership> IGameService.GetMothership(Id<Game> gameId) {
+		async Task<Mothership> IGameService.GetMothership( Id<Game> gameId ) {
 			return await _mothershipRepository.GetMothership( gameId );
 		}
 

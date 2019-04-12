@@ -98,7 +98,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToGame( gameRecord );
 		}
 
-		private async Task AddStatistic(string statistic, int amount) {
+		private async Task AddStatistic( string statistic, int amount ) {
 			var request = new UpdateItemRequest {
 				TableName = "RiftDrive-Development",
 				Key = new Dictionary<string, AttributeValue>() {
@@ -123,7 +123,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				new Id<Game>( r.GameId ),
 				r.Name,
 				r.CreatedOn,
-				(GameState)Enum.Parse(typeof(GameState), r.State));
+				(GameState)Enum.Parse( typeof( GameState ), r.State ) );
 		}
 	}
 }

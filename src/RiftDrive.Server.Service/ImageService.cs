@@ -39,11 +39,11 @@ namespace RiftDrive.Server.Service {
 			return await _imageRepository.Update( id, contentType, content );
 		}
 
-		async Task<Image?> IImageService.Get(Id<Image> id) {
+		async Task<Image?> IImageService.Get( Id<Image> id ) {
 			return await _imageRepository.Get( id );
 		}
 
-		async Task IImageService.Remove(Id<Image> id) {
+		async Task IImageService.Remove( Id<Image> id ) {
 			await _imageRepository.Remove( id );
 		}
 	}

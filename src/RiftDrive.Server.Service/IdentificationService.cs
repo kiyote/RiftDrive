@@ -20,7 +20,7 @@ using RiftDrive.Server.Model;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Server.Service {
-	internal sealed class IdentificationService: IIdentificationService {
+	internal sealed class IdentificationService : IIdentificationService {
 
 		private readonly IAuthenticationRepository _authenticationRepository;
 		private readonly IUserRepository _userRepository;
@@ -54,11 +54,11 @@ namespace RiftDrive.Server.Service {
 			return user;
 		}
 
-		async Task<User> IIdentificationService.GetUser(Id<User> userId) {
+		async Task<User> IIdentificationService.GetUser( Id<User> userId ) {
 			return await _userRepository.GetUser( userId );
 		}
 
-		async Task<User> IIdentificationService.SetAvatarStatus(Id<User> userId, bool hasAvatar) {
+		async Task<User> IIdentificationService.SetAvatarStatus( Id<User> userId, bool hasAvatar ) {
 			return await _userRepository.UpdateAvatarStatus( userId, hasAvatar );
 		}
 	}
