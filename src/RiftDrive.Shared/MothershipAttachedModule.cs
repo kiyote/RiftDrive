@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using Newtonsoft.Json;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared {
 	public sealed class MothershipAttachedModule : IEquatable<MothershipAttachedModule> {
 
+		[JsonConstructor]
 		public MothershipAttachedModule(
 			Id<Mothership> mothershipId,
 			Id<MothershipModule> mothershipModuleId,

@@ -95,5 +95,11 @@ namespace RiftDrive.Server.Service {
 		async Task<IEnumerable<Actor>> IGameService.GetCrew( Id<Game> gameId ) {
 			return await _actorRepository.GetActors( gameId );
 		}
+
+		async Task<IEnumerable<MothershipAttachedModule>> IGameService.GetMothershipModules(
+			Id<Mothership> mothershipId
+		) {
+			return await _mothershipRepository.GetAttachedModules( mothershipId );
+		}
 	}
 }

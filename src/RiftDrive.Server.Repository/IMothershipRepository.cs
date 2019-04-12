@@ -28,5 +28,7 @@ namespace RiftDrive.Server.Repository {
 		Task<MothershipAttachedModule> CreateModule( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId, int remainingPower, DateTime createdOn );
 
 		Task<Mothership> GetMothership( Id<Game> gameId );
+
+		Task<IEnumerable<MothershipAttachedModule>> GetAttachedModules( Id<Mothership> mothershipId );
 	}
 }

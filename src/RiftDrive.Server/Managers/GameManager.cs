@@ -21,7 +21,6 @@ using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
 using RiftDrive.Shared;
 using ClientPlayer = RiftDrive.Client.Model.Player;
-using ClientMothership = RiftDrive.Client.Model.Mothership;
 
 namespace RiftDrive.Server.Managers {
 	public class GameManager {
@@ -70,9 +69,12 @@ namespace RiftDrive.Server.Managers {
 			return players.Select( p => ToClientPlayer( p ) );
 		}
 
-		public async Task<ClientMothership> GetMothership( Id<Game> gameId ) {
-			Mothership mothership = await _gameService.GetMothership( gameId );
-			return ToClientMothership( mothership );
+		public async Task<Mothership> GetMothership( Id<Game> gameId ) {
+			return await _gameService.GetMothership( gameId );
+		}
+
+		public async Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Mothership> mothershipId ) {
+			return await _gameService.GetMothershipModules( mothershipId );
 		}
 
 		public async Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId ) {
@@ -84,15 +86,6 @@ namespace RiftDrive.Server.Managers {
 				new Id<ClientPlayer>( player.Id.Value ),
 				player.GameId,
 				player.Name );
-		}
-
-		private ClientMothership ToClientMothership( Mothership mothership ) {
-			return new ClientMothership(
-				new Id<ClientMothership>( mothership.Id.Value ),
-				mothership.GameId,
-				mothership.Name,
-				mothership.AvailableCrew,
-				mothership.RemainingFuel );
 		}
 	}
 }

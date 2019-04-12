@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared {
 	public sealed class MothershipModuleEffect : IEquatable<MothershipModuleEffect> {
 
+		[JsonConstructor]
 		public MothershipModuleEffect(
 			ModuleEffect effect,
 			int magnitude

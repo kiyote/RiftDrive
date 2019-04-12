@@ -15,40 +15,49 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
-using RiftDrive.Shared;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
-	public sealed class MothershipModuleAction : IEquatable<MothershipModuleAction> {
+namespace RiftDrive.Shared {
+	public sealed partial class MothershipModule: IEquatable<MothershipModule> {
 
-		public MothershipModuleAction(
+		[JsonConstructor]
+		public MothershipModule(
+			Id<MothershipModule> id,
 			string name,
 			string description,
+			IEnumerable<MothershipModuleAction> actions,
 			IEnumerable<MothershipModuleEffect> effects
 		) {
+			Id = id;
 			Name = name;
 			Description = description;
+			Actions = actions;
 			Effects = effects;
 		}
+
+		public Id<MothershipModule> Id { get; }
 
 		public string Name { get; }
 
 		public string Description { get; }
 
+		public IEnumerable<MothershipModuleAction> Actions { get; }
+
 		public IEnumerable<MothershipModuleEffect> Effects { get; }
 
-		public bool Equals( MothershipModuleAction other ) {
-			if( ReferenceEquals( other, this ) ) {
+		public bool Equals( MothershipModule other ) {
+			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& string.Equals( Description, other.Description, StringComparison.Ordinal )
+			return Id.Equals( other.Id )
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
+				&& Actions.Similar( other.Actions )
 				&& Effects.Similar( other.Effects );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is MothershipModuleAction target ) ) {
+			if( !( obj is MothershipModule target ) ) {
 				return false;
 			}
 
@@ -58,8 +67,9 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
+				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
-				result = ( result * 31 ) + Description.GetHashCode();
+				result = ( result * 31 ) + Actions.GetFinalHashCode();
 				result = ( result * 31 ) + Effects.GetFinalHashCode();
 
 				return result;

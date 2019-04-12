@@ -14,49 +14,50 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using RiftDrive.Shared;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
-	public sealed partial class MothershipModule: IEquatable<MothershipModule> {
+namespace RiftDrive.Shared {
+	public sealed class Mothership : IEquatable<Mothership> {
 
-		public MothershipModule(
-			Id<MothershipModule> id,
+		[JsonConstructor]
+		public Mothership(
+			Id<Mothership> id,
+			Id<Game> gameId,
 			string name,
-			string description,
-			IEnumerable<MothershipModuleAction> actions,
-			IEnumerable<MothershipModuleEffect> effects
+			int availableCrew,
+			int remainingFuel
 		) {
 			Id = id;
 			Name = name;
-			Description = description;
-			Actions = actions;
-			Effects = effects;
+			GameId = gameId;
+			AvailableCrew = availableCrew;
+			RemainingFuel = remainingFuel;
 		}
 
-		public Id<MothershipModule> Id { get; }
+		public Id<Mothership> Id { get; }
+
+		public Id<Game> GameId { get; }
 
 		public string Name { get; }
 
-		public string Description { get; }
+		public int AvailableCrew { get; }
 
-		public IEnumerable<MothershipModuleAction> Actions { get; }
+		public int RemainingFuel { get; }
 
-		public IEnumerable<MothershipModuleEffect> Effects { get; }
-
-		public bool Equals( MothershipModule other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( Mothership other ) {
+			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
+				&& GameId.Equals( other.GameId )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& Actions.Similar( other.Actions )
-				&& Effects.Similar( other.Effects );
+				&& AvailableCrew == other.AvailableCrew
+				&& RemainingFuel == other.RemainingFuel;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is MothershipModule target ) ) {
+			if( !( obj is Mothership target ) ) {
 				return false;
 			}
 
@@ -67,9 +68,10 @@ namespace RiftDrive.Server.Model {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + GameId.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
-				result = ( result * 31 ) + Actions.GetFinalHashCode();
-				result = ( result * 31 ) + Effects.GetFinalHashCode();
+				result = ( result * 31 ) + AvailableCrew.GetHashCode();
+				result = ( result * 31 ) + RemainingFuel.GetHashCode();
 
 				return result;
 			}

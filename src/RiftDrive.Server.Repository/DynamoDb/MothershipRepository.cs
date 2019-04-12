@@ -19,7 +19,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
-using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository.DynamoDb.Model;
 using RiftDrive.Shared;
 
@@ -102,6 +101,18 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 
 			List<MothershipRecord> records = await query.GetRemainingAsync();
 			return ToMothership( records.First() );
+		}
+
+		async Task<IEnumerable<MothershipAttachedModule>> IMothershipRepository.GetAttachedModules( Id<Mothership> mothershipId ) {
+			AsyncSearch<MothershipAttachedModuleRecord> query = _context.QueryAsync<MothershipAttachedModuleRecord>(
+				MothershipRecord.GetKey( mothershipId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					MothershipAttachedModuleRecord.ItemType
+				} );
+
+			List<MothershipAttachedModuleRecord> records = await query.GetRemainingAsync();
+			return records.Select( r => ToMothershipAttachedModule( r ));
 		}
 
 		private async Task<IEnumerable<Id<MothershipModule>>> GetAttachedModuleIds( Id<Mothership> mothershipId ) {

@@ -1,0 +1,27 @@
+﻿@inherits MothershipModuleSummaryComponent
+@using RiftDrive.Shared;
+
+@if (Modules == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <Card>
+        <CardBody>
+            <CardText>
+                <TableContainer IsBordered="true" IsStriped="true">
+                    <TableBody>
+                        @foreach (var module in Modules)
+                        {
+                            MothershipModule definition = MothershipModule.GetById(module.MothershipModuleId);
+                            <TableRow>
+                                <TableRowCell>@definition.Name</TableRowCell>
+                            </TableRow>
+                        }
+                    </TableBody>
+                </TableContainer>
+            </CardText>
+        </CardBody>
+    </Card>
+}

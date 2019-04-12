@@ -37,5 +37,7 @@ namespace RiftDrive.Server.Service {
 		Task<Mothership> GetMothership( Id<Game> gameId );
 
 		Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId );
+
+		Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Mothership> mothershipId );
 	}
 }

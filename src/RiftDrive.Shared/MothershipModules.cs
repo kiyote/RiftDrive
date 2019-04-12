@@ -13,14 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Collections.Generic;
-using RiftDrive.Shared;
+using System.Linq;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared {
 	public sealed partial class MothershipModule {
-		public static List<MothershipModule> All = new List<MothershipModule> {
-			Hanger
-		};
+
+		public static MothershipModule GetById(Id<MothershipModule> id ) {
+			return All.First( m => m.Id == id );
+		}
 
 		public static MothershipModule AtmosphereProcessor = new MothershipModule(
 			new Id<MothershipModule>( "21351bbe9814419d9d3c45d85242a029" ),
@@ -85,5 +87,13 @@ namespace RiftDrive.Server.Model {
 			new List<MothershipModuleEffect>() {
 
 			} );
+
+		public static List<MothershipModule> All = new List<MothershipModule> {
+			AtmosphereProcessor,
+			Hanger,
+			Cryogenics,
+			Reactor
+		};
+
 	}
 }

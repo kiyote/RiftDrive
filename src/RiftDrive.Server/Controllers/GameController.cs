@@ -25,7 +25,6 @@ using RiftDrive.Shared;
 using GameStartInformation = RiftDrive.Client.Model.GameStartInformation;
 using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
 using ClientPlayer = RiftDrive.Client.Model.Player;
-using ClientMothership = RiftDrive.Client.Model.Mothership;
 
 namespace RiftDrive.Server.Controllers {
 	[Authorize]
@@ -81,17 +80,24 @@ namespace RiftDrive.Server.Controllers {
 			return Ok( players );
 		}
 
-		[HttpGet( "{gameId}/mothership" )]
-		public async Task<ActionResult<ClientMothership>> GetMothership( string gameId ) {
-			ClientMothership mothership = await _gameManager.GetMothership( new Id<Game>( gameId ) );
-
-			return Ok( mothership );
-		}
-
 		[HttpGet( "{gameId}/crew" )]
 		public async Task<ActionResult<IEnumerable<Actor>>> GetCrew( string gameId ) {
 			IEnumerable<Actor> crew = await _gameManager.GetCrew( new Id<Game>( gameId ) );
 			return Ok( crew );
+		}
+
+		[HttpGet( "{gameId}/mothership" )]
+		public async Task<ActionResult<Mothership>> GetMothership( string gameId ) {
+			Mothership mothership = await _gameManager.GetMothership( new Id<Game>( gameId ) );
+
+			return Ok( mothership );
+		}
+
+		[HttpGet( "{gameId}/mothership/{mothershipId}/module" )]
+		public async Task<ActionResult<MothershipAttachedModule>> GetMothershipModules( string gameId, string mothershipId ) {
+			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules( new Id<Mothership>( mothershipId ) );
+
+			return Ok( modules );
 		}
 	}
 }

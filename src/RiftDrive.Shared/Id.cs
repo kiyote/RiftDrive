@@ -116,7 +116,7 @@ namespace RiftDrive.Shared {
 			}
 
 			return
-				string.CompareOrdinal( left?.Value, right?.Value ) == 0;
+				string.Equals( left.Value, right.Value, StringComparison.Ordinal );
 		}
 
 		public static bool operator !=( Id<T> left, Id<T> right ) {
