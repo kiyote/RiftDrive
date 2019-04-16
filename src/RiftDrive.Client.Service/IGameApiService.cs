@@ -20,5 +20,11 @@ namespace RiftDrive.Client.Service {
 		Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId );
 
 		Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Game> gameId, Id<Mothership> mothershipId );
+
+		Task TriggerAction(
+			Id<Game> gameId,
+			Id<Mothership> mothershipId,
+			Id<MothershipModule> mothershipModuleId,
+			Id<MothershipModuleAction> actionId );
 	}
 }

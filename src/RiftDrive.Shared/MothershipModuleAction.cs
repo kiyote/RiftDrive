@@ -22,14 +22,18 @@ namespace RiftDrive.Shared {
 
 		[JsonConstructor]
 		public MothershipModuleAction(
+			Id<MothershipModuleAction> id,
 			string name,
 			string description,
 			IEnumerable<MothershipModuleEffect> effects
 		) {
+			Id = id;
 			Name = name;
 			Description = description;
 			Effects = effects;
 		}
+
+		public Id<MothershipModuleAction> Id { get; }
 
 		public string Name { get; }
 
@@ -42,7 +46,8 @@ namespace RiftDrive.Shared {
 				return true;
 			}
 
-			return string.Equals( Name, other.Name, StringComparison.Ordinal )
+			return Id.Equals( other.Id )
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& string.Equals( Description, other.Description, StringComparison.Ordinal )
 				&& Effects.Similar( other.Effects );
 		}
@@ -58,6 +63,7 @@ namespace RiftDrive.Shared {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
+				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + Description.GetHashCode();
 				result = ( result * 31 ) + Effects.GetFinalHashCode();

@@ -65,7 +65,10 @@ namespace RiftDrive.Shared.Provider {
 				"Arrow",
 				"Spear",
 				"Axe",
-				"Fortress"
+				"Fortress",
+				"Guardian",
+				"Protector",
+				"Destroyer"
 			};
 
 			return words[_random.Next( words.Count )];

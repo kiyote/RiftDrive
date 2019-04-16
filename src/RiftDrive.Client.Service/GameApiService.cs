@@ -124,5 +124,16 @@ namespace RiftDrive.Client.Service {
 
 			return response;
 		}
+
+		async Task IGameApiService.TriggerAction(
+			Id<Game> gameId,
+			Id<Mothership> mothershipId,
+			Id<MothershipModule> mothershipModuleId,
+			Id<MothershipModuleAction> actionId
+		) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module/{mothershipModuleId.Value}/action/{actionId.Value}",
+				( s ) => { return string.Empty; } );
+		}
 	}
 }

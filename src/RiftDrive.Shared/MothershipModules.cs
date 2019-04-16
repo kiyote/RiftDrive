@@ -41,6 +41,7 @@ namespace RiftDrive.Shared {
 			"Hanger",
 			new List<MothershipModuleAction>() {
 				new MothershipModuleAction(
+					new Id<MothershipModuleAction>("47d6ee961e5c426ca43bce524d4190ea"),
 					"Launch Mission",
 					"Send out the ship to have an encounter.",
 					new List<MothershipModuleEffect>() {
@@ -58,6 +59,7 @@ namespace RiftDrive.Shared {
 			"Cryogenics",
 			new List<MothershipModuleAction>() {
 				new MothershipModuleAction(
+					new Id<MothershipModuleAction>("db986b5cc46d4720a941b9f29b8fca0f"),
 					"Revive Crew",
 					"Find functional pods and attempt to revive the crew.",
 					new List<MothershipModuleEffect>() {
@@ -76,6 +78,7 @@ namespace RiftDrive.Shared {
 			"Reactor",
 			new List<MothershipModuleAction>() {
 				new MothershipModuleAction(
+					new Id<MothershipModuleAction>("6c0bd78759ea462b87986978e54cc151"),
 					"Produce Power",
 					"Run the reactor to produce power.",
 					new List<MothershipModuleEffect>() {
