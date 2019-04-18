@@ -16,12 +16,8 @@ limitations under the License.
 using System;
 using System.Threading.Tasks;
 
-namespace RiftDrive.Client.Service {
+namespace RiftDrive.Client {
 	public interface IAccessTokenProvider {
-
-		Task ClearTokens();
-
-		Task SetTokens( string accessToken, string refreshToken, DateTime expiresAt );
 
 		Task<string> GetJwtToken();
 	}

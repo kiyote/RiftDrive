@@ -15,6 +15,7 @@ limitations under the License.
 */
 using Microsoft.Extensions.DependencyInjection;
 using RiftDrive.Client.Model;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Service {
 	public static class ServiceExtensions {
@@ -27,7 +28,6 @@ namespace RiftDrive.Client.Service {
 			services.AddScoped<IAppState, T>();
 			services.AddScoped<IJsonConverter, JsonConverter>();
 			services.AddScoped<ITokenService, TokenService>();
-			services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
 			services.AddScoped<IUserApiService, UserApiService>();
 			services.AddScoped<IGameApiService, GameApiService>();
 

@@ -19,6 +19,7 @@ using Blazorise.Material;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using RiftDrive.Client.Service;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client {
 	public class Startup
@@ -32,6 +33,8 @@ namespace RiftDrive.Client {
 				.AddMaterialProviders()
 				.AddMaterialIcons();
 
+			services.AddScoped<IStateStorage, StateStorage>();
+			services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
 			services.RegisterServices<Config, AppState>();
 		}
 

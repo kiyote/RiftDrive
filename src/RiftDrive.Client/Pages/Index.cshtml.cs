@@ -17,6 +17,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Model;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages {
 	public class IndexComponent : ComponentBase {
@@ -24,21 +25,11 @@ namespace RiftDrive.Client.Pages {
 		public static string Url = "/";
 
 		public IndexComponent() {
-			Name = "";
 		}
 
 #nullable disable
 
-		[Inject] protected IAppState AppState { get; set; }
+		[Inject] protected IAppState State { get; set; }
 #nullable enable
-
-		protected string Name { get; set; }
-
-		protected bool IsAuthenticated { get; set; }
-
-		protected override async Task OnInitAsync() {
-			Name = await AppState.GetName();
-			IsAuthenticated = await AppState.GetIsAuthenticated();
-		}
 	}
 }

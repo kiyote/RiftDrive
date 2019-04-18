@@ -2,11 +2,11 @@
 @layout MainLayout
 @inherits IndexComponent
 
-@if(IsAuthenticated)
+@if(State.Authentication.IsAuthenticated)
 {
     <Row>
         <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
-            <UserGames Name=@Name />
+            <UserGames AuthenticationState=@State.Authentication />
         </Column>
     </Row>
 }

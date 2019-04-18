@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Provider",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Provider.Tests", "test\RiftDrive.Shared.Provider.Tests\RiftDrive.Shared.Provider.Tests.csproj", "{272A21DA-F173-4B30-888A-2613AB1A0E75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Client.State", "src\RiftDrive.Client.State\RiftDrive.Client.State.csproj", "{E4C2A9E3-630F-4776-A144-88359B88768B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{272A21DA-F173-4B30-888A-2613AB1A0E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4C2A9E3-630F-4776-A144-88359B88768B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C2A9E3-630F-4776-A144-88359B88768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C2A9E3-630F-4776-A144-88359B88768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C2A9E3-630F-4776-A144-88359B88768B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{6408B9E7-6EAF-4FD8-BFFB-B989F9EFDC7F} = {FE6FF765-7B16-41DC-B49C-820223D6E7EB}
 		{F9FB80FE-9B73-44F4-B093-5762FCEA95B6} = {9F2C27DD-A6A3-4AC5-9E9F-7A2565D1CC1D}
 		{272A21DA-F173-4B30-888A-2613AB1A0E75} = {77A259CD-E77F-42D1-A85C-298C2967FDA9}
+		{E4C2A9E3-630F-4776-A144-88359B88768B} = {FE6FF765-7B16-41DC-B49C-820223D6E7EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9752C3A-0480-43E1-BE90-C8FE58795EB4}

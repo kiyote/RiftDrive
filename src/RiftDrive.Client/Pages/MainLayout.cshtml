@@ -1,7 +1,7 @@
 ﻿@inherits MainLayoutComponent
 
 <div class="app-main">
-    <NavBar Name=@Name IsAuthenticated=@IsAuthenticated />
+    <NavBar Name=@State.Authentication.Name IsAuthenticated=@State.Authentication.IsAuthenticated />
     <div class="app-content">
         @Body
     </div>

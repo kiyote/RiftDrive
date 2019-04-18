@@ -16,8 +16,10 @@ limitations under the License.
 using System;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
+using RiftDrive.Client.Service;
+using RiftDrive.Client.State;
 
-namespace RiftDrive.Client.Service {
+namespace RiftDrive.Client {
 	internal sealed class AccessTokenProvider : IAccessTokenProvider {
 
 		private readonly IAppState _state;
@@ -31,26 +33,14 @@ namespace RiftDrive.Client.Service {
 			_tokenService = tokenService;
 		}
 
-		public async Task SetTokens( string accessToken, string refreshToken, DateTime expiresAt ) {
-			await _state.SetAccessToken( accessToken );
-			await _state.SetRefreshToken( refreshToken );
-			await _state.SetTokensExpireAt( expiresAt );
-		}
-
 		async Task<string> IAccessTokenProvider.GetJwtToken() {
-			if( await _state.GetTokensExpireAt() < DateTimeOffset.Now ) {
-				AuthorizationToken? tokens = await _tokenService.RefreshToken( await _state.GetAccessToken() );
+			if( _state.Authentication.TokensExpireAt < DateTimeOffset.Now ) {
+				AuthorizationToken? tokens = await _tokenService.RefreshToken( _state.Authentication.AccessToken );
 				if( tokens != default ) {
-					await SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+					await _state.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 				}
 			}
-			return await _state.GetAccessToken();
-		}
-
-		async Task IAccessTokenProvider.ClearTokens() {
-			await _state.SetAccessToken( "" );
-			await _state.SetRefreshToken( "" );
-			await _state.SetTokensExpireAt( DateTime.MinValue );
+			return _state.Authentication.AccessToken;
 		}
 	}
 }

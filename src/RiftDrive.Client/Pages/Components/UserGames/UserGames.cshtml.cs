@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.Play;
 using RiftDrive.Client.Service;
+using RiftDrive.Client.State;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Components.UserGames {
 	public class UserGamesComponent : ComponentBase {
 
 #nullable disable
-		[Parameter] protected string Name { get; set; }
-
 		[Inject] protected IGameApiService GameService { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
+
+		[Parameter] protected IAuthenticationState AuthenticationState { get; set; }
 
 		[Inject] protected IAppState State { get; set; }
 

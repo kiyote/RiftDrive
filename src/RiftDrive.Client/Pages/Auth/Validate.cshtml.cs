@@ -20,53 +20,56 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Auth {
-	public class ValidateComponent : ComponentBase {
+    public class ValidateComponent : ComponentBase {
 
-		public static string Url = "/auth/validate";
+        public static string Url = "/auth/validate";
 
 #nullable disable
-		[Inject] protected IUriHelper UriHelper { get; set; }
+        [Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] protected IAccessTokenProvider AccessTokenProvider { get; set; }
+        [Inject] protected IAccessTokenProvider AccessTokenProvider { get; set; }
 
-		[Inject] protected IUserApiService UserApiService { get; set; }
+        [Inject] protected IUserApiService UserApiService { get; set; }
 
-		[Inject] protected IAppState State { get; set; }
+        [Inject] protected IAppState State { get; set; }
 
-		[Inject] protected ITokenService TokenService { get; set; }
+        [Inject] protected ITokenService TokenService { get; set; }
 #nullable enable
 
-		protected List<string> Messages { get; set; } = new List<string>();
+        protected List<string> Messages { get; set; } = new List<string>();
 
-		protected int Progress { get; set; }
+        protected int Progress { get; set; }
 
-		protected override async Task OnInitAsync() {
-			string code = UriHelper.GetParameter( "code" );
+        protected override async Task OnInitAsync() {
+            await State.Initialize();
 
-			Messages.Add( "...retrieving tokens..." );
-			StateHasChanged();
-			AuthorizationToken? tokens = await TokenService.GetToken( code );
-			if (tokens == default) {
-				//TODO: Do something here
-				throw new InvalidOperationException();
-			}
-			await AccessTokenProvider.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+            string code = UriHelper.GetParameter("code");
 
-			Progress = 50;
-			Messages.Add( "...recording login..." );
-			StateHasChanged();
-			await UserApiService.RecordLogin();
+            Messages.Add("...retrieving tokens...");
+            StateHasChanged();
+            AuthorizationToken? tokens = await TokenService.GetToken(code);
+            if (tokens == default) {
+                //TODO: Do something here
+                throw new InvalidOperationException();
+            }
+            await State.SetTokens(tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds(tokens.expires_in));
+            await AccessTokenProvider.SetTokens(tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds(tokens.expires_in));
 
-			Progress = 75;
-			Messages.Add( "...retrieving user information..." );
-			StateHasChanged();
-			Model.User userInfo = await UserApiService.GetUserInformation();
+            Progress = 50;
+            Messages.Add("...recording login...");
+            StateHasChanged();
+            await UserApiService.RecordLogin();
 
-			await State.SetUsername( userInfo.Username );
-			await State.SetName( userInfo.Name );
-			UriHelper.NavigateTo( IndexComponent.Url );
-		}
-	}
+            Progress = 75;
+            Messages.Add("...retrieving user information...");
+            StateHasChanged();
+            Model.User userInfo = await UserApiService.GetUserInformation();
+
+            await State.SetUserInformation(userInfo.Username, userInfo.Name);
+            UriHelper.NavigateTo(IndexComponent.Url);
+        }
+    }
 }

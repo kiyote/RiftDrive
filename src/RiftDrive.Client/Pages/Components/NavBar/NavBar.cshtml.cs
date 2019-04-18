@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.Auth;
 using RiftDrive.Client.Pages.User;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Components.NavBar {
 	public class NavBarComponent : ComponentBase {
