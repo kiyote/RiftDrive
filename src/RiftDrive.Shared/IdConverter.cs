@@ -31,7 +31,7 @@ namespace RiftDrive.Shared {
 		}
 
 		public override object ReadJson( JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer ) {
-			string? value = reader.Value as string;
+			string value = reader.Value as string;
 
 			if( string.IsNullOrWhiteSpace( value ) ) {
 				return Activator.CreateInstance( objectType, new object[] { Guid.Empty.ToString( "N" ) } );

@@ -16,8 +16,8 @@ limitations under the License.
 
 namespace RiftDrive.Server {
 	public sealed class TokenValidationOptions {
-		public string? Issuer { get; set; }
-		public string? Expo { get; set; }
-		public string? Modulus { get; set; }
+		public string Issuer { get; set; }
+		public string Expo { get; set; }
+		public string Modulus { get; set; }
 	}
 }

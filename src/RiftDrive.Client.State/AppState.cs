@@ -17,7 +17,7 @@ using System;
 using System.Threading.Tasks;
 
 namespace RiftDrive.Client.State {
-	public sealed class AppState : IAppState {
+	internal sealed class AppState : IAppState {
 
 		private readonly IStateStorage _storage;
 
@@ -41,6 +41,14 @@ namespace RiftDrive.Client.State {
 			await _storage.Set( "RefreshToken", refreshToken );
 			await _storage.Set( "TokensExpireAt", tokensExpireAt.ToUniversalTime().ToString( "o" ) );
 			Authentication = new AuthenticationState( Authentication, accessToken, refreshToken, tokensExpireAt );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public async Task ClearTokens() {
+			await _storage.Set( "AccessToken", "" );
+			await _storage.Set( "RefreshToken", "" );
+			await _storage.Set( "TokensExpireAt", DateTime.MinValue.ToUniversalTime().ToString( "o" ) );
+			Authentication = new AuthenticationState();
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 

@@ -24,13 +24,13 @@ namespace RiftDrive.Client.Service {
 		
 		private readonly HttpClient _http;
 		private readonly IAccessTokenProvider _accessTokenProvider;
-		private readonly IConfig _config;
+		private readonly IServiceConfig _config;
 		private readonly IJsonConverter _json;
 
 		public UserApiService(
 			HttpClient http,
 			IAccessTokenProvider accessTokenProvider,
-			IConfig config,
+			IServiceConfig config,
 			IJsonConverter json
 		) {
 			_http = http;
@@ -59,7 +59,7 @@ namespace RiftDrive.Client.Service {
 				contentType,
 				content
 			);
-			AvatarUrl? response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
+			AvatarUrl response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
 				( r ) => { return _json.Serialize( r ); },
 				( s ) => { return _json.Deserialize<AvatarUrl>( s ); } );
 

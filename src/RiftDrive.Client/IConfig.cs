@@ -14,11 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using RiftDrive.Client.Service;
 
 namespace RiftDrive.Client {
-	public interface IAccessTokenProvider {
+	public interface IConfig: IServiceConfig {
+		string CognitoUrl { get; }
 
-		Task<string> GetJwtToken();
+		string LogInUrl { get; }
+
+		string SignUpUrl { get; }
+
+		string LogOutUrl { get; }
 	}
 }

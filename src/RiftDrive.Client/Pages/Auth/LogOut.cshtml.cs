@@ -17,7 +17,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
-using RiftDrive.Client.Service;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Auth {
 	public class LogOutComponent : ComponentBase {
@@ -26,11 +26,11 @@ namespace RiftDrive.Client.Pages.Auth {
 #nullable disable
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] protected IAccessTokenProvider Tokens { get; set; }
+		[Inject] protected IAppState State { get; set; }
 #nullable enable
 
 		protected override async Task OnInitAsync() {
-			await Tokens.ClearTokens();
+			await State.ClearTokens();
 			UriHelper.NavigateTo( IndexComponent.Url );
 		}
 	}

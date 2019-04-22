@@ -33,9 +33,9 @@ namespace RiftDrive.Client {
 				.AddMaterialProviders()
 				.AddMaterialIcons();
 
-			services.AddScoped<IStateStorage, StateStorage>();
-			services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
-			services.RegisterServices<Config, AppState>();
+			services.AddSingleton<IConfig, Config>();
+			services.RegisterState<StateStorage>();
+			services.RegisterServices<Config>();
 		}
 
         public void Configure(IComponentsApplicationBuilder app)

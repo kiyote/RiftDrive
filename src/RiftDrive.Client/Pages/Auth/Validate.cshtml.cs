@@ -30,8 +30,6 @@ namespace RiftDrive.Client.Pages.Auth {
 #nullable disable
         [Inject] protected IUriHelper UriHelper { get; set; }
 
-        [Inject] protected IAccessTokenProvider AccessTokenProvider { get; set; }
-
         [Inject] protected IUserApiService UserApiService { get; set; }
 
         [Inject] protected IAppState State { get; set; }
@@ -56,7 +54,6 @@ namespace RiftDrive.Client.Pages.Auth {
                 throw new InvalidOperationException();
             }
             await State.SetTokens(tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds(tokens.expires_in));
-            await AccessTokenProvider.SetTokens(tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds(tokens.expires_in));
 
             Progress = 50;
             Messages.Add("...recording login...");

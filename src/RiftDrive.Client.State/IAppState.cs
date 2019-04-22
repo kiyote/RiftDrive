@@ -32,5 +32,7 @@ namespace RiftDrive.Client.State {
 
 		Task SetUserInformation( string username, string name );
 
+		Task ClearTokens();
+
 	}
 }

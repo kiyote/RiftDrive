@@ -24,7 +24,7 @@ namespace RiftDrive.Client.Model {
 		public User(
 			Id<User> id,
 			string username,
-			string? avatarUrl,
+			string avatarUrl,
 			DateTime lastLogin,
 			DateTime? previousLogin,
 			string name
@@ -41,7 +41,7 @@ namespace RiftDrive.Client.Model {
 
 		public string Username { get; }
 
-		public string? AvatarUrl { get; }
+		public string AvatarUrl { get; }
 
 		public DateTime LastLogin { get; }
 

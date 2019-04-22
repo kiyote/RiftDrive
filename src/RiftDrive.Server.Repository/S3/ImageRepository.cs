@@ -41,7 +41,7 @@ namespace RiftDrive.Server.Repository.S3 {
 			_bucket = options.Bucket;
 		}
 
-		async Task<Image?> IImageRepository.Add( Id<Image> id, string contentType, string content ) {
+		async Task<Image> IImageRepository.Add( Id<Image> id, string contentType, string content ) {
 			string key = GetKey( id );
 			if( await PutImage( key, contentType, content ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
@@ -55,7 +55,7 @@ namespace RiftDrive.Server.Repository.S3 {
 			return await Exists( key );
 		}
 
-		async Task<Image?> IImageRepository.Get( Id<Image> id ) {
+		async Task<Image> IImageRepository.Get( Id<Image> id ) {
 			string key = GetKey( id );
 			if( await Exists( key ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
@@ -73,7 +73,7 @@ namespace RiftDrive.Server.Repository.S3 {
 			await _client.DeleteObjectAsync( request );
 		}
 
-		async Task<Image?> IImageRepository.Update( Id<Image> id, string contentType, string content ) {
+		async Task<Image> IImageRepository.Update( Id<Image> id, string contentType, string content ) {
 			string key = GetKey( id );
 			if( await PutImage( key, contentType, content ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );

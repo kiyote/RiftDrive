@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client {
 	internal sealed class StateStorage : IStateStorage {

@@ -13,20 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace RiftDrive.Client.Service {
-	public static class ServiceExtensions {
+	public interface IAccessTokenProvider {
 
-		public static IServiceCollection RegisterServices<S>( this IServiceCollection services ) where S: class, IServiceConfig {
-			services.AddScoped<IServiceConfig, S>();
-			services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
-			services.AddScoped<IJsonConverter, JsonConverter>();
-			services.AddScoped<ITokenService, TokenService>();
-			services.AddScoped<IUserApiService, UserApiService>();
-			services.AddScoped<IGameApiService, GameApiService>();
-
-			return services;
-		}
+		Task<string> GetJwtToken();
 	}
 }

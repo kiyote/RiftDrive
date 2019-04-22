@@ -13,22 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-namespace RiftDrive.Client.Model {
-	public interface IConfig {
-		string Host { get; }
+using Microsoft.Extensions.DependencyInjection;
 
-		string CongnitoUrl { get; }
+namespace RiftDrive.Client.State {
+	public static class StateExtensions {
+		public static IServiceCollection RegisterState<S>( this IServiceCollection services ) where S: class, IStateStorage {
+			services.AddScoped<IStateStorage, S>();
+			services.AddScoped<IAppState, AppState>();
 
-		string TokenUrl { get; }
-
-		string LogInUrl { get; }
-
-		string SignUpUrl { get; }
-
-		string LogOutUrl { get; }
-
-		string RedirectUrl { get; }
-
-		string CognitoClientId { get; }
+			return services;
+		}
 	}
 }

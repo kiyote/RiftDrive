@@ -13,19 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Microsoft.AspNetCore.Components.Services;
-using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Services;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace RiftDrive.Client {
 	public static class ExtensionMethods {
 		public static string GetParameter( this IUriHelper uriHelper, string name ) {
-			var uri = new Uri( uriHelper.GetAbsoluteUri() );
-			var value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out var values ) ? values.First() : string.Empty;
+			Uri uri = new Uri( uriHelper.GetAbsoluteUri() );
+			string value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out var values ) ? values.First() : string.Empty;
 
 			return value;
 		}

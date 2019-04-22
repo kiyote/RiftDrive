@@ -26,13 +26,13 @@ namespace RiftDrive.Client.Service {
 
 		private readonly HttpClient _http;
 		private readonly IAccessTokenProvider _accessTokenProvider;
-		private readonly IConfig _config;
+		private readonly IServiceConfig _config;
 		private readonly IJsonConverter _json;
 
 		public GameApiService(
 			HttpClient http,
 			IAccessTokenProvider accessTokenProvider,
-			IConfig config,
+			IServiceConfig config,
 			IJsonConverter json
 		) {
 			_http = http;
@@ -46,7 +46,7 @@ namespace RiftDrive.Client.Service {
 				gameName,
 				playerName );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Game? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
+			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
 				gameInfo,
 				( g ) => { return _json.Serialize( g ); },
 				( s ) => { return _json.Deserialize<Game>( s ); } );
@@ -62,7 +62,7 @@ namespace RiftDrive.Client.Service {
 			var startInfo = new GameStartInformation(
 				message );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Game? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
+			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
 				startInfo,
 				( g ) => { return _json.Serialize( g ); },
 				( s ) => { return _json.Deserialize<Game>( s ); } );
@@ -82,9 +82,9 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
-		async Task<Game?> IGameApiService.GetGame(Id<Game> gameId) {
+		async Task<Game> IGameApiService.GetGame(Id<Game> gameId) {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Game? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
+			Game response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
 				( s ) => { return _json.Deserialize<Game>( s ); } );
 
 			return response;

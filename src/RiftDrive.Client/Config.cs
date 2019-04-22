@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.Auth;
+using RiftDrive.Client.Service;
 
 namespace RiftDrive.Client {
-	internal sealed class Config : IConfig {
+	internal sealed class Config: IConfig {
 #if DEBUG
 		private static readonly string _host = "http://localhost:55020";
 		private static readonly string _cognitoUrl = "https://riftdrive-development.auth.us-east-1.amazoncognito.com";
@@ -39,11 +39,11 @@ namespace RiftDrive.Client {
 
 		private static readonly string _redirectUrl = $"{_host}{ValidateComponent.Url}";
 
-		string IConfig.Host => _host;
+		string IServiceConfig.Host => _host;
 
-		string IConfig.CongnitoUrl => _cognitoUrl;
+		string IConfig.CognitoUrl => _cognitoUrl;
 
-		string IConfig.TokenUrl => _tokenUrl;
+		string IServiceConfig.TokenUrl => _tokenUrl;
 
 		string IConfig.LogInUrl => _logInUrl;
 
@@ -51,8 +51,8 @@ namespace RiftDrive.Client {
 
 		string IConfig.LogOutUrl => _logOutUrl;
 
-		string IConfig.RedirectUrl => _redirectUrl;
+		string IServiceConfig.RedirectUrl => _redirectUrl;
 
-		string IConfig.CognitoClientId => _cognitoClientId;
+		string IServiceConfig.CognitoClientId => _cognitoClientId;
 	}
 }

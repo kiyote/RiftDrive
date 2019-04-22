@@ -22,12 +22,12 @@ namespace RiftDrive.Client.Service {
 	internal sealed class TokenService : ITokenService {
 
 		private readonly HttpClient _http;
-		private readonly IConfig _config;
+		private readonly IServiceConfig _config;
 		private readonly IJsonConverter _json;
 
 		public TokenService(
 			HttpClient httpClient,
-			IConfig config,
+			IServiceConfig config,
 			IJsonConverter json
 		) {
 			_http = httpClient;
@@ -35,7 +35,7 @@ namespace RiftDrive.Client.Service {
 			_json = json;
 		}
 
-		async Task<AuthorizationToken?> ITokenService.GetToken( string code ) {
+		async Task<AuthorizationToken> ITokenService.GetToken( string code ) {
 			var content = new FormUrlEncodedContent( new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("grant_type", "authorization_code"),
 				new KeyValuePair<string, string>("client_id", _config.CognitoClientId),
@@ -53,7 +53,7 @@ namespace RiftDrive.Client.Service {
 			return default;
 		}
 
-		async Task<AuthorizationToken?> ITokenService.RefreshToken( string refreshToken ) {
+		async Task<AuthorizationToken> ITokenService.RefreshToken( string refreshToken ) {
 			var content = new FormUrlEncodedContent( new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("grant_type", "refresh_token"),
 				new KeyValuePair<string, string>("client_id", _config.CognitoClientId),
