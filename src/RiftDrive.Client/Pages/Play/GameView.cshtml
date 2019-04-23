@@ -10,10 +10,24 @@ else
 {
     <Row>
         <Column>
-            <MothershipSummary Game=@State.GamePlay.Game></MothershipSummary>
+            @if (State.GamePlay.Mothership == default)
+            {
+                <span>Loading...</span>
+            }
+            else
+            {
+                <MothershipSummary Game=@State.GamePlay.Game Mothership=@State.GamePlay.Mothership></MothershipSummary>
+            }
         </Column>
         <Column>
-            <CrewSummary Game=@State.GamePlay.Game></CrewSummary>
+            @if (State.GamePlay.Crew == default)
+            {
+                <span>Loading...</span>
+            }
+            else
+            {
+                <CrewSummary Crew=@State.GamePlay.Crew></CrewSummary>
+            }
         </Column>
     </Row>
 }

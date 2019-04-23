@@ -16,7 +16,6 @@ limitations under the License.
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Pages.Auth;
 using RiftDrive.Client.Pages.User;
-using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Components.NavBar {

@@ -14,12 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
 	public interface IAppState {
 		event EventHandler OnStateChanged;
+
+		event Func<object, EventArgs, Task> OnStateInitialized;
+
+		bool IsInitialized { get; }
 
 		IAuthenticationState Authentication { get; }
 
@@ -39,5 +44,10 @@ namespace RiftDrive.Client.State {
 
 		Task SetGame( Game game );
 
+		Task SetMothership( Mothership mothership );
+
+		Task SetCrew( IEnumerable<Actor> actor );
+
+		Task SetMothershipModules( IEnumerable<MothershipAttachedModule> modules );
 	}
 }

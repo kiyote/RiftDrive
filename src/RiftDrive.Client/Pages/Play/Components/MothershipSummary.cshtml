@@ -1,6 +1,6 @@
 ﻿@inherits MothershipSummaryComponent
 
-@if (Mothership == null)
+@if (Mothership == default)
 {
     <span>Loading...</span>
 }
@@ -27,5 +27,12 @@ else
             </CardText>
         </CardBody>
     </Card>
-    <MothershipModuleSummary Mothership=@Mothership></MothershipModuleSummary>
+    @if (State.GamePlay.Modules == default)
+    {
+        <span>Loading ...</span>
+    }
+    else
+    {
+        <MothershipModuleSummary Game=@Game Modules=@State.GamePlay.Modules></MothershipModuleSummary>
+    }
 }

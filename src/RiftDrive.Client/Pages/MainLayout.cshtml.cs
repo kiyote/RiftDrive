@@ -30,8 +30,8 @@ namespace RiftDrive.Client.Pages {
 #nullable enable
 
 		protected override async Task OnInitAsync() {
-			await State.Initialize();
 			State.OnStateChanged += AppState_OnStateChanged;
+			await State.Initialize();
 		}
 
 		private void AppState_OnStateChanged( object sender, EventArgs e ) {

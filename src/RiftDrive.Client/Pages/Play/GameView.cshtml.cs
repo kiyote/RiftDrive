@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 using RiftDrive.Shared;
@@ -28,24 +28,15 @@ namespace RiftDrive.Client.Pages.Play {
 #nullable disable
 		[Inject] protected IAppState State { get; set; }
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
-
 		[Inject] protected IGameApiService GameService { get; set; }
 #nullable enable
 
 		protected override async Task OnInitAsync() {
-			/*
-			string gameIdValue = await State.GetPlayGameId();
-			if( string.IsNullOrWhiteSpace( gameIdValue ) ) {
-				UriHelper.NavigateTo( IndexComponent.Url );
-			}
-			Game = await GameService.GetGame( new Id<Game>( gameIdValue ) );
+			Mothership mothership = await GameService.GetMothership( State.GamePlay.Game.Id );
+			await State.SetMothership( mothership );
 
-			// If we didn't find a game, don't continue
-			if (Game == default) {
-				UriHelper.NavigateTo( IndexComponent.Url );
-			}
-			*/
+			IEnumerable<Actor> crew = await GameService.GetCrew( State.GamePlay.Game.Id );
+			await State.SetCrew( crew );
 		}
 	}
 }

@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RiftDrive.Shared;
 
@@ -22,7 +24,10 @@ namespace RiftDrive.Client.State {
 
 		private readonly IStateStorage _storage;
 
-		public AppState( IStateStorage storage ) {
+		public AppState(
+			IStateStorage storage
+		) {
+			IsInitialized = false;
 			_storage = storage;
 
 			Authentication = new AuthenticationState();
@@ -32,9 +37,20 @@ namespace RiftDrive.Client.State {
 
 		public event EventHandler OnStateChanged;
 
+		public event Func<object, EventArgs, Task> OnStateInitialized;
+
 		public async Task Initialize() {
 			Authentication = await AuthenticationState.InitialState( _storage );
+			GamePlay = await GamePlayState.InitialState( _storage );
+			IsInitialized = true;
+			if (OnStateInitialized != default) {
+				var handlers = OnStateInitialized.GetInvocationList();
+				var calls = handlers.Select( h => ( (Func<object, EventArgs, Task>)h ).Invoke( this, EventArgs.Empty ) );
+				await Task.WhenAll( calls );
+			}
 		}
+
+		public bool IsInitialized { get; private set; }
 
 		public IAuthenticationState Authentication { get; private set; }
 
@@ -71,9 +87,30 @@ namespace RiftDrive.Client.State {
 			return Task.CompletedTask;
 		}
 
-		public Task SetGame( Game  game ) {
-			GamePlay = new GamePlayState( game );
+		public Task SetGame( Game game ) {
+			GamePlay = new GamePlayState( GamePlay, game );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
 			return Task.CompletedTask;
 		}
+
+		public Task SetMothership( Mothership mothership ) {
+			GamePlay = new GamePlayState( GamePlay, mothership );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
+		}
+
+		public Task SetCrew( IEnumerable<Actor> crew ) {
+			Console.WriteLine( "Setting Crew" );
+			GamePlay = new GamePlayState( GamePlay, crew );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
+		}
+
+		public Task SetMothershipModules( IEnumerable<MothershipAttachedModule> modules ) {
+			GamePlay = new GamePlayState( GamePlay, modules );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
+		}
+
 	}
 }

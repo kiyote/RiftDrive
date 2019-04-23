@@ -15,7 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
@@ -23,12 +23,49 @@ namespace RiftDrive.Client.State {
 
 		public GamePlayState() {
 			Game = default;
+			Mothership = default;
+			Crew = new List<Actor>();
+			Modules = new List<MothershipAttachedModule>();
 		}
 
-		public GamePlayState( Game game) {
+		public GamePlayState( IGamePlayState initial, Game game) {
 			Game = game;
+			Mothership = Mothership;
+			Crew = initial.Crew;
+			Modules = initial.Modules;
+		}
+
+		public GamePlayState( IGamePlayState initial, Mothership mothership ) {
+			Game = initial.Game;
+			Mothership = mothership;
+			Crew = initial.Crew;
+			Modules = initial.Modules;
+		}
+
+		public GamePlayState( IGamePlayState initial, IEnumerable<Actor> crew ) {
+			Game = initial.Game;
+			Mothership = initial.Mothership;
+			Crew = crew;
+			Modules = initial.Modules;
+		}
+
+		public GamePlayState( IGamePlayState initial, IEnumerable<MothershipAttachedModule> modules ) {
+			Game = initial.Game;
+			Mothership = initial.Mothership;
+			Crew = initial.Crew;
+			Modules = modules;
 		}
 
 		public Game Game { get; }
+
+		public Mothership Mothership { get; }
+
+		public IEnumerable<Actor> Crew { get; }
+
+		public IEnumerable<MothershipAttachedModule> Modules { get; }
+
+		public static Task<GamePlayState> InitialState( IStateStorage storage ) {
+			return Task.FromResult( new GamePlayState() );
+		}
 	}
 }

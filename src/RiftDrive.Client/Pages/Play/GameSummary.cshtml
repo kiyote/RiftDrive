@@ -2,20 +2,20 @@
 @layout MainLayout
 @page "/game/summary"
 
-@if (Game == default)
+@if (State.GamePlay.Game == default)
 {
     <span>Loading...</span>
 }
 else
 {
-    <GamePlayersSummary Game=@Game></GamePlayersSummary>
+    <GamePlayersSummary Game=@State.GamePlay.Game></GamePlayersSummary>
 
-    @if (Game.State == Shared.GameState.WaitingForPlayers)
+    @if (State.GamePlay.Game.State == Shared.GameState.WaitingForPlayers)
     {
         <SimpleButton Clicked=@StartGame>Start Game</SimpleButton>
     }
 
-    @if (Game.State == Shared.GameState.Active)
+    @if (State.GamePlay.Game.State == Shared.GameState.Active)
     {
         <SimpleButton Clicked=@PlayGame>Play Game</SimpleButton>
     }
