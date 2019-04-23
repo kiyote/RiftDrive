@@ -17,7 +17,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Layouts;
-using RiftDrive.Client.Model;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages {

@@ -19,12 +19,12 @@ namespace RiftDrive.Client.Service {
 	public static class ServiceExtensions {
 
 		public static IServiceCollection RegisterServices<S>( this IServiceCollection services ) where S: class, IServiceConfig {
-			services.AddScoped<IServiceConfig, S>();
-			services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
-			services.AddScoped<IJsonConverter, JsonConverter>();
-			services.AddScoped<ITokenService, TokenService>();
-			services.AddScoped<IUserApiService, UserApiService>();
-			services.AddScoped<IGameApiService, GameApiService>();
+			services.AddSingleton<IServiceConfig, S>();
+			services.AddSingleton<IAccessTokenProvider, AccessTokenProvider>();
+			services.AddSingleton<IJsonConverter, JsonConverter>();
+			services.AddSingleton<ITokenService, TokenService>();
+			services.AddSingleton<IUserApiService, UserApiService>();
+			services.AddSingleton<IGameApiService, GameApiService>();
 
 			return services;
 		}

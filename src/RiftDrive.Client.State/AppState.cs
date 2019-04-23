@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Threading.Tasks;
+using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
 	internal sealed class AppState : IAppState {
@@ -25,6 +26,8 @@ namespace RiftDrive.Client.State {
 			_storage = storage;
 
 			Authentication = new AuthenticationState();
+			Validation = new ValidationState();
+			GamePlay = new GamePlayState();
 		}
 
 		public event EventHandler OnStateChanged;
@@ -33,8 +36,11 @@ namespace RiftDrive.Client.State {
 			Authentication = await AuthenticationState.InitialState( _storage );
 		}
 
-
 		public IAuthenticationState Authentication { get; private set; }
+
+		public IValidationState Validation { get; private set; }
+
+		public IGamePlayState GamePlay { get; private set; }
 
 		public async Task SetTokens( string accessToken, string refreshToken, DateTime tokensExpireAt ) {
 			await _storage.Set( "AccessToken", accessToken );
@@ -59,12 +65,15 @@ namespace RiftDrive.Client.State {
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task<string> GetPlayGameId() {
-			return await _storage.GetAsString( "PlayGameId" );
+		public Task UpdateValidationProgress( string message, int progress ) {
+			Validation = new ValidationState( Validation, message, progress );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
 		}
 
-		public async Task SetPlayGameId( string value ) {
-			await _storage.Set( "PlayGameId", value );
+		public Task SetGame( Game  game ) {
+			GamePlay = new GamePlayState( game );
+			return Task.CompletedTask;
 		}
 	}
 }

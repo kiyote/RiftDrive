@@ -14,30 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
-	public interface IAppState {
-		event EventHandler OnStateChanged;
-
-		IAuthenticationState Authentication { get; }
-
-		IValidationState Validation { get; }
-
-		IGamePlayState GamePlay { get; }
-
-		Task Initialize();
-
-		Task SetTokens( string accessToken, string refreshToken, DateTime tokensExpireAt );
-
-		Task SetUserInformation( string username, string name );
-
-		Task ClearTokens();
-
-		Task UpdateValidationProgress( string message, int progress );
-
-		Task SetGame( Game game );
-
+	public interface IGamePlayState {
+		Game Game { get; }
 	}
 }

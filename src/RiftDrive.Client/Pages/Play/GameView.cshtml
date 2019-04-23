@@ -2,7 +2,7 @@
 @inherits GameViewComponent
 @layout MainLayout
 
-@if (Game == default)
+@if (State.GamePlay.Game == default)
 {
     <span>Loading...</span>
 }
@@ -10,10 +10,10 @@ else
 {
     <Row>
         <Column>
-            <MothershipSummary Game=@Game></MothershipSummary>
+            <MothershipSummary Game=@State.GamePlay.Game></MothershipSummary>
         </Column>
         <Column>
-            <CrewSummary Game=@Game></CrewSummary>
+            <CrewSummary Game=@State.GamePlay.Game></CrewSummary>
         </Column>
     </Row>
 }

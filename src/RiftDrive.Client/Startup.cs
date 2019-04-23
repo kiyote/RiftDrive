@@ -33,17 +33,19 @@ namespace RiftDrive.Client {
 				.AddMaterialProviders()
 				.AddMaterialIcons();
 
-			services.AddSingleton<IConfig, Config>();
-			services.RegisterState<StateStorage>();
-			services.RegisterServices<Config>();
+			services
+				.AddSingleton<IJSRuntimeProvider, JSRuntimeProvider>()
+				.AddSingleton<IConfig, Config>()
+				.RegisterState<StateStorage>()
+				.RegisterServices<Config>();
 		}
 
         public void Configure(IComponentsApplicationBuilder app)
         {
 			app
 				.UseMaterialProviders()
-				.UseMaterialIcons();
-			app.AddComponent<App>("app");
+				.UseMaterialIcons()
+				.AddComponent<App>("app");
         }
     }
 }

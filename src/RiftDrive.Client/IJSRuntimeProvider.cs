@@ -13,15 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 
-namespace RiftDrive.Client.State {
-	public static class StateExtensions {
-		public static IServiceCollection RegisterState<S>( this IServiceCollection services ) where S: class, IStateStorage {
-			services.AddSingleton<IStateStorage, S>();
-			services.AddSingleton<IAppState, AppState>();
+namespace RiftDrive.Client {
+	public interface IJSRuntimeProvider {
+		bool TryGet( out IJSRuntime jsRuntime );
 
-			return services;
-		}
+		IJSRuntime Get();
 	}
 }

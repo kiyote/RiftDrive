@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
@@ -53,7 +54,7 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 		}
 
 		public async Task PlayGame( Id<Game> gameId ) {
-			await State.SetPlayGameId( gameId.Value );
+			await State.SetGame( Games.First( g => g.Id.Equals( gameId )));
 			UriHelper.NavigateTo( GameSummaryComponent.Url );
 		}
 
