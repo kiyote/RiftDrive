@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.Pages.Play;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
@@ -35,6 +36,8 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 		[Parameter] protected IAuthenticationState AuthenticationState { get; set; }
 
 		[Inject] protected IAppState State { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
 
 		protected Modal ModalRef { get; set; }
 #nullable enable
@@ -67,7 +70,8 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 		}
 
 		public async Task PlayGame( Id<Game> gameId ) {
-			await State.SetGame( Games.First( g => g.Id.Equals( gameId )));
+			await Dispatch.ViewGame( gameId );
+			//await State.SetGame( Games.First( g => g.Id.Equals( gameId )));
 			UriHelper.NavigateTo( GameSummaryComponent.Url );
 		}
 

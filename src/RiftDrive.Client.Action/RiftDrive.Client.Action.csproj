@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
+    <ProjectReference Include="..\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj" />
+    <ProjectReference Include="..\RiftDrive.Client.State\RiftDrive.Client.State.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -56,6 +56,18 @@ namespace RiftDrive.Client.State {
 			Modules = modules;
 		}
 
+		public GamePlayState(
+			Game game,
+			Mothership mothership,
+			IEnumerable<Actor> crew,
+			IEnumerable<MothershipAttachedModule> modules
+		) {
+			Game = game;
+			Mothership = mothership;
+			Crew = crew;
+			Modules = modules;
+		}
+
 		public Game Game { get; }
 
 		public Mothership Mothership { get; }

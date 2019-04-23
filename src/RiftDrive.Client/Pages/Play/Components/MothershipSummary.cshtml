@@ -27,12 +27,12 @@ else
             </CardText>
         </CardBody>
     </Card>
-    @if (State.GamePlay.Modules == default)
+    @if (Modules == default)
     {
         <span>Loading ...</span>
     }
     else
     {
-        <MothershipModuleSummary Game=@Game Modules=@State.GamePlay.Modules></MothershipModuleSummary>
+        <MothershipModuleSummary Game=@Game Modules=@Modules></MothershipModuleSummary>
     }
 }

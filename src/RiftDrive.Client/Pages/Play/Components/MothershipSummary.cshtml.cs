@@ -14,28 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Service;
-using RiftDrive.Client.State;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Play.Components {
 	public class MothershipSummaryComponent : ComponentBase
     {
 #nullable disable
-		[Inject] protected IAppState State { get; set; }
-
-		[Inject] protected IGameApiService GameService { get; set; }
-
 		[Parameter] protected Mothership Mothership { get; set; }
 
 		[Parameter] protected Game Game { get; set; }
-#nullable enable
 
-		protected override async Task OnInitAsync() {
-			IEnumerable<MothershipAttachedModule> modules = await GameService.GetMothershipModules( Mothership.GameId, Mothership.Id );
-			await State.SetMothershipModules( modules );
-		}
+		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
+#nullable enable
 	}
 }

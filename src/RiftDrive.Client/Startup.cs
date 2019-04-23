@@ -18,6 +18,7 @@ using Blazorise.Icons.Material;
 using Blazorise.Material;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
@@ -38,6 +39,8 @@ namespace RiftDrive.Client {
 				.AddSingleton<IConfig, Config>()
 				.RegisterState<StateStorage>()
 				.RegisterServices<Config>();
+
+			services.AddSingleton<IDispatch, Dispatch>();
 		}
 
         public void Configure(IComponentsApplicationBuilder app)

@@ -112,5 +112,16 @@ namespace RiftDrive.Client.State {
 			return Task.CompletedTask;
 		}
 
+		public Task SetPlayGameState(
+			Game game,
+			Mothership mothership,
+			IEnumerable<Actor> crew,
+			IEnumerable<MothershipAttachedModule> modules
+		) {
+			GamePlay = new GamePlayState( game, mothership, crew, modules );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
+		}
+
 	}
 }
