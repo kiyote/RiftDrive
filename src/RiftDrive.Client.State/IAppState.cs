@@ -16,6 +16,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
@@ -32,6 +33,8 @@ namespace RiftDrive.Client.State {
 
 		IGamePlayState GamePlay { get; }
 
+		IProfileState Profile { get; }
+
 		Task Initialize();
 
 		Task SetTokens( string accessToken, string refreshToken, DateTime tokensExpireAt );
@@ -42,7 +45,7 @@ namespace RiftDrive.Client.State {
 
 		Task UpdateValidationProgress( string message, int progress );
 
-		Task SetGame( Game game );
+		Task SetGame( Game game, IEnumerable<Player> players );
 
 		Task SetMothership( Mothership mothership );
 
@@ -50,6 +53,8 @@ namespace RiftDrive.Client.State {
 
 		Task SetMothershipModules( IEnumerable<MothershipAttachedModule> modules );
 
-		Task SetPlayGameState( Game game, Mothership mothership, IEnumerable<Actor> crew, IEnumerable<MothershipAttachedModule> module );
+		Task SetPlayGameState( Game game, Mothership mothership, IEnumerable<Actor> crew, IEnumerable<MothershipAttachedModule> module, IEnumerable<Player> players );
+
+		Task SetProfileUser( User user );
 	}
 }

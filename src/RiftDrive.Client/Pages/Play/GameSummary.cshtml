@@ -8,7 +8,7 @@
 }
 else
 {
-    <GamePlayersSummary Game=@State.GamePlay.Game></GamePlayersSummary>
+    <GamePlayersSummary Game=@State.GamePlay.Game Players=@State.GamePlay.Players></GamePlayersSummary>
 
     @if (State.GamePlay.Game.State == Shared.GameState.WaitingForPlayers)
     {

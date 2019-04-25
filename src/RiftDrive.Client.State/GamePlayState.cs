@@ -16,6 +16,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
@@ -26,6 +27,7 @@ namespace RiftDrive.Client.State {
 			Mothership = default;
 			Crew = new List<Actor>();
 			Modules = new List<MothershipAttachedModule>();
+			Players = new List<Player>();
 		}
 
 		public GamePlayState( IGamePlayState initial, Game game) {
@@ -33,6 +35,7 @@ namespace RiftDrive.Client.State {
 			Mothership = Mothership;
 			Crew = initial.Crew;
 			Modules = initial.Modules;
+			Players = initial.Players;
 		}
 
 		public GamePlayState( IGamePlayState initial, Mothership mothership ) {
@@ -40,6 +43,7 @@ namespace RiftDrive.Client.State {
 			Mothership = mothership;
 			Crew = initial.Crew;
 			Modules = initial.Modules;
+			Players = initial.Players;
 		}
 
 		public GamePlayState( IGamePlayState initial, IEnumerable<Actor> crew ) {
@@ -47,6 +51,7 @@ namespace RiftDrive.Client.State {
 			Mothership = initial.Mothership;
 			Crew = crew;
 			Modules = initial.Modules;
+			Players = initial.Players;
 		}
 
 		public GamePlayState( IGamePlayState initial, IEnumerable<MothershipAttachedModule> modules ) {
@@ -54,18 +59,29 @@ namespace RiftDrive.Client.State {
 			Mothership = initial.Mothership;
 			Crew = initial.Crew;
 			Modules = modules;
+			Players = initial.Players;
+		}
+
+		public GamePlayState( IGamePlayState initial, IEnumerable<Player> players ) {
+			Game = initial.Game;
+			Mothership = initial.Mothership;
+			Crew = initial.Crew;
+			Modules = initial.Modules;
+			Players = players;
 		}
 
 		public GamePlayState(
 			Game game,
 			Mothership mothership,
 			IEnumerable<Actor> crew,
-			IEnumerable<MothershipAttachedModule> modules
+			IEnumerable<MothershipAttachedModule> modules,
+			IEnumerable<Player> players
 		) {
 			Game = game;
 			Mothership = mothership;
 			Crew = crew;
 			Modules = modules;
+			Players = players;
 		}
 
 		public Game Game { get; }
@@ -75,6 +91,8 @@ namespace RiftDrive.Client.State {
 		public IEnumerable<Actor> Crew { get; }
 
 		public IEnumerable<MothershipAttachedModule> Modules { get; }
+
+		public IEnumerable<Player> Players { get; }
 
 		public static Task<GamePlayState> InitialState( IStateStorage storage ) {
 			return Task.FromResult( new GamePlayState() );

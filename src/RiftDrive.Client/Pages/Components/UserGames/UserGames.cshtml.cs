@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
@@ -71,7 +70,6 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 
 		public async Task PlayGame( Id<Game> gameId ) {
 			await Dispatch.ViewGame( gameId );
-			//await State.SetGame( Games.First( g => g.Id.Equals( gameId )));
 			UriHelper.NavigateTo( GameSummaryComponent.Url );
 		}
 

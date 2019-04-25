@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
@@ -33,6 +34,7 @@ namespace RiftDrive.Client.State {
 			Authentication = new AuthenticationState();
 			Validation = new ValidationState();
 			GamePlay = new GamePlayState();
+			Profile = new ProfileState();
 		}
 
 		public event EventHandler OnStateChanged;
@@ -44,8 +46,8 @@ namespace RiftDrive.Client.State {
 			GamePlay = await GamePlayState.InitialState( _storage );
 			IsInitialized = true;
 			if (OnStateInitialized != default) {
-				var handlers = OnStateInitialized.GetInvocationList();
-				var calls = handlers.Select( h => ( (Func<object, EventArgs, Task>)h ).Invoke( this, EventArgs.Empty ) );
+				Delegate[] handlers = OnStateInitialized.GetInvocationList();
+				IEnumerable<Task> calls = handlers.Select( h => ( (Func<object, EventArgs, Task>)h ).Invoke( this, EventArgs.Empty ) );
 				await Task.WhenAll( calls );
 			}
 		}
@@ -57,6 +59,8 @@ namespace RiftDrive.Client.State {
 		public IValidationState Validation { get; private set; }
 
 		public IGamePlayState GamePlay { get; private set; }
+
+		public IProfileState Profile { get; private set; }
 
 		public async Task SetTokens( string accessToken, string refreshToken, DateTime tokensExpireAt ) {
 			await _storage.Set( "AccessToken", accessToken );
@@ -87,8 +91,9 @@ namespace RiftDrive.Client.State {
 			return Task.CompletedTask;
 		}
 
-		public Task SetGame( Game game ) {
+		public Task SetGame( Game game, IEnumerable<Player> players ) {
 			GamePlay = new GamePlayState( GamePlay, game );
+			GamePlay = new GamePlayState( GamePlay, players );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 			return Task.CompletedTask;
 		}
@@ -116,12 +121,18 @@ namespace RiftDrive.Client.State {
 			Game game,
 			Mothership mothership,
 			IEnumerable<Actor> crew,
-			IEnumerable<MothershipAttachedModule> modules
+			IEnumerable<MothershipAttachedModule> modules,
+			IEnumerable<Player> players
 		) {
-			GamePlay = new GamePlayState( game, mothership, crew, modules );
+			GamePlay = new GamePlayState( game, mothership, crew, modules, players );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 			return Task.CompletedTask;
 		}
 
+		public Task SetProfileUser( User user ) {
+			Profile = new ProfileState( user );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
+		}
 	}
 }

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
+using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
@@ -26,5 +27,7 @@ namespace RiftDrive.Client.State {
 		IEnumerable<Actor> Crew { get; }
 
 		IEnumerable<MothershipAttachedModule> Modules { get; }
+
+		IEnumerable<Player> Players { get; }
 	}
 }

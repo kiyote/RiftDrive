@@ -18,42 +18,34 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.Service;
+using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.User {
 	public class ProfileComponent : ComponentBase {
 		public const string Url = "/user/profile";
 
 #nullable disable
+		[Inject] protected IAppState State { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
+
 		[Inject] protected IUserApiService UserService { get; set; }
 
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
 #nullable enable
 
-		protected string? AvatarUrl { get; private set; }
-
-		protected string UserId { get; private set; }
-
-		protected string Name { get; private set; }
-
-		protected string LastLogin { get; private set; }
-
 		protected ElementRef FileUploadRef { get; set; }
 
 		protected bool ChangingAvatar { get; set; }
 
-		public ProfileComponent() {
-			UserId = "";
-			Name = "";
-			LastLogin = "";
+		protected override async Task OnInitAsync() {
+			await Dispatch.ViewProfile();
 		}
 
-		protected override async Task OnInitAsync() {
-			Model.User userInformation = await UserService.GetUserInformation();
-			Name = userInformation.Name;
-			UserId = userInformation.Id.Value;
-			AvatarUrl = userInformation.AvatarUrl;
-			LastLogin = userInformation.PreviousLogin
+		protected string FormatDate( DateTime? dateTime ) {
+			return dateTime
 					?.Subtract( TimeSpan.FromHours( 5 ) )
 					.ToString( "F", CultureInfo.GetCultureInfo( "en-US" ) )
 					?? "None";
@@ -95,7 +87,8 @@ namespace RiftDrive.Client.Pages.User {
 				//	content = image.Clone( x => x.Resize( 64, 64 ) ).ToBase64String( ImageFormats.Png ).Split( ',' )[ 1 ];
 				//	mimeType = "image/png";
 				//}
-				AvatarUrl = await UserService.SetAvatar( mimeType, content );
+				await UserService.SetAvatar( mimeType, content );
+				await Dispatch.ViewProfile();
 			}
 		}
 	}

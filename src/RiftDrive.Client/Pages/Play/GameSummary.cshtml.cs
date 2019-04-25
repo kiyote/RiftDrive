@@ -17,9 +17,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Action;
-using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
-using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.Play {
 	public class GameSummaryComponent : ComponentBase {
@@ -31,13 +29,11 @@ namespace RiftDrive.Client.Pages.Play {
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] protected IGameApiService GameService { get; set; }
-
 		[Inject] protected IDispatch Dispatch { get; set; }
 #nullable enable
 
 		protected async Task StartGame() {
-			await GameService.StartGame( State.GamePlay.Game.Id, "Game has started!" );
+			await Dispatch.StartGame( State.GamePlay.Game.Id, "Game has started!" );
 			UriHelper.NavigateTo( GameViewComponent.Url );
 		}
 

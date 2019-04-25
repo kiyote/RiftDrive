@@ -16,17 +16,18 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using RiftDrive.Shared;
+using RiftDrive.Client.Model;
 
-namespace RiftDrive.Client.Action {
-	public interface IDispatch {
-		Task PlayGame( Id<Game> gameId );
+namespace RiftDrive.Client.State {
+	internal sealed class ProfileState : IProfileState {
 
-		Task ViewGame( Id<Game> gameId );
+		public ProfileState() {
+		}
 
-		Task ViewProfile();
+		public ProfileState(User user) {
+			User = user;
+		}
 
-		Task StartGame( Id<Game> gameId, string message );
+		public User User { get; }
 	}
 }
