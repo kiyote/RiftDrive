@@ -19,12 +19,13 @@ using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Action;
-using RiftDrive.Client.Pages.Play;
+using RiftDrive.Client.Model;
+using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Pages.Components.UserGames {
+namespace RiftDrive.Client.Pages.Components {
 	public class UserGamesComponent : ComponentBase {
 
 #nullable disable
@@ -32,16 +33,14 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Parameter] protected IAuthenticationState AuthenticationState { get; set; }
-
-		[Inject] protected IAppState State { get; set; }
-
 		[Inject] protected IDispatch Dispatch { get; set; }
+
+		[Parameter] protected IEnumerable<Game> Games { get; set; }
+
+		[Parameter] protected User User { get; set; }
 
 		protected Modal ModalRef { get; set; }
 #nullable enable
-
-		protected IEnumerable<Game> Games { get; set; } = new List<Game>();
 
 		public string GameName { get; set; }
 
@@ -52,10 +51,6 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 		public UserGamesComponent() {
 			GameName = "";
 			PlayerName = "";
-		}
-
-		protected override async Task OnInitAsync() {
-			Games = await GameService.GetGames();
 		}
 
 		public async Task CreateGame() {

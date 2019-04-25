@@ -55,7 +55,9 @@ namespace RiftDrive.Client.Action {
 
 		public async Task ViewProfile() {
 			User user = await _userService.GetUserInformation();
+			IEnumerable<Game> games = await _gameService.GetGames();
 			await _state.SetProfileUser( user );
+			await _state.SetGames( games );
 		}
 
 		public async Task StartGame( Id<Game> gameId, string message ) {

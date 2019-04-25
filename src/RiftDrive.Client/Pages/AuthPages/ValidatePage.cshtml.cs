@@ -21,7 +21,7 @@ using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
-namespace RiftDrive.Client.Pages.Auth {
+namespace RiftDrive.Client.Pages.AuthPages {
 	public class ValidatePageBase : ComponentBase {
 
 		public static string Url = "/auth/validate";

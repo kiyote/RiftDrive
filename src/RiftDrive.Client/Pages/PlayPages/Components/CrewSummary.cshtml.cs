@@ -13,16 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.State;
+using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Pages.Play {
-	public class GameViewPageBase : ComponentBase
+namespace RiftDrive.Client.Pages.PlayPages.Components {
+	public class CrewSummaryComponent: ComponentBase
     {
-		public const string Url = "/game/view";
-
 #nullable disable
-		[Inject] protected IAppState State { get; set; }
+		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
 #nullable enable
 	}
 }

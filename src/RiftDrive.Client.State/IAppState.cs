@@ -56,5 +56,7 @@ namespace RiftDrive.Client.State {
 		Task SetPlayGameState( Game game, Mothership mothership, IEnumerable<Actor> crew, IEnumerable<MothershipAttachedModule> module, IEnumerable<Player> players );
 
 		Task SetProfileUser( User user );
+
+		Task SetGames( IEnumerable<Game> game );
 	}
 }

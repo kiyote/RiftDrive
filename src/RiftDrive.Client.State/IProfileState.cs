@@ -13,13 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Client.Model;
+using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
 	public interface IProfileState {
 		User User { get; }
+
+		IEnumerable<Game> Games { get; }
 	}
 }

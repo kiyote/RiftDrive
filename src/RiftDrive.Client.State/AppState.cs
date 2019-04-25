@@ -130,7 +130,13 @@ namespace RiftDrive.Client.State {
 		}
 
 		public Task SetProfileUser( User user ) {
-			Profile = new ProfileState( user );
+			Profile = new ProfileState( Profile, user );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+			return Task.CompletedTask;
+		}
+
+		public Task SetGames( IEnumerable<Game> games ) {
+			Profile = new ProfileState( Profile, games );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 			return Task.CompletedTask;
 		}

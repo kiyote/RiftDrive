@@ -13,21 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Client.Model;
+using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
 	internal sealed class ProfileState : IProfileState {
 
 		public ProfileState() {
+			Games = new List<Game>();
 		}
 
-		public ProfileState(User user) {
+		public ProfileState(IProfileState initial, User user) {
 			User = user;
+			Games = initial.Games;
+		}
+
+		public ProfileState( IProfileState initial, IEnumerable<Game> games ) {
+			User = initial.User;
+			Games = games;
 		}
 
 		public User User { get; }
+
+		public IEnumerable<Game> Games { get; }
 	}
 }

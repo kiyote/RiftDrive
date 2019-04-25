@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Pages.Auth;
-using RiftDrive.Client.Pages.User;
+using RiftDrive.Client.Pages.AuthPages;
+using RiftDrive.Client.Pages.UserPages;
 using RiftDrive.Client.State;
 
-namespace RiftDrive.Client.Pages.Components.NavBar {
+namespace RiftDrive.Client.Pages.Components {
 	public class NavBarComponent : ComponentBase {
 
 #nullable disable

@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Client.Pages.Play.Components {
+namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class GamePlayersSummaryComponent : ComponentBase {
 
 		public GamePlayersSummaryComponent() {

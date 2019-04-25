@@ -22,7 +22,7 @@ using RiftDrive.Client.Action;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
-namespace RiftDrive.Client.Pages.User {
+namespace RiftDrive.Client.Pages.UserPages {
 	public class ProfilePageBase : ComponentBase {
 		public const string Url = "/user/profile";
 

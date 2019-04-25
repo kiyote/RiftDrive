@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Components.Services;
 using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 
-namespace RiftDrive.Client.Pages.Play {
+namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameSummaryPageBase : ComponentBase {
 
 		public const string Url = "/game/summary";

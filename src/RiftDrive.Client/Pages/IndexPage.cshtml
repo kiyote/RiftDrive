@@ -6,7 +6,7 @@
 {
     <Row>
         <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
-        <UserGames AuthenticationState=@State.Authentication />
+            <UserGames Games=@State.Profile.Games User=@State.Profile.User />
         </Column>
     </Row>
 }

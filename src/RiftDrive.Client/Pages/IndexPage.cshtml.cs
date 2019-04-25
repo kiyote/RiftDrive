@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages {
@@ -24,6 +26,12 @@ namespace RiftDrive.Client.Pages {
 #nullable disable
 
 		[Inject] protected IAppState State { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
 #nullable enable
+
+		protected override async Task OnInitAsync() {
+			await Dispatch.ViewProfile();
+		}
 	}
 }

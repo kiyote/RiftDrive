@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using RiftDrive.Client.Pages.Auth;
+using RiftDrive.Client.Pages.AuthPages;
 using RiftDrive.Client.Service;
 
 namespace RiftDrive.Client {
