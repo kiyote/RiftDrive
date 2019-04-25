@@ -23,7 +23,7 @@ using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.User {
-	public class ProfileComponent : ComponentBase {
+	public class ProfilePageBase : ComponentBase {
 		public const string Url = "/user/profile";
 
 #nullable disable

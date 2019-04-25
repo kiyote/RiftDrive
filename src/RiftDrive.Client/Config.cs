@@ -37,7 +37,7 @@ namespace RiftDrive.Client {
 
 		private static readonly string _logOutUrl = $"{_cognitoUrl}/logout?client_id={_cognitoClientId}";
 
-		private static readonly string _redirectUrl = $"{_host}{ValidateComponent.Url}";
+		private static readonly string _redirectUrl = $"{_host}{ValidatePageBase.Url}";
 
 		string IServiceConfig.Host => _host;
 

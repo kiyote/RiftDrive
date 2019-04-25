@@ -33,7 +33,7 @@ namespace RiftDrive.Client.Pages.Components.NavBar {
 
 		public string ProfileUrl {
 			get {
-				return ProfileComponent.Url;
+				return ProfilePageBase.Url;
 			}
 		}
 
@@ -51,7 +51,7 @@ namespace RiftDrive.Client.Pages.Components.NavBar {
 
 		public string LogOutUrl {
 			get {
-				return $"{Config.LogOutUrl}&logout_uri={Config.Host}{LogOutComponent.Url}";
+				return $"{Config.LogOutUrl}&logout_uri={Config.Host}{LogOutPageBase.Url}";
 			}
 		}
 	}

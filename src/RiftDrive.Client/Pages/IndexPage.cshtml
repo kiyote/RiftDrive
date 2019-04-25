@@ -1,12 +1,12 @@
 ﻿@page "/"
+@inherits IndexPageBase
 @layout MainLayout
-@inherits IndexComponent
 
-@if(State.Authentication.IsAuthenticated)
+@if (State.Authentication.IsAuthenticated)
 {
     <Row>
         <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
-            <UserGames AuthenticationState=@State.Authentication />
+        <UserGames AuthenticationState=@State.Authentication />
         </Column>
     </Row>
 }

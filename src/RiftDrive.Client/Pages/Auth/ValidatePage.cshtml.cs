@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
@@ -23,7 +22,7 @@ using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Auth {
-	public class ValidateComponent : ComponentBase {
+	public class ValidatePageBase : ComponentBase {
 
 		public static string Url = "/auth/validate";
 
@@ -59,7 +58,7 @@ namespace RiftDrive.Client.Pages.Auth {
 
 			await State.SetUserInformation( userInfo.Username, userInfo.Name );
 			State.OnStateChanged -= AppStateHasChanged;
-			UriHelper.NavigateTo( IndexComponent.Url );
+			UriHelper.NavigateTo( IndexPageBase.Url );
 		}
 
 		private void AppStateHasChanged( object sender, EventArgs e ) {

@@ -70,7 +70,7 @@ namespace RiftDrive.Client.Pages.Components.UserGames {
 
 		public async Task PlayGame( Id<Game> gameId ) {
 			await Dispatch.ViewGame( gameId );
-			UriHelper.NavigateTo( GameSummaryComponent.Url );
+			UriHelper.NavigateTo( GameSummaryPageBase.Url );
 		}
 
 		public Task ShowModal() {

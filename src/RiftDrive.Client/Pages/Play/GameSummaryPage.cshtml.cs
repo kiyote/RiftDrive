@@ -20,7 +20,7 @@ using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Play {
-	public class GameSummaryComponent : ComponentBase {
+	public class GameSummaryPageBase : ComponentBase {
 
 		public const string Url = "/game/summary";
 
@@ -34,12 +34,12 @@ namespace RiftDrive.Client.Pages.Play {
 
 		protected async Task StartGame() {
 			await Dispatch.StartGame( State.GamePlay.Game.Id, "Game has started!" );
-			UriHelper.NavigateTo( GameViewComponent.Url );
+			UriHelper.NavigateTo( GameViewPageBase.Url );
 		}
 
 		protected async Task PlayGame() {
 			await Dispatch.PlayGame( State.GamePlay.Game.Id );
-			UriHelper.NavigateTo( GameViewComponent.Url );
+			UriHelper.NavigateTo( GameViewPageBase.Url );
 		}
 	}
 }

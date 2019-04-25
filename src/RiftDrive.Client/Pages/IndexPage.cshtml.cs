@@ -13,19 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Model;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages {
-	public class IndexComponent : ComponentBase {
+	public class IndexPageBase : ComponentBase {
 
 		public static string Url = "/";
-
-		public IndexComponent() {
-		}
 
 #nullable disable
 
