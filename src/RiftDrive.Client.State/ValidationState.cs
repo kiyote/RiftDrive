@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace RiftDrive.Client.State {
 	internal sealed class ValidationState : IValidationState {
@@ -10,13 +11,11 @@ namespace RiftDrive.Client.State {
 			Progress = 0;
 		}
 
+		[JsonConstructor]
 		public ValidationState(
-			IValidationState initial,
-			string message,
+			IEnumerable<string> messages,
 			int progress
 		) {
-			var messages = new List<string>( initial.Messages );
-			messages.Add( message );
 			Messages = messages;
 			Progress = progress;
 		}

@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client {
@@ -48,6 +49,15 @@ namespace RiftDrive.Client {
 			return int.Parse( value );
 		}
 
+		public async Task<T> Get<T>(string name) {
+			var js = _jsProvider.Get();
+			string value = await js.InvokeAsync<string>( "appState.getItem", name );
+			if (string.IsNullOrWhiteSpace(value)) {
+				return default;
+			}
+			return JsonConvert.DeserializeObject<T>( value );
+		}
+
 		public async Task Set( string name, string value ) {
 			var js = _jsProvider.Get();
 			await js.InvokeAsync<string>( "appState.setItem", name, value );
@@ -61,6 +71,12 @@ namespace RiftDrive.Client {
 		public async Task Set( string name, DateTime value ) {
 			var js = _jsProvider.Get();
 			await js.InvokeAsync<string>( "appState.setItem", name, value.ToString( "o" ) );
+		}
+
+		public async Task Set<T>( string name, T value ) {
+			var json = JsonConvert.SerializeObject( value );
+			var js = _jsProvider.Get();
+			await js.InvokeAsync<string>( "appState.setItem", name, json );
 		}
 	}
 }

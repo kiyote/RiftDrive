@@ -42,21 +42,21 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 			string code = UriHelper.GetParameter( "code" );
 
-			await State.UpdateValidationProgress( "...retrieving tokens...", 5 );
+			await State.Update( State.Validation, "...retrieving tokens...", 5 );
 			AuthorizationToken tokens = await TokenService.GetToken( code );
 			if( tokens == default ) {
 				//TODO: Do something here
 				throw new InvalidOperationException();
 			}
-			await State.SetTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+			await State.Update( State.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
-			await State.UpdateValidationProgress( "...recording login...", 50 );
+			await State.Update( State.Validation, "...recording login...", 50 );
 			await UserApiService.RecordLogin();
 
-			await State.UpdateValidationProgress( "...retrieving user information...", 75 );
-			Model.User userInfo = await UserApiService.GetUserInformation();
+			await State.Update( State.Validation, "...retrieving user information...", 75 );
+			User userInfo = await UserApiService.GetUserInformation();
 
-			await State.SetUserInformation( userInfo.Username, userInfo.Name );
+			await State.Update( State.Authentication, userInfo.Username, userInfo.Name );
 			State.OnStateChanged -= AppStateHasChanged;
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}

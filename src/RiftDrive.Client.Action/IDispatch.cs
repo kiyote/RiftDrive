@@ -13,9 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using RiftDrive.Shared;
 
@@ -25,7 +22,9 @@ namespace RiftDrive.Client.Action {
 
 		Task ViewGame( Id<Game> gameId );
 
-		Task ViewProfile();
+		Task ViewUserProfile();
+
+		Task ViewUserGames();
 
 		Task StartGame( Id<Game> gameId, string message );
 	}

@@ -30,7 +30,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 #nullable enable
 
 		protected override async Task OnInitAsync() {
-			await State.ClearTokens();
+			await State.ClearState();
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}
 	}

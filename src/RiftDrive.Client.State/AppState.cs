@@ -15,7 +15,6 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
 using RiftDrive.Shared;
@@ -34,22 +33,18 @@ namespace RiftDrive.Client.State {
 			Authentication = new AuthenticationState();
 			Validation = new ValidationState();
 			GamePlay = new GamePlayState();
-			Profile = new ProfileState();
+			UserInformation = new UserInformationState();
 		}
 
 		public event EventHandler OnStateChanged;
 
-		public event Func<object, EventArgs, Task> OnStateInitialized;
-
 		public async Task Initialize() {
-			Authentication = await AuthenticationState.InitialState( _storage );
-			GamePlay = await GamePlayState.InitialState( _storage );
+			Authentication = await _storage.Get<AuthenticationState>( "State::Authentication" ) ?? new AuthenticationState();
+			GamePlay = await _storage.Get<GamePlayState>( "State::GamePlay" ) ?? new GamePlayState();
+			UserInformation = await _storage.Get<UserInformationState>( "State::UserInformation" ) ?? new UserInformationState();
+			Validation = await _storage.Get<ValidationState>( "State::Validation" ) ?? new ValidationState();
 			IsInitialized = true;
-			if (OnStateInitialized != default) {
-				Delegate[] handlers = OnStateInitialized.GetInvocationList();
-				IEnumerable<Task> calls = handlers.Select( h => ( (Func<object, EventArgs, Task>)h ).Invoke( this, EventArgs.Empty ) );
-				await Task.WhenAll( calls );
-			}
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public bool IsInitialized { get; private set; }
@@ -60,64 +55,38 @@ namespace RiftDrive.Client.State {
 
 		public IGamePlayState GamePlay { get; private set; }
 
-		public IProfileState Profile { get; private set; }
+		public IUserInformationState UserInformation { get; private set; }
 
-		public async Task SetTokens( string accessToken, string refreshToken, DateTime tokensExpireAt ) {
-			await _storage.Set( "AccessToken", accessToken );
-			await _storage.Set( "RefreshToken", refreshToken );
-			await _storage.Set( "TokensExpireAt", tokensExpireAt.ToUniversalTime().ToString( "o" ) );
-			Authentication = new AuthenticationState( Authentication, accessToken, refreshToken, tokensExpireAt );
+		public async Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt ) {
+			Authentication = new AuthenticationState( Authentication.Username, Authentication.Name, accessToken, refreshToken, tokensExpireAt );
+			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task ClearTokens() {
-			await _storage.Set( "AccessToken", "" );
-			await _storage.Set( "RefreshToken", "" );
-			await _storage.Set( "TokensExpireAt", DateTime.MinValue.ToUniversalTime().ToString( "o" ) );
-			Authentication = new AuthenticationState();
+		public async Task ClearState() {
+			await _storage.Set( "State::Authentication", "" );
+			await _storage.Set( "State::UserInformation", "" );
+			await _storage.Set( "State::GamePlay", "" );
+			await _storage.Set( "State::Validation", "" );
+			await Initialize();
+		}
+
+		public async Task Update( IAuthenticationState initial, string username, string name ) {
+			Authentication = new AuthenticationState( username, name, initial.AccessToken, initial.RefreshToken, initial.TokensExpireAt );
+			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task SetUserInformation( string username, string name ) {
-			await _storage.Set( "Name", name );
-			await _storage.Set( "Username", username );
-			Authentication = new AuthenticationState( Authentication, username, name );
+		public async Task Update( IValidationState initial, string message, int progress ) {
+			List<string> messages = new List<string>( initial.Messages );
+			messages.Add( message );
+			Validation = new ValidationState( messages, progress );
+			await _storage.Set( "State::Validation", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public Task UpdateValidationProgress( string message, int progress ) {
-			Validation = new ValidationState( Validation, message, progress );
-			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
-		}
-
-		public Task SetGame( Game game, IEnumerable<Player> players ) {
-			GamePlay = new GamePlayState( GamePlay, game );
-			GamePlay = new GamePlayState( GamePlay, players );
-			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
-		}
-
-		public Task SetMothership( Mothership mothership ) {
-			GamePlay = new GamePlayState( GamePlay, mothership );
-			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
-		}
-
-		public Task SetCrew( IEnumerable<Actor> crew ) {
-			Console.WriteLine( "Setting Crew" );
-			GamePlay = new GamePlayState( GamePlay, crew );
-			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
-		}
-
-		public Task SetMothershipModules( IEnumerable<MothershipAttachedModule> modules ) {
-			GamePlay = new GamePlayState( GamePlay, modules );
-			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
-		}
-
-		public Task SetPlayGameState(
+		public async Task Update(
+			IGamePlayState initial,
 			Game game,
 			Mothership mothership,
 			IEnumerable<Actor> crew,
@@ -125,20 +94,30 @@ namespace RiftDrive.Client.State {
 			IEnumerable<Player> players
 		) {
 			GamePlay = new GamePlayState( game, mothership, crew, modules, players );
+			await _storage.Set( "State::GamePlay", GamePlay );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
 		}
 
-		public Task SetProfileUser( User user ) {
-			Profile = new ProfileState( Profile, user );
+		public async Task Update(
+			IGamePlayState initial,
+			Game game,
+			IEnumerable<Player> players
+		) {
+			GamePlay = new GamePlayState( game, initial.Mothership, initial.Crew, initial.Modules, players );
+			await _storage.Set( "State::GamePlay", GamePlay );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
 		}
 
-		public Task SetGames( IEnumerable<Game> games ) {
-			Profile = new ProfileState( Profile, games );
+		public async Task Update( IUserInformationState initial, User user ) {
+			UserInformation = new UserInformationState( user, initial.Games );
+			await _storage.Set( "State::UserInformation", UserInformation );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
-			return Task.CompletedTask;
+		}
+
+		public async Task Update( IUserInformationState initial, IEnumerable<Game> games ) {
+			UserInformation = new UserInformationState( initial.User, games );
+			await _storage.Set( "State::UserInformation", UserInformation );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 	}
 }

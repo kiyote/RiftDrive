@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using Newtonsoft.Json;
 
 namespace RiftDrive.Client.State {
 	public interface IAuthenticationState {
@@ -27,6 +28,7 @@ namespace RiftDrive.Client.State {
 
 		string Username { get; }
 
+		[JsonIgnore]
 		bool IsAuthenticated { get; }
 	}
 }

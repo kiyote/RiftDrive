@@ -13,9 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RiftDrive.Client.Model;
 using RiftDrive.Shared;
 
@@ -30,46 +29,7 @@ namespace RiftDrive.Client.State {
 			Players = new List<Player>();
 		}
 
-		public GamePlayState( IGamePlayState initial, Game game) {
-			Game = game;
-			Mothership = Mothership;
-			Crew = initial.Crew;
-			Modules = initial.Modules;
-			Players = initial.Players;
-		}
-
-		public GamePlayState( IGamePlayState initial, Mothership mothership ) {
-			Game = initial.Game;
-			Mothership = mothership;
-			Crew = initial.Crew;
-			Modules = initial.Modules;
-			Players = initial.Players;
-		}
-
-		public GamePlayState( IGamePlayState initial, IEnumerable<Actor> crew ) {
-			Game = initial.Game;
-			Mothership = initial.Mothership;
-			Crew = crew;
-			Modules = initial.Modules;
-			Players = initial.Players;
-		}
-
-		public GamePlayState( IGamePlayState initial, IEnumerable<MothershipAttachedModule> modules ) {
-			Game = initial.Game;
-			Mothership = initial.Mothership;
-			Crew = initial.Crew;
-			Modules = modules;
-			Players = initial.Players;
-		}
-
-		public GamePlayState( IGamePlayState initial, IEnumerable<Player> players ) {
-			Game = initial.Game;
-			Mothership = initial.Mothership;
-			Crew = initial.Crew;
-			Modules = initial.Modules;
-			Players = players;
-		}
-
+		[JsonConstructor]
 		public GamePlayState(
 			Game game,
 			Mothership mothership,
@@ -93,9 +53,5 @@ namespace RiftDrive.Client.State {
 		public IEnumerable<MothershipAttachedModule> Modules { get; }
 
 		public IEnumerable<Player> Players { get; }
-
-		public static Task<GamePlayState> InitialState( IStateStorage storage ) {
-			return Task.FromResult( new GamePlayState() );
-		}
 	}
 }

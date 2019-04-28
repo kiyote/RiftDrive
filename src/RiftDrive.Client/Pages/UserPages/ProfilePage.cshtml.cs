@@ -40,10 +40,6 @@ namespace RiftDrive.Client.Pages.UserPages {
 
 		protected bool ChangingAvatar { get; set; }
 
-		protected override async Task OnInitAsync() {
-			await Dispatch.ViewProfile();
-		}
-
 		protected string FormatDate( DateTime? dateTime ) {
 			return dateTime
 					?.Subtract( TimeSpan.FromHours( 5 ) )
@@ -88,7 +84,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 				//	mimeType = "image/png";
 				//}
 				await UserService.SetAvatar( mimeType, content );
-				await Dispatch.ViewProfile();
+				await Dispatch.ViewUserProfile();
 			}
 		}
 	}

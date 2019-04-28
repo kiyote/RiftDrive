@@ -23,8 +23,6 @@ namespace RiftDrive.Client.State {
 	public interface IAppState {
 		event EventHandler OnStateChanged;
 
-		event Func<object, EventArgs, Task> OnStateInitialized;
-
 		bool IsInitialized { get; }
 
 		IAuthenticationState Authentication { get; }
@@ -33,30 +31,24 @@ namespace RiftDrive.Client.State {
 
 		IGamePlayState GamePlay { get; }
 
-		IProfileState Profile { get; }
+		IUserInformationState UserInformation { get; }
 
 		Task Initialize();
 
-		Task SetTokens( string accessToken, string refreshToken, DateTime tokensExpireAt );
+		Task ClearState();
 
-		Task SetUserInformation( string username, string name );
+		Task Update( IValidationState initial, string message, int progress );
 
-		Task ClearTokens();
+		Task Update( IAuthenticationState initial, string username, string name );
 
-		Task UpdateValidationProgress( string message, int progress );
+		Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt );
 
-		Task SetGame( Game game, IEnumerable<Player> players );
+		Task Update( IGamePlayState initial, Game game, IEnumerable<Player> players );
 
-		Task SetMothership( Mothership mothership );
+		Task Update( IGamePlayState initial, Game game, Mothership mothership, IEnumerable<Actor> crew, IEnumerable<MothershipAttachedModule> module, IEnumerable<Player> players );
 
-		Task SetCrew( IEnumerable<Actor> actor );
+		Task Update( IUserInformationState initial, User user );
 
-		Task SetMothershipModules( IEnumerable<MothershipAttachedModule> modules );
-
-		Task SetPlayGameState( Game game, Mothership mothership, IEnumerable<Actor> crew, IEnumerable<MothershipAttachedModule> module, IEnumerable<Player> players );
-
-		Task SetProfileUser( User user );
-
-		Task SetGames( IEnumerable<Game> game );
+		Task Update( IUserInformationState initial, IEnumerable<Game> games );
 	}
 }

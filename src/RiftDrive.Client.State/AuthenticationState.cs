@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RiftDrive.Client.State {
 	internal sealed class AuthenticationState : IAuthenticationState {
@@ -27,40 +27,14 @@ namespace RiftDrive.Client.State {
 			TokensExpireAt = DateTime.MinValue.ToUniversalTime();
 		}
 
-		public AuthenticationState(
-			IAuthenticationState state,
-			string accessToken,
-			string refreshToken,
-			DateTime tokensExpireAt
-		) {
-			Username = state.Username;
-			Name = state.Name;
-			AccessToken = accessToken;
-			RefreshToken = refreshToken;
-			TokensExpireAt = tokensExpireAt;
-		}
-
+		[JsonConstructor]
         public AuthenticationState(
-            IAuthenticationState state,
-            string username,
-            string name
-        )
-        {
-            Username = username;
-            Name = name;
-            AccessToken = state.AccessToken;
-            RefreshToken = state.RefreshToken;
-            TokensExpireAt = state.TokensExpireAt;
-        }
-
-        public AuthenticationState(
-            string username,
+			string username,
 			string name,
             string accessToken,
             string refreshToken,
             DateTime tokensExpireAt
-        )
-        {
+        ) {
             Username = username;
             Name = name;
             AccessToken = accessToken;
@@ -78,20 +52,11 @@ namespace RiftDrive.Client.State {
 
 		public DateTime TokensExpireAt { get; }
 
+		[JsonIgnore]
 		public bool IsAuthenticated {
 			get {
 				return ( TokensExpireAt >= DateTime.UtcNow );
 			}
-		}
-
-		public static async Task<AuthenticationState> InitialState( IStateStorage storage ) {
-			string accessToken = await storage.GetAsString( "AccessToken" );
-			string refreshToken = await storage.GetAsString( "RefreshToken" );
-			DateTime tokensExpireAt = await storage.GetAsDateTime( "TokensExpireAt" );
-			string name = await storage.GetAsString( "Name" );
-			string username = await storage.GetAsString( "Username" );
-
-			return new AuthenticationState( username, name, accessToken, refreshToken, tokensExpireAt );
 		}
 	}
 }

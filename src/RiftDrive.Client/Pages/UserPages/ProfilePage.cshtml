@@ -2,7 +2,7 @@
 @inherits ProfilePageBase
 @layout MainLayout
 
-@if (State.Profile.User == default)
+@if (State.UserInformation.User == default)
 {
     <span>Loading ...</span>
 }
@@ -12,11 +12,11 @@ else
         <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
             <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
                 <CardBody>
-                    <CardTitle Size="5">@State.Profile.User.Name</CardTitle>
+                    <CardTitle Size="5">@State.UserInformation.User.Name</CardTitle>
                 </CardBody>
-                @if (!string.IsNullOrWhiteSpace(State.Profile.User.AvatarUrl))
+                @if (!string.IsNullOrWhiteSpace(State.UserInformation.User.AvatarUrl))
                 {
-                    <CardImage Source=@State.Profile.User.AvatarUrl Alt="Avatar Image">
+                    <CardImage Source=@State.UserInformation.User.AvatarUrl Alt="Avatar Image">
                     </CardImage>
                 }
                 <CardBody>
@@ -27,13 +27,13 @@ else
                                     <TableRowCell>User Id:</TableRowCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableRowCell>@State.Profile.User.Id.Value</TableRowCell>
+                                    <TableRowCell>@State.UserInformation.User.Id.Value</TableRowCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableRowCell>Last Login:</TableRowCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableRowCell>@FormatDate(State.Profile.User.LastLogin)</TableRowCell>
+                                    <TableRowCell>@FormatDate(State.UserInformation.User.LastLogin)</TableRowCell>
                                 </TableRow>
                             </TableBody>
                         </TableContainer>

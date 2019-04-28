@@ -31,7 +31,8 @@ namespace RiftDrive.Client.Pages {
 #nullable enable
 
 		protected override async Task OnInitAsync() {
-			await Dispatch.ViewProfile();
+			await Dispatch.ViewUserGames();
+			await Dispatch.ViewUserProfile();
 		}
 	}
 }

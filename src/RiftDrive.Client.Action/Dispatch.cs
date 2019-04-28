@@ -39,28 +39,40 @@ namespace RiftDrive.Client.Action {
 		}
 
 		public async Task PlayGame( Id<Game> gameId ) {
+			Console.WriteLine( "PlayGame" );
 			Game game = await _gameService.GetGame( gameId );
 			Mothership mothership = await _gameService.GetMothership( gameId );
 			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothership.Id );
 			IEnumerable<Actor> crew = await _gameService.GetCrew( gameId );
 			IEnumerable<Player> players = await _gameService.GetPlayers( gameId );
-			await _state.SetPlayGameState( game, mothership, crew, modules, players );
+			await _state.Update( _state.GamePlay, game, mothership, crew, modules, players );
 		}
 
 		public async Task ViewGame( Id<Game> gameId ) {
+			Console.WriteLine( "ViewGame" );
 			Game game = await _gameService.GetGame( gameId );
 			IEnumerable<Player> players = await _gameService.GetPlayers( gameId );
-			await _state.SetGame( game, players );
+			await _state.Update( _state.GamePlay, game, players );
 		}
 
-		public async Task ViewProfile() {
-			User user = await _userService.GetUserInformation();
-			IEnumerable<Game> games = await _gameService.GetGames();
-			await _state.SetProfileUser( user );
-			await _state.SetGames( games );
+		public async Task ViewUserProfile() {
+			Console.WriteLine( "ViewUserProfile" );
+			if( _state.Authentication.IsAuthenticated) {
+				User user = await _userService.GetUserInformation();
+				await _state.Update( _state.UserInformation, user );
+			}
+		}
+
+		public async Task ViewUserGames() {
+			Console.WriteLine( "ViewUserGames" );
+			if( _state.Authentication.IsAuthenticated) {
+				IEnumerable<Game> games = await _gameService.GetGames();
+				await _state.Update( _state.UserInformation, games );
+			}
 		}
 
 		public async Task StartGame( Id<Game> gameId, string message ) {
+			Console.WriteLine( "StartGame" );
 			await _gameService.StartGame( gameId, message );
 		}
 	}
