@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Linq;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
+using RiftDrive.Shared;
 
-namespace RiftDrive.Client {
-	public static class ExtensionMethods {
-		public static string GetParameter( this IUriHelper uriHelper, string name ) {
-			Uri uri = new Uri( uriHelper.GetAbsoluteUri() );
-			string value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out StringValues values ) ? values.First() : string.Empty;
+namespace RiftDrive.Client.Pages.PlayPages.Components {
+	public class MothershipSummaryComponent : ComponentBase {
+		[Parameter] protected Mothership Mothership { get; set; }
 
-			return value;
-		}
+		[Parameter] protected Game Game { get; set; }
+
+		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
 	}
 }

@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using RiftDrive.Client.State;
 
@@ -28,7 +29,7 @@ namespace RiftDrive.Client {
 		}
 
 		public async Task<DateTime> GetAsDateTime( string name ) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			string value = await js.InvokeAsync<string>( "appState.getItem", name );
 
 			if( string.IsNullOrWhiteSpace( value ) ) {
@@ -39,18 +40,18 @@ namespace RiftDrive.Client {
 		}
 
 		public async Task<string> GetAsString( string name ) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			return await js.InvokeAsync<string>( "appState.getItem", name );
 		}
 
 		public async Task<int> GetAsInt( string name ) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			string value = await js.InvokeAsync<string>( "appState.getItem", name );
 			return int.Parse( value );
 		}
 
 		public async Task<T> Get<T>(string name) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			string value = await js.InvokeAsync<string>( "appState.getItem", name );
 			if (string.IsNullOrWhiteSpace(value)) {
 				return default;
@@ -59,23 +60,23 @@ namespace RiftDrive.Client {
 		}
 
 		public async Task Set( string name, string value ) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			await js.InvokeAsync<string>( "appState.setItem", name, value );
 		}
 
 		public async Task Set( string name, int value ) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			await js.InvokeAsync<string>( "appState.setItem", name, value );
 		}
 
 		public async Task Set( string name, DateTime value ) {
-			var js = _jsProvider.Get();
+			IJSRuntime js = _jsProvider.Get();
 			await js.InvokeAsync<string>( "appState.setItem", name, value.ToString( "o" ) );
 		}
 
 		public async Task Set<T>( string name, T value ) {
-			var json = JsonConvert.SerializeObject( value );
-			var js = _jsProvider.Get();
+			string json = JsonConvert.SerializeObject( value );
+			IJSRuntime js = _jsProvider.Get();
 			await js.InvokeAsync<string>( "appState.setItem", name, json );
 		}
 	}

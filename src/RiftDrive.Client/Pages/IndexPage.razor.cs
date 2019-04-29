@@ -13,19 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
+using RiftDrive.Client.Action;
+using RiftDrive.Client.State;
 
-namespace RiftDrive.Client {
-	public static class ExtensionMethods {
-		public static string GetParameter( this IUriHelper uriHelper, string name ) {
-			Uri uri = new Uri( uriHelper.GetAbsoluteUri() );
-			string value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out StringValues values ) ? values.First() : string.Empty;
+namespace RiftDrive.Client.Pages {
+	public class IndexPageBase : ComponentBase {
+		public static string Url = "/";
 
-			return value;
+		[Inject] protected IAppState State { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
+
+		protected override async Task OnInitAsync() {
+			await Dispatch.ViewUserGames();
 		}
 	}
 }

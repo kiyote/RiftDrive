@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,18 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
+using RiftDrive.Client.State;
 
-namespace RiftDrive.Client {
-	public static class ExtensionMethods {
-		public static string GetParameter( this IUriHelper uriHelper, string name ) {
-			Uri uri = new Uri( uriHelper.GetAbsoluteUri() );
-			string value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out StringValues values ) ? values.First() : string.Empty;
+namespace RiftDrive.Client.Pages.AuthPages {
+	public class LogOutPageBase : ComponentBase {
+		public const string Url = "/auth/logout";
 
-			return value;
+		[Inject] protected IUriHelper UriHelper { get; set; }
+
+		[Inject] protected IAppState State { get; set; }
+
+		protected override async Task OnInitAsync() {
+			await State.ClearState();
+			UriHelper.NavigateTo( IndexPageBase.Url );
 		}
 	}
 }

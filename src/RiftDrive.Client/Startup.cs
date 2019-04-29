@@ -23,14 +23,12 @@ using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client {
-	public class Startup
-    {
-        public void ConfigureServices(IServiceCollection services) {
+	public class Startup {
+		public void ConfigureServices( IServiceCollection services ) {
 			services
-                .AddBlazorise( options =>
-				 {
-					 options.ChangeTextOnKeyPress = true;
-				 } )
+				.AddBlazorise( options => {
+					options.ChangeTextOnKeyPress = true;
+				} )
 				.AddMaterialProviders()
 				.AddMaterialIcons();
 
@@ -40,15 +38,17 @@ namespace RiftDrive.Client {
 				.RegisterState<StateStorage>()
 				.RegisterServices<Config>();
 
-			services.AddSingleton<IDispatch, Dispatch>();
+			services
+				.AddSingleton<IDispatch, Dispatch>();
 		}
 
-        public void Configure(IComponentsApplicationBuilder app)
-        {
+		public void Configure( IComponentsApplicationBuilder app ) {
 			app
 				.UseMaterialProviders()
-				.UseMaterialIcons()
-				.AddComponent<App>("app");
-        }
-    }
+				.UseMaterialIcons();
+
+			app
+				.AddComponent<App>( "app" );
+		}
+	}
 }

@@ -1,0 +1,10 @@
+﻿@inherits MainLayoutBase
+@using RiftDrive.Client.Pages.Components
+
+<div class="app-main">
+
+    <NavBar Username=@State.Authentication.Name IsAuthenticated=@State.Authentication.IsAuthenticated />
+    <div class="app-content">
+        @Body
+    </div>
+</div>

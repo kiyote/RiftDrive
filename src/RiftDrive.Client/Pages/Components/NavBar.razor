@@ -1,0 +1,51 @@
+﻿@inherits NavBarComponent
+
+<Bar Breakpoint="Breakpoint.Desktop" Background="Background.Light" Theme="Theme.Light">
+    <BarBrand>
+        RiftDrive
+    </BarBrand>
+    <BarToggler>
+    </BarToggler>
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="#home">Home</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="#docs">Documentation</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarDropdown>
+                    <BarDropdownToggle>Dropdown</BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem>Action</BarDropdownItem>
+                        <BarDropdownItem>Another action</BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            @if (!IsAuthenticated)
+            {
+                <BarItem>
+                    <BarLink To=@SignUpUrl>Sign Up</BarLink>
+                </BarItem>
+                <BarItem>
+                    <BarLink To=@LogInUrl>Log in</BarLink>
+                </BarItem>
+            }
+            else
+            {
+                <BarItem>
+                    <BarDropdown>
+                        <BarDropdownToggle>@Username</BarDropdownToggle>
+                        <BarDropdownMenu>
+                            <BarDropdownItem To=@ProfileUrl>Profile</BarDropdownItem>
+                            <BarDropdownItem To=@LogOutUrl>Log Out</BarDropdownItem>
+                        </BarDropdownMenu>
+                    </BarDropdown>
+                </BarItem>
+            }
+        </BarEnd>
+    </BarMenu>
+</Bar>

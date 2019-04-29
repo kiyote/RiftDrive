@@ -26,22 +26,22 @@ namespace RiftDrive.Server.Hubs {
 		public readonly static string Url = "/signalhub";
 
 		public override async Task OnConnectedAsync() {
-			var username = this.Context.GetHttpContext().Items[ "User" ];
+			object username = this.Context.GetHttpContext().Items[ "User" ];
 			await this.Clients.Others.SendAsync( "Send", $"{username} joined" );
 		}
 
 		public override async Task OnDisconnectedAsync( Exception ex ) {
-			var username = this.Context.GetHttpContext().Items[ "User" ];
+			object username = this.Context.GetHttpContext().Items[ "User" ];
 			await this.Clients.Others.SendAsync( "Send", $"{username} left" );
 		}
 
 		public Task Send( string message ) {
-			var username = this.Context.GetHttpContext().Items[ "User" ];
+			object username = this.Context.GetHttpContext().Items[ "User" ];
 			return this.Clients.All.SendAsync( "Send", $"{username}: {message}" );
 		}
 
 		public Task SendToOthers( string message ) {
-			var username = this.Context.GetHttpContext().Items[ "User" ];
+			object username = this.Context.GetHttpContext().Items[ "User" ];
 			return this.Clients.Others.SendAsync( "Send", $"{username}: {message}" );
 		}
 

@@ -14,18 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Components.Layouts;
+using RiftDrive.Client.State;
 
-namespace RiftDrive.Client {
-	public static class ExtensionMethods {
-		public static string GetParameter( this IUriHelper uriHelper, string name ) {
-			Uri uri = new Uri( uriHelper.GetAbsoluteUri() );
-			string value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out StringValues values ) ? values.First() : string.Empty;
+namespace RiftDrive.Client.Pages {
+	public class MainLayoutBase : LayoutComponentBase, IDisposable {
 
-			return value;
+		[Inject] protected IAppState State { get; set; }
+
+		protected override async Task OnInitAsync() {
+			State.OnStateChanged += AppState_OnStateChanged;
+			await State.Initialize();
+		}
+
+		private void AppState_OnStateChanged( object sender, EventArgs e ) {
+			StateHasChanged();
+		}
+
+		public void Dispose() {
+			State.OnStateChanged -= AppState_OnStateChanged;
 		}
 	}
 }

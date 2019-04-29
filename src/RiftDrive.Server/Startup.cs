@@ -13,11 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 using BlazorSpa.Server.Repository.DynamoDb;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +21,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -37,9 +33,15 @@ using RiftDrive.Server.Repository.Cognito;
 using RiftDrive.Server.Repository.S3;
 using RiftDrive.Server.Service;
 using RiftDrive.Shared.Provider;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace RiftDrive.Server {
 	public class Startup {
+
 		public Startup( IConfiguration configuration ) {
 			Configuration = configuration;
 		}
@@ -101,8 +103,11 @@ namespace RiftDrive.Server {
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure( IApplicationBuilder app, IWebHostEnvironment env ) {
-			app.UseResponseCompression();
-			app.UseAuthentication();
+			app
+				.UseResponseCompression()
+				.UseAuthorization()
+				.UseAuthentication();
+
 			app.UseIdentificationMiddleware();
 
 			if( env.IsDevelopment() ) {
@@ -114,15 +119,17 @@ namespace RiftDrive.Server {
 			app.UseSignalR( routes => {
 				routes.MapHub<SignalHub>( SignalHub.Url );
 			} );
-			app.UseMvc( routes => {
-				routes.MapRoute( name: "default", template: "{controller}/{action}/{id?}" );
+
+			app.UseRouting();
+			app.UseEndpoints( endpoints => {
+				endpoints.MapDefaultControllerRoute();
 			} );
 
 			app.UseBlazor<Client.Startup>();
 		}
 
 		private void SetJwtBearerOptions( JwtBearerOptions options ) {
-			var tokenValidationOptions = Configuration.GetSection( "TokenValidation" ).Get<TokenValidationOptions>();
+			TokenValidationOptions tokenValidationOptions = Configuration.GetSection( "TokenValidation" ).Get<TokenValidationOptions>();
 			var rsa = new RSACryptoServiceProvider();
 			rsa.ImportParameters(
 				new RSAParameters() {
@@ -144,7 +151,7 @@ namespace RiftDrive.Server {
 
 			options.Events = new JwtBearerEvents {
 				OnMessageReceived = context => {
-					var accessToken = context.Request.Query["access_token"];
+					StringValues accessToken = context.Request.Query["access_token"];
 
 					// If there is an access token supplied in the url, then
 					// we check to see if we're actually trying to service

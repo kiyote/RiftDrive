@@ -1,0 +1,33 @@
+﻿@inherits MothershipModuleSummaryComponent
+@using RiftDrive.Shared;
+
+@if (Modules == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <Card>
+        <CardBody>
+            <CardText>
+                <TableContainer IsBordered="true" IsStriped="true">
+                    <TableBody>
+                        @foreach (var module in Modules)
+                        {
+                            MothershipModule definition = MothershipModule.GetById(module.MothershipModuleId);
+                            <TableRow>
+                                <TableRowCell>@definition.Name</TableRowCell>
+                                <TableRowCell>
+                                    @foreach (var action in definition.Actions)
+                                    {
+                                        <SimpleButton Clicked=@(async () => { await ModuleButtonClicked(module, action); })>@action.Name</SimpleButton>
+                                    }
+                                </TableRowCell>
+                            </TableRow>
+                        }
+                    </TableBody>
+                </TableContainer>
+            </CardText>
+        </CardBody>
+    </Card>
+}

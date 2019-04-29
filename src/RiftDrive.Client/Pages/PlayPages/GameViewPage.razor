@@ -1,0 +1,34 @@
+﻿@page "/game/view"
+@inherits GameViewPageBase
+@layout MainLayout
+@using RiftDrive.Client.Pages.PlayPages.Components
+
+@if (State.GamePlay.Game == default)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <Row>
+        <Column>
+            @if (State.GamePlay.Mothership == default)
+            {
+                <span>Loading...</span>
+            }
+            else
+            {
+                <MothershipSummary Game=@State.GamePlay.Game Mothership=@State.GamePlay.Mothership Modules=@State.GamePlay.Modules></MothershipSummary>
+            }
+        </Column>
+        <Column>
+            @if (State.GamePlay.Crew == default)
+            {
+                <span>Loading...</span>
+            }
+            else
+            {
+                <CrewSummary Crew=@State.GamePlay.Crew></CrewSummary>
+            }
+        </Column>
+    </Row>
+}

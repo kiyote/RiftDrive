@@ -1,0 +1,14 @@
+﻿@page "/"
+@inherits IndexPageBase
+@layout MainLayout
+@using RiftDrive.Client.Pages.Components
+
+@if (State.Authentication.IsAuthenticated)
+{
+    <Row>
+        <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
+            <UserGames Games=@State.UserInformation.Games User=@State.UserInformation.User />
+        </Column>
+    </Row>
+}
+

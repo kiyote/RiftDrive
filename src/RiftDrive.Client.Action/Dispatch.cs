@@ -61,6 +61,7 @@ namespace RiftDrive.Client.Action {
 		public async Task ViewUserProfile() {
 			Console.WriteLine( "ViewUserProfile" );
 			if( _state.Authentication.IsAuthenticated) {
+				Console.WriteLine( "IsAuthenticated" );
 				User user = await _userService.GetUserInformation();
 				await _state.Update( _state.UserInformation, user );
 			}
@@ -69,8 +70,11 @@ namespace RiftDrive.Client.Action {
 		public async Task ViewUserGames() {
 			Console.WriteLine( "ViewUserGames" );
 			if( _state.Authentication.IsAuthenticated) {
+				//TODO: Fix this for efficiency
 				IEnumerable<Game> games = await _gameService.GetGames();
 				await _state.Update( _state.UserInformation, games );
+				User user = await _userService.GetUserInformation();
+				await _state.Update( _state.UserInformation, user );
 			}
 		}
 
