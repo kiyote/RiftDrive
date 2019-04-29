@@ -17,6 +17,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
@@ -29,11 +30,9 @@ namespace RiftDrive.Client.Pages.AuthPages {
 #nullable disable
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] protected IUserApiService UserApiService { get; set; }
-
 		[Inject] protected IAppState State { get; set; }
 
-		[Inject] protected ITokenService TokenService { get; set; }
+		[Inject] protected IDispatch Dispatch { get; set; }
 #nullable enable
 
 		protected override async Task OnInitAsync() {
@@ -41,22 +40,9 @@ namespace RiftDrive.Client.Pages.AuthPages {
 			await State.Initialize();
 
 			string code = UriHelper.GetParameter( "code" );
+			await Dispatch.RetrieveTokens( code );
+			await Dispatch.LogInUser();
 
-			await State.Update( State.Validation, "...retrieving tokens...", 5 );
-			AuthorizationToken tokens = await TokenService.GetToken( code );
-			if( tokens == default ) {
-				//TODO: Do something here
-				throw new InvalidOperationException();
-			}
-			await State.Update( State.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
-
-			await State.Update( State.Validation, "...recording login...", 50 );
-			await UserApiService.RecordLogin();
-
-			await State.Update( State.Validation, "...retrieving user information...", 75 );
-			User userInfo = await UserApiService.GetUserInformation();
-
-			await State.Update( State.Authentication, userInfo.Username, userInfo.Name );
 			State.OnStateChanged -= AppStateHasChanged;
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}

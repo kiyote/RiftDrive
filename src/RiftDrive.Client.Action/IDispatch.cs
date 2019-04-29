@@ -27,5 +27,9 @@ namespace RiftDrive.Client.Action {
 		Task ViewUserGames();
 
 		Task StartGame( Id<Game> gameId, string message );
+
+		Task RetrieveTokens( string code );
+
+		Task LogInUser();
 	}
 }

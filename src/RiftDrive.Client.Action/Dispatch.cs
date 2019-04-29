@@ -24,6 +24,7 @@ using RiftDrive.Shared;
 namespace RiftDrive.Client.Action {
 	public class Dispatch : IDispatch {
 
+		private readonly ITokenService _tokenService;
 		private readonly IUserApiService _userService;
 		private readonly IGameApiService _gameService;
 		private readonly IAppState _state;
@@ -31,11 +32,13 @@ namespace RiftDrive.Client.Action {
 		public Dispatch(
 			IAppState state,
 			IGameApiService gameService,
-			IUserApiService userService
+			IUserApiService userService,
+			ITokenService tokenService
 		) {
 			_state = state;
 			_gameService = gameService;
 			_userService = userService;
+			_tokenService = tokenService;
 		}
 
 		public async Task PlayGame( Id<Game> gameId ) {
@@ -74,6 +77,26 @@ namespace RiftDrive.Client.Action {
 		public async Task StartGame( Id<Game> gameId, string message ) {
 			Console.WriteLine( "StartGame" );
 			await _gameService.StartGame( gameId, message );
+		}
+
+		public async Task RetrieveTokens( string code ) {
+			await _state.Update( _state.Validation, "...retrieving tokens...", 5 );
+			AuthorizationToken tokens = await _tokenService.GetToken( code );
+			if( tokens == default ) {
+				//TODO: Do something here
+				throw new InvalidOperationException();
+			}
+			await _state.Update( _state.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+		}
+
+		public async Task LogInUser() {
+			await _state.Update( _state.Validation, "...recording login...", 50 );
+			await _userService.RecordLogin();
+
+			await _state.Update( _state.Validation, "...retrieving user information...", 75 );
+			User userInfo = await _userService.GetUserInformation();
+
+			await _state.Update( _state.Authentication, userInfo.Username, userInfo.Name );
 		}
 	}
 }
