@@ -101,5 +101,30 @@ namespace RiftDrive.Server.Service {
 		) {
 			return await _mothershipRepository.GetAttachedModules( mothershipId );
 		}
+
+		async Task IGameService.TriggerAction(
+			Id<Game> gameId,
+			Id<Mothership> mothershipId,
+			Id<MothershipModule> moduleId,
+			Id<MothershipModuleAction> actionId
+		) {
+			Mothership mothership = await _mothershipRepository.GetMothership( mothershipId );
+			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( mothershipId, moduleId );
+			MothershipModule definition = MothershipModule.GetById( moduleId );
+			foreach (var effect in definition.Effects) {
+				switch (effect.Effect) {
+					case ModuleEffect.AddCrew:
+						await _mothershipRepository.SetAvailableCrew( mothershipId, effect.Magnitude );
+						break;
+					case ModuleEffect.ConsumeFuel:
+						await _mothershipRepository.SetRemainingFuel( mothershipId, mothership.RemainingFuel - effect.Magnitude );
+						break;
+					case ModuleEffect.ConsumePower:
+						await _mothershipRepository.SetRemainingPower( mothershipId, module.MothershipModuleId, module.RemainingPower - effect.Magnitude );
+						break;
+				}
+			}
+		}
+
 	}
 }

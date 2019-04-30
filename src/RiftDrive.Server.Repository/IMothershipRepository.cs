@@ -16,7 +16,6 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RiftDrive.Server.Model;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository {
@@ -29,6 +28,16 @@ namespace RiftDrive.Server.Repository {
 
 		Task<Mothership> GetMothership( Id<Game> gameId );
 
+		Task<Mothership> GetMothership( Id<Mothership> mothershipId );
+
 		Task<IEnumerable<MothershipAttachedModule>> GetAttachedModules( Id<Mothership> mothershipId );
+
+		Task<Mothership> SetAvailableCrew( Id<Mothership> mothershipId, int availableCrew );
+
+		Task<Mothership> SetRemainingFuel( Id<Mothership> mothershipId, int remainingFuel );
+
+		Task<MothershipAttachedModule> GetAttachedModule( Id<Mothership> mothershipId, Id<MothershipModule> moduleId );
+
+		Task<MothershipAttachedModule> SetRemainingPower( Id<Mothership> mothershipId, Id<MothershipModule> moduleId, int remainingPower );
 	}
 }

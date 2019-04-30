@@ -20,7 +20,7 @@ else
                                 <TableRowCell>
                                     @foreach (var action in definition.Actions)
                                     {
-                                        <SimpleButton Clicked=@(() => { ModuleButtonClicked(module, action); })>@action.Name</SimpleButton>
+                                        <SimpleButton Clicked=@(async () => { await ModuleButtonClicked(module, action); })>@action.Name</SimpleButton>
                                     }
                                 </TableRowCell>
                             </TableRow>

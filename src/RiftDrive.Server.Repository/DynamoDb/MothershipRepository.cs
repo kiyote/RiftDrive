@@ -115,6 +115,46 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return records.Select( r => ToMothershipAttachedModule( r ));
 		}
 
+		async Task<Mothership> IMothershipRepository.SetAvailableCrew( Id<Mothership> mothershipId, int availableCrew ) {
+			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( MothershipRecord.GetKey( mothershipId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+			mothership.AvailableCrew = availableCrew;
+
+			await _context.SaveAsync( mothership );
+			return ToMothership( mothership );
+		}
+
+		async Task<Mothership> IMothershipRepository.SetRemainingFuel( Id<Mothership> mothershipId, int remainingFuel ) {
+			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( MothershipRecord.GetKey( mothershipId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+			mothership.RemainingFuel = remainingFuel;
+
+			await _context.SaveAsync( mothership );
+			return ToMothership( mothership );
+		}
+
+		async Task<Mothership> IMothershipRepository.GetMothership( Id<Mothership> mothershipId ) {
+			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( MothershipRecord.GetKey( mothershipId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+			return ToMothership( mothership );
+		}
+
+		async Task<MothershipAttachedModule> IMothershipRepository.GetAttachedModule( Id<Mothership> mothershipId, Id<MothershipModule> moduleId ) {
+			MothershipAttachedModuleRecord module = await _context.LoadAsync<MothershipAttachedModuleRecord>(
+				MothershipRecord.GetKey( mothershipId.Value ),
+				MothershipAttachedModuleRecord.GetKey( moduleId.Value ) );
+
+			return ToMothershipAttachedModule( module );
+		}
+
+		async Task<MothershipAttachedModule> IMothershipRepository.SetRemainingPower( Id<Mothership> mothershipId, Id<MothershipModule> moduleId, int remainingPower ) {
+			MothershipAttachedModuleRecord module = await _context.LoadAsync<MothershipAttachedModuleRecord>(
+				MothershipRecord.GetKey( mothershipId.Value ),
+				MothershipAttachedModuleRecord.GetKey( moduleId.Value ) );
+
+			module.RemainingPower = remainingPower;
+			await _context.SaveAsync( module );
+
+			return ToMothershipAttachedModule( module );
+		}
+
 		private async Task<IEnumerable<Id<MothershipModule>>> GetAttachedModuleIds( Id<Mothership> mothershipId ) {
 			AsyncSearch<MothershipAttachedModuleRecord> query = _context.QueryAsync<MothershipAttachedModuleRecord>(
 				MothershipRecord.GetKey( mothershipId.Value ),

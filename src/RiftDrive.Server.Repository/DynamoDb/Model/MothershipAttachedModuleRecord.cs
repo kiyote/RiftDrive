@@ -64,7 +64,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty("CreatedOn")]
 		public DateTime CreatedOn { get; set; }
 
-		private static string GetKey( string mothershipModuleId ) {
+		public static string GetKey( string mothershipModuleId ) {
 			return $"{ItemType}{mothershipModuleId}";
 		}
 

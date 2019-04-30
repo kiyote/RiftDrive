@@ -90,7 +90,7 @@ namespace RiftDrive.Server.Managers {
 			Id<MothershipModule> moduleId,
 			Id<MothershipModuleAction> actionId
 		) {
-			return Task.CompletedTask;
+			await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
 		}
 
 		private ClientPlayer ToClientPlayer( Player player ) {
