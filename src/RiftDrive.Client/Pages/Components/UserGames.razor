@@ -6,7 +6,7 @@
 }
 else
 {
-    <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
+    <Card>
         <CardBody>
             <CardTitle Size="5">Games for @User.Name</CardTitle>
         </CardBody>
@@ -19,7 +19,10 @@ else
                             <TableRow>
                                 <TableRowCell>@game.Name</TableRowCell>
                                 <TableRowCell>
-                                    <SimpleButton Clicked=@(async () => { await PlayGame(game.Id); }) IsActive=@(!Busy)>Play</SimpleButton>
+                                    <SimpleButton 
+                                                  Clicked=@(() => { PlayGame( game.Id ); })
+                                                  IsActive=@(!Busy)>Play
+                                    </SimpleButton>
                                 </TableRowCell>
                             </TableRow>
                         }

@@ -1,53 +1,59 @@
 ﻿@page "/user/profile"
+@page "/user/profile/{UserId}"
 @inherits ProfilePageBase
 @layout MainLayout
 
-@if (State.UserInformation.User == default)
+@if (User == default)
 {
     <span>Loading ...</span>
 }
 else
 {
-    <Row>
-        <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
-            <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
-                <CardBody>
-                    <CardTitle Size="5">@State.UserInformation.User.Name</CardTitle>
-                </CardBody>
-                @if (!string.IsNullOrWhiteSpace(State.UserInformation.User.AvatarUrl))
+<Row>
+    <Column>
+        <Card>
+            <CardBody>
+                <CardTitle Size="5">@User.Name</CardTitle>
+            </CardBody>
+            @if (!string.IsNullOrWhiteSpace(User.AvatarUrl))
+            {
+                <CardImage Source=@User.AvatarUrl Alt="Avatar Image">
+                </CardImage>
+            }
+        <CardBody>
+            <CardText>
+                <TableContainer IsBordered="true" IsStriped="true">
+                    <TableBody>
+                        <TableRow>
+                            <TableRowCell>User Id:</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowCell>@User.Id.Value</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowCell>Last Login:</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowCell>@FormatDate(User.LastLogin)</TableRowCell>
+                        </TableRow>
+                    </TableBody>
+                </TableContainer>
+            </CardText>
+            @if(IsTheAuthenticatedUser)
+            {
+                if (ChangingAvatar)
                 {
-                    <CardImage Source=@State.UserInformation.User.AvatarUrl Alt="Avatar Image">
-                    </CardImage>
+                    <input type="file" onchange="@UploadFile" ref="FileUploadRef" />
                 }
-                <CardBody>
-                    <CardText>
-                        <TableContainer IsBordered="true" IsStriped="true">
-                            <TableBody>
-                                <TableRow>
-                                    <TableRowCell>User Id:</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableRowCell>@State.UserInformation.User.Id.Value</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableRowCell>Last Login:</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableRowCell>@FormatDate(State.UserInformation.User.LastLogin)</TableRowCell>
-                                </TableRow>
-                            </TableBody>
-                        </TableContainer>
-                    </CardText>
-                    @if (ChangingAvatar)
-                    {
-                        <input type="file" onchange="@UploadFile" ref="FileUploadRef" />
-                    }
-                    else
-                    {
-                        <SimpleButton Clicked=@ChangeAvatarClicked Color="Color.Primary">Change Avatar</SimpleButton>
-                    }
-                </CardBody>
-            </Card>
-        </Column>
-    </Row>
+                else
+                {
+                    <SimpleButton Clicked=@ChangeAvatarClicked Color="Color.Primary">Change Avatar</SimpleButton>
+                }
+            }
+        </CardBody>
+        </Card>
+    </Column>
+    <Column></Column>
+    <Column></Column>
+</Row>
 }

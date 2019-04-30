@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RiftDrive.Client.Action\RiftDrive.Client.Action.csproj" />
     <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
     <ProjectReference Include="..\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj" />
     <ProjectReference Include="..\RiftDrive.Client.State\RiftDrive.Client.State.csproj" />

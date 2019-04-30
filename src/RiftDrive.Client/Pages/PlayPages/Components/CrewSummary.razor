@@ -1,5 +1,10 @@
 ﻿@inherits CrewSummaryComponent
 
+@if (Crew == default) {
+<span>Loading...</span>
+}
+else
+{
 <Card>
     <CardHeader>
         <CardTitle>Crew</CardTitle>
@@ -29,3 +34,4 @@
     </CardBody>
 </Card>
 
+}

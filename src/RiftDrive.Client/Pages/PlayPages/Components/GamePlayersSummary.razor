@@ -1,27 +1,34 @@
 ﻿@inherits GamePlayersSummaryComponent
 
-<Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
-    <CardBody>
-        <CardTitle Size="5">Players in @Game.Name</CardTitle>
-    </CardBody>
-    <CardBody>
-        <CardText>
-            <TableContainer IsBordered="true" IsStriped="true">
-                <TableBody>
-                    @foreach (var player in Players)
-                    {
-                        <TableRow>
-                            <TableRowCell>@player.Name</TableRowCell>
-                            <TableRowCell>
-                                <SimpleButton Clicked=@(async () => { await EditPlayer(player);}) Color="Color.Primary">Edit</SimpleButton>
-                            </TableRowCell>
-                        </TableRow>
-                    }
-                </TableBody>
-            </TableContainer>
-        </CardText>
-    </CardBody>
-</Card>
+@if (Players == default)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
+        <CardBody>
+            <CardTitle Size="5">Players</CardTitle>
+        </CardBody>
+        <CardBody>
+            <CardText>
+                <TableContainer IsBordered="true" IsStriped="true">
+                    <TableBody>
+                        @foreach (var player in Players)
+                        {
+                            <TableRow>
+                                <TableRowCell>@player.Name</TableRowCell>
+                                <TableRowCell>
+                                    <SimpleButton Clicked=@(() => { EditPlayer(player);}) Color="Color.Primary">Edit</SimpleButton>
+                                </TableRowCell>
+                            </TableRow>
+                        }
+                    </TableBody>
+                </TableContainer>
+            </CardText>
+        </CardBody>
+    </Card>
+}
 
 <Modal ref="ModalRef">
     <ModalBackdrop />

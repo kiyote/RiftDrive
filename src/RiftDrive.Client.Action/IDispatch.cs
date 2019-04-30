@@ -14,22 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Threading.Tasks;
-using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Action {
 	public interface IDispatch {
-		Task PlayGame( Id<Game> gameId );
-
-		Task ViewGame( Id<Game> gameId );
-
-		Task ViewUserProfile();
-
-		Task ViewUserGames();
-
-		Task StartGame( Id<Game> gameId, string message );
-
-		Task RetrieveTokens( string code );
-
-		Task LogInUser();
+		Task LogInUser( string code );
 	}
 }

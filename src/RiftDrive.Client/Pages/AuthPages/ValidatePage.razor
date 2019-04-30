@@ -14,12 +14,12 @@
             </CardHeader>
             <CardBody>
                 <ProgressGroup>
-                    <ProgressBar IsStriped="true" IsAnimated="true" Value=@State.Validation.Progress />
+                    <ProgressBar IsStriped="true" IsAnimated="true" Value=@Progress />
                 </ProgressGroup>
             </CardBody>
             <CardBody>
                 <CardText>
-                    @foreach (var message in State.Validation.Messages)
+                    @foreach (var message in Messages)
                     {
                         <p>@message</p>
                     }

@@ -6,8 +6,10 @@
 @if (State.Authentication.IsAuthenticated)
 {
     <Row>
-        <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is3.OnMobile">
-            <UserGames Games=@State.UserInformation.Games User=@State.UserInformation.User />
+        <Column>
+            <UserGames User=@State.Authentication.User />
+        </Column>
+        <Column>
         </Column>
     </Row>
 }

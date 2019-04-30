@@ -28,16 +28,15 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
 
-		[Parameter] protected Game Game { get; set; }
-
 		[Inject] protected IGameApiService GameService { get; set; }
 
-		protected async Task ModuleButtonClicked(
+		protected Task ModuleButtonClicked(
 			MothershipAttachedModule module,
 			MothershipModuleAction action
 		) {
 			MothershipModule definition = MothershipModule.GetById( module.MothershipModuleId );
-			await GameService.TriggerAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
+			//			await GameService.TriggerAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
+			return Task.CompletedTask;
 		}
 	}
 }

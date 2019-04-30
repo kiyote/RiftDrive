@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Action;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.AuthPages {
-	public class ValidatePageBase : ComponentBase {
+	public class ValidatePageBase : ComponentBase, IDisposable {
 
 		public static string Url = "/auth/validate";
 
@@ -30,21 +30,52 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 		[Inject] protected IAppState State { get; set; }
 
-		[Inject] protected IDispatch Dispatch { get; set; }
+		[Inject] protected ITokenService TokenService { get; set; }
+
+		[Inject] protected IUserApiService UserService { get; set; }
+
+		protected List<string> Messages { get; set; }
+
+		protected int Progress { get; set; }
+
+		public ValidatePageBase() {
+			Messages = new List<string>();
+		}
 
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += AppStateHasChanged;
 			await State.Initialize();
 
 			string code = UriHelper.GetParameter( "code" );
-			await Dispatch.RetrieveTokens( code );
-			await Dispatch.LogInUser();
+			Messages.Add( "...retrieving token..." );
+			AuthorizationToken tokens = await TokenService.GetToken( code );
+			if( tokens == default ) {
+				//TODO: Do something here
+				throw new InvalidOperationException();
+			}
+			await State.Update( State.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
-			State.OnStateChanged -= AppStateHasChanged;
+			Update( "...recording login...", 50 );
+			await UserService.RecordLogin();
+
+			Update( "...loading user information...", 75 );
+			User userInfo = await UserService.GetUserInformation();
+			await State.Update( State.Authentication, userInfo );
+
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}
 
 		private void AppStateHasChanged( object sender, EventArgs e ) {
+			StateHasChanged();
+		}
+
+		public void Dispose() {
+			State.OnStateChanged -= AppStateHasChanged;
+		}
+
+		private void Update(string message, int progress) {
+			Messages.Add( message );
+			Progress = progress;
 			StateHasChanged();
 		}
 	}

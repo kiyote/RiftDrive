@@ -14,14 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
+using RiftDrive.Client.Model;
 
 namespace RiftDrive.Client.State {
 	internal sealed class AuthenticationState : IAuthenticationState {
 
 		public AuthenticationState() {
-			Username = "";
-			Name = "";
+			User = default;
 			AccessToken = "";
 			RefreshToken = "";
 			TokensExpireAt = DateTime.MinValue.ToUniversalTime();
@@ -29,22 +30,19 @@ namespace RiftDrive.Client.State {
 
 		[JsonConstructor]
         public AuthenticationState(
-			string username,
-			string name,
+			User user,
             string accessToken,
             string refreshToken,
             DateTime tokensExpireAt
         ) {
-            Username = username;
-            Name = name;
+			User = user;
             AccessToken = accessToken;
             RefreshToken = refreshToken;
             TokensExpireAt = tokensExpireAt;
         }
 
-		public string Username { get; }
 
-		public string Name { get; }
+		public User User { get; }
 
 		public string AccessToken { get; }
 

@@ -14,24 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.AuthPages;
 using RiftDrive.Client.Pages.UserPages;
-using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages.Components {
 	public class NavBarComponent : ComponentBase {
 
 		[Inject] protected IConfig Config { get; set; }
 
-		[Inject] protected IAppState AppState { get; set; }
-
-		[Parameter] protected string Username { get; set; }
+		[Parameter] protected User User { get; set; }
 
 		[Parameter] protected bool IsAuthenticated { get; set; }
 
 		public string ProfileUrl {
 			get {
-				return ProfilePageBase.Url;
+				return ProfilePageBase.GetUrl( User.Id );
 			}
 		}
 

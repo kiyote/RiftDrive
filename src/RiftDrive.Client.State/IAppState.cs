@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
-using RiftDrive.Shared;
 
 namespace RiftDrive.Client.State {
 	public interface IAppState {
@@ -27,28 +25,12 @@ namespace RiftDrive.Client.State {
 
 		IAuthenticationState Authentication { get; }
 
-		IValidationState Validation { get; }
-
-		IGamePlayState GamePlay { get; }
-
-		IUserInformationState UserInformation { get; }
-
 		Task Initialize();
 
 		Task ClearState();
 
-		Task Update( IValidationState initial, string message, int progress );
-
-		Task Update( IAuthenticationState initial, string username, string name );
+		Task Update( IAuthenticationState initial, User user );
 
 		Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt );
-
-		Task Update( IGamePlayState initial, Game game, IEnumerable<Player> players );
-
-		Task Update( IGamePlayState initial, Game game, Mothership mothership, IEnumerable<Actor> crew, IEnumerable<MothershipAttachedModule> module, IEnumerable<Player> players );
-
-		Task Update( IUserInformationState initial, User user );
-
-		Task Update( IUserInformationState initial, IEnumerable<Game> games );
 	}
 }

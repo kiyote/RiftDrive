@@ -20,9 +20,5 @@ using RiftDrive.Shared;
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipSummaryComponent : ComponentBase {
 		[Parameter] protected Mothership Mothership { get; set; }
-
-		[Parameter] protected Game Game { get; set; }
-
-		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
 	}
 }

@@ -31,23 +31,18 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Parameter] protected IEnumerable<Player> Players { get; set; }
 
-		[Parameter] protected Game Game { get; set; }
-
 		protected string EditPlayerName { get; set; }
 
-		public Task EditPlayer( Player player ) {
+		public void EditPlayer( Player player ) {
 			ModalRef.Show();
-			return Task.CompletedTask;
 		}
 
-		public Task CancelEdit() {
+		public void CancelEdit() {
 			ModalRef.Hide();
-			return Task.CompletedTask;
 		}
 
-		public Task ApplyChanges() {
+		public void ApplyChanges() {
 			ModalRef.Hide();
-			return Task.CompletedTask;
 		}
 	}
 }

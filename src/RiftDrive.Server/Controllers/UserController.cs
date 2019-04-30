@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Client.Model;
 using RiftDrive.Server.Managers;
-using RiftDrive.Server.Model;
 using ClientUser = RiftDrive.Client.Model.User;
 
 namespace RiftDrive.Server.Controllers {
@@ -47,6 +46,18 @@ namespace RiftDrive.Server.Controllers {
 		[HttpGet]
 		public async Task<ActionResult<ClientUser>> GetUserInformation() {
 			var result = await _userManager.GetUser( _contextInformation.UserId );
+
+			if( result != default ) {
+				return Ok( result );
+
+			} else {
+				return NotFound();
+			}
+		}
+
+		[HttpGet("{userId}")]
+		public async Task<ActionResult<ClientUser>> GetUserInformation( string userId ) {
+			var result = await _userManager.GetUser( userId );
 
 			if( result != default ) {
 				return Ok( result );

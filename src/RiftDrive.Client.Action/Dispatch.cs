@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
-using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Action {
 	public class Dispatch : IDispatch {
@@ -41,66 +40,26 @@ namespace RiftDrive.Client.Action {
 			_tokenService = tokenService;
 		}
 
-		public async Task PlayGame( Id<Game> gameId ) {
-			Console.WriteLine( "PlayGame" );
-			Game game = await _gameService.GetGame( gameId );
-			Mothership mothership = await _gameService.GetMothership( gameId );
-			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothership.Id );
-			IEnumerable<Actor> crew = await _gameService.GetCrew( gameId );
-			IEnumerable<Player> players = await _gameService.GetPlayers( gameId );
-			await _state.Update( _state.GamePlay, game, mothership, crew, modules, players );
-		}
-
-		public async Task ViewGame( Id<Game> gameId ) {
-			Console.WriteLine( "ViewGame" );
-			Game game = await _gameService.GetGame( gameId );
-			IEnumerable<Player> players = await _gameService.GetPlayers( gameId );
-			await _state.Update( _state.GamePlay, game, players );
-		}
-
-		public async Task ViewUserProfile() {
-			Console.WriteLine( "ViewUserProfile" );
-			if( _state.Authentication.IsAuthenticated) {
-				Console.WriteLine( "IsAuthenticated" );
-				User user = await _userService.GetUserInformation();
-				await _state.Update( _state.UserInformation, user );
-			}
-		}
-
-		public async Task ViewUserGames() {
-			Console.WriteLine( "ViewUserGames" );
-			if( _state.Authentication.IsAuthenticated) {
-				//TODO: Fix this for efficiency
-				IEnumerable<Game> games = await _gameService.GetGames();
-				await _state.Update( _state.UserInformation, games );
-				User user = await _userService.GetUserInformation();
-				await _state.Update( _state.UserInformation, user );
-			}
-		}
-
-		public async Task StartGame( Id<Game> gameId, string message ) {
-			Console.WriteLine( "StartGame" );
-			await _gameService.StartGame( gameId, message );
-		}
-
-		public async Task RetrieveTokens( string code ) {
-			await _state.Update( _state.Validation, "...retrieving tokens...", 5 );
+		public async Task LogInUser( string code ) {
+			List<string> messages = new List<string>();
+			messages.Add( "...retrieving token..." );
+			await _state.Update( _state.Authentication, messages, 10 );
 			AuthorizationToken tokens = await _tokenService.GetToken( code );
 			if( tokens == default ) {
 				//TODO: Do something here
 				throw new InvalidOperationException();
 			}
 			await _state.Update( _state.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
-		}
 
-		public async Task LogInUser() {
-			await _state.Update( _state.Validation, "...recording login...", 50 );
+			messages.Add( "...recording login..." );
+			await _state.Update( _state.Authentication, messages, 50 );
 			await _userService.RecordLogin();
 
-			await _state.Update( _state.Validation, "...retrieving user information...", 75 );
+			messages.Add( "...loading user information..." );
+			await _state.Update( _state.Authentication, messages, 75 );
 			User userInfo = await _userService.GetUserInformation();
-
-			await _state.Update( _state.Authentication, userInfo.Username, userInfo.Name );
+			await _state.Update( _state.Authentication, userInfo );
+			await _state.Update( _state.Authentication, new List<string>(), 100 );
 		}
 	}
 }

@@ -1,9 +1,10 @@
 ﻿@page "/game/view"
+@page "/game/view/{GameId}"
 @inherits GameViewPageBase
 @layout MainLayout
 @using RiftDrive.Client.Pages.PlayPages.Components
 
-@if (State.GamePlay.Game == default)
+@if (Game == default)
 {
     <span>Loading...</span>
 }
@@ -11,24 +12,11 @@ else
 {
     <Row>
         <Column>
-            @if (State.GamePlay.Mothership == default)
-            {
-                <span>Loading...</span>
-            }
-            else
-            {
-                <MothershipSummary Game=@State.GamePlay.Game Mothership=@State.GamePlay.Mothership Modules=@State.GamePlay.Modules></MothershipSummary>
-            }
+            <MothershipSummary Mothership=@Mothership></MothershipSummary>
+            <MothershipModuleSummary Modules=@Modules></MothershipModuleSummary>
         </Column>
         <Column>
-            @if (State.GamePlay.Crew == default)
-            {
-                <span>Loading...</span>
-            }
-            else
-            {
-                <CrewSummary Crew=@State.GamePlay.Crew></CrewSummary>
-            }
+            <CrewSummary Crew=@Crew></CrewSummary>
         </Column>
     </Row>
 }

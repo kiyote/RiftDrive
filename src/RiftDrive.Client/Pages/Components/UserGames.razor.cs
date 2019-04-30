@@ -15,13 +15,14 @@ limitations under the License.
 */
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Action;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Client.Service;
 using RiftDrive.Shared;
+using System;
 
 namespace RiftDrive.Client.Pages.Components {
 	public class UserGamesComponent : ComponentBase {
@@ -30,38 +31,41 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Inject] protected IDispatch Dispatch { get; set; }
-
-		[Parameter] protected IEnumerable<Game> Games { get; set; }
-
 		[Parameter] protected User User { get; set; }
+
+		protected List<Game> Games { get; set; }
+
+		protected string GameName { get; set; }
+
+		protected string PlayerName { get; set; }
+
+		protected bool Busy { get; set; }
 
 		protected Modal ModalRef { get; set; }
 
-		public string GameName { get; set; }
-
-		public string PlayerName { get; set; }
-
-		public bool Busy { get; set; }
-
 		public UserGamesComponent() {
-			GameName = "";
-			PlayerName = "";
+			Games = new List<Game>();
+		}
+
+		protected override async Task OnInitAsync() {
+			IEnumerable<Game> games = await GameService.GetGames();
+			Games = games.ToList();
 		}
 
 		public async Task CreateGame() {
 			ModalRef.Hide();
 			Busy = true;
-			await GameService.CreateGame( GameName, PlayerName );
+
+			Game newGame = await GameService.CreateGame( GameName, PlayerName );
+			Games.Add( newGame );
+
 			GameName = "";
 			PlayerName = "";
-			Games = await GameService.GetGames();
 			Busy = false;
 		}
 
-		public async Task PlayGame( Id<Game> gameId ) {
-			await Dispatch.ViewGame( gameId );
-			UriHelper.NavigateTo( GameSummaryPageBase.Url );
+		public void PlayGame( Id<Game> gameId ) {
+			UriHelper.NavigateTo( GameViewPageBase.GetUrl(gameId) );
 		}
 
 		public Task ShowModal() {

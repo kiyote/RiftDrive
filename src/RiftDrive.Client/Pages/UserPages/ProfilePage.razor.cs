@@ -18,25 +18,42 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using RiftDrive.Client.Action;
+using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
+using RiftDrive.Shared;
 
 namespace RiftDrive.Client.Pages.UserPages {
 	public class ProfilePageBase : ComponentBase {
 		public const string Url = "/user/profile";
 
-		[Inject] protected IAppState State { get; set; }
-
-		[Inject] protected IDispatch Dispatch { get; set; }
+		[Parameter] protected string UserId { get; set; }
 
 		[Inject] protected IUserApiService UserService { get; set; }
 
+		[Inject] protected IAppState State { get; set; }
+
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
+
+		protected User User { get; set; }
 
 		protected ElementRef FileUploadRef { get; set; }
 
 		protected bool ChangingAvatar { get; set; }
+
+		public bool IsTheAuthenticatedUser {
+			get {
+				return string.Equals( UserId, State.Authentication.User.Id.Value, StringComparison.OrdinalIgnoreCase );
+			}
+		}
+
+		public static string GetUrl( Id<User> userId ) {
+			return $"{Url}/{userId.Value}";
+		}
+		protected override async Task OnParametersSetAsync() {
+			var userId = new Id<User>( UserId );
+			User = await UserService.GetUserInformation();
+		}
 
 		protected string FormatDate( DateTime? dateTime ) {
 			return dateTime
@@ -45,10 +62,8 @@ namespace RiftDrive.Client.Pages.UserPages {
 					?? "None";
 		}
 
-		protected async Task ChangeAvatarClicked() {
+		protected void ChangeAvatarClicked() {
 			ChangingAvatar = true;
-
-			await Task.CompletedTask;
 		}
 
 		protected async Task UploadFile() {
@@ -63,26 +78,11 @@ namespace RiftDrive.Client.Pages.UserPages {
 			string[] parts = data.Split( ',' );
 			string[] descriptor = parts[0].Split( ';' );
 			string mimeType = descriptor[0];
-			//string encoding = descriptor[1];
 			string content = parts[1];
 
-			/*
-			using( var ms = new System.IO.MemoryStream( 10000 ) ) {
-				using( var gzs = new System.IO.Compression.GZipStream( ms, System.IO.Compression.CompressionLevel.Optimal ) ) {
-					var bytes = System.Text.Encoding.UTF8.GetBytes( "Content" );
-					gzs.Write( bytes, 0, bytes.Length );
-				}
-			}
-			*/
-
 			if( mimeType.StartsWith( "image" ) ) {
-				// Cheese it down to 64x64 for now
-				//using( var image = Image.Load( Convert.FromBase64String( content ) ) ) {
-				//	content = image.Clone( x => x.Resize( 64, 64 ) ).ToBase64String( ImageFormats.Png ).Split( ',' )[ 1 ];
-				//	mimeType = "image/png";
-				//}
 				await UserService.SetAvatar( mimeType, content );
-				await Dispatch.ViewUserProfile();
+				User = await UserService.GetUserInformation();
 			}
 		}
 	}
