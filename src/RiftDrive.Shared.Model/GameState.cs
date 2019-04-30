@@ -16,7 +16,7 @@ limitations under the License.
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	[JsonConverter( typeof( StringEnumConverter ) )]
 	public enum GameState {
 		Unknown,

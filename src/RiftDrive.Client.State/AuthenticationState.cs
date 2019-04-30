@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
 	internal sealed class AuthenticationState : IAuthenticationState {
@@ -30,7 +30,7 @@ namespace RiftDrive.Client.State {
 
 		[JsonConstructor]
         public AuthenticationState(
-			User user,
+			ClientUser user,
             string accessToken,
             string refreshToken,
             DateTime tokensExpireAt
@@ -42,7 +42,7 @@ namespace RiftDrive.Client.State {
         }
 
 
-		public User User { get; }
+		public ClientUser User { get; }
 
 		public string AccessToken { get; }
 

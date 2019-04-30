@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	public sealed partial class MothershipModule {
 
 		public static MothershipModule GetById(Id<MothershipModule> id ) {

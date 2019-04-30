@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameViewPageBase : ComponentBase {

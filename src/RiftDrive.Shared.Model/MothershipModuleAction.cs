@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	public sealed class MothershipModuleAction : IEquatable<MothershipModuleAction> {
 
 		[JsonConstructor]

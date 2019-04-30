@@ -15,16 +15,14 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 using GameStartInformation = RiftDrive.Client.Model.GameStartInformation;
 using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
-using ClientPlayer = RiftDrive.Client.Model.Player;
 
 namespace RiftDrive.Server.Controllers {
 	[Authorize]
@@ -73,6 +71,12 @@ namespace RiftDrive.Server.Controllers {
 			return Ok( game );
 		}
 
+		[HttpDelete("{gameId}")]
+		public async Task<ActionResult> DeleteGame( string gameId ) {
+			await _gameManager.DeleteGame( new Id<Game>( gameId ) );
+			return Ok();
+		}
+
 		[HttpGet( "{gameId}/player" )]
 		public async Task<ActionResult<IEnumerable<ClientPlayer>>> GetPlayers( string gameId ) {
 			IEnumerable<ClientPlayer> players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );
@@ -98,6 +102,22 @@ namespace RiftDrive.Server.Controllers {
 			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules( new Id<Mothership>( mothershipId ) );
 
 			return Ok( modules );
+		}
+
+		[HttpPost("{gameId}/mothership/{mothershipId}/module/{moduleId}/action/{actionId}")]
+		public async Task<ActionResult> TriggerModuleAction(
+			string gameId,
+			string mothershipId,
+			string moduleId,
+			string actionId
+		) {
+			await _gameManager.TriggerAction(
+				new Id<Game>( gameId ),
+				new Id<Mothership>( mothershipId ),
+				new Id<MothershipModule>( moduleId ),
+				new Id<MothershipModuleAction>( actionId ) );
+
+			return Ok();
 		}
 	}
 }

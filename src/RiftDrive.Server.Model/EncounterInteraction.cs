@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
 	public sealed class EncounterInteraction: IEquatable<EncounterInteraction> {

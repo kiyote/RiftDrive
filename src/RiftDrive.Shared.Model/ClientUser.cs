@@ -14,30 +14,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Client.Model {
-	public class Player : IEquatable<Player> {
+namespace RiftDrive.Shared.Model {
+	public class ClientUser : IEquatable<ClientUser> {
 
 		[JsonConstructor]
-		public Player(
-			Id<Player> id,
-			Id<Game> gameId,
+		public ClientUser(
+			Id<ClientUser> id,
+			string username,
+			string avatarUrl,
+			DateTime lastLogin,
+			DateTime? previousLogin,
 			string name
 		) {
 			Id = id;
-			GameId = gameId;
+			Username = username;
+			AvatarUrl = avatarUrl;
+			LastLogin = lastLogin;
+			PreviousLogin = previousLogin;
 			Name = name;
 		}
 
-		public Id<Player> Id { get; }
+		public Id<ClientUser> Id { get; }
 
-		public Id<Game> GameId { get; }
+		public string Username { get; }
+
+		public string AvatarUrl { get; }
+
+		public DateTime LastLogin { get; }
+
+		public DateTime? PreviousLogin { get; }
 
 		public string Name { get; }
 
-		public bool Equals( Player other ) {
+		public bool Equals( ClientUser other ) {
 			if (other is null) {
 				return false;
 			}
@@ -47,12 +58,15 @@ namespace RiftDrive.Client.Model {
 			}
 
 			return Id.Equals( other.Id )
-				&& GameId.Equals(other.GameId)
+				&& string.Equals( Username, other.Username, StringComparison.Ordinal )
+				&& string.Equals( AvatarUrl, other.AvatarUrl, StringComparison.Ordinal )
+				&& DateTime.Equals( LastLogin, other.LastLogin )
+				&& Nullable.Equals( PreviousLogin, other.PreviousLogin )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Player target ) ) {
+			if( !( obj is ClientUser target ) ) {
 				return false;
 			}
 
@@ -63,7 +77,10 @@ namespace RiftDrive.Client.Model {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + GameId.GetHashCode();
+				result = ( result * 31 ) + Username.GetHashCode();
+				result = ( result * 31 ) + AvatarUrl?.GetHashCode() ?? 0;
+				result = ( result * 31 ) + LastLogin.GetHashCode();
+				result = ( result * 31 ) + PreviousLogin?.GetHashCode() ?? 0;
 				result = ( result * 13 ) + Name.GetHashCode();
 
 				return result;

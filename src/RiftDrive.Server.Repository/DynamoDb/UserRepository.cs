@@ -21,7 +21,7 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository.DynamoDb.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository.DynamoDb {
 	internal sealed class UserRepository : IUserRepository {

@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Text;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
 	public sealed class Player: IEquatable<Player> {

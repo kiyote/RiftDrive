@@ -15,7 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Threading.Tasks;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
 	public interface IAppState {
@@ -29,7 +29,7 @@ namespace RiftDrive.Client.State {
 
 		Task ClearState();
 
-		Task Update( IAuthenticationState initial, User user );
+		Task Update( IAuthenticationState initial, ClientUser user );
 
 		Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt );
 	}

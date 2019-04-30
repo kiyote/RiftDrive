@@ -13,10 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System.Threading.Tasks;
 
-namespace RiftDrive.Client.Action {
-	public interface IDispatch {
-		Task LogInUser( string code );
+namespace RiftDrive.Shared.Model {
+	public enum ModuleEffect {
+		Unknown,
+
+		ProducePower,
+
+		ConsumePower,
+
+		ConsumeFuel,
+
+		AddCrew
 	}
 }

@@ -6,7 +6,6 @@
       https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json;
       https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;
     </RestoreAdditionalProjectSources>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +24,7 @@
     <ProjectReference Include="..\RiftDrive.Server.Repository\RiftDrive.Server.Repository.csproj" />
     <ProjectReference Include="..\RiftDrive.Server.Service\RiftDrive.Server.Service.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared.Provider\RiftDrive.Shared.Provider.csproj" />
-    <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
+    <ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
   </ItemGroup>
 
 </Project>

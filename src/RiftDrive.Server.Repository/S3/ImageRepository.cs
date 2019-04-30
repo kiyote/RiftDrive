@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
 using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository.S3 {
 	public sealed class ImageRepository : IImageRepository {

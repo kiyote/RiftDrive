@@ -15,7 +15,7 @@ limitations under the License.
 */
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository {
 	public interface IDeckRepository {

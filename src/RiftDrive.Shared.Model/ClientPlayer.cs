@@ -16,48 +16,42 @@ limitations under the License.
 using System;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared {
-	public sealed class Mothership : IEquatable<Mothership> {
+namespace RiftDrive.Shared.Model {
+	public class ClientPlayer : IEquatable<ClientPlayer> {
 
 		[JsonConstructor]
-		public Mothership(
-			Id<Mothership> id,
+		public ClientPlayer(
+			Id<ClientPlayer> id,
 			Id<Game> gameId,
-			string name,
-			int availableCrew,
-			int remainingFuel
+			string name
 		) {
 			Id = id;
-			Name = name;
 			GameId = gameId;
-			AvailableCrew = availableCrew;
-			RemainingFuel = remainingFuel;
+			Name = name;
 		}
 
-		public Id<Mothership> Id { get; }
+		public Id<ClientPlayer> Id { get; }
 
 		public Id<Game> GameId { get; }
 
 		public string Name { get; }
 
-		public int AvailableCrew { get; }
+		public bool Equals( ClientPlayer other ) {
+			if( other is null ) {
+				return false;
+			}
 
-		public int RemainingFuel { get; }
-
-		public bool Equals( Mothership other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
 				&& GameId.Equals( other.GameId )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& AvailableCrew == other.AvailableCrew
-				&& RemainingFuel == other.RemainingFuel;
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Mothership target ) ) {
+			if( !( obj is ClientPlayer target ) ) {
 				return false;
 			}
 
@@ -69,9 +63,7 @@ namespace RiftDrive.Shared {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + GameId.GetHashCode();
-				result = ( result * 31 ) + Name.GetHashCode();
-				result = ( result * 31 ) + AvailableCrew.GetHashCode();
-				result = ( result * 31 ) + RemainingFuel.GetHashCode();
+				result = ( result * 13 ) + Name.GetHashCode();
 
 				return result;
 			}

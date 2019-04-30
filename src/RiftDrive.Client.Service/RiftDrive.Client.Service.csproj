@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
     <ProjectReference Include="..\RiftDrive.Client.State\RiftDrive.Client.State.csproj" />
-    <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
+    <ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
   </ItemGroup>
 
 </Project>

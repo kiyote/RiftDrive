@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Model;
 using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Client.Service;
-using RiftDrive.Shared;
-using System;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.Components {
 	public class UserGamesComponent : ComponentBase {
@@ -31,7 +29,7 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Parameter] protected User User { get; set; }
+		[Parameter] protected ClientUser User { get; set; }
 
 		protected List<Game> Games { get; set; }
 
@@ -66,6 +64,12 @@ namespace RiftDrive.Client.Pages.Components {
 
 		public void PlayGame( Id<Game> gameId ) {
 			UriHelper.NavigateTo( GameViewPageBase.GetUrl(gameId) );
+		}
+
+		public async Task DeleteGame( Id<Game> gameId ) {
+			await GameService.DeleteGame( gameId );
+			IEnumerable<Game> games = await GameService.GetGames();
+			Games = games.ToList();
 		}
 
 		public Task ShowModal() {

@@ -15,7 +15,7 @@ limitations under the License.
 */
 using System;
 using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Service {
 	public sealed class CreateGameConfiguration {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Model;
 using RiftDrive.Client.Pages.AuthPages;
 using RiftDrive.Client.Pages.UserPages;
 
@@ -23,7 +23,7 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IConfig Config { get; set; }
 
-		[Parameter] protected User User { get; set; }
+		[Parameter] protected ClientUser User { get; set; }
 
 		[Parameter] protected bool IsAuthenticated { get; set; }
 

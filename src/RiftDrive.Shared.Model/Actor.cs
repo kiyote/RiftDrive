@@ -17,7 +17,7 @@ using System;
 using Newtonsoft.Json;
 using RiftDrive.Shared;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	public sealed class Actor: IEquatable<Actor> {
 
 		[JsonConstructor]

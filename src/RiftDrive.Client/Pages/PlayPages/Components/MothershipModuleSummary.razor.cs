@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Service;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipModuleSummaryComponent : ComponentBase {
@@ -30,13 +30,12 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Inject] protected IGameApiService GameService { get; set; }
 
-		protected Task ModuleButtonClicked(
+		protected void ModuleButtonClicked(
 			MothershipAttachedModule module,
 			MothershipModuleAction action
 		) {
 			MothershipModule definition = MothershipModule.GetById( module.MothershipModuleId );
 			//			await GameService.TriggerAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
-			return Task.CompletedTask;
 		}
 	}
 }

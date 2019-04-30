@@ -18,10 +18,9 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.UserPages {
 	public class ProfilePageBase : ComponentBase {
@@ -35,7 +34,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
 
-		protected User User { get; set; }
+		protected ClientUser User { get; set; }
 
 		protected ElementRef FileUploadRef { get; set; }
 
@@ -47,11 +46,11 @@ namespace RiftDrive.Client.Pages.UserPages {
 			}
 		}
 
-		public static string GetUrl( Id<User> userId ) {
+		public static string GetUrl( Id<ClientUser> userId ) {
 			return $"{Url}/{userId.Value}";
 		}
 		protected override async Task OnParametersSetAsync() {
-			var userId = new Id<User>( UserId );
+			var userId = new Id<ClientUser>( UserId );
 			User = await UserService.GetUserInformation();
 		}
 

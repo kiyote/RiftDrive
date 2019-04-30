@@ -18,6 +18,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Service {
 	internal sealed class UserApiService : IUserApiService {
@@ -41,14 +42,14 @@ namespace RiftDrive.Client.Service {
 
 		async Task IUserApiService.RecordLogin() {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			User response = await _http.GetJsonAsync( $@"{_config.Host}/api/user/login",
-				( s ) => { return _json.Deserialize<User>( s ); } );
+			ClientUser response = await _http.GetJsonAsync( $@"{_config.Host}/api/user/login",
+				( s ) => { return _json.Deserialize<ClientUser>( s ); } );
 		}
 
-		async Task<User> IUserApiService.GetUserInformation() {
+		async Task<ClientUser> IUserApiService.GetUserInformation() {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			User response = await _http.GetJsonAsync( $@"{_config.Host}/api/user",
-				( s ) => { return _json.Deserialize<User>( s ); } );
+			ClientUser response = await _http.GetJsonAsync( $@"{_config.Host}/api/user",
+				( s ) => { return _json.Deserialize<ClientUser>( s ); } );
 
 			return response;
 		}

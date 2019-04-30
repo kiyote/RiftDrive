@@ -16,7 +16,7 @@ limitations under the License.
 using System.Threading.Tasks;
 using RiftDrive.Server.Repository;
 using RiftDrive.Server.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Service {
 	internal sealed class ImageService : IImageService {

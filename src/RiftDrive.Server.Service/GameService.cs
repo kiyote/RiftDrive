@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 using RiftDrive.Shared.Provider;
 
 namespace RiftDrive.Server.Service {

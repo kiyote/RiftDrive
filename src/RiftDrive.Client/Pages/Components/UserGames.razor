@@ -19,9 +19,13 @@ else
                             <TableRow>
                                 <TableRowCell>@game.Name</TableRowCell>
                                 <TableRowCell>
-                                    <SimpleButton 
-                                                  Clicked=@(() => { PlayGame( game.Id ); })
-                                                  IsActive=@(!Busy)>Play
+                                    <SimpleButton Clicked=@(() => { PlayGame( game.Id ); })
+                                                  IsActive=@(!Busy)>
+                                        Play
+                                    </SimpleButton>
+                                    <SimpleButton Clicked=@(async () => { await DeleteGame( game.Id ); })
+                                                  IsActive=@(!Busy)>
+                                        Delete
                                     </SimpleButton>
                                 </TableRowCell>
                             </TableRow>

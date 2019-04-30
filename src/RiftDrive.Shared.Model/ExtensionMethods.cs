@@ -14,7 +14,7 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	public static class ExtensionMethods {
 
 		public static bool Similar<T>( this IEnumerable<T> source, IEnumerable<T> other ) where T: class {

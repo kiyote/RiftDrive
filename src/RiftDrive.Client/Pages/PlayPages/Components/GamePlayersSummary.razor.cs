@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class GamePlayersSummaryComponent : ComponentBase {
@@ -29,11 +27,11 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		protected Modal ModalRef { get; set; }
 
-		[Parameter] protected IEnumerable<Player> Players { get; set; }
+		[Parameter] protected IEnumerable<ClientPlayer> Players { get; set; }
 
 		protected string EditPlayerName { get; set; }
 
-		public void EditPlayer( Player player ) {
+		public void EditPlayer( ClientPlayer player ) {
 			ModalRef.Show();
 		}
 

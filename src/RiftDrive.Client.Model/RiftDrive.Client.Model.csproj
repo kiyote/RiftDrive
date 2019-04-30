@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RiftDrive.Shared\RiftDrive.Shared.csproj" />
+    <ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
   </ItemGroup>
 
 </Project>

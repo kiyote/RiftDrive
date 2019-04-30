@@ -17,12 +17,11 @@ using System;
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
-using ClientUser = RiftDrive.Client.Model.User;
 using Image = RiftDrive.Server.Model.Image;
 using LaborImage = SixLabors.ImageSharp.Image;
 

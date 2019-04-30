@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	[JsonConverter( typeof( IdConverter ) )]
 	public sealed class Id<T> : IEquatable<Id<T>> {
 

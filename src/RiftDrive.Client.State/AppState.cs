@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
 	internal sealed class AppState : IAppState {
@@ -55,7 +54,7 @@ namespace RiftDrive.Client.State {
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task Update( IAuthenticationState initial, User user ) {
+		public async Task Update( IAuthenticationState initial, ClientUser user ) {
 			Authentication = new AuthenticationState( user, initial.AccessToken, initial.RefreshToken, initial.TokensExpireAt );
 			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );

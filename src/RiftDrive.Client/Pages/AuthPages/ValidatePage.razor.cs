@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Model;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.AuthPages {
 	public class ValidatePageBase : ComponentBase, IDisposable {
@@ -59,7 +60,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 			await UserService.RecordLogin();
 
 			Update( "...loading user information...", 75 );
-			User userInfo = await UserService.GetUserInformation();
+			ClientUser userInfo = await UserService.GetUserInformation();
 			await State.Update( State.Authentication, userInfo );
 
 			UriHelper.NavigateTo( IndexPageBase.Url );

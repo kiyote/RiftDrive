@@ -23,7 +23,7 @@ using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository.DynamoDb.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository.DynamoDb {
 	internal sealed class GameRepository : IGameRepository {

@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Client.Model;
 using RiftDrive.Server.Managers;
-using ClientUser = RiftDrive.Client.Model.User;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Controllers {
 	[Authorize]

@@ -15,7 +15,7 @@ limitations under the License.
 */
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipSummaryComponent : ComponentBase {

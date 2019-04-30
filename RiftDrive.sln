@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Server", "src\Rif
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Client", "src\RiftDrive.Client\RiftDrive.Client.csproj", "{22B8D49E-36E0-42F5-B3F6-869F0FCD1780}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared", "src\RiftDrive.Shared\RiftDrive.Shared.csproj", "{C0DB0621-3B5B-4098-94FD-6138487062B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Model", "src\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj", "{C0DB0621-3B5B-4098-94FD-6138487062B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FCD5BBAC-9F19-4228-B452-7E9CA4E8EB43}"
 EndProject

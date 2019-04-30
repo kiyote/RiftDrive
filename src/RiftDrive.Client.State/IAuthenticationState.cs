@@ -15,11 +15,11 @@ limitations under the License.
 */
 using System;
 using Newtonsoft.Json;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
 	public interface IAuthenticationState {
-		User User { get; }
+		ClientUser User { get; }
 
 		string AccessToken { get; }
 

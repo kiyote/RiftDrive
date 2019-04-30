@@ -19,8 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
-using RiftDrive.Shared;
-using ClientPlayer = RiftDrive.Client.Model.Player;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Managers {
 	public class GameManager {
@@ -43,6 +42,10 @@ namespace RiftDrive.Server.Managers {
 			Game game = await _gameService.CreateGame( config );
 
 			return game;
+		}
+
+		public async Task DeleteGame( Id<Game> gameId ) {
+			await _gameService.DeleteGame( gameId );
 		}
 
 		public async Task<IEnumerable<Game>> GetGames( Id<User> userId ) {
@@ -79,6 +82,15 @@ namespace RiftDrive.Server.Managers {
 
 		public async Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId ) {
 			return await _gameService.GetCrew( gameId );
+		}
+
+		public Task TriggerAction(
+			Id<Game> gameId,
+			Id<Mothership> mothershipId,
+			Id<MothershipModule> moduleId,
+			Id<MothershipModuleAction> actionId
+		) {
+			return Task.CompletedTask;
 		}
 
 		private ClientPlayer ToClientPlayer( Player player ) {

@@ -14,50 +14,50 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared {
-	public class Game : IEquatable<Game> {
+namespace RiftDrive.Shared.Model {
+	public sealed class Mothership : IEquatable<Mothership> {
 
 		[JsonConstructor]
-		public Game(
-			Id<Game> id,
+		public Mothership(
+			Id<Mothership> id,
+			Id<Game> gameId,
 			string name,
-			DateTime createdOn,
-			GameState state
+			int availableCrew,
+			int remainingFuel
 		) {
 			Id = id;
 			Name = name;
-			CreatedOn = createdOn;
-			State = state;
+			GameId = gameId;
+			AvailableCrew = availableCrew;
+			RemainingFuel = remainingFuel;
 		}
 
-		public Id<Game> Id { get; }
+		public Id<Mothership> Id { get; }
+
+		public Id<Game> GameId { get; }
 
 		public string Name { get; }
 
-		public DateTime CreatedOn { get; }
+		public int AvailableCrew { get; }
 
-		public GameState State { get; }
+		public int RemainingFuel { get; }
 
-		public bool Equals( Game other ) {
-			if (other is null) {
-				return false;
-			}
-
+		public bool Equals( Mothership other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
+				&& GameId.Equals( other.GameId )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& DateTime.Equals( CreatedOn, other.CreatedOn )
-				&& State == other.State;
+				&& AvailableCrew == other.AvailableCrew
+				&& RemainingFuel == other.RemainingFuel;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Game target ) ) {
+			if( !( obj is Mothership target ) ) {
 				return false;
 			}
 
@@ -68,9 +68,10 @@ namespace RiftDrive.Shared {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 13 ) + Name.GetHashCode();
-				result = ( result * 31 ) + CreatedOn.GetHashCode();
-				result = ( result * 31 ) + State.GetHashCode();
+				result = ( result * 31 ) + GameId.GetHashCode();
+				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + AvailableCrew.GetHashCode();
+				result = ( result * 31 ) + RemainingFuel.GetHashCode();
 
 				return result;
 			}

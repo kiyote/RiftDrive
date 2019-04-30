@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared {
+namespace RiftDrive.Shared.Model {
 	public sealed class MothershipModuleEffect : IEquatable<MothershipModuleEffect> {
 
 		[JsonConstructor]

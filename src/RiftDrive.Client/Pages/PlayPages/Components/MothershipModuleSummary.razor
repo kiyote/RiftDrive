@@ -1,5 +1,5 @@
 ﻿@inherits MothershipModuleSummaryComponent
-@using RiftDrive.Shared;
+@using RiftDrive.Shared.Model;
 
 @if (Modules == null)
 {
@@ -20,7 +20,7 @@ else
                                 <TableRowCell>
                                     @foreach (var action in definition.Actions)
                                     {
-                                        <SimpleButton Clicked=@(async () => { await ModuleButtonClicked(module, action); })>@action.Name</SimpleButton>
+                                        <SimpleButton Clicked=@(() => { ModuleButtonClicked(module, action); })>@action.Name</SimpleButton>
                                     }
                                 </TableRowCell>
                             </TableRow>

@@ -19,7 +19,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RiftDrive.Client.Model;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Service {
 	internal sealed class GameApiService: IGameApiService {
@@ -58,6 +58,11 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
+		async Task IGameApiService.DeleteGame( Id<Game> gameId ) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			await _http.DeleteAsync( $@"{_config.Host}/api/game/{gameId.Value}" );
+		}
+
 		async Task<Game> IGameApiService.StartGame( Id<Game> gameId, string message ) {
 			var startInfo = new GameStartInformation(
 				message );
@@ -90,10 +95,10 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
-		async Task<IEnumerable<Player>> IGameApiService.GetPlayers(Id<Game> gameId) {
+		async Task<IEnumerable<ClientPlayer>> IGameApiService.GetPlayers(Id<Game> gameId) {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			Player[] response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/player",
-				( s ) => { return _json.Deserialize<Player[]>( s ); } );
+			ClientPlayer[] response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/player",
+				( s ) => { return _json.Deserialize<ClientPlayer[]>( s ); } );
 
 			return response;
 		}

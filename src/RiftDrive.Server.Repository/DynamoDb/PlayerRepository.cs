@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RiftDrive.Shared;
+using RiftDrive.Shared.Model;
 using RiftDrive.Server.Model;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DataModel;
