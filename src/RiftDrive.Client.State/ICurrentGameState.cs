@@ -15,14 +15,17 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
 	public interface ICurrentGameState {
 
-		public Mothership Mothership { get;
-		}
+		public Game Game { get; }
+
+		public Mothership Mothership { get; }
+
 		public IEnumerable<MothershipAttachedModule> Modules { get; }
+
+		public IEnumerable<Actor> Crew { get; }
 	}
 }

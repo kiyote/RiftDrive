@@ -16,7 +16,6 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
 using RiftDrive.Client.Action;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
@@ -34,22 +33,12 @@ namespace RiftDrive.Client.Pages.PlayPages {
 
 		[Parameter] protected string GameId { get; set; }
 
-		protected Game Game { get; set; }
-
-		protected IEnumerable<Actor> Crew { get; set; }
-
-		public GameViewPageBase() {
-			Crew = new List<Actor>();
-		}
-
 		public static string GetUrl( Id<Game> gameId ) {
 			return $"{Url}/{gameId.Value}";
 		}
 
 		protected override async Task OnInitAsync() {
 			var gameId = new Id<Game>( GameId );
-			Game = await GameService.GetGame( gameId );
-			Crew = await GameService.GetCrew( gameId );
 			await Dispatch.LoadCurrentGame( gameId );
 		}
 	}

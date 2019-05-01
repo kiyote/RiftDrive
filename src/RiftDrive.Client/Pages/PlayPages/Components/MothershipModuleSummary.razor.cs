@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
-using RiftDrive.Client.Service;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {

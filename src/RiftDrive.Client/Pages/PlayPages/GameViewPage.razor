@@ -4,7 +4,7 @@
 @layout MainLayout
 @using RiftDrive.Client.Pages.PlayPages.Components
 
-@if (Game == default)
+@if (State.CurrentGame.Game == default)
 {
     <span>Loading...</span>
 }
@@ -13,10 +13,10 @@ else
     <Row>
         <Column>
             <MothershipSummary Mothership=@State.CurrentGame.Mothership></MothershipSummary>
-            <MothershipModuleSummary Game=@Game Modules=@State.CurrentGame.Modules></MothershipModuleSummary>
+            <MothershipModuleSummary Game=@State.CurrentGame.Game Modules=@State.CurrentGame.Modules></MothershipModuleSummary>
         </Column>
         <Column>
-            <CrewSummary Crew=@Crew></CrewSummary>
+            <CrewSummary Crew=@State.CurrentGame.Crew></CrewSummary>
         </Column>
     </Row>
 }
