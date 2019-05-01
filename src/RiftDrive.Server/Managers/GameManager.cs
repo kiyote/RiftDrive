@@ -84,7 +84,7 @@ namespace RiftDrive.Server.Managers {
 			return await _gameService.GetCrew( gameId );
 		}
 
-		public Task TriggerAction(
+		public async Task TriggerAction(
 			Id<Game> gameId,
 			Id<Mothership> mothershipId,
 			Id<MothershipModule> moduleId,

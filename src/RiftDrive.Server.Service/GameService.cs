@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository;
 using RiftDrive.Shared.Model;
@@ -121,6 +122,13 @@ namespace RiftDrive.Server.Service {
 						break;
 					case ModuleEffect.ConsumePower:
 						await _mothershipRepository.SetRemainingPower( mothershipId, module.MothershipModuleId, module.RemainingPower - effect.Magnitude );
+						break;
+					case ModuleEffect.ProducePower:
+						IEnumerable<MothershipAttachedModule> modules = await _mothershipRepository.GetAttachedModules( mothershipId );
+						modules = modules.Where( m => m != module );
+						foreach (MothershipAttachedModule m in modules) {
+							await _mothershipRepository.SetRemainingPower( mothershipId, m.MothershipModuleId, m.RemainingPower + effect.Magnitude );
+						}
 						break;
 				}
 			}
