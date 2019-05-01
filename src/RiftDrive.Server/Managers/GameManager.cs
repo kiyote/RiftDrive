@@ -76,8 +76,8 @@ namespace RiftDrive.Server.Managers {
 			return await _gameService.GetMothership( gameId );
 		}
 
-		public async Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Mothership> mothershipId ) {
-			return await _gameService.GetMothershipModules( mothershipId );
+		public async Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Game> gameId, Id<Mothership> mothershipId ) {
+			return await _gameService.GetMothershipModules( gameId, mothershipId );
 		}
 
 		public async Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId ) {

@@ -29,19 +29,22 @@ namespace RiftDrive.Server.Service {
 		private readonly IActorRepository _actorRepository;
 		private readonly IMothershipRepository _mothershipRepository;
 		private readonly INameProvider _nameProvider;
+		private readonly IRandomProvider _randomProvider;
 
 		public GameService(
 			IGameRepository gameRepository,
 			IPlayerRepository playerRepository,
 			IActorRepository actorRepository,
 			IMothershipRepository mothershipRepository,
-			INameProvider nameProvider
+			INameProvider nameProvider,
+			IRandomProvider randomProvider
 		) {
 			_gameRepository = gameRepository;
 			_playerRepository = playerRepository;
 			_actorRepository = actorRepository;
 			_mothershipRepository = mothershipRepository;
 			_nameProvider = nameProvider;
+			_randomProvider = randomProvider;
 		}
 
 		async Task<IEnumerable<Game>> IGameService.GetGames( Id<User> userId ) {
@@ -98,9 +101,10 @@ namespace RiftDrive.Server.Service {
 		}
 
 		async Task<IEnumerable<MothershipAttachedModule>> IGameService.GetMothershipModules(
+			Id<Game> gameId,
 			Id<Mothership> mothershipId
 		) {
-			return await _mothershipRepository.GetAttachedModules( mothershipId );
+			return await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
 		}
 
 		async Task IGameService.TriggerAction(
@@ -109,29 +113,39 @@ namespace RiftDrive.Server.Service {
 			Id<MothershipModule> moduleId,
 			Id<MothershipModuleAction> actionId
 		) {
-			Mothership mothership = await _mothershipRepository.GetMothership( mothershipId );
-			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( mothershipId, moduleId );
+			Mothership mothership = await _mothershipRepository.GetMothership( gameId, mothershipId );
+			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( gameId, mothershipId, moduleId );
 			MothershipModule definition = MothershipModule.GetById( moduleId );
-			foreach (var effect in definition.Effects) {
-				switch (effect.Effect) {
+			MothershipModuleAction action = definition.Actions.First( a => a.Id == actionId );
+			foreach (var effect in action.Effects) {
+				int magnitude = CalculateMagnitude( effect );
+				switch( effect.Effect) {
 					case ModuleEffect.AddCrew:
-						await _mothershipRepository.SetAvailableCrew( mothershipId, effect.Magnitude );
+						await _mothershipRepository.SetAvailableCrew( gameId, mothershipId, mothership.AvailableCrew + magnitude );
 						break;
 					case ModuleEffect.ConsumeFuel:
-						await _mothershipRepository.SetRemainingFuel( mothershipId, mothership.RemainingFuel - effect.Magnitude );
+						await _mothershipRepository.SetRemainingFuel( gameId, mothershipId, mothership.RemainingFuel - magnitude );
 						break;
 					case ModuleEffect.ConsumePower:
-						await _mothershipRepository.SetRemainingPower( mothershipId, module.MothershipModuleId, module.RemainingPower - effect.Magnitude );
+						await _mothershipRepository.SetRemainingPower( gameId, mothershipId, module.MothershipModuleId, module.RemainingPower - magnitude );
 						break;
 					case ModuleEffect.ProducePower:
-						IEnumerable<MothershipAttachedModule> modules = await _mothershipRepository.GetAttachedModules( mothershipId );
+						IEnumerable<MothershipAttachedModule> modules = await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
 						modules = modules.Where( m => m != module );
 						foreach (MothershipAttachedModule m in modules) {
-							await _mothershipRepository.SetRemainingPower( mothershipId, m.MothershipModuleId, m.RemainingPower + effect.Magnitude );
+							await _mothershipRepository.SetRemainingPower( gameId, mothershipId, m.MothershipModuleId, m.RemainingPower + magnitude );
 						}
 						break;
 				}
 			}
+		}
+
+		private int CalculateMagnitude( MothershipModuleEffect effect ) {
+			if (effect.Magnitude == int.MinValue) {
+				return _randomProvider.Next( effect.RandomMin, effect.RandomMax );
+			}
+
+			return effect.Magnitude;
 		}
 
 	}

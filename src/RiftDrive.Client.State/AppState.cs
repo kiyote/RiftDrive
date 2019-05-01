@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Shared.Model;
 
@@ -29,6 +30,7 @@ namespace RiftDrive.Client.State {
 			_storage = storage;
 
 			Authentication = new AuthenticationState();
+			CurrentGame = new CurrentGameState();
 		}
 
 		public event EventHandler OnStateChanged;
@@ -36,6 +38,8 @@ namespace RiftDrive.Client.State {
 		public bool IsInitialized { get; private set; }
 
 		public IAuthenticationState Authentication { get; private set; }
+
+		public ICurrentGameState CurrentGame { get; private set; }
 
 		public async Task Initialize() {
 			Authentication = await _storage.Get<AuthenticationState>( "State::Authentication" ) ?? new AuthenticationState();
@@ -58,6 +62,20 @@ namespace RiftDrive.Client.State {
 			Authentication = new AuthenticationState( user, initial.AccessToken, initial.RefreshToken, initial.TokensExpireAt );
 			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public Task Update( ICurrentGameState initial, Mothership mothership ) {
+			CurrentGame = new CurrentGameState( mothership, initial.Modules );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+
+			return Task.CompletedTask;
+		}
+
+		public Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules ) {
+			CurrentGame = new CurrentGameState( initial.Mothership, modules );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+
+			return Task.CompletedTask;
 		}
 	}
 }

@@ -16,6 +16,7 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.Service;
 using RiftDrive.Shared.Model;
 
@@ -30,14 +31,14 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Parameter] protected Game Game { get; set; }
 
-		[Inject] protected IGameApiService GameService { get; set; }
+		[Inject] protected IDispatch Dispatch { get; set; }
 
 		protected async Task ModuleButtonClicked(
 			MothershipAttachedModule module,
 			MothershipModuleAction action
 		) {
 			MothershipModule definition = MothershipModule.GetById( module.MothershipModuleId );
-			await GameService.TriggerAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
+			await Dispatch.TriggerModuleAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
 		}
 	}
 }

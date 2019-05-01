@@ -25,6 +25,7 @@ using GameStartInformation = RiftDrive.Client.Model.GameStartInformation;
 using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
 
 namespace RiftDrive.Server.Controllers {
+	[ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 	[Authorize]
 	[Route( "api/game" )]
 	public class GameController : Controller {
@@ -71,7 +72,7 @@ namespace RiftDrive.Server.Controllers {
 			return Ok( game );
 		}
 
-		[HttpDelete("{gameId}")]
+		[HttpDelete( "{gameId}" )]
 		public async Task<ActionResult> DeleteGame( string gameId ) {
 			await _gameManager.DeleteGame( new Id<Game>( gameId ) );
 			return Ok();
@@ -99,12 +100,12 @@ namespace RiftDrive.Server.Controllers {
 
 		[HttpGet( "{gameId}/mothership/{mothershipId}/module" )]
 		public async Task<ActionResult<MothershipAttachedModule>> GetMothershipModules( string gameId, string mothershipId ) {
-			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules( new Id<Mothership>( mothershipId ) );
+			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules( new Id<Game>( gameId ), new Id<Mothership>( mothershipId ) );
 
 			return Ok( modules );
 		}
 
-		[HttpPost("{gameId}/mothership/{mothershipId}/module/{moduleId}/action/{actionId}")]
+		[HttpGet( "{gameId}/mothership/{mothershipId}/module/{moduleId}/action/{actionId}" )]
 		public async Task<ActionResult> TriggerModuleAction(
 			string gameId,
 			string mothershipId,

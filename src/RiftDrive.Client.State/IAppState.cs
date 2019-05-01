@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Shared.Model;
 
@@ -25,6 +26,8 @@ namespace RiftDrive.Client.State {
 
 		IAuthenticationState Authentication { get; }
 
+		ICurrentGameState CurrentGame { get; }
+
 		Task Initialize();
 
 		Task ClearState();
@@ -32,5 +35,9 @@ namespace RiftDrive.Client.State {
 		Task Update( IAuthenticationState initial, ClientUser user );
 
 		Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt );
+
+		Task Update( ICurrentGameState initial, Mothership mothership );
+
+		Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules );
 	}
 }

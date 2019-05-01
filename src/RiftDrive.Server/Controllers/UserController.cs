@@ -21,6 +21,7 @@ using RiftDrive.Server.Managers;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Controllers {
+	[ResponseCache( Location = ResponseCacheLocation.None, NoStore = true )]
 	[Authorize]
 	[Route( "api/user" )]
 	public sealed class UserController : Controller {

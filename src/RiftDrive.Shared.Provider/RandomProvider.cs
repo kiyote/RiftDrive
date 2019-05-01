@@ -30,6 +30,10 @@ namespace RiftDrive.Shared.Provider {
 			return _random.Next( max );
 		}
 
+		int IRandomProvider.Next( int min, int max ) {
+			return min + _random.Next( max - min );
+		}
+
 		bool IRandomProvider.Flip() {
 			return _random.Next( 2 ) == 1;
 		}

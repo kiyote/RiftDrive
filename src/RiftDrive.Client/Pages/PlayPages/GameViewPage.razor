@@ -12,8 +12,8 @@ else
 {
     <Row>
         <Column>
-            <MothershipSummary Mothership=@Mothership></MothershipSummary>
-            <MothershipModuleSummary Game=@Game Modules=@Modules></MothershipModuleSummary>
+            <MothershipSummary Mothership=@State.CurrentGame.Mothership></MothershipSummary>
+            <MothershipModuleSummary Game=@Game Modules=@State.CurrentGame.Modules></MothershipModuleSummary>
         </Column>
         <Column>
             <CrewSummary Crew=@Crew></CrewSummary>

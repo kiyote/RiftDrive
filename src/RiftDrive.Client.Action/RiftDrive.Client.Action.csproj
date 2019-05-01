@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview4.19216.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
+    <ProjectReference Include="..\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj" />
+    <ProjectReference Include="..\RiftDrive.Client.State\RiftDrive.Client.State.csproj" />
+  </ItemGroup>
+
+</Project>

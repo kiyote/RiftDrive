@@ -28,16 +28,16 @@ namespace RiftDrive.Server.Repository {
 
 		Task<Mothership> GetMothership( Id<Game> gameId );
 
-		Task<Mothership> GetMothership( Id<Mothership> mothershipId );
+		Task<Mothership> GetMothership( Id<Game> gameId, Id<Mothership> mothershipId );
 
-		Task<IEnumerable<MothershipAttachedModule>> GetAttachedModules( Id<Mothership> mothershipId );
+		Task<IEnumerable<MothershipAttachedModule>> GetAttachedModules( Id<Game> gameId, Id<Mothership> mothershipId );
 
-		Task<Mothership> SetAvailableCrew( Id<Mothership> mothershipId, int availableCrew );
+		Task<Mothership> SetAvailableCrew( Id<Game> gameId, Id<Mothership> mothershipId, int availableCrew );
 
-		Task<Mothership> SetRemainingFuel( Id<Mothership> mothershipId, int remainingFuel );
+		Task<Mothership> SetRemainingFuel( Id<Game> gameId, Id<Mothership> mothershipId, int remainingFuel );
 
-		Task<MothershipAttachedModule> GetAttachedModule( Id<Mothership> mothershipId, Id<MothershipModule> moduleId );
+		Task<MothershipAttachedModule> GetAttachedModule( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId );
 
-		Task<MothershipAttachedModule> SetRemainingPower( Id<Mothership> mothershipId, Id<MothershipModule> moduleId, int remainingPower );
+		Task<MothershipAttachedModule> SetRemainingPower( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, int remainingPower );
 	}
 }

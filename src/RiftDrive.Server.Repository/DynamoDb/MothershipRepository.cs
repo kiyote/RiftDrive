@@ -103,7 +103,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMothership( records.First() );
 		}
 
-		async Task<IEnumerable<MothershipAttachedModule>> IMothershipRepository.GetAttachedModules( Id<Mothership> mothershipId ) {
+		async Task<IEnumerable<MothershipAttachedModule>> IMothershipRepository.GetAttachedModules( Id<Game> gameId, Id<Mothership> mothershipId ) {
 			AsyncSearch<MothershipAttachedModuleRecord> query = _context.QueryAsync<MothershipAttachedModuleRecord>(
 				MothershipRecord.GetKey( mothershipId.Value ),
 				QueryOperator.BeginsWith,
@@ -115,28 +115,28 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return records.Select( r => ToMothershipAttachedModule( r ));
 		}
 
-		async Task<Mothership> IMothershipRepository.SetAvailableCrew( Id<Mothership> mothershipId, int availableCrew ) {
-			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( MothershipRecord.GetKey( mothershipId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+		async Task<Mothership> IMothershipRepository.SetAvailableCrew( Id<Game> gameId, Id<Mothership> mothershipId, int availableCrew ) {
+			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( GameRecord.GetKey( gameId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
 			mothership.AvailableCrew = availableCrew;
 
 			await _context.SaveAsync( mothership );
 			return ToMothership( mothership );
 		}
 
-		async Task<Mothership> IMothershipRepository.SetRemainingFuel( Id<Mothership> mothershipId, int remainingFuel ) {
-			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( MothershipRecord.GetKey( mothershipId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+		async Task<Mothership> IMothershipRepository.SetRemainingFuel( Id<Game> gameId, Id<Mothership> mothershipId, int remainingFuel ) {
+			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( GameRecord.GetKey( gameId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
 			mothership.RemainingFuel = remainingFuel;
 
 			await _context.SaveAsync( mothership );
 			return ToMothership( mothership );
 		}
 
-		async Task<Mothership> IMothershipRepository.GetMothership( Id<Mothership> mothershipId ) {
-			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( MothershipRecord.GetKey( mothershipId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+		async Task<Mothership> IMothershipRepository.GetMothership( Id<Game> gameId, Id<Mothership> mothershipId ) {
+			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( GameRecord.GetKey( gameId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
 			return ToMothership( mothership );
 		}
 
-		async Task<MothershipAttachedModule> IMothershipRepository.GetAttachedModule( Id<Mothership> mothershipId, Id<MothershipModule> moduleId ) {
+		async Task<MothershipAttachedModule> IMothershipRepository.GetAttachedModule( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId ) {
 			MothershipAttachedModuleRecord module = await _context.LoadAsync<MothershipAttachedModuleRecord>(
 				MothershipRecord.GetKey( mothershipId.Value ),
 				MothershipAttachedModuleRecord.GetKey( moduleId.Value ) );
@@ -144,7 +144,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMothershipAttachedModule( module );
 		}
 
-		async Task<MothershipAttachedModule> IMothershipRepository.SetRemainingPower( Id<Mothership> mothershipId, Id<MothershipModule> moduleId, int remainingPower ) {
+		async Task<MothershipAttachedModule> IMothershipRepository.SetRemainingPower( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, int remainingPower ) {
 			MothershipAttachedModuleRecord module = await _context.LoadAsync<MothershipAttachedModuleRecord>(
 				MothershipRecord.GetKey( mothershipId.Value ),
 				MothershipAttachedModuleRecord.GetKey( moduleId.Value ) );
