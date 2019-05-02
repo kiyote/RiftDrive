@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -22,12 +23,10 @@ using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages {
-	public class GameViewPageBase : ComponentBase {
+	public class GameViewPageBase : ComponentBase, IDisposable {
 		public const string Url = "/game/view";
 
 		[Inject] protected IAppState State { get; set; }
-
-		[Inject] protected IGameApiService GameService { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
@@ -37,9 +36,18 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			return $"{Url}/{gameId.Value}";
 		}
 
+		public void Dispose() {
+			State.OnStateChanged -= OnStateHasChanged;
+		}
+
 		protected override async Task OnInitAsync() {
+			State.OnStateChanged += OnStateHasChanged;
 			var gameId = new Id<Game>( GameId );
 			await Dispatch.LoadCurrentGame( gameId );
+		}
+
+		private void OnStateHasChanged(object sender, EventArgs args) {
+			StateHasChanged();
 		}
 	}
 }
