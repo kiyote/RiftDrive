@@ -15,11 +15,11 @@ limitations under the License.
 */
 using Newtonsoft.Json;
 
-namespace RiftDrive.Client.Model {
-	public class AvatarImage {
+namespace RiftDrive.Shared.Message {
+	public class SetAvatarRequest {
 
 		[JsonConstructor]
-		public AvatarImage(
+		public SetAvatarRequest(
 			string contentType,
 			string content
 		) {

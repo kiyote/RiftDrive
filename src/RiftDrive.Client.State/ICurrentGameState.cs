@@ -27,5 +27,7 @@ namespace RiftDrive.Client.State {
 		public IEnumerable<MothershipAttachedModule> Modules { get; }
 
 		public IEnumerable<Actor> Crew { get; }
+
+		public IEnumerable<string> ActionLog { get; }
 	}
 }

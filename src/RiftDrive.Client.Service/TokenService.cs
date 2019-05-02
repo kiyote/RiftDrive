@@ -16,7 +16,7 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Message;
 
 namespace RiftDrive.Client.Service {
 	internal sealed class TokenService : ITokenService {

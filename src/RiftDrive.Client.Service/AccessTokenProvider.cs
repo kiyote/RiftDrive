@@ -15,8 +15,8 @@ limitations under the License.
 */
 using System;
 using System.Threading.Tasks;
-using RiftDrive.Client.Model;
 using RiftDrive.Client.State;
+using RiftDrive.Shared.Message;
 
 namespace RiftDrive.Client.Service {
 	internal sealed class AccessTokenProvider : IAccessTokenProvider {

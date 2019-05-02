@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RiftDrive.Server.Model\RiftDrive.Server.Model.csproj" />
     <ProjectReference Include="..\RiftDrive.Server.Repository\RiftDrive.Server.Repository.csproj" />
+    <ProjectReference Include="..\RiftDrive.Shared.Message\RiftDrive.Shared.Message.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared.Provider\RiftDrive.Shared.Provider.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
   </ItemGroup>

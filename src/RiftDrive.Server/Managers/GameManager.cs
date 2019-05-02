@@ -84,13 +84,13 @@ namespace RiftDrive.Server.Managers {
 			return await _gameService.GetCrew( gameId );
 		}
 
-		public async Task TriggerAction(
+		public async Task<IEnumerable<string>> TriggerAction(
 			Id<Game> gameId,
 			Id<Mothership> mothershipId,
 			Id<MothershipModule> moduleId,
 			Id<MothershipModuleAction> actionId
 		) {
-			await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
+			return await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
 		}
 
 		private ClientPlayer ToClientPlayer( Player player ) {

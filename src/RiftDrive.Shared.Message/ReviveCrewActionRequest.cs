@@ -13,30 +13,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using Newtonsoft.Json;
+using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Client.Model {
-	public class AuthorizationToken {
+namespace RiftDrive.Shared.Message {
+	public sealed class ReviveCrewActionRequest {
 
 		[JsonConstructor]
-		public AuthorizationToken(
-			string id_token,
-			string access_token,
-			string token_type,
-			int expires_in,
-			string refresh_token
+		public ReviveCrewActionRequest(
+			Id<Game> gameId,
+			Id<Mothership> mothershipId,
+			Id<MothershipModule> moduleId,
+			Id<MothershipModuleAction> actionId
 		) {
-			this.id_token = id_token;
-			this.access_token = access_token;
-			this.token_type = token_type;
-			this.expires_in = expires_in;
-			this.refresh_token = refresh_token;
+			GameId = gameId;
+			MothershipId = mothershipId;
+			ModuleId = moduleId;
+			ActionId = actionId;
 		}
 
-		public string id_token { get; }
-		public string access_token { get; }
-		public string token_type { get; }
-		public int expires_in { get; }
-		public string refresh_token { get; }
+		public Id<Game> GameId { get; }
+
+		public Id<Mothership> MothershipId { get; }
+
+		public Id<MothershipModule> ModuleId { get; }
+
+		public Id<MothershipModuleAction> ActionId { get; }
 	}
 }

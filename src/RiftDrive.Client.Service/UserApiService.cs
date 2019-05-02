@@ -17,7 +17,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Service {
@@ -56,13 +56,13 @@ namespace RiftDrive.Client.Service {
 
 		async Task<string> IUserApiService.SetAvatar( string contentType, string content ) {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			var request = new AvatarImage(
+			var request = new SetAvatarRequest(
 				contentType,
 				content
 			);
-			AvatarUrl response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
+			SetAvatarResponse response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
 				( r ) => { return _json.Serialize( r ); },
-				( s ) => { return _json.Deserialize<AvatarUrl>( s ); } );
+				( s ) => { return _json.Deserialize<SetAvatarResponse>( s ); } );
 
 			if (response == default) {
 				throw new InvalidOperationException();

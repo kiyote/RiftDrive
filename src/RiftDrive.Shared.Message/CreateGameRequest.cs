@@ -13,13 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System.Threading.Tasks;
-using RiftDrive.Shared.Message;
+using System;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Client.Service {
-	public interface ITokenService {
-		Task<AuthorizationToken> GetToken( string code );
+namespace RiftDrive.Shared.Message {
+	public sealed class CreateGameRequest {
+		[JsonConstructor]
+		public CreateGameRequest(
+			string gameName,
+			string playerName
+		) {
+			GameName = gameName;
+			PlayerName = playerName;
+		}
 
-		Task<AuthorizationToken> RefreshToken( string refreshToken );
+		public string GameName { get; }
+
+		public string PlayerName { get; }
 	}
 }

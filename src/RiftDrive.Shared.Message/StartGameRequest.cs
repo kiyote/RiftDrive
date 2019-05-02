@@ -13,19 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Client.Model {
-
-	public class AvatarUrl {
-
+namespace RiftDrive.Shared.Message {
+	public sealed class StartGameRequest {
 		[JsonConstructor]
-		public AvatarUrl(
-			string url
+		public StartGameRequest(
+			string message
 		) {
-			Url = url;
+			Message = message;
 		}
 
-		public string Url { get; }
+		public string Message { get; }
 	}
 }

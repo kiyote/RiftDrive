@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Message;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;

@@ -13,19 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
+using RiftDrive.Server.Service;
+using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
-using GameStartInformation = RiftDrive.Client.Model.GameStartInformation;
-using GameCreationInformation = RiftDrive.Client.Model.GameCreationInformation;
 
 namespace RiftDrive.Server.Controllers {
-	[ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+	[ResponseCache( Location = ResponseCacheLocation.None, NoStore = true )]
 	[Authorize]
 	[Route( "api/game" )]
 	public class GameController : Controller {
@@ -42,7 +41,7 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpPost()]
-		public async Task<ActionResult<Game>> CreateGame( [FromBody] GameCreationInformation gameInfo ) {
+		public async Task<ActionResult<Game>> CreateGame( [FromBody] CreateGameRequest gameInfo ) {
 			var userId = new Id<User>( _context.UserId );
 			Game result = await _gameManager.CreateGame( userId, gameInfo.GameName, gameInfo.PlayerName );
 
@@ -59,7 +58,7 @@ namespace RiftDrive.Server.Controllers {
 
 
 		[HttpPost( "{gameId}" )]
-		public async Task<ActionResult<Game>> StartGame( string gameId, [FromBody] GameStartInformation gameInfo ) {
+		public async Task<ActionResult<Game>> StartGame( string gameId, [FromBody] StartGameRequest gameInfo ) {
 			Game game = await _gameManager.StartGame( new Id<Game>( gameId ) );
 
 			return Ok( game );
@@ -112,13 +111,13 @@ namespace RiftDrive.Server.Controllers {
 			string moduleId,
 			string actionId
 		) {
-			await _gameManager.TriggerAction(
+			IEnumerable<string> log = await _gameManager.TriggerAction(
 				new Id<Game>( gameId ),
 				new Id<Mothership>( mothershipId ),
 				new Id<MothershipModule>( moduleId ),
 				new Id<MothershipModuleAction>( actionId ) );
 
-			return Ok();
+			return Ok( log );
 		}
 	}
 }

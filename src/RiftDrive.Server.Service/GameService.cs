@@ -107,12 +107,13 @@ namespace RiftDrive.Server.Service {
 			return await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
 		}
 
-		async Task IGameService.TriggerAction(
+		async Task<IEnumerable<string>> IGameService.TriggerAction(
 			Id<Game> gameId,
 			Id<Mothership> mothershipId,
 			Id<MothershipModule> moduleId,
 			Id<MothershipModuleAction> actionId
 		) {
+			List<string> result = new List<string>();
 			Mothership mothership = await _mothershipRepository.GetMothership( gameId, mothershipId );
 			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( gameId, mothershipId, moduleId );
 			MothershipModule definition = MothershipModule.GetById( moduleId );
@@ -121,23 +122,30 @@ namespace RiftDrive.Server.Service {
 				int magnitude = CalculateMagnitude( effect );
 				switch( effect.Effect) {
 					case ModuleEffect.AddCrew:
+						result.Add( magnitude > 0 ? $"Revived {magnitude} additional crew." : "No viable crew found for revival" );
 						await _mothershipRepository.SetAvailableCrew( gameId, mothershipId, mothership.AvailableCrew + magnitude );
 						break;
 					case ModuleEffect.ConsumeFuel:
+						result.Add( $"Consumed {magnitude} fuel." );
 						await _mothershipRepository.SetRemainingFuel( gameId, mothershipId, mothership.RemainingFuel - magnitude );
 						break;
 					case ModuleEffect.ConsumePower:
+						result.Add( $"Consumed {magnitude} power in the {definition.Name} module." );
 						await _mothershipRepository.SetRemainingPower( gameId, mothershipId, module.MothershipModuleId, module.RemainingPower - magnitude );
 						break;
 					case ModuleEffect.ProducePower:
 						IEnumerable<MothershipAttachedModule> modules = await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
 						modules = modules.Where( m => m != module );
 						foreach (MothershipAttachedModule m in modules) {
+							MothershipModule defn = MothershipModule.GetById( m.MothershipModuleId );
+							result.Add( $"Gained {magnitude} power in the {defn.Name} module." );
 							await _mothershipRepository.SetRemainingPower( gameId, mothershipId, m.MothershipModuleId, m.RemainingPower + magnitude );
 						}
 						break;
 				}
 			}
+
+			return result;
 		}
 
 		private int CalculateMagnitude( MothershipModuleEffect effect ) {

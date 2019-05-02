@@ -40,6 +40,6 @@ namespace RiftDrive.Server.Service {
 
 		Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Game> gameId, Id<Mothership> mothershipId );
 
-		Task TriggerAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId );
+		Task<IEnumerable<string>> TriggerAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId );
 	}
 }

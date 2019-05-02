@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using RiftDrive.Client.Model;
+using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Service {
@@ -42,7 +42,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<Game> IGameApiService.CreateGame( string gameName, string playerName ) {
-			var gameInfo = new GameCreationInformation(
+			var gameInfo = new CreateGameRequest(
 				gameName,
 				playerName );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
@@ -64,7 +64,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<Game> IGameApiService.StartGame( Id<Game> gameId, string message ) {
-			var startInfo = new GameStartInformation(
+			var startInfo = new StartGameRequest(
 				message );
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
 			Game response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
@@ -130,15 +130,15 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
-		async Task IGameApiService.TriggerAction(
+		async Task<IEnumerable<string>> IGameApiService.TriggerAction(
 			Id<Game> gameId,
 			Id<Mothership> mothershipId,
 			Id<MothershipModule> mothershipModuleId,
 			Id<MothershipModuleAction> actionId
 		) {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module/{mothershipModuleId.Value}/action/{actionId.Value}",
-				( s ) => { return string.Empty; } );
+			return await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module/{mothershipModuleId.Value}/action/{actionId.Value}",
+				( s ) => { return _json.Deserialize<string[]>( s ); } );
 		}
 	}
 }

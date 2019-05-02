@@ -50,7 +50,8 @@ namespace RiftDrive.Client.Action {
 		}
 
 		public async Task TriggerModuleAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId ) {
-			await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
+			IEnumerable<string> log = await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
+			await _state.Update( _state.CurrentGame, log );
 
 			Mothership mothership = await _gameService.GetMothership( gameId );
 			await _state.Update( _state.CurrentGame, mothership );

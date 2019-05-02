@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RiftDrive.Shared.Provider {
 	internal sealed class RandomProvider : IRandomProvider {
@@ -23,7 +21,7 @@ namespace RiftDrive.Shared.Provider {
 		private readonly Random _random;
 
 		public RandomProvider() {
-			_random = new Random();
+			_random = new Random( (int)DateTime.Now.Ticks );
 		}
 
 		int IRandomProvider.Next( int max ) {
@@ -31,7 +29,8 @@ namespace RiftDrive.Shared.Provider {
 		}
 
 		int IRandomProvider.Next( int min, int max ) {
-			return min + _random.Next( max - min );
+			int value = _random.Next( max - min + 1 );
+			return min + value;
 		}
 
 		bool IRandomProvider.Flip() {

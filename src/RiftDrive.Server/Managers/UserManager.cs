@@ -42,14 +42,14 @@ namespace RiftDrive.Server.Managers {
 		public async Task<ClientUser> RecordLogin( string username ) {
 			User user = await _identificationService.RecordLogin( username );
 
-			return ToApiUser( user, await GetAvatarUrl( user ) );
+			return ToClientUser( user, await GetAvatarUrl( user ) );
 		}
 
 		public async Task<ClientUser> GetUser( string userId ) {
 			var id = new Id<User>( userId );
 			User user = await _identificationService.GetUser( id );
 
-			return ToApiUser( user, await GetAvatarUrl( user ) );
+			return ToClientUser( user, await GetAvatarUrl( user ) );
 		}
 
 		public async Task<string> SetAvatar( string userId, string contentType, string content ) {
@@ -75,7 +75,7 @@ namespace RiftDrive.Server.Managers {
 			return avatar.Url;
 		}
 
-		private static ClientUser ToApiUser( User user, string avatarUrl ) {
+		private static ClientUser ToClientUser( User user, string avatarUrl ) {
 			return new ClientUser(
 				new Id<ClientUser>(user.Id.Value),
 				user.Username,

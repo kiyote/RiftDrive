@@ -21,9 +21,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RiftDrive.Client.Action\RiftDrive.Client.Action.csproj" />
-    <ProjectReference Include="..\RiftDrive.Client.Model\RiftDrive.Client.Model.csproj" />
     <ProjectReference Include="..\RiftDrive.Client.Service\RiftDrive.Client.Service.csproj" />
     <ProjectReference Include="..\RiftDrive.Client.State\RiftDrive.Client.State.csproj" />
+    <ProjectReference Include="..\RiftDrive.Shared.Message\RiftDrive.Shared.Message.csproj" />
     <ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
   </ItemGroup>
 

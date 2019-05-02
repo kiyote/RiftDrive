@@ -14,6 +14,10 @@ else
         <Column>
             <MothershipSummary Mothership=@State.CurrentGame.Mothership></MothershipSummary>
             <MothershipModuleSummary Game=@State.CurrentGame.Game Modules=@State.CurrentGame.Modules></MothershipModuleSummary>
+            @foreach (string log in State.CurrentGame.ActionLog)
+            {
+                <div>@log</div>
+            }
         </Column>
         <Column>
             <CrewSummary Crew=@State.CurrentGame.Crew></CrewSummary>

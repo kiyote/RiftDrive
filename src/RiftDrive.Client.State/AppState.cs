@@ -65,28 +65,35 @@ namespace RiftDrive.Client.State {
 		}
 
 		public Task Update( ICurrentGameState initial, Game game ) {
-			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew );
+			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, IEnumerable<Actor> crew ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, crew );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, crew, initial.ActionLog );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, Mothership mothership ) {
-			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew );
+			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew, initial.ActionLog );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, modules, initial.Crew );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, modules, initial.Crew, initial.ActionLog );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+
+			return Task.CompletedTask;
+		}
+
+		public Task Update( ICurrentGameState initial, IEnumerable<string> actionLog ) {
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, actionLog );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
