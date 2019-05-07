@@ -52,7 +52,7 @@ namespace RiftDrive.Server {
 			services
 				.AddConnections()
 				.AddSignalR( o => o.KeepAliveInterval = TimeSpan.FromSeconds( 5 ) )
-				.AddNewtonsoftJsonProtocol();
+				.AddJsonProtocol();
 
 			services.AddAuthorization( options => {
 				options.AddPolicy( JwtBearerDefaults.AuthenticationScheme, policy => {
