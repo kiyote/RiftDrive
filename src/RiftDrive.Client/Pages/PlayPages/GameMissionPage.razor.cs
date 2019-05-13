@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
@@ -21,8 +23,8 @@ using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages {
-	public class GameViewPageBase : ComponentBase, IDisposable {
-		public const string Url = "/game/{0}/view";
+	public class GameMissionPageBase: ComponentBase {
+		public const string Url = "/game/{GameId}/mission";
 
 		[Inject] protected IAppState State { get; set; }
 
@@ -30,8 +32,10 @@ namespace RiftDrive.Client.Pages.PlayPages {
 
 		[Parameter] protected string GameId { get; set; }
 
+		[Parameter] protected string MissionId { get; set; }
+
 		public static string GetUrl( Id<Game> gameId ) {
-			return string.Format( Url, gameId.Value );
+			return $"{Url}/{gameId.Value}/mission";
 		}
 
 		public void Dispose() {
@@ -41,10 +45,9 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += OnStateHasChanged;
 			var gameId = new Id<Game>( GameId );
-			await Dispatch.LoadCurrentGame( gameId );
 		}
 
-		private void OnStateHasChanged(object sender, EventArgs args) {
+		private void OnStateHasChanged( object sender, EventArgs args ) {
 			StateHasChanged();
 		}
 	}

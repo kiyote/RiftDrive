@@ -21,7 +21,7 @@ using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BlazorSpa.Server.Repository.DynamoDb {
+namespace RiftDrive.Server.Repository.DynamoDb {
 	public static class DynamoDbExtensions {
 
 		public static IServiceCollection AddDynamoDb( this IServiceCollection services, DynamoDbOptions options ) {
