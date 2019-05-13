@@ -24,6 +24,8 @@ namespace RiftDrive.Shared.Model {
 
 		ConsumeFuel,
 
-		AddCrew
+		AddCrew,
+
+		LaunchMission
 	}
 }

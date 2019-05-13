@@ -45,7 +45,8 @@ namespace RiftDrive.Shared.Model {
 					"Launch Mission",
 					"Send out the ship to have an encounter.",
 					new List<MothershipModuleEffect>() {
-						new MothershipModuleEffect(ModuleEffect.ConsumeFuel, 5)
+						new MothershipModuleEffect(ModuleEffect.ConsumeFuel, 5),
+						new MothershipModuleEffect(ModuleEffect.LaunchMission, 0)
 					} )
 			},
 			new List<MothershipModuleEffect>() {

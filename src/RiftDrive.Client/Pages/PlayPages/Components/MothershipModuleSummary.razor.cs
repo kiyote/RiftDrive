@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
@@ -32,12 +33,18 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
+		[Inject] protected IUriHelper UriHelper { get; set; }
+
 		protected async Task ModuleButtonClicked(
 			MothershipAttachedModule module,
 			MothershipModuleAction action
 		) {
 			MothershipModule definition = MothershipModule.GetById( module.MothershipModuleId );
 			await Dispatch.TriggerModuleAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
+
+			if (action.Effects.Any(e => e.Effect == ModuleEffect.LaunchMission)) {
+				UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Game.Id ) );
+			}
 		}
 	}
 }

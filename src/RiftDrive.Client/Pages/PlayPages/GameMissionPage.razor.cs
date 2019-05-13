@@ -35,7 +35,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		[Parameter] protected string MissionId { get; set; }
 
 		public static string GetUrl( Id<Game> gameId ) {
-			return $"{Url}/{gameId.Value}/mission";
+			return $"game/{gameId.Value}/mission";
 		}
 
 		public void Dispose() {
