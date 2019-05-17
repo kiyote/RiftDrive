@@ -9,51 +9,49 @@
 }
 else
 {
-<Row>
-    <Column>
-        <Card>
-            <CardBody>
-                <CardTitle Size="5">@User.Name</CardTitle>
-            </CardBody>
-            @if (!string.IsNullOrWhiteSpace(User.AvatarUrl))
-            {
-                <CardImage Source=@User.AvatarUrl Alt="Avatar Image">
-                </CardImage>
-            }
-        <CardBody>
-            <CardText>
-                <TableContainer IsBordered="true" IsStriped="true">
-                    <TableBody>
-                        <TableRow>
-                            <TableRowCell>User Id:</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowCell>@User.Id.Value</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowCell>Last Login:</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowCell>@FormatDate(User.LastLogin)</TableRowCell>
-                        </TableRow>
-                    </TableBody>
-                </TableContainer>
-            </CardText>
-            @if(IsTheAuthenticatedUser)
-            {
-                if (ChangingAvatar)
-                {
-                    <input type="file" onchange="@UploadFile" ref="FileUploadRef" />
-                }
-                else
-                {
-                    <SimpleButton Clicked=@ChangeAvatarClicked Color="Color.Primary">Change Avatar</SimpleButton>
-                }
-            }
-        </CardBody>
-        </Card>
-    </Column>
-    <Column></Column>
-    <Column></Column>
-</Row>
+    <div class="container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        @User.Name
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        @if (!string.IsNullOrWhiteSpace(User.AvatarUrl))
+                        {
+                            <img src=@User.AvatarUrl />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>User Id:</td>
+                    <td>@User.Id.Value</td>
+                </tr>
+                <tr>
+                    <td>Last Login:</td>
+                    <td>@FormatDate(User.LastLogin)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        @if (IsTheAuthenticatedUser)
+                        {
+                            if (ChangingAvatar)
+                            {
+                                <input type="file" onchange="@UploadFile" ref="FileUploadRef" />
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary" onclick=@ChangeAvatarClicked>Change Avatar</button>
+                            }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 }

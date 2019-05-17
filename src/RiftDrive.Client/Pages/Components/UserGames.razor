@@ -6,62 +6,34 @@
 }
 else
 {
-    <Card>
-        <CardBody>
-            <CardTitle Size="5">Games for @User.Name</CardTitle>
-        </CardBody>
-        <CardBody>
-            <CardText>
-                <TableContainer IsBordered="true" IsStriped="true">
-                    <TableBody>
-                        @foreach (var game in Games)
-                        {
-                            <TableRow>
-                                <TableRowCell>@game.Name</TableRowCell>
-                                <TableRowCell>
-                                    <SimpleButton Clicked=@(() => { PlayGame( game.Id ); })
-                                                  IsActive=@(!Busy)>
-                                        Play
-                                    </SimpleButton>
-                                    <SimpleButton Clicked=@(async () => { await DeleteGame( game.Id ); })
-                                                  IsActive=@(!Busy)>
-                                        Delete
-                                    </SimpleButton>
-                                </TableRowCell>
-                            </TableRow>
-                        }
-                    </TableBody>
-                </TableContainer>
-            </CardText>
-            <SimpleButton Clicked=@ShowModal Color="Color.Primary" IsActive=@(!Busy)>Create Game</SimpleButton>
-        </CardBody>
-    </Card>
+<div class="container">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2">
+                    Games for @User.Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Games)
+            {
+                <tr>
+                    <td>
+                        @game.Name
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="@(() => { PlayGame(game.Id); })">
+                            Play
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick=@(async () => { await DeleteGame(game.Id); })>
+                            Delete
+                        </button>
+                    </td>
+                </tr>
 
+            }
+        </tbody>
+    </table>
+</div>
 }
-
-<Modal ref="ModalRef">
-    <ModalBackdrop />
-    <ModalContent Size="ModalSize.Small" IsCentered="true">
-        <ModalHeader>
-            <ModalTitle>
-                <Icon Name="IconName.Edit" />
-                Create Game
-            </ModalTitle>
-            <CloseButton Clicked=@CancelCreate />
-        </ModalHeader>
-        <ModalBody>
-            <Field>
-                <FieldLabel>Game Name</FieldLabel>
-                <TextEdit Placeholder="Enter name..." bind-Text=@GameName />
-            </Field>
-            <Field>
-                <FieldLabel>Player Name</FieldLabel>
-                <TextEdit Placeholder="Enter name..." bind-Text=@PlayerName />
-            </Field>
-        </ModalBody>
-        <ModalFooter>
-            <SimpleButton Color="Color.Secondary" Clicked=@CancelCreate>Cancel</SimpleButton>
-            <SimpleButton Color="Color.Primary" Clicked=@CreateGame>Create</SimpleButton>
-        </ModalFooter>
-    </ModalContent>
-</Modal>

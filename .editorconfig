@@ -7,6 +7,7 @@ trim_trailing_whitespace = true
 insert_final_newline     = true
 max_line_length          = off
 guidelines				 = 80
+charset					 = utf-8
 
 # C# specific settings:
 #   https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference

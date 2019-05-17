@@ -1,37 +1,41 @@
 ﻿@inherits CrewSummaryComponent
 
-@if (Crew == default) {
-<span>Loading...</span>
+@if (Crew == default)
+{
+    <span>Loading...</span>
 }
 else
 {
-<Card>
-    <CardHeader>
-        <CardTitle>Crew</CardTitle>
-    </CardHeader>
-    <CardBody>
-        <CardText>
-            <TableContainer IsBordered="true" IsStriped="true">
-                <TableHeader>
-                    <TableHeaderCell>Name</TableHeaderCell>
-                    <TableHeaderCell>Intelligence</TableHeaderCell>
-                    <TableHeaderCell>Talent</TableHeaderCell>
-                    <TableHeaderCell>Training</TableHeaderCell>
-                </TableHeader>
-                <TableBody>
-                    @foreach (var crew in Crew)
-                    {
-                        <TableRow>
-                            <TableRowCell>@crew.Name</TableRowCell>
-                            <TableRowCell>@crew.Intelligence</TableRowCell>
-                            <TableRowCell>@crew.Talent</TableRowCell>
-                            <TableRowCell>@crew.Training</TableRowCell>
-                        </TableRow>
-                    }
-                </TableBody>
-            </TableContainer>
-        </CardText>
-    </CardBody>
-</Card>
-
+    <div class="container">
+        <h5>Crew</h5>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Name
+                    </th>
+                    <th scope="col">
+                        Intelligence
+                    </th>
+                    <th scope="col">
+                        Talent
+                    </th>
+                    <th scope="col">
+                        Training
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var crew in Crew)
+                {
+                    <tr>
+                        <td>@crew.Name</td>
+                        <td>@crew.Intelligence</td>
+                        <td>@crew.Talent</td>
+                        <td>@crew.Training</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

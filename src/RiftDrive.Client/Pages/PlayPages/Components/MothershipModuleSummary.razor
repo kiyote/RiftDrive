@@ -7,27 +7,32 @@
 }
 else
 {
-    <Card>
-        <CardBody>
-            <CardText>
-                <TableContainer IsBordered="true" IsStriped="true">
-                    <TableBody>
-                        @foreach (var module in Modules)
-                        {
-                            MothershipModule definition = MothershipModule.GetById(module.MothershipModuleId);
-                        <TableRow>
-                            <TableRowCell>@definition.Name</TableRowCell>
-                            <TableRowCell>@module.RemainingPower</TableRowCell>
-                            <TableRowCell>
-                                @foreach ( var action in definition.Actions ) {
-                                    <SimpleButton Clicked=@(async () => { await ModuleButtonClicked(module, action); })>@action.Name</SimpleButton>
-                                }
-                            </TableRowCell>
-                        </TableRow>
-                        }
-                    </TableBody>
-                </TableContainer>
-            </CardText>
-        </CardBody>
-    </Card>
+    <div class="container">
+        <h5>Mothership Modules</h5>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Energy</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var module in Modules)
+                {
+                    MothershipModule definition = MothershipModule.GetById(module.MothershipModuleId);
+                    <tr>
+                        <td>@definition.Name</td>
+                        <td>@module.RemainingPower</td>
+                        <td>
+                            @foreach (var action in definition.Actions)
+                            {
+                                <button type="button" class="btn btn-primary" onclick=@(async () => { await ModuleButtonClicked(module, action); })>@action.Name</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

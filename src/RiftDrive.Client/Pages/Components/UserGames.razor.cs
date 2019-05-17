@@ -16,7 +16,6 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazorise;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Client.Service;
@@ -39,7 +38,7 @@ namespace RiftDrive.Client.Pages.Components {
 
 		protected bool Busy { get; set; }
 
-		protected Modal ModalRef { get; set; }
+		//protected Modal ModalRef { get; set; }
 
 		public UserGamesComponent() {
 			Games = new List<Game>();
@@ -51,7 +50,7 @@ namespace RiftDrive.Client.Pages.Components {
 		}
 
 		public async Task CreateGame() {
-			ModalRef.Hide();
+			//ModalRef.Hide();
 			Busy = true;
 
 			Game newGame = await GameService.CreateGame( GameName, PlayerName );
@@ -73,12 +72,12 @@ namespace RiftDrive.Client.Pages.Components {
 		}
 
 		public Task ShowModal() {
-			ModalRef.Show();
+			//ModalRef.Show();
 			return Task.CompletedTask;
 		}
 
 		public Task CancelCreate() {
-			ModalRef.Hide();
+			//ModalRef.Hide();
 			return Task.CompletedTask;
 		}
 	}

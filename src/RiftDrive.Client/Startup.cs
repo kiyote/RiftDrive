@@ -13,9 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Blazorise;
-using Blazorise.Icons.Material;
-using Blazorise.Material;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using RiftDrive.Client.Action;
@@ -26,13 +23,6 @@ namespace RiftDrive.Client {
 	public class Startup {
 		public void ConfigureServices( IServiceCollection services ) {
 			services
-				.AddBlazorise( options => {
-					options.ChangeTextOnKeyPress = true;
-				} )
-				.AddMaterialProviders()
-				.AddMaterialIcons();
-
-			services
 				.AddSingleton<IJSRuntimeProvider, JSRuntimeProvider>()
 				.AddSingleton<IConfig, Config>()
 				.RegisterState<StateStorage>()
@@ -41,10 +31,6 @@ namespace RiftDrive.Client {
 		}
 
 		public void Configure( IComponentsApplicationBuilder app ) {
-			app
-				.UseMaterialProviders()
-				.UseMaterialIcons();
-
 			app
 				.AddComponent<App>( "app" );
 		}

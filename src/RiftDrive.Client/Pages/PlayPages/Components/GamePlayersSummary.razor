@@ -6,49 +6,20 @@
 }
 else
 {
-    <Card Margin="Margin.Is4.OnY.Is2.OnMobile.Is5.OnDesktop">
-        <CardBody>
-            <CardTitle Size="5">Players</CardTitle>
-        </CardBody>
-        <CardBody>
-            <CardText>
-                <TableContainer IsBordered="true" IsStriped="true">
-                    <TableBody>
-                        @foreach (var player in Players)
-                        {
-                            <TableRow>
-                                <TableRowCell>@player.Name</TableRowCell>
-                                <TableRowCell>
-                                    <SimpleButton Clicked=@(() => { EditPlayer(player);}) Color="Color.Primary">Edit</SimpleButton>
-                                </TableRowCell>
-                            </TableRow>
-                        }
-                    </TableBody>
-                </TableContainer>
-            </CardText>
-        </CardBody>
-    </Card>
+    <div class="container">
+        <h5>Players</h5>
+        <table>
+            <tbody>
+                @foreach (var player in Players)
+                {
+                    <tr>
+                        <td>@player.Name</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick=@(() => { EditPlayer(player);})>Edit</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
-
-<Modal ref="ModalRef">
-    <ModalBackdrop />
-    <ModalContent Size="ModalSize.Small" IsCentered="true">
-        <ModalHeader>
-            <ModalTitle>
-                <Icon Name="IconName.Edit" />
-                Player
-            </ModalTitle>
-            <CloseButton Clicked=@CancelEdit />
-        </ModalHeader>
-        <ModalBody>
-            <Field>
-                <FieldLabel>Name</FieldLabel>
-                <TextEdit Placeholder="Enter name..." bind-Text=@EditPlayerName />
-            </Field>
-        </ModalBody>
-        <ModalFooter>
-            <SimpleButton Color="Color.Secondary" Clicked=@CancelEdit>Cancel</SimpleButton>
-            <SimpleButton Color="Color.Primary" Clicked=@ApplyChanges>Apply</SimpleButton>
-        </ModalFooter>
-    </ModalContent>
-</Modal>
