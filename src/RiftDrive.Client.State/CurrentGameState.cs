@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,12 +26,20 @@ namespace RiftDrive.Client.State {
 			ActionLog = new List<string>();
 		}
 
-		public CurrentGameState( Game game, Mothership mothership, IEnumerable<MothershipAttachedModule> modules, IEnumerable<Actor> crew, IEnumerable<string> actionLog ) {
+		public CurrentGameState(
+			Game game,
+			Mothership mothership,
+			IEnumerable<MothershipAttachedModule> modules,
+			IEnumerable<Actor> crew,
+			IEnumerable<string> actionLog,
+			Mission mission
+		) {
 			Game = game;
 			Mothership = mothership;
 			Modules = modules;
 			Crew = crew;
 			ActionLog = actionLog;
+			Mission = mission;
 		}
 
 		public Game Game { get; }
@@ -43,6 +51,8 @@ namespace RiftDrive.Client.State {
 		public IEnumerable<Actor> Crew { get; }
 
 		public IEnumerable<string> ActionLog { get; }
+
+		public Mission Mission { get; }
 
 	}
 }

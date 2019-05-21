@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -139,6 +139,14 @@ namespace RiftDrive.Client.Service {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
 			return await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module/{mothershipModuleId.Value}/action/{actionId.Value}",
 				( s ) => { return _json.Deserialize<string[]>( s ); } );
+		}
+
+		async Task<Mission> IGameApiService.GetMission( Id<Game> gameId ) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Mission response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission",
+				( s ) => { return _json.Deserialize<Mission>( s ); } );
+
+			return response;
 		}
 	}
 }

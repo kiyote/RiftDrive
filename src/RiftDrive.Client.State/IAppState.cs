@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,5 +45,7 @@ namespace RiftDrive.Client.State {
 		Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules );
 
 		Task Update( ICurrentGameState initial, IEnumerable<string> actionLog );
+
+		Task Update( ICurrentGameState initial, Mission mission );
 	}
 }

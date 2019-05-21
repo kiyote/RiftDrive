@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +28,7 @@ namespace RiftDrive.Server.Repository {
 			services.AddSingleton<IPlayerRepository, PlayerRepository>();
 			services.AddSingleton<IActorRepository, ActorRepository>();
 			services.AddSingleton<IMothershipRepository, MothershipRepository>();
+			services.AddSingleton<IMissionRepository, MissionRepository>();
 
 			return services;
 		}

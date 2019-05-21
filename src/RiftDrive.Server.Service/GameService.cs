@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +30,7 @@ namespace RiftDrive.Server.Service {
 		private readonly IMothershipRepository _mothershipRepository;
 		private readonly INameProvider _nameProvider;
 		private readonly IRandomProvider _randomProvider;
+		private readonly IMissionRepository _missionRepository;
 
 		public GameService(
 			IGameRepository gameRepository,
@@ -37,7 +38,8 @@ namespace RiftDrive.Server.Service {
 			IActorRepository actorRepository,
 			IMothershipRepository mothershipRepository,
 			INameProvider nameProvider,
-			IRandomProvider randomProvider
+			IRandomProvider randomProvider,
+			IMissionRepository missionRepository
 		) {
 			_gameRepository = gameRepository;
 			_playerRepository = playerRepository;
@@ -45,6 +47,7 @@ namespace RiftDrive.Server.Service {
 			_mothershipRepository = mothershipRepository;
 			_nameProvider = nameProvider;
 			_randomProvider = randomProvider;
+			_missionRepository = missionRepository;
 		}
 
 		async Task<IEnumerable<Game>> IGameService.GetGames( Id<User> userId ) {
@@ -105,6 +108,10 @@ namespace RiftDrive.Server.Service {
 			Id<Mothership> mothershipId
 		) {
 			return await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
+		}
+
+		async Task<Mission> IGameService.GetMission( Id<Game> gameId ) {
+			return await _missionRepository.GetMission( gameId );
 		}
 
 		async Task<IEnumerable<string>> IGameService.TriggerAction(

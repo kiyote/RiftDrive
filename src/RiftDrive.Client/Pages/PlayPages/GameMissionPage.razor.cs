@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,9 +42,10 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			State.OnStateChanged -= OnStateHasChanged;
 		}
 
-		protected override async Task OnInitAsync() {
+		protected override Task OnInitAsync() {
 			State.OnStateChanged += OnStateHasChanged;
 			var gameId = new Id<Game>( GameId );
+			return Task.CompletedTask;
 		}
 
 		private void OnStateHasChanged( object sender, EventArgs args ) {

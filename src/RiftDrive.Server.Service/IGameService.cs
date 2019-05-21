@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,5 +41,7 @@ namespace RiftDrive.Server.Service {
 		Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Game> gameId, Id<Mothership> mothershipId );
 
 		Task<IEnumerable<string>> TriggerAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId );
+
+		Task<Mission> GetMission( Id<Game> gameId );
 	}
 }

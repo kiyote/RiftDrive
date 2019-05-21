@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,35 +65,42 @@ namespace RiftDrive.Client.State {
 		}
 
 		public Task Update( ICurrentGameState initial, Game game ) {
-			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog );
+			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog, initial.Mission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, IEnumerable<Actor> crew ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, crew, initial.ActionLog );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, crew, initial.ActionLog, initial.Mission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, Mothership mothership ) {
-			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew, initial.ActionLog );
+			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew, initial.ActionLog, initial.Mission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, modules, initial.Crew, initial.ActionLog );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, modules, initial.Crew, initial.ActionLog, initial.Mission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;
 		}
 
 		public Task Update( ICurrentGameState initial, IEnumerable<string> actionLog ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, actionLog );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, actionLog, initial.Mission );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+
+			return Task.CompletedTask;
+		}
+
+		public Task Update( ICurrentGameState initial, Mission mission ) {
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog, mission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 
 			return Task.CompletedTask;

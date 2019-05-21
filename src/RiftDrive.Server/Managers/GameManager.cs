@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -91,6 +91,12 @@ namespace RiftDrive.Server.Managers {
 			Id<MothershipModuleAction> actionId
 		) {
 			return await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
+		}
+
+		public async Task<Mission> GetMission(
+			Id<Game> gameId
+		) {
+			return await _gameService.GetMission( gameId );
 		}
 
 		private ClientPlayer ToClientPlayer( Player player ) {

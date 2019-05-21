@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -88,6 +88,12 @@ namespace RiftDrive.Server.Controllers {
 		public async Task<ActionResult<IEnumerable<Actor>>> GetCrew( string gameId ) {
 			IEnumerable<Actor> crew = await _gameManager.GetCrew( new Id<Game>( gameId ) );
 			return Ok( crew );
+		}
+
+		[HttpGet( "{gameId}/mission" )]
+		public async Task<ActionResult<Mission>> GetMission( string gameId ) {
+			Mission mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
+			return Ok( mission );
 		}
 
 		[HttpGet( "{gameId}/mothership" )]

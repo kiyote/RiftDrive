@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,6 +47,9 @@ namespace RiftDrive.Client.Action {
 
 			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothership.Id );
 			await _state.Update( _state.CurrentGame, modules );
+
+			Mission mission = await _gameService.GetMission( gameId );
+			await _state.Update( _state.CurrentGame, mission );
 		}
 
 		public async Task TriggerModuleAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId ) {
