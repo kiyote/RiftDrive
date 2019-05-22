@@ -14,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
-	public class MissionSummaryComponent: ComponentBase {
+	public class MissionSummaryComponent : ComponentBase {
 
 		[Parameter] protected Mission Mission { get; set; }
+
+		[Parameter] protected IUriHelper UriHelper { get; set; }
+
+		protected void ResumeClicked( UIMouseEventArgs args ) {
+			UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Mission.GameId ) );
+		}
 	}
 }

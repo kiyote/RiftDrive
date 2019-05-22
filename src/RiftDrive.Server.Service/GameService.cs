@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
@@ -111,7 +112,7 @@ namespace RiftDrive.Server.Service {
 		}
 
 		async Task<Mission> IGameService.GetMission( Id<Game> gameId ) {
-			return await _missionRepository.GetMission( gameId );
+			return await _missionRepository.GetByGameId( gameId );
 		}
 
 		async Task<IEnumerable<string>> IGameService.TriggerAction(
@@ -128,25 +129,34 @@ namespace RiftDrive.Server.Service {
 			foreach (var effect in action.Effects) {
 				int magnitude = CalculateMagnitude( effect );
 				switch( effect.Effect) {
-					case ModuleEffect.AddCrew:
-						result.Add( magnitude > 0 ? $"Revived {magnitude} additional crew." : "No viable crew found for revival" );
-						await _mothershipRepository.SetAvailableCrew( gameId, mothershipId, mothership.AvailableCrew + magnitude );
+					case ModuleEffect.AddCrew: {
+							result.Add( magnitude > 0 ? $"Revived {magnitude} additional crew." : "No viable crew found for revival" );
+							await _mothershipRepository.SetAvailableCrew( gameId, mothershipId, mothership.AvailableCrew + magnitude );
+						}
 						break;
-					case ModuleEffect.ConsumeFuel:
-						result.Add( $"Consumed {magnitude} fuel." );
-						await _mothershipRepository.SetRemainingFuel( gameId, mothershipId, mothership.RemainingFuel - magnitude );
+					case ModuleEffect.ConsumeFuel: {
+							result.Add( $"Consumed {magnitude} fuel." );
+							await _mothershipRepository.SetRemainingFuel( gameId, mothershipId, mothership.RemainingFuel - magnitude );
+						}
 						break;
-					case ModuleEffect.ConsumePower:
-						result.Add( $"Consumed {magnitude} power in the {definition.Name} module." );
-						await _mothershipRepository.SetRemainingPower( gameId, mothershipId, module.MothershipModuleId, module.RemainingPower - magnitude );
+					case ModuleEffect.ConsumePower: {
+							result.Add( $"Consumed {magnitude} power in the {definition.Name} module." );
+							await _mothershipRepository.SetRemainingPower( gameId, mothershipId, module.MothershipModuleId, module.RemainingPower - magnitude );
+						}
 						break;
-					case ModuleEffect.ProducePower:
-						IEnumerable<MothershipAttachedModule> modules = await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
-						modules = modules.Where( m => m != module );
-						foreach (MothershipAttachedModule m in modules) {
-							MothershipModule defn = MothershipModule.GetById( m.MothershipModuleId );
-							result.Add( $"Gained {magnitude} power in the {defn.Name} module." );
-							await _mothershipRepository.SetRemainingPower( gameId, mothershipId, m.MothershipModuleId, m.RemainingPower + magnitude );
+					case ModuleEffect.ProducePower: {
+							IEnumerable<MothershipAttachedModule> modules = await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
+							modules = modules.Where( m => m != module );
+							foreach( MothershipAttachedModule m in modules ) {
+								MothershipModule defn = MothershipModule.GetById( m.MothershipModuleId );
+								result.Add( $"Gained {magnitude} power in the {defn.Name} module." );
+								await _mothershipRepository.SetRemainingPower( gameId, mothershipId, m.MothershipModuleId, m.RemainingPower + magnitude );
+							}
+						}
+						break;
+					case ModuleEffect.LaunchMission: {
+							await _missionRepository.Create( gameId, new Id<Mission>(), DateTime.UtcNow );
+							result.Add( $"Launching mission." );
 						}
 						break;
 				}
