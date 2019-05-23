@@ -47,5 +47,19 @@ namespace RiftDrive.Client.State {
 		Task Update( ICurrentGameState initial, IEnumerable<string> actionLog );
 
 		Task Update( ICurrentGameState initial, Mission mission );
+
+		Task Update(
+			ICurrentGameState initial,
+			Game game,
+			IEnumerable<Actor> crew,
+			Mothership mothership,
+			IEnumerable<MothershipAttachedModule> modules,
+			Mission mission );
+
+		Task Update(
+			ICurrentGameState initial,
+			Mothership mothership,
+			IEnumerable<MothershipAttachedModule> modules,
+			IEnumerable<string> actionLog );
 	}
 }

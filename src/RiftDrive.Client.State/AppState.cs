@@ -99,5 +99,30 @@ namespace RiftDrive.Client.State {
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
+
+		public async Task Update(
+			ICurrentGameState initial,
+			Game game,
+			IEnumerable<Actor> crew,
+			Mothership mothership,
+			IEnumerable<MothershipAttachedModule> modules,
+			Mission mission
+		) {
+			CurrentGame = new CurrentGameState( game, mothership, modules, crew, initial.ActionLog, mission );
+			await _storage.Set( "State::CurrentGame", CurrentGame );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public async Task Update(
+			ICurrentGameState initial,
+			Mothership mothership,
+			IEnumerable<MothershipAttachedModule> modules,
+			IEnumerable<string> actionLog
+		) {
+			CurrentGame = new CurrentGameState( initial.Game, mothership, modules, initial.Crew, actionLog, initial.Mission );
+			await _storage.Set( "State::CurrentGame", CurrentGame );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
 	}
 }

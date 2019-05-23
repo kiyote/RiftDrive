@@ -36,30 +36,26 @@ namespace RiftDrive.Client.Action {
 
 		public async Task LoadCurrentGame( Id<Game> gameId ) {
 			Game game = await _gameService.GetGame( gameId );
-			await _state.Update( _state.CurrentGame, game );
-
 			IEnumerable<Actor> crew = await _gameService.GetCrew( gameId );
-			await _state.Update( _state.CurrentGame, crew );
-
 			Mothership mothership = await _gameService.GetMothership( gameId );
-			await _state.Update( _state.CurrentGame, mothership );
-
 			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothership.Id );
-			await _state.Update( _state.CurrentGame, modules );
-
 			Mission mission = await _gameService.GetMission( gameId );
-			await _state.Update( _state.CurrentGame, mission );
+
+			await _state.Update(
+				_state.CurrentGame,
+				game,
+				crew,
+				mothership,
+				modules,
+				mission );
 		}
 
 		public async Task TriggerModuleAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId ) {
 			IEnumerable<string> log = await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
-			await _state.Update( _state.CurrentGame, log );
-
 			Mothership mothership = await _gameService.GetMothership( gameId );
-			await _state.Update( _state.CurrentGame, mothership );
-
 			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothershipId );
-			await _state.Update( _state.CurrentGame, modules );
+
+			await _state.Update( _state.CurrentGame, mothership, modules, log );
 		}
 
 	}
