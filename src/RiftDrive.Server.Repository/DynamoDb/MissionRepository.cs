@@ -16,7 +16,6 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
@@ -58,9 +57,16 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMission( gameId, missionRecord );
 		}
 
-		async Task<Mission> IMissionRepository.Create( Id<Game> gameId, Id<Mission> missionId, DateTime createdOn ) {
+		async Task<Mission> IMissionRepository.Create(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			DateTime createdOn,
+			MissionStatus status
+		) {
 			MissionRecord missionRecord = new MissionRecord() {
 				MissionId = missionId.Value,
+				GameId = gameId.Value,
+				Status = status.ToString(),
 				CreatedOn = createdOn.ToUniversalTime()
 			};
 
@@ -78,8 +84,9 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 
 		private static Mission ToMission( Id<Game> gameId, MissionRecord r ) {
 			return new Mission(
+				new Id<Mission>( r.MissionId ),
 				gameId,
-				new Id<Mission>( r.MissionId ) );
+				(MissionStatus)Enum.Parse(typeof(MissionStatus), r.Status));
 		}
 	}
 }

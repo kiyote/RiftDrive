@@ -14,21 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
 	public sealed class Mission: IEquatable<Mission> {
 
+		[JsonConstructor]
 		public Mission(
+			Id<Mission> id,
 			Id<Game> gameId,
-			Id<Mission> missionId
+			MissionStatus status
 		) {
-			Id = missionId;
+			Id = id;
 			GameId = gameId;
+			Status = status;
 		}
 
 		public Id<Mission> Id { get; }
 
 		public Id<Game> GameId { get; }
+
+		public MissionStatus Status { get; }
 
 		public bool Equals( Mission other ) {
 			if (other is null) {
@@ -40,7 +46,8 @@ namespace RiftDrive.Shared.Model {
 			}
 
 			return Id.Equals( other.Id )
-				&& GameId.Equals( other.GameId );
+				&& GameId.Equals( other.GameId )
+				&& Status == other.Status;
 		}
 
 		public override bool Equals( object obj ) {
@@ -51,6 +58,7 @@ namespace RiftDrive.Shared.Model {
 			unchecked {
 				int result = Id.GetHashCode();
 				result = ( result * 31 ) + GameId.GetHashCode();
+				result = ( result * 31 ) + Status.GetHashCode();
 
 				return result;
 			}

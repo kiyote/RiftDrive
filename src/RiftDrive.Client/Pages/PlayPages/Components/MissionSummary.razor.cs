@@ -22,7 +22,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Parameter] protected Mission Mission { get; set; }
 
-		[Parameter] protected IUriHelper UriHelper { get; set; }
+		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		protected void ResumeClicked( UIMouseEventArgs args ) {
 			UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Mission.GameId ) );

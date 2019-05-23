@@ -13,14 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Repository {
-	public interface IMissionRepository {
-		Task<Mission> GetByGameId( Id<Game> gameId );
-
-		Task<Mission> Create( Id<Game> gameId, Id<Mission> missionId, DateTime createdOn, MissionStatus status );
+namespace RiftDrive.Client.Pages.PlayPages.Components {
+	public class SelectCrewComponent : ComponentBase {
+		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
 	}
 }

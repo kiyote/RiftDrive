@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
@@ -42,10 +40,12 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			State.OnStateChanged -= OnStateHasChanged;
 		}
 
-		protected override Task OnInitAsync() {
-			State.OnStateChanged += OnStateHasChanged;
-			var gameId = new Id<Game>( GameId );
-			return Task.CompletedTask;
+		protected override async Task OnInitAsync() {
+			Id<Mission> missionId = new Id<Mission>( MissionId );
+			if (State.CurrentGame.Mission?.Id != missionId) {
+				Id<Game> gameId = new Id<Game>( GameId );
+				await Dispatch.LoadCurrentGame( gameId );
+			}
 		}
 
 		private void OnStateHasChanged( object sender, EventArgs args ) {

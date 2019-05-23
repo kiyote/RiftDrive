@@ -1,3 +1,17 @@
 ﻿@page "/game/{GameId}/mission"
 @inherits  GameMissionPageBase
 @layout MainLayout
+@using RiftDrive.Shared.Model
+@using RiftDrive.Client.Pages.PlayPages.Components
+
+@if (State.CurrentGame.Mission == default)
+{
+    <span>Loading...</span>
+}
+else
+{
+    @if(State.CurrentGame.Mission.Status == MissionStatus.SelectCrew)
+    {
+        <SelectCrew Crew=@State.CurrentGame.Crew></SelectCrew>
+    }
+}

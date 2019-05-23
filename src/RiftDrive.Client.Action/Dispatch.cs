@@ -15,7 +15,6 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;

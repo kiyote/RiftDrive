@@ -13,14 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
-using System.Threading.Tasks;
-using RiftDrive.Shared.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace RiftDrive.Server.Repository {
-	public interface IMissionRepository {
-		Task<Mission> GetByGameId( Id<Game> gameId );
+namespace RiftDrive.Shared.Model {
+	[JsonConverter( typeof( StringEnumConverter ) )]
+	public enum MissionStatus {
+		Unknown = 0,
 
-		Task<Mission> Create( Id<Game> gameId, Id<Mission> missionId, DateTime createdOn, MissionStatus status );
+		SelectCrew = 1,
+
+		RaceEncounter = 2
 	}
 }

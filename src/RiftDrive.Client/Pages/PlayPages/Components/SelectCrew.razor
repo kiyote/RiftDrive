@@ -1,0 +1,43 @@
+﻿@inherits SelectCrewComponent
+
+@if (Crew == default)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <div class="container">
+        <h5>Crew</h5>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">
+                        Name
+                    </th>
+                    <th scope="col">
+                        Intelligence
+                    </th>
+                    <th scope="col">
+                        Talent
+                    </th>
+                    <th scope="col">
+                        Training
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var crew in Crew)
+                {
+                    <tr>
+                        <td><input class="form-check-input" type="checkbox" value=""></td>
+                        <td>@crew.Name</td>
+                        <td>@crew.Intelligence</td>
+                        <td>@crew.Talent</td>
+                        <td>@crew.Training</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

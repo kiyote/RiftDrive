@@ -155,7 +155,7 @@ namespace RiftDrive.Server.Service {
 						}
 						break;
 					case ModuleEffect.LaunchMission: {
-							await _missionRepository.Create( gameId, new Id<Mission>(), DateTime.UtcNow );
+							await _missionRepository.Create( gameId, new Id<Mission>(), DateTime.UtcNow, MissionStatus.SelectCrew );
 							result.Add( $"Launching mission." );
 						}
 						break;

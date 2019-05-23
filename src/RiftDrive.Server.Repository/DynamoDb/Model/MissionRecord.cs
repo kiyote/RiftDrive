@@ -53,6 +53,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBIgnore]
 		public string MissionId { get; set; }
 
+		[DynamoDBProperty("GameId")]
+		public string GameId { get; set; }
+
+		[DynamoDBProperty("Status")]
+		public string Status { get; set; }
+
 		[DynamoDBProperty( "CreatedOn" )]
 		public DateTime CreatedOn { get; set; }
 
