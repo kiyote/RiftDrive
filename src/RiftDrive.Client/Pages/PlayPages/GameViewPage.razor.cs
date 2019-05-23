@@ -42,6 +42,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			State.OnStateChanged += OnStateHasChanged;
 			var gameId = new Id<Game>( GameId );
 			await Dispatch.LoadCurrentGame( gameId );
+			await Dispatch.LoadCurrentMission( gameId );
 		}
 
 		private void OnStateHasChanged(object sender, EventArgs args) {

@@ -18,16 +18,10 @@ using System.Collections.Generic;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
-	public interface ICurrentGameState {
+	public interface IMissionState {
 
-		public Game Game { get; }
-
-		public Mothership Mothership { get; }
-
-		public IEnumerable<MothershipAttachedModule> Modules { get; }
+		public Mission Mission { get; }
 
 		public IEnumerable<Actor> Crew { get; }
-
-		public IEnumerable<string> ActionLog { get; }
 	}
 }

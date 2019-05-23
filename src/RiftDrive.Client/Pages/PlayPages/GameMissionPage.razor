@@ -4,14 +4,14 @@
 @using RiftDrive.Shared.Model
 @using RiftDrive.Client.Pages.PlayPages.Components
 
-@if (State.CurrentGame.Mission == default)
+@if (State.CurrentMission.Mission == default)
 {
     <span>Loading...</span>
 }
 else
 {
-    @if(State.CurrentGame.Mission.Status == MissionStatus.SelectCrew)
+    @if(State.CurrentMission.Mission.Status == MissionStatus.SelectCrew)
     {
-        <SelectCrew Crew=@State.CurrentGame.Crew></SelectCrew>
+        <SelectCrew Game=@State.CurrentGame.Game Mission=@State.CurrentMission.Mission Crew=@State.CurrentGame.Crew></SelectCrew>
     }
 }

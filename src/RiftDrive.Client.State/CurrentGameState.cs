@@ -31,15 +31,13 @@ namespace RiftDrive.Client.State {
 			Mothership mothership,
 			IEnumerable<MothershipAttachedModule> modules,
 			IEnumerable<Actor> crew,
-			IEnumerable<string> actionLog,
-			Mission mission
+			IEnumerable<string> actionLog
 		) {
 			Game = game;
 			Mothership = mothership;
 			Modules = modules;
 			Crew = crew;
 			ActionLog = actionLog;
-			Mission = mission;
 		}
 
 		public Game Game { get; }
@@ -51,8 +49,5 @@ namespace RiftDrive.Client.State {
 		public IEnumerable<Actor> Crew { get; }
 
 		public IEnumerable<string> ActionLog { get; }
-
-		public Mission Mission { get; }
-
 	}
 }

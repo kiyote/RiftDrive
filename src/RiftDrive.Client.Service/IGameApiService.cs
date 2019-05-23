@@ -44,5 +44,7 @@ namespace RiftDrive.Client.Service {
 			Id<MothershipModuleAction> actionId );
 
 		Task<Mission> GetMission( Id<Game> gameId );
+
+		Task<Mission> SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
 	}
 }

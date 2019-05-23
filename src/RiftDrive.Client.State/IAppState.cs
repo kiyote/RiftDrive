@@ -28,6 +28,8 @@ namespace RiftDrive.Client.State {
 
 		ICurrentGameState CurrentGame { get; }
 
+		IMissionState CurrentMission { get; }
+
 		Task Initialize();
 
 		Task ClearState();
@@ -46,15 +48,16 @@ namespace RiftDrive.Client.State {
 
 		Task Update( ICurrentGameState initial, IEnumerable<string> actionLog );
 
-		Task Update( ICurrentGameState initial, Mission mission );
+		Task Update( IMissionState initial, Mission mission );
+
+		Task Update( IMissionState initial, IEnumerable<Actor> crew );
 
 		Task Update(
 			ICurrentGameState initial,
 			Game game,
 			IEnumerable<Actor> crew,
 			Mothership mothership,
-			IEnumerable<MothershipAttachedModule> modules,
-			Mission mission );
+			IEnumerable<MothershipAttachedModule> modules );
 
 		Task Update(
 			ICurrentGameState initial,

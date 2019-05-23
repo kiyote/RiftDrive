@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
@@ -39,14 +40,20 @@ namespace RiftDrive.Client.Action {
 			IEnumerable<Actor> crew = await _gameService.GetCrew( gameId );
 			Mothership mothership = await _gameService.GetMothership( gameId );
 			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothership.Id );
-			Mission mission = await _gameService.GetMission( gameId );
 
 			await _state.Update(
 				_state.CurrentGame,
 				game,
 				crew,
 				mothership,
-				modules,
+				modules );
+		}
+
+		public async Task LoadCurrentMission( Id<Game> gameId ) {
+			Mission mission = await _gameService.GetMission( gameId );
+
+			await _state.Update(
+				_state.CurrentMission,
 				mission );
 		}
 
@@ -56,6 +63,20 @@ namespace RiftDrive.Client.Action {
 			IEnumerable<MothershipAttachedModule> modules = await _gameService.GetMothershipModules( gameId, mothershipId );
 
 			await _state.Update( _state.CurrentGame, mothership, modules, log );
+		}
+
+		public async Task SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Actor> crew ) {
+			Mission mission = await _gameService.SelectMissionCrew( gameId, missionId, crew.Select( c => c.Id ) );
+			await _state.Update( _state.CurrentMission, crew );
+			await _state.Update( _state.CurrentMission, mission );
+		}
+
+		public async Task LogOut() {
+			await _state.ClearState();
+		}
+
+		public async Task UpdateTokens( string accessToken, string refreshToken, DateTime tokensExpireAt ) {
+			await _state.Update( _state.Authentication, accessToken, refreshToken, tokensExpireAt );
 		}
 
 	}

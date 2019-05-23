@@ -42,9 +42,9 @@ namespace RiftDrive.Client.Pages.PlayPages {
 
 		protected override async Task OnInitAsync() {
 			Id<Mission> missionId = new Id<Mission>( MissionId );
-			if (State.CurrentGame.Mission?.Id != missionId) {
+			if (State.CurrentMission.Mission?.Id != missionId) {
 				Id<Game> gameId = new Id<Game>( GameId );
-				await Dispatch.LoadCurrentGame( gameId );
+				await Dispatch.LoadCurrentMission( gameId );
 			}
 		}
 

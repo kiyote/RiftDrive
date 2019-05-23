@@ -148,5 +148,16 @@ namespace RiftDrive.Client.Service {
 
 			return response;
 		}
+
+		async Task<Mission> IGameApiService.SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew ) {
+			SelectMissionCrewRequest request = new SelectMissionCrewRequest( missionId, crew );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			Mission response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission/crew",
+				request,
+				( r ) => { return _json.Serialize( r ); },
+				( s ) => { return _json.Deserialize<Mission>( s ); } );
+
+			return response;
+		}
 	}
 }

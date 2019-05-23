@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,6 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using RiftDrive.Shared.Model;
 
@@ -24,6 +23,14 @@ namespace RiftDrive.Client.Action {
 
 		Task LoadCurrentGame( Id<Game> gameId );
 
+		Task LoadCurrentMission( Id<Game> gameId );
+
 		Task TriggerModuleAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId );
+
+		Task SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Actor> crew );
+
+		Task LogOut();
+
+		Task UpdateTokens( string accessToken, string refreshToken, DateTime tokensExpireAt );
 	}
 }

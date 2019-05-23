@@ -31,6 +31,7 @@ namespace RiftDrive.Client.State {
 
 			Authentication = new AuthenticationState();
 			CurrentGame = new CurrentGameState();
+			CurrentMission = new MissionState();
 		}
 
 		public event EventHandler OnStateChanged;
@@ -40,6 +41,8 @@ namespace RiftDrive.Client.State {
 		public IAuthenticationState Authentication { get; private set; }
 
 		public ICurrentGameState CurrentGame { get; private set; }
+
+		public IMissionState CurrentMission { get; private set; }
 
 		public async Task Initialize() {
 			Authentication = await _storage.Get<AuthenticationState>( "State::Authentication" ) ?? new AuthenticationState();
@@ -65,37 +68,31 @@ namespace RiftDrive.Client.State {
 		}
 
 		public async Task Update( ICurrentGameState initial, Game game ) {
-			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog, initial.Mission );
+			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task Update( ICurrentGameState initial, IEnumerable<Actor> crew ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, crew, initial.ActionLog, initial.Mission );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task Update( ICurrentGameState initial, Mothership mothership ) {
-			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew, initial.ActionLog, initial.Mission );
+			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, modules, initial.Crew, initial.ActionLog, initial.Mission );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, modules, initial.Crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task Update( ICurrentGameState initial, IEnumerable<string> actionLog ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, actionLog, initial.Mission );
-			await _storage.Set( "State::CurrentGame", CurrentGame );
-			OnStateChanged?.Invoke( this, EventArgs.Empty );
-		}
-
-		public async Task Update( ICurrentGameState initial, Mission mission ) {
-			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog, mission );
+			CurrentGame = new CurrentGameState( initial.Game, initial.Mothership, initial.Modules, initial.Crew, actionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
@@ -105,10 +102,9 @@ namespace RiftDrive.Client.State {
 			Game game,
 			IEnumerable<Actor> crew,
 			Mothership mothership,
-			IEnumerable<MothershipAttachedModule> modules,
-			Mission mission
+			IEnumerable<MothershipAttachedModule> modules
 		) {
-			CurrentGame = new CurrentGameState( game, mothership, modules, crew, initial.ActionLog, mission );
+			CurrentGame = new CurrentGameState( game, mothership, modules, crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
@@ -119,8 +115,20 @@ namespace RiftDrive.Client.State {
 			IEnumerable<MothershipAttachedModule> modules,
 			IEnumerable<string> actionLog
 		) {
-			CurrentGame = new CurrentGameState( initial.Game, mothership, modules, initial.Crew, actionLog, initial.Mission );
+			CurrentGame = new CurrentGameState( initial.Game, mothership, modules, initial.Crew, actionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public async Task Update( IMissionState initial, Mission mission ) {
+			CurrentMission = new MissionState( mission, initial.Crew );
+			await _storage.Set( "State::CurrentMission", CurrentMission );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public async Task Update( IMissionState initial, IEnumerable<Actor> crew ) {
+			CurrentMission = new MissionState( initial.Mission, crew );
+			await _storage.Set( "State::CurrentMission", CurrentMission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 

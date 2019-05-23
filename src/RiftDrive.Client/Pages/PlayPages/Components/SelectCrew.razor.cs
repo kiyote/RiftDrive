@@ -13,12 +13,43 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Action;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class SelectCrewComponent : ComponentBase {
 		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
+
+		[Parameter] protected Game Game { get; set; }
+
+		[Parameter] protected Mission Mission { get; set; }
+
+		protected List<Id<Actor>> SelectedCrew { get; set; }
+
+		protected override void OnInit() {
+			SelectedCrew = new List<Id<Actor>>();
+		}
+
+		protected async Task SelectClicked(UIMouseEventArgs args) {
+			if (SelectedCrew.Any()) {
+				var selectedCrew = Crew.Where( c => SelectedCrew.Contains( c.Id ) );
+				await Dispatch.SelectMissionCrew( Game.Id, Mission.Id, selectedCrew );
+			}
+		}
+
+		protected void SelectionChanged( Id<Actor> crewId ) {
+			if ( SelectedCrew.Contains(crewId)) {
+				SelectedCrew.Remove( crewId );
+			} else {
+				SelectedCrew.Add( crewId );
+			}
+		}
 	}
 }

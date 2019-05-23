@@ -21,6 +21,7 @@ using RiftDrive.Shared.Message;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
+using RiftDrive.Client.Action;
 
 namespace RiftDrive.Client.Pages.AuthPages {
 	public class ValidatePageBase : ComponentBase, IDisposable {
@@ -28,6 +29,8 @@ namespace RiftDrive.Client.Pages.AuthPages {
 		public static string Url = "/auth/validate";
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IAppState State { get; set; }
 
@@ -54,7 +57,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 				//TODO: Do something here
 				throw new InvalidOperationException();
 			}
-			await State.Update( State.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+			await Dispatch.UpdateTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
 			Update( "...recording login...", 50 );
 			await UserService.RecordLogin();

@@ -14,22 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Action;
-using RiftDrive.Client.State;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Client.Pages.AuthPages {
-	public class LogOutPageBase : ComponentBase {
-		public const string Url = "/auth/logout";
+namespace RiftDrive.Shared.Message {
+	public sealed class SelectMissionCrewRequest {
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
-
-		[Inject] protected IDispatch Dispatch { get; set; }
-
-		protected override async Task OnInitAsync() {
-			await Dispatch.LogOut();
-			UriHelper.NavigateTo( IndexPageBase.Url );
+		[JsonConstructor]
+		public SelectMissionCrewRequest(
+			Id<Mission> missionId,
+			IEnumerable<Id<Actor>> crew
+		) {
+			MissionId = missionId;
+			Crew = crew;
 		}
+
+		public Id<Mission> MissionId { get; }
+
+		public IEnumerable<Id<Actor>> Crew { get; }
 	}
 }
