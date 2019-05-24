@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Shared.Model;
 
@@ -21,6 +22,10 @@ namespace RiftDrive.Server.Repository {
 	public interface IMissionRepository {
 		Task<Mission> GetByGameId( Id<Game> gameId );
 
+		Task<Mission> GetByMissionId( Id<Mission> missionId );
+
 		Task<Mission> Create( Id<Game> gameId, Id<Mission> missionId, DateTime createdOn, MissionStatus status );
+
+		Task<Mission> AddCrewToMission( Id<Mission> missionId, IEnumerable<Id<Actor>> crew, MissionStatus status );
 	}
 }

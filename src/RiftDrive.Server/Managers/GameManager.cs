@@ -99,6 +99,13 @@ namespace RiftDrive.Server.Managers {
 			return await _gameService.GetMission( gameId );
 		}
 
+		public async Task<Mission> AddCrewToMission(
+			Id<Mission> missionId,
+			IEnumerable<Id<Actor>> crew
+		) {
+			return await _gameService.AddCrewToMission( missionId, crew );
+		}
+
 		private ClientPlayer ToClientPlayer( Player player ) {
 			return new ClientPlayer(
 				new Id<ClientPlayer>( player.Id.Value ),

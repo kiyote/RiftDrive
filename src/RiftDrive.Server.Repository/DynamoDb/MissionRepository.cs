@@ -54,7 +54,15 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				MissionRecord.GetKey( record.MissionId ),
 				MissionRecord.GetKey( record.MissionId ) );
 
-			return ToMission( gameId, missionRecord );
+			return ToMission( missionRecord );
+		}
+
+		async Task<Mission> IMissionRepository.GetByMissionId( Id<Mission> missionId ) {
+			MissionRecord missionRecord = await _context.LoadAsync<MissionRecord>(
+				MissionRecord.GetKey( missionId.Value ),
+				MissionRecord.GetKey( missionId.Value ) );
+
+			return ToMission( missionRecord );
 		}
 
 		async Task<Mission> IMissionRepository.Create(
@@ -79,13 +87,36 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 
 			await _context.SaveAsync( gameMissionRecord );
 
-			return ToMission( gameId, missionRecord );
+			return ToMission( missionRecord );
 		}
 
-		private static Mission ToMission( Id<Game> gameId, MissionRecord r ) {
+		async Task<Mission> IMissionRepository.AddCrewToMission(
+			Id<Mission> missionId,
+			IEnumerable<Id<Actor>> crew,
+			MissionStatus status
+		) {
+			foreach (Id<Actor> crewId in crew) {
+				MissionCrewRecord record = new MissionCrewRecord() {
+					MissionId = missionId.Value,
+					CrewId = crewId.Value
+				};
+				await _context.SaveAsync( record );
+			}
+
+			MissionRecord missionRecord = await _context.LoadAsync<MissionRecord>(
+				MissionRecord.GetKey( missionId.Value ),
+				MissionRecord.GetKey( missionId.Value ) );
+
+			missionRecord.Status = status.ToString();
+			await _context.SaveAsync( missionRecord );
+
+			return ToMission( missionRecord );
+		}
+
+		private static Mission ToMission( MissionRecord r ) {
 			return new Mission(
 				new Id<Mission>( r.MissionId ),
-				gameId,
+				new Id<Game>( r.GameId ),
 				(MissionStatus)Enum.Parse(typeof(MissionStatus), r.Status));
 		}
 	}

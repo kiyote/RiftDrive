@@ -98,8 +98,7 @@ namespace RiftDrive.Server.Controllers {
 
 		[HttpPost( "{gameId}/mission/crew" )]
 		public async Task<ActionResult<Mission>> SelectMissionCrew( string gameId, [FromBody] SelectMissionCrewRequest request ) {
-			// TODO: PROCESS THIS
-			Mission mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
+			Mission mission = await _gameManager.AddCrewToMission( request.MissionId, request.Crew );
 			return Ok( mission );
 		}
 

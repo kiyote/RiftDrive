@@ -93,6 +93,7 @@ namespace RiftDrive.Server.Service {
 			foreach( Player player in players ) {
 				await _playerRepository.Delete( gameId, player.Id );
 			}
+			// TODO: Delete missions
 			await _gameRepository.Delete( gameId );
 		}
 
@@ -163,6 +164,10 @@ namespace RiftDrive.Server.Service {
 			}
 
 			return result;
+		}
+
+		async Task<Mission> IGameService.AddCrewToMission(Id<Mission> missionId, IEnumerable<Id<Actor>> crew) {
+			return await _missionRepository.AddCrewToMission( missionId, crew, MissionStatus.RaceEncounter );
 		}
 
 		private int CalculateMagnitude( MothershipModuleEffect effect ) {

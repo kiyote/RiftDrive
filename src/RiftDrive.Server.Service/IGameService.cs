@@ -43,5 +43,7 @@ namespace RiftDrive.Server.Service {
 		Task<IEnumerable<string>> TriggerAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId );
 
 		Task<Mission> GetMission( Id<Game> gameId );
+
+		Task<Mission> AddCrewToMission( Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
 	}
 }
