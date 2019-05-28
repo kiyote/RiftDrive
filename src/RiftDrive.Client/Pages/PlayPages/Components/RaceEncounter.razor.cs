@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
-	[JsonConverter( typeof( StringEnumConverter ) )]
-	public enum Skill {
-		Unknown,
+namespace RiftDrive.Client.Pages.PlayPages.Components {
+	public class RaceEncounterComponent : ComponentBase {
+		[Parameter] protected Game Game { get; set; }
 
-		Science
+		[Parameter] protected Mission Mission { get; set; }
 	}
 }

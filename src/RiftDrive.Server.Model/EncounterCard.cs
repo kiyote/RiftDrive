@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,7 +56,7 @@ namespace RiftDrive.Server.Model {
 				return false;
 			}
 
-			return Equals( target );
+			return Equals( target as EncounterCard );
 		}
 
 		public override int GetHashCode() {

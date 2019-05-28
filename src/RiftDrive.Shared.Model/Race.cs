@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,45 +14,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
-	public sealed class RaceEncounterCard : IEquatable<RaceEncounterCard> {
+namespace RiftDrive.Shared.Model {
+	public sealed class Race: IEquatable<Race> {
 
-		public RaceEncounterCard(
-			Id<RaceEncounterCard> id,
-			Id<Race> raceId
+		public Race(
+			Id<Race> id,
+			string name
 		) {
 			Id = id;
-			RaceId = raceId;
+			Name = name;
 		}
 
-		public Id<RaceEncounterCard> Id { get; }
+		public Id<Race> Id { get; }
 
-		public Id<Race> RaceId { get; }
+		public string Name { get; }
 
-		public bool Equals( RaceEncounterCard other ) {
+		public bool Equals( Race other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
-				&& RaceId.Equals( other.RaceId );
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is RaceEncounterCard target ) ) {
+			if( !( obj is Race target ) ) {
 				return false;
 			}
 
-			return Equals( target );
+			return Equals( target as Race );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + RaceId.GetHashCode();
+				result = ( result * 31 ) + Name.GetHashCode();
 
 				return result;
 			}

@@ -14,4 +14,8 @@ else
     {
         <SelectCrew Game=@State.CurrentGame.Game Mission=@State.CurrentMission.Mission Crew=@State.CurrentGame.Crew></SelectCrew>
     }
+    else if (State.CurrentMission.Mission.Status == MissionStatus.RaceEncounter)
+    {
+        <RaceEncounter Game=@State.CurrentGame.Game Mission=@State.CurrentMission.Mission></RaceEncounter>
+    }
 }

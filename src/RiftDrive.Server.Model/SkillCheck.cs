@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
 	public sealed class SkillCheck: IEquatable<SkillCheck> {
@@ -46,7 +47,7 @@ namespace RiftDrive.Server.Model {
 				return false;
 			}
 
-			return Equals( target );
+			return Equals( target as SkillCheck );
 		}
 
 		public override int GetHashCode() {
