@@ -32,5 +32,11 @@ namespace RiftDrive.Client.Action {
 		Task LogOut();
 
 		Task UpdateTokens( string accessToken, string refreshToken, DateTime tokensExpireAt );
+
+		Task CreateGame( string gameName, string playerName );
+
+		Task LoadGames( Id<ClientUser> userId );
+
+		Task DeleteGame( Id<Game> gameId );
 	}
 }

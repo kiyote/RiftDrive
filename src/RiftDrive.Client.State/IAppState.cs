@@ -30,6 +30,8 @@ namespace RiftDrive.Client.State {
 
 		IMissionState CurrentMission { get; }
 
+		IAdministrationState Administration { get; }
+
 		Task Initialize();
 
 		Task ClearState();
@@ -64,5 +66,9 @@ namespace RiftDrive.Client.State {
 			Mothership mothership,
 			IEnumerable<MothershipAttachedModule> modules,
 			IEnumerable<string> actionLog );
+
+		Task Update(
+			IAdministrationState initial,
+			IEnumerable<Game> games );
 	}
 }

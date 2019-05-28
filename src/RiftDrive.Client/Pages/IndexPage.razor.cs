@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 
 namespace RiftDrive.Client.Pages {
-	public class IndexPageBase : ComponentBase {
+	public class IndexPageBase : ComponentBase, IDisposable {
 		public static string Url = "/";
 
 		[Inject] protected IAppState State { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
+
+		protected override async Task OnInitAsync() {
+			State.OnStateChanged += OnStateHasChanged;
+			await Dispatch.LoadGames( State.Authentication.User.Id );
+		}
+
+		public void Dispose() {
+			State.OnStateChanged -= OnStateHasChanged;
+		}
+
+		private void OnStateHasChanged( object sender, EventArgs args ) {
+			StateHasChanged();
+		}
 	}
 }

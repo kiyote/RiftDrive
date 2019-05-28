@@ -79,5 +79,21 @@ namespace RiftDrive.Client.Action {
 			await _state.Update( _state.Authentication, accessToken, refreshToken, tokensExpireAt );
 		}
 
+		public async Task CreateGame( string gameName, string playerName ) {
+			Game game = await _gameService.CreateGame( gameName, playerName );
+			IEnumerable<Game> games = await _gameService.GetGames();
+			await _state.Update( _state.Administration, games );
+		}
+
+		public async Task LoadGames( Id<ClientUser> userId ) {
+			IEnumerable<Game> games = await _gameService.GetGames();
+			await _state.Update( _state.Administration, games );
+		}
+
+		public async Task DeleteGame( Id<Game> gameId ) {
+			await _gameService.DeleteGame( gameId );
+			IEnumerable<Game> games = await _gameService.GetGames();
+			await _state.Update( _state.Administration, games );
+		}
 	}
 }

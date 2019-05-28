@@ -41,8 +41,8 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += OnStateHasChanged;
 			var gameId = new Id<Game>( GameId );
-			await Dispatch.LoadCurrentGame( gameId );
 			await Dispatch.LoadCurrentMission( gameId );
+			await Dispatch.LoadCurrentGame( gameId );
 		}
 
 		private void OnStateHasChanged(object sender, EventArgs args) {

@@ -8,7 +8,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <UserGames User=@State.Authentication.User />
+                <UserGames Games=@State.Administration.Games User=@State.Authentication.User />
+                <CreateGame User=@State.Authentication.User />
             </div>
             <div class="col-sm">
 

@@ -32,6 +32,7 @@ namespace RiftDrive.Client.State {
 			Authentication = new AuthenticationState();
 			CurrentGame = new CurrentGameState();
 			CurrentMission = new MissionState();
+			Administration = new AdministrationState();
 		}
 
 		public event EventHandler OnStateChanged;
@@ -44,14 +45,22 @@ namespace RiftDrive.Client.State {
 
 		public IMissionState CurrentMission { get; private set; }
 
+		public IAdministrationState Administration { get; private set; }
+
 		public async Task Initialize() {
 			Authentication = await _storage.Get<AuthenticationState>( "State::Authentication" ) ?? new AuthenticationState();
+			CurrentGame = await _storage.Get<CurrentGameState>( "State::CurrentGame" ) ?? new CurrentGameState();
+			CurrentMission = await _storage.Get<MissionState>( "State::CurrentMission" ) ?? new MissionState();
+			Administration = await _storage.Get<AdministrationState>( "State::Administration" ) ?? new AdministrationState();
 			IsInitialized = true;
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task ClearState() {
 			await _storage.Set( "State::Authentication", "" );
+			await _storage.Set( "State::CurrentGame", "" );
+			await _storage.Set( "State::CurrentMission", "" );
+			await _storage.Set( "State::Administration", "" );
 			await Initialize();
 		}
 
@@ -132,5 +141,11 @@ namespace RiftDrive.Client.State {
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
+		public async Task Update( IAdministrationState initial, IEnumerable<Game> games ) {
+			Administration = new AdministrationState( games );
+			await _storage.Set( "State::Administration", Administration );
+			Console.WriteLine( "invoking state changed event" );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
 	}
 }
