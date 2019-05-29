@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
-	public sealed class EncounterCard: IEquatable<EncounterCard> {
+	public sealed partial class EncounterCard: IEquatable<EncounterCard> {
 
 		public EncounterCard(
 			Id<EncounterCard> id,

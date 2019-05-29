@@ -13,20 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace RiftDrive.Shared.Model {
-	[JsonConverter( typeof( StringEnumConverter ) )]
-	public enum Skill {
-		Unknown,
-
-		None,
-
-		Science,
-
-		Engineering,
-
-		Command
+namespace RiftDrive.Server.Model {
+	public sealed partial class RaceEncounterCard {
 	}
 }

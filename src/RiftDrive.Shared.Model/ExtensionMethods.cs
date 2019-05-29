@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,6 +31,34 @@ namespace RiftDrive.Shared.Model {
 
 				return result;
 			}
+		}
+
+		public static int GetFinalHashCode<T>( this T[] source ) where T : struct {
+			unchecked {
+				int result = 17;
+				foreach( T item in source ) {
+					result = ( result * 31 ) + item.GetHashCode();
+				}
+
+				return result;
+			}
+		}
+
+		public static int GetFinalHashCode<T>( this T[,] source ) where T : struct {
+			unchecked {
+				int result = 17;
+				foreach( T item in source ) {
+					result = ( result * 31 ) + item.GetHashCode();
+				}
+
+				return result;
+			}
+		}
+
+		public static bool IsEqualTo<T>( this T[,] source, T[,] target) where T: struct {
+			return source.Rank == target.Rank
+				&& Enumerable.Range( 0, source.Rank ).All( dimension => source.GetLength( dimension ) == target.GetLength( dimension ) )
+				&& source.Cast<T>().SequenceEqual( target.Cast<T>() );
 		}
 	}
 }

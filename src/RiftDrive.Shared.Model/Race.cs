@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 
 namespace RiftDrive.Shared.Model {
-	public sealed class Race: IEquatable<Race> {
+	public sealed partial class Race: IEquatable<Race> {
 
 		public Race(
 			Id<Race> id,

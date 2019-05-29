@@ -4,9 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,47 +12,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace RiftDrive.Server.Model {
-	public sealed class SkillCheck : IEquatable<SkillCheck> {
+namespace RiftDrive.Shared.Model {
+	public sealed partial class Ship : IEquatable<Ship> {
 
-		public static SkillCheck None = new SkillCheck( Skill.Unknown, int.MinValue );
-
-		public SkillCheck(
-			Skill skill,
-			int target
+		public Ship(
+			Id<Ship> id,
+			string name,
+			IEnumerable<ShipAttachedTile> tiles
 		) {
-			Skill = skill;
-			Target = target;
+			Id = id;
+			Name = name;
+			Tiles = tiles;
 		}
 
-		public Skill Skill { get; }
+		public Id<Ship> Id { get; }
 
-		public int Target { get; }
+		public string Name { get; }
 
-		public bool Equals( SkillCheck other ) {
+		public IEnumerable<ShipAttachedTile> Tiles { get; }
+
+		public bool Equals( Ship other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return Skill == other.Skill
-				&& Target == other.Target;
+			return Id.Equals( other.Id )
+				&& Name.Equals( other.Name )
+				&& Tiles.SequenceEqual( other.Tiles );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is SkillCheck target ) ) {
+			if( obj is null ) {
 				return false;
 			}
 
-			return Equals( target as SkillCheck );
+			return Equals( obj as Ship );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Target.GetHashCode();
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + Tiles.GetFinalHashCode();
 
 				return result;
 			}

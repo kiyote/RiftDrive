@@ -17,44 +17,46 @@ using System;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
-	public sealed class SkillCheck : IEquatable<SkillCheck> {
+	public sealed partial class RaceEncounterCard : IEquatable<RaceEncounterCard> {
 
-		public static SkillCheck None = new SkillCheck( Skill.Unknown, int.MinValue );
-
-		public SkillCheck(
-			Skill skill,
-			int target
+		public RaceEncounterCard(
+			Id<RaceEncounterCard> id,
+			Id<Race> raceId
 		) {
-			Skill = skill;
-			Target = target;
+			Id = id;
+			RaceId = raceId;
 		}
 
-		public Skill Skill { get; }
+		public Id<RaceEncounterCard> Id { get; }
 
-		public int Target { get; }
+		public Id<Race> RaceId { get; }
 
-		public bool Equals( SkillCheck other ) {
-			if( ReferenceEquals( other, this ) ) {
-				return true;
-			}
-
-			return Skill == other.Skill
-				&& Target == other.Target;
-		}
-
-		public override bool Equals( object obj ) {
-			if( !( obj is SkillCheck target ) ) {
+		public bool Equals( RaceEncounterCard other ) {
+			if (other is null) {
 				return false;
 			}
 
-			return Equals( target as SkillCheck );
+			if (ReferenceEquals(other, this)) {
+				return true;
+			}
+
+			return Id.Equals( other.Id )
+				&& RaceId.Equals( other.Id );
+		}
+
+		public override bool Equals( object obj ) {
+			if (obj is null) {
+				return false;
+			}
+
+			return Equals( obj as RaceEncounterCard );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Target.GetHashCode();
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + RaceId.GetHashCode();
 
 				return result;
 			}

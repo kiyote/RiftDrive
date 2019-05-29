@@ -4,9 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,47 +12,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
-	public sealed class SkillCheck : IEquatable<SkillCheck> {
+namespace RiftDrive.Shared.Model {
+	public sealed class ShipAttachedTile : IEquatable<ShipAttachedTile> {
 
-		public static SkillCheck None = new SkillCheck( Skill.Unknown, int.MinValue );
-
-		public SkillCheck(
-			Skill skill,
-			int target
+		public ShipAttachedTile(
+			Id<Ship> shipId,
+			Id<ShipTile> shipTileId
 		) {
-			Skill = skill;
-			Target = target;
+			ShipId = shipId;
+			ShipTileId = shipTileId;
 		}
 
-		public Skill Skill { get; }
+		public Id<Ship> ShipId { get; }
 
-		public int Target { get; }
+		public Id<ShipTile> ShipTileId { get; }
 
-		public bool Equals( SkillCheck other ) {
+		public bool Equals( ShipAttachedTile other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return Skill == other.Skill
-				&& Target == other.Target;
+			return ShipId.Equals( other.ShipId )
+				&& ShipTileId.Equals( other.ShipTileId );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is SkillCheck target ) ) {
+			if( obj is null ) {
 				return false;
 			}
 
-			return Equals( target as SkillCheck );
+			return Equals( obj as ShipAttachedTile );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Target.GetHashCode();
+				result = ( result * 31 ) + ShipId.GetHashCode();
+				result = ( result * 31 ) + ShipTileId.GetHashCode();
 
 				return result;
 			}
