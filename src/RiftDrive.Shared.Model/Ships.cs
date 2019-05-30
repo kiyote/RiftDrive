@@ -21,8 +21,22 @@ namespace RiftDrive.Shared.Model {
 			return All.First( s => s.Id == shipId );
 		}
 
-		public static List<Ship> All = new List<Ship>() {
+		public static Ship FlaxianScout = new Ship(
+			new Id<Ship>( "a3563ca08da4484a9b73110a53c86c96" ),
+			"Scout",
+			new List<ShipAttachedModule>() {
+				new ShipAttachedModule(
+					new Id<Ship>("a3563ca08da4484a9b73110a53c86c96"),
+					new Id<ShipModule>("805cdfdf9f46495c8a03d8a16887eba9"), // Bridge
+					0, 0),
+				new ShipAttachedModule(
+					new Id<Ship>("a3563ca08da4484a9b73110a53c86c96"),
+					new Id<ShipModule>("112255bf754545b085edaeb4ab5e84b1"), // Engine
+					0, 3)
+			});
 
+		public static List<Ship> All = new List<Ship>() {
+			FlaxianScout
 		};
 	}
 }

@@ -14,27 +14,37 @@ limitations under the License.
 using System;
 
 namespace RiftDrive.Shared.Model {
-	public sealed class ShipAttachedTile : IEquatable<ShipAttachedTile> {
+	public sealed class ShipAttachedModule : IEquatable<ShipAttachedModule> {
 
-		public ShipAttachedTile(
+		public ShipAttachedModule(
 			Id<Ship> shipId,
-			Id<ShipTile> shipTileId
+			Id<ShipModule> shipModuleId,
+			int tileColumn,
+			int tileRow
 		) {
 			ShipId = shipId;
-			ShipTileId = shipTileId;
+			ShipModuleId = shipModuleId;
+			TileRow = tileRow;
+			TileColumn = tileColumn;
 		}
 
 		public Id<Ship> ShipId { get; }
 
-		public Id<ShipTile> ShipTileId { get; }
+		public Id<ShipModule> ShipModuleId { get; }
 
-		public bool Equals( ShipAttachedTile other ) {
+		public int TileRow { get; }
+
+		public int TileColumn { get; }
+
+		public bool Equals( ShipAttachedModule other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
 			return ShipId.Equals( other.ShipId )
-				&& ShipTileId.Equals( other.ShipTileId );
+				&& ShipModuleId.Equals( other.ShipModuleId )
+				&& TileRow == other.TileRow
+				&& TileColumn == other.TileColumn;
 		}
 
 		public override bool Equals( object obj ) {
@@ -42,14 +52,16 @@ namespace RiftDrive.Shared.Model {
 				return false;
 			}
 
-			return Equals( obj as ShipAttachedTile );
+			return Equals( obj as ShipAttachedModule );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + ShipId.GetHashCode();
-				result = ( result * 31 ) + ShipTileId.GetHashCode();
+				result = ( result * 31 ) + ShipModuleId.GetHashCode();
+				result = ( result * 31 ) + TileRow.GetHashCode();
+				result = ( result * 31 ) + TileColumn.GetHashCode();
 
 				return result;
 			}

@@ -14,18 +14,32 @@ limitations under the License.
 using System;
 
 namespace RiftDrive.Shared.Model {
-	public sealed partial class ShipTile: IEquatable<ShipTile> {
+	public sealed partial class ShipModule : IEquatable<ShipModule> {
 
-		public Id<ShipTile> Id { get; }
+		public ShipModule(
+			Id<ShipModule> id,
+			string name,
+			bool[,] layout
+		) {
+			Id = id;
+			Name = name;
+			Layout = layout;
+		}
+
+		public Id<ShipModule> Id { get; }
+
+		public string Name { get; }
 
 		public bool[,] Layout { get; }
 
-		public bool Equals( ShipTile other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( ShipModule other ) {
+			if (ReferenceEquals( other, this )) {
 				return true;
 			}
 
-			return Id.Equals( other.Id )
+			return
+				Id.Equals( other.Id )
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& Layout.IsEqualTo( other.Layout );
 		}
 
@@ -34,13 +48,14 @@ namespace RiftDrive.Shared.Model {
 				return false;
 			}
 
-			return Equals( obj as ShipTile );
+			return Equals( obj as ShipModule );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + Layout.GetFinalHashCode();
 
 				return result;

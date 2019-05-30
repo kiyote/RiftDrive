@@ -21,18 +21,18 @@ namespace RiftDrive.Shared.Model {
 		public Ship(
 			Id<Ship> id,
 			string name,
-			IEnumerable<ShipAttachedTile> tiles
+			IEnumerable<ShipAttachedModule> modules
 		) {
 			Id = id;
 			Name = name;
-			Tiles = tiles;
+			Modules = modules;
 		}
 
 		public Id<Ship> Id { get; }
 
 		public string Name { get; }
 
-		public IEnumerable<ShipAttachedTile> Tiles { get; }
+		public IEnumerable<ShipAttachedModule> Modules { get; }
 
 		public bool Equals( Ship other ) {
 			if( ReferenceEquals( other, this ) ) {
@@ -41,7 +41,7 @@ namespace RiftDrive.Shared.Model {
 
 			return Id.Equals( other.Id )
 				&& Name.Equals( other.Name )
-				&& Tiles.SequenceEqual( other.Tiles );
+				&& Modules.SequenceEqual( other.Modules );
 		}
 
 		public override bool Equals( object obj ) {
@@ -57,7 +57,7 @@ namespace RiftDrive.Shared.Model {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
-				result = ( result * 31 ) + Tiles.GetFinalHashCode();
+				result = ( result * 31 ) + Modules.GetFinalHashCode();
 
 				return result;
 			}
