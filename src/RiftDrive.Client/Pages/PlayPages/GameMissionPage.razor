@@ -1,5 +1,5 @@
 ﻿@page "/game/{GameId}/mission"
-@inherits  GameMissionPageBase
+@inherits GameMissionPageBase
 @layout MainLayout
 @using RiftDrive.Shared.Model
 @using RiftDrive.Client.Pages.PlayPages.Components
@@ -10,7 +10,7 @@
 }
 else
 {
-    @if(State.CurrentMission.Mission.Status == MissionStatus.SelectCrew)
+    @if (State.CurrentMission.Mission.Status == MissionStatus.SelectCrew)
     {
         <SelectCrew Game=@State.CurrentGame.Game Mission=@State.CurrentMission.Mission Crew=@State.CurrentGame.Crew></SelectCrew>
     }

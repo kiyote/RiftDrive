@@ -55,7 +55,7 @@ namespace RiftDrive.Server.Service {
 			return await _gameRepository.GetGames( userId );
 		}
 
-		async Task<Game> IGameService.GetGame( Id<Game> gameId ) {
+		async Task<Game?> IGameService.GetGame( Id<Game> gameId ) {
 			return await _gameRepository.GetGame( gameId );
 		}
 
@@ -97,7 +97,7 @@ namespace RiftDrive.Server.Service {
 			await _gameRepository.Delete( gameId );
 		}
 
-		async Task<Mothership> IGameService.GetMothership( Id<Game> gameId ) {
+		async Task<Mothership?> IGameService.GetMothership( Id<Game> gameId ) {
 			return await _mothershipRepository.GetMothership( gameId );
 		}
 
@@ -112,7 +112,7 @@ namespace RiftDrive.Server.Service {
 			return await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
 		}
 
-		async Task<Mission> IGameService.GetMission( Id<Game> gameId ) {
+		async Task<Mission?> IGameService.GetMission( Id<Game> gameId ) {
 			return await _missionRepository.GetByGameId( gameId );
 		}
 
@@ -123,7 +123,12 @@ namespace RiftDrive.Server.Service {
 			Id<MothershipModuleAction> actionId
 		) {
 			List<string> result = new List<string>();
-			Mothership mothership = await _mothershipRepository.GetMothership( gameId, mothershipId );
+			Mothership? mothership = await _mothershipRepository.GetMothership( gameId, mothershipId );
+
+			if (mothership == default) {
+				throw new ArgumentException();
+			}
+
 			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( gameId, mothershipId, moduleId );
 			MothershipModule definition = MothershipModule.GetById( moduleId );
 			MothershipModuleAction action = definition.Actions.First( a => a.Id == actionId );

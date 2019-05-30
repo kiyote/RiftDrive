@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,15 +37,18 @@ namespace RiftDrive.Server.Middleware {
 		public async Task InvokeAsync( HttpContext httpContext ) {
 			var principal = httpContext.User?.Identities?.FirstOrDefault();
 
-			if( ( principal?.Claims.Any() ?? false ) ) {
+			if( ( principal != default )
+				&& (principal.Claims != default)
+				&& principal.Claims.Any()
+			) {
 				var userIdValue = principal.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier ).Value;
 				var username = principal.Claims.FirstOrDefault( c => c.Type == "username" ).Value;
 
-				httpContext.Items[ "Username" ] = username;
+				httpContext.Items["Username"] = username;
 
 				var user = await _userRepository.GetByUsername( username );
-				if (user != default) {
-					httpContext.Items[ "UserId" ] = user.Id.Value;
+				if( user != default ) {
+					httpContext.Items["UserId"] = user.Id.Value;
 					httpContext.Items["Name"] = user.Name;
 				}
 			}

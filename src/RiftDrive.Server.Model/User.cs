@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,9 +18,6 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
 	public sealed class User : IEquatable<User> {
-
-		public static User None = new User( Id<User>.Empty, "", false, DateTime.MinValue, default, "" );
-
 
 		public User(
 			Id<User> id,

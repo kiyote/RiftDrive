@@ -19,6 +19,8 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class CrewSummaryComponent : ComponentBase {
+#nullable disable
 		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+#nullable enable
 	}
 }

@@ -27,6 +27,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			Modules = new List<MothershipAttachedModule>();
 		}
 
+#nullable disable
 		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
 
 		[Parameter] protected Game Game { get; set; }
@@ -34,6 +35,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
+#nullable enable
 
 		protected async Task ModuleButtonClicked(
 			MothershipAttachedModule module,

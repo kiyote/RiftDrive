@@ -64,19 +64,19 @@ namespace RiftDrive.Client.State {
 			await Initialize();
 		}
 
-		public async Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt ) {
+		public async Task Update( IAuthenticationState initial, string? accessToken, string? refreshToken, DateTime tokensExpireAt ) {
 			Authentication = new AuthenticationState( Authentication.User, accessToken, refreshToken, tokensExpireAt );
 			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task Update( IAuthenticationState initial, ClientUser user ) {
+		public async Task Update( IAuthenticationState initial, ClientUser? user ) {
 			Authentication = new AuthenticationState( user, initial.AccessToken, initial.RefreshToken, initial.TokensExpireAt );
 			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task Update( ICurrentGameState initial, Game game ) {
+		public async Task Update( ICurrentGameState initial, Game? game ) {
 			CurrentGame = new CurrentGameState( game, initial.Mothership, initial.Modules, initial.Crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
@@ -88,7 +88,7 @@ namespace RiftDrive.Client.State {
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task Update( ICurrentGameState initial, Mothership mothership ) {
+		public async Task Update( ICurrentGameState initial, Mothership? mothership ) {
 			CurrentGame = new CurrentGameState( initial.Game, mothership, initial.Modules, initial.Crew, initial.ActionLog );
 			await _storage.Set( "State::CurrentGame", CurrentGame );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
@@ -108,9 +108,9 @@ namespace RiftDrive.Client.State {
 
 		public async Task Update(
 			ICurrentGameState initial,
-			Game game,
+			Game? game,
 			IEnumerable<Actor> crew,
-			Mothership mothership,
+			Mothership? mothership,
 			IEnumerable<MothershipAttachedModule> modules
 		) {
 			CurrentGame = new CurrentGameState( game, mothership, modules, crew, initial.ActionLog );
@@ -120,7 +120,7 @@ namespace RiftDrive.Client.State {
 
 		public async Task Update(
 			ICurrentGameState initial,
-			Mothership mothership,
+			Mothership? mothership,
 			IEnumerable<MothershipAttachedModule> modules,
 			IEnumerable<string> actionLog
 		) {
@@ -129,7 +129,7 @@ namespace RiftDrive.Client.State {
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
-		public async Task Update( IMissionState initial, Mission mission ) {
+		public async Task Update( IMissionState initial, Mission? mission ) {
 			CurrentMission = new MissionState( mission, initial.Crew );
 			await _storage.Set( "State::CurrentMission", CurrentMission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );

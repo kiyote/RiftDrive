@@ -20,9 +20,9 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Client.State {
 	public interface ICurrentGameState {
 
-		public Game Game { get; }
+		public Game? Game { get; }
 
-		public Mothership Mothership { get; }
+		public Mothership? Mothership { get; }
 
 		public IEnumerable<MothershipAttachedModule> Modules { get; }
 

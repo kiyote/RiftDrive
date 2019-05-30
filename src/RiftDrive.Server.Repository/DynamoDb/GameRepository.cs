@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -84,14 +84,23 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return batchGet.Results.Select( r => ToGame( r ) );
 		}
 
-		async Task<Game> IGameRepository.GetGame( Id<Game> gameId ) {
+		async Task<Game?> IGameRepository.GetGame( Id<Game> gameId ) {
 			GameRecord gameRecord = await _context.LoadAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
+
+			if (gameRecord == default) {
+				throw new ArgumentException();
+			}
 
 			return ToGame( gameRecord );
 		}
 
 		async Task<Game> IGameRepository.StartGame( Id<Game> gameId ) {
 			GameRecord gameRecord = await _context.LoadAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
+
+			if (gameRecord == default) {
+				throw new ArgumentException();
+			}
+
 			gameRecord.State = GameState.Active.ToString();
 			await _context.SaveAsync( gameRecord );
 

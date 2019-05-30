@@ -20,9 +20,11 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MissionSummaryComponent : ComponentBase {
 
+#nullable disable
 		[Parameter] protected Mission Mission { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
+#nullable enable
 
 		protected void ResumeClicked( UIMouseEventArgs args ) {
 			UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Mission.GameId ) );

@@ -45,11 +45,11 @@ namespace RiftDrive.Server.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			if (obj is null) {
+			if( !( obj is RaceEncounterCard target ) ) {
 				return false;
 			}
 
-			return Equals( obj as RaceEncounterCard );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

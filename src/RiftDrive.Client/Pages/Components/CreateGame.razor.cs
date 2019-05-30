@@ -21,11 +21,19 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Client.Pages.Components {
 	public class CreateGameComponent : ComponentBase {
 
+		public CreateGameComponent() {
+			GameName = "";
+			PlayerName = "";
+			CreatingGame = false;
+		}
+
+#nullable disable
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Parameter] protected ClientUser User { get; set; }
+#nullable enable
 
 		protected string GameName { get; set; }
 

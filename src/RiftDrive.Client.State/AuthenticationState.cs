@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using RiftDrive.Shared.Model;
 
@@ -22,17 +21,14 @@ namespace RiftDrive.Client.State {
 	internal sealed class AuthenticationState : IAuthenticationState {
 
 		public AuthenticationState() {
-			User = default;
-			AccessToken = "";
-			RefreshToken = "";
 			TokensExpireAt = DateTime.MinValue.ToUniversalTime();
 		}
 
 		[JsonConstructor]
         public AuthenticationState(
-			ClientUser user,
-            string accessToken,
-            string refreshToken,
+			ClientUser? user,
+            string? accessToken,
+            string? refreshToken,
             DateTime tokensExpireAt
         ) {
 			User = user;
@@ -42,11 +38,11 @@ namespace RiftDrive.Client.State {
         }
 
 
-		public ClientUser User { get; }
+		public ClientUser? User { get; }
 
-		public string AccessToken { get; }
+		public string? AccessToken { get; }
 
-		public string RefreshToken { get; }
+		public string? RefreshToken { get; }
 
 		public DateTime TokensExpireAt { get; }
 

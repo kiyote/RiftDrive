@@ -23,13 +23,17 @@ namespace RiftDrive.Client.Pages {
 	public class IndexPageBase : ComponentBase, IDisposable {
 		public static string Url = "/";
 
+#nullable disable
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
+#nullable enable
 
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += OnStateHasChanged;
-			await Dispatch.LoadGames( State.Authentication.User.Id );
+			if (State.Authentication.User != default) {
+				await Dispatch.LoadGames( State.Authentication.User.Id );
+			}
 		}
 
 		public void Dispose() {

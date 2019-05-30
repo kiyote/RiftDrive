@@ -36,34 +36,34 @@ namespace RiftDrive.Client.State {
 
 		Task ClearState();
 
-		Task Update( IAuthenticationState initial, ClientUser user );
+		Task Update( IAuthenticationState initial, ClientUser? user );
 
-		Task Update( IAuthenticationState initial, string accessToken, string refreshToken, DateTime tokensExpireAt );
+		Task Update( IAuthenticationState initial, string? accessToken, string? refreshToken, DateTime tokensExpireAt );
 
-		Task Update( ICurrentGameState initial, Game game );
+		Task Update( ICurrentGameState initial, Game? game );
 
 		Task Update( ICurrentGameState initial, IEnumerable<Actor> crew );
 
-		Task Update( ICurrentGameState initial, Mothership mothership );
+		Task Update( ICurrentGameState initial, Mothership? mothership );
 
 		Task Update( ICurrentGameState initial, IEnumerable<MothershipAttachedModule> modules );
 
 		Task Update( ICurrentGameState initial, IEnumerable<string> actionLog );
 
-		Task Update( IMissionState initial, Mission mission );
+		Task Update( IMissionState initial, Mission? mission );
 
 		Task Update( IMissionState initial, IEnumerable<Actor> crew );
 
 		Task Update(
 			ICurrentGameState initial,
-			Game game,
+			Game? game,
 			IEnumerable<Actor> crew,
-			Mothership mothership,
+			Mothership? mothership,
 			IEnumerable<MothershipAttachedModule> modules );
 
 		Task Update(
 			ICurrentGameState initial,
-			Mothership mothership,
+			Mothership? mothership,
 			IEnumerable<MothershipAttachedModule> modules,
 			IEnumerable<string> actionLog );
 

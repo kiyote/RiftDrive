@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,11 +34,15 @@ namespace RiftDrive.Server.Repository.Cognito {
 			_cognitoOptions = cognitoOptions;
 		}
 
-		async Task<AuthenticationUserInformation> IAuthenticationRepository.GetUserInformation( string username ) {
+		async Task<AuthenticationUserInformation?> IAuthenticationRepository.GetUserInformation( string username ) {
 			var response = await _client.AdminGetUserAsync( new AdminGetUserRequest() {
 				Username = username,
 				UserPoolId = _cognitoOptions.UserPoolId
 			} );
+
+			if (response == default) {
+				return default;
+			}
 
 			var sub = response.UserAttributes.First( ua => ua.Name == "sub" );
 			var email = response.UserAttributes.First( ua => ua.Name == "email" );

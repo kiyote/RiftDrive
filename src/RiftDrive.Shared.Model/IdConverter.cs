@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override object ReadJson( JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer ) {
-			string value = reader.Value as string;
+			string? value = reader.Value as string;
 
 			if( string.IsNullOrWhiteSpace( value ) ) {
 				return Activator.CreateInstance( objectType, new object[] { Guid.Empty.ToString( "N" ) } );

@@ -24,11 +24,13 @@ namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameViewPageBase : ComponentBase, IDisposable {
 		public const string Url = "/game/{0}/view";
 
+#nullable disable
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Parameter] protected string GameId { get; set; }
+#nullable enable
 
 		public static string GetUrl( Id<Game> gameId ) {
 			return string.Format( Url, gameId.Value );

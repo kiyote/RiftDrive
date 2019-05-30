@@ -37,10 +37,6 @@ namespace RiftDrive.Shared.Model {
 		public MissionStatus Status { get; }
 
 		public bool Equals( Mission other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -51,7 +47,11 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			return Equals( obj as Mission );
+			if( !( obj is Mission target ) ) {
+				return false;
+			}
+
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

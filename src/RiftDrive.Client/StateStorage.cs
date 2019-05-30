@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +50,7 @@ namespace RiftDrive.Client {
 			return int.Parse( value );
 		}
 
-		public async Task<T> Get<T>(string name) {
+		public async Task<T?> Get<T>(string name) where T: class {
 			IJSRuntime js = _jsProvider.Get();
 			string value = await js.InvokeAsync<string>( "appState.getItem", name );
 			if (string.IsNullOrWhiteSpace(value)) {

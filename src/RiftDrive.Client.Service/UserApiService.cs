@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,14 +42,18 @@ namespace RiftDrive.Client.Service {
 
 		async Task IUserApiService.RecordLogin() {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			ClientUser response = await _http.GetJsonAsync( $@"{_config.Host}/api/user/login",
+			ClientUser? response = await _http.GetJsonAsync( $@"{_config.Host}/api/user/login",
 				( s ) => { return _json.Deserialize<ClientUser>( s ); } );
 		}
 
 		async Task<ClientUser> IUserApiService.GetUserInformation() {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
-			ClientUser response = await _http.GetJsonAsync( $@"{_config.Host}/api/user",
+			ClientUser? response = await _http.GetJsonAsync( $@"{_config.Host}/api/user",
 				( s ) => { return _json.Deserialize<ClientUser>( s ); } );
+
+			if (response == default) {
+				throw new InvalidOperationException();
+			}
 
 			return response;
 		}
@@ -60,7 +64,7 @@ namespace RiftDrive.Client.Service {
 				contentType,
 				content
 			);
-			SetAvatarResponse response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
+			SetAvatarResponse? response = await _http.PostJsonAsync( $@"{_config.Host}/api/user/avatar", request,
 				( r ) => { return _json.Serialize( r ); },
 				( s ) => { return _json.Deserialize<SetAvatarResponse>( s ); } );
 

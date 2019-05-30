@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,7 +47,7 @@ namespace RiftDrive.Server.Repository.S3 {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
 
-			return default;
+			throw new InvalidOperationException();
 		}
 
 		async Task<bool> IImageRepository.Exists( Id<Image> id ) {
@@ -55,7 +55,7 @@ namespace RiftDrive.Server.Repository.S3 {
 			return await Exists( key );
 		}
 
-		async Task<Image> IImageRepository.Get( Id<Image> id ) {
+		async Task<Image?> IImageRepository.Get( Id<Image> id ) {
 			string key = GetKey( id );
 			if( await Exists( key ) ) {
 				return new Image( id, GenerateUrl( _bucket, key ) );
@@ -79,7 +79,7 @@ namespace RiftDrive.Server.Repository.S3 {
 				return new Image( id, GenerateUrl( _bucket, key ) );
 			}
 
-			return default;
+			throw new InvalidOperationException();
 		}
 
 		private async Task<bool> Exists( string key ) {

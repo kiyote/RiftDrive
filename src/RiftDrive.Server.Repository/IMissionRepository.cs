@@ -20,9 +20,9 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository {
 	public interface IMissionRepository {
-		Task<Mission> GetByGameId( Id<Game> gameId );
+		Task<Mission?> GetByGameId( Id<Game> gameId );
 
-		Task<Mission> GetByMissionId( Id<Mission> missionId );
+		Task<Mission?> GetByMissionId( Id<Mission> missionId );
 
 		Task<Mission> Create( Id<Game> gameId, Id<Mission> missionId, DateTime createdOn, MissionStatus status );
 

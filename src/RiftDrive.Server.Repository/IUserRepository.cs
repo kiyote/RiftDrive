@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,11 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Server.Repository {
 	public interface IUserRepository {
 
-		Task<User> GetByUsername( string username );
+		Task<User?> GetByUsername( string username );
 
 		Task<User> AddUser( Id<User> userId, string username, DateTime createdOn, DateTime lastLogin, string name );
 
-		Task<User> GetUser( Id<User> userId );
+		Task<User?> GetUser( Id<User> userId );
 
 		Task<User> UpdateAvatarStatus( Id<User> userId, bool hasAvatar );
 

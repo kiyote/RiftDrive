@@ -23,6 +23,7 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Client.Pages.Components {
 	public class UserGamesComponent : ComponentBase {
 
+#nullable disable
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
@@ -30,6 +31,7 @@ namespace RiftDrive.Client.Pages.Components {
 		[Parameter] protected IEnumerable<Game> Games { get; set; }
 
 		[Parameter] protected ClientUser User { get; set; }
+#nullable enable
 
 		public void PlayGame( Id<Game> gameId ) {
 			UriHelper.NavigateTo( GameViewPageBase.GetUrl( gameId ) );

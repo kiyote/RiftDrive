@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,6 +33,11 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<string> IAccessTokenProvider.GetJwtToken() {
+
+			if (_state.Authentication.AccessToken == default) {
+				throw new InvalidOperationException();
+			}
+
 			if( _state.Authentication.TokensExpireAt < DateTimeOffset.Now ) {
 				AuthorizationToken tokens = await _tokenService.RefreshToken( _state.Authentication.AccessToken );
 				if( tokens != default ) {

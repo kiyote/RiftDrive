@@ -24,6 +24,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameMissionPageBase: ComponentBase {
 		public const string Url = "/game/{GameId}/mission";
 
+#nullable disable
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
@@ -31,6 +32,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		[Parameter] protected string GameId { get; set; }
 
 		[Parameter] protected string MissionId { get; set; }
+#nullable enable
 
 		public static string GetUrl( Id<Game> gameId ) {
 			return $"game/{gameId.Value}/mission";
@@ -42,7 +44,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 
 		protected override async Task OnInitAsync() {
 			Id<Mission> missionId = new Id<Mission>( MissionId );
-			if (State.CurrentMission.Mission?.Id != missionId) {
+			if (( State.CurrentMission.Mission != default) && ( State.CurrentMission.Mission.Id != missionId )) {
 				Id<Game> gameId = new Id<Game>( GameId );
 				await Dispatch.LoadCurrentMission( gameId );
 			}

@@ -28,6 +28,9 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		public MissionRecord() {
 			MissionId = "";
+			GameId = "";
+			Status = "";
+			CreatedOn = DateTime.MinValue;
 		}
 
 		[DynamoDBHashKey( "PK" )]

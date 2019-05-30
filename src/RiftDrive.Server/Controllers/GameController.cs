@@ -65,8 +65,8 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet( "{gameId}" )]
-		public async Task<ActionResult<Game>> GetGame( string gameId ) {
-			Game game = await _gameManager.GetGame( new Id<Game>( gameId ) );
+		public async Task<ActionResult<Game?>> GetGame( string gameId ) {
+			Game? game = await _gameManager.GetGame( new Id<Game>( gameId ) );
 
 			return Ok( game );
 		}
@@ -91,8 +91,8 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet( "{gameId}/mission" )]
-		public async Task<ActionResult<Mission>> GetMission( string gameId ) {
-			Mission mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
+		public async Task<ActionResult<Mission?>> GetMission( string gameId ) {
+			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
 			return Ok( mission );
 		}
 
@@ -103,8 +103,8 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet( "{gameId}/mothership" )]
-		public async Task<ActionResult<Mothership>> GetMothership( string gameId ) {
-			Mothership mothership = await _gameManager.GetMothership( new Id<Game>( gameId ) );
+		public async Task<ActionResult<Mothership?>> GetMothership( string gameId ) {
+			Mothership? mothership = await _gameManager.GetMothership( new Id<Game>( gameId ) );
 
 			return Ok( mothership );
 		}

@@ -21,11 +21,13 @@ using RiftDrive.Client.Pages.UserPages;
 namespace RiftDrive.Client.Pages.Components {
 	public class NavBarComponent : ComponentBase {
 
+#nullable disable
 		[Inject] protected IConfig Config { get; set; }
 
 		[Parameter] protected ClientUser User { get; set; }
 
 		[Parameter] protected bool IsAuthenticated { get; set; }
+#nullable enable
 
 		public string ProfileUrl {
 			get {

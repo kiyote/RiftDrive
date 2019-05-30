@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,6 +35,11 @@ namespace RiftDrive.Server.Service {
 
 		async Task<User> IIdentificationService.RecordLogin( string username ) {
 			var authenticationInformation = await _authenticationRepository.GetUserInformation( username );
+
+			if (authenticationInformation == default) {
+				throw new ArgumentException();
+			}
+
 			var user = await _userRepository.GetByUsername( username );
 			var lastLogin = DateTime.UtcNow;
 
@@ -54,7 +59,7 @@ namespace RiftDrive.Server.Service {
 			return user;
 		}
 
-		async Task<User> IIdentificationService.GetUser( Id<User> userId ) {
+		async Task<User?> IIdentificationService.GetUser( Id<User> userId ) {
 			return await _userRepository.GetUser( userId );
 		}
 

@@ -19,8 +19,11 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class RaceEncounterComponent : ComponentBase {
+
+#nullable disable
 		[Parameter] protected Game Game { get; set; }
 
 		[Parameter] protected Mission Mission { get; set; }
+#nullable enable
 	}
 }

@@ -28,6 +28,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 		public static string Url = "/auth/validate";
 
+#nullable disable
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
@@ -37,6 +38,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 		[Inject] protected ITokenService TokenService { get; set; }
 
 		[Inject] protected IUserApiService UserService { get; set; }
+#nullable enable
 
 		protected List<string> Messages { get; set; }
 

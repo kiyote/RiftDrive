@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,9 +26,9 @@ namespace RiftDrive.Server.Repository {
 
 		Task<MothershipAttachedModule> CreateModule( Id<Mothership> mothershipId, Id<MothershipModule> mothershipModuleId, int remainingPower, DateTime createdOn );
 
-		Task<Mothership> GetMothership( Id<Game> gameId );
+		Task<Mothership?> GetMothership( Id<Game> gameId );
 
-		Task<Mothership> GetMothership( Id<Game> gameId, Id<Mothership> mothershipId );
+		Task<Mothership?> GetMothership( Id<Game> gameId, Id<Mothership> mothershipId );
 
 		Task<IEnumerable<MothershipAttachedModule>> GetAttachedModules( Id<Game> gameId, Id<Mothership> mothershipId );
 

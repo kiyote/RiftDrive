@@ -29,9 +29,9 @@ namespace RiftDrive.Client.Service {
 
 		Task<IEnumerable<ClientPlayer>> GetPlayers( Id<Game> gameId );
 
-		Task<Game> GetGame( Id<Game> gameId );
+		Task<Game?> GetGame( Id<Game> gameId );
 
-		Task<Mothership> GetMothership( Id<Game> gameId );
+		Task<Mothership?> GetMothership( Id<Game> gameId );
 
 		Task<IEnumerable<Actor>> GetCrew( Id<Game> gameId );
 
@@ -43,7 +43,7 @@ namespace RiftDrive.Client.Service {
 			Id<MothershipModule> mothershipModuleId,
 			Id<MothershipModuleAction> actionId );
 
-		Task<Mission> GetMission( Id<Game> gameId );
+		Task<Mission?> GetMission( Id<Game> gameId );
 
 		Task<Mission> SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
 	}

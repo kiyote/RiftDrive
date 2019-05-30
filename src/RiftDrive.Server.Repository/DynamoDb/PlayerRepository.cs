@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,20 +63,28 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task IPlayerRepository.Delete( Id<Game> gameId, Id<Player> playerId ) {
-			Player player = await GetById( gameId, playerId );
+			Player? player = await GetById( gameId, playerId );
+
+			if (player == default) {
+				return;
+			}
 
 			await _context.DeleteAsync<PlayerRecord>( GameRecord.GetKey( gameId.Value ), PlayerRecord.GetKey( playerId.Value ) );
 			await _context.DeleteAsync<GameUserRecord>( GameRecord.GetKey( gameId.Value ), UserRecord.GetKey( player.UserId.Value ) );
 		}
 
-		async Task<Player> IPlayerRepository.Get( Id<Game> gameId, Id<Player> playerId ) {
+		async Task<Player?> IPlayerRepository.Get( Id<Game> gameId, Id<Player> playerId ) {
 			return await GetById( gameId, playerId );
 		}
 
-		private async Task<Player> GetById( Id<Game> gameId, Id<Player> playerId ) {
+		private async Task<Player?> GetById( Id<Game> gameId, Id<Player> playerId ) {
 			PlayerRecord playerRecord = await _context.LoadAsync<PlayerRecord>(
 				GameRecord.GetKey( gameId.Value ),
 				PlayerRecord.GetKey( playerId.Value ) );
+
+			if (playerRecord == default) {
+				return default;
+			}
 
 			return new Player(
 				playerId,

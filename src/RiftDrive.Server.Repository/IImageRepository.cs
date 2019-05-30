@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ namespace RiftDrive.Server.Repository {
 
 		Task Remove( Id<Image> id );
 
-		Task<Image> Get( Id<Image> id );
+		Task<Image?> Get( Id<Image> id );
 
 		Task<bool> Exists( Id<Image> id );
 	}

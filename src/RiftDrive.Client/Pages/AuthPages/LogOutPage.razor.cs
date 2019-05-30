@@ -23,9 +23,11 @@ namespace RiftDrive.Client.Pages.AuthPages {
 	public class LogOutPageBase : ComponentBase {
 		public const string Url = "/auth/logout";
 
+#nullable disable
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
+#nullable enable
 
 		protected override async Task OnInitAsync() {
 			await Dispatch.LogOut();

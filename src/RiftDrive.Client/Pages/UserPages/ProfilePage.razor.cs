@@ -26,6 +26,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 	public class ProfilePageBase : ComponentBase {
 		public const string Url = "/user/profile";
 
+#nullable disable
 		[Parameter] protected string UserId { get; set; }
 
 		[Inject] protected IUserApiService UserService { get; set; }
@@ -33,8 +34,9 @@ namespace RiftDrive.Client.Pages.UserPages {
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
+#nullable enable
 
-		protected ClientUser User { get; set; }
+		protected ClientUser? User { get; set; }
 
 		protected ElementRef FileUploadRef { get; set; }
 
@@ -42,7 +44,12 @@ namespace RiftDrive.Client.Pages.UserPages {
 
 		public bool IsTheAuthenticatedUser {
 			get {
-				return string.Equals( UserId, State.Authentication.User.Id.Value, StringComparison.OrdinalIgnoreCase );
+				if (State.Authentication.User == default) {
+					return false;
+				}
+
+				var targetId = new Id<ClientUser>( UserId );
+				return ( targetId == State.Authentication.User.Id );
 			}
 		}
 

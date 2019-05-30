@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,8 +69,12 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return actors.Select( a => ToActor( a ) );
 		}
 
-		async Task<Actor> IActorRepository.GetActor( Id<Game> gameId, Id<Actor> actorId ) {
+		async Task<Actor?> IActorRepository.GetActor( Id<Game> gameId, Id<Actor> actorId ) {
 			ActorRecord actorRecord = await _context.LoadAsync<ActorRecord>( GameRecord.GetKey( gameId.Value ), ActorRecord.GetKey( actorId.Value ) );
+
+			if (actorRecord == default) {
+				return default;
+			}
 
 			return ToActor( actorRecord );
 		}

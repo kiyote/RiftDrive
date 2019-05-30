@@ -18,6 +18,9 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipSummaryComponent : ComponentBase {
+
+#nullable disable
 		[Parameter] protected Mothership Mothership { get; set; }
+#nullable enable
 	}
 }

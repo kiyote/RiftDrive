@@ -54,8 +54,8 @@ namespace RiftDrive.Server.Managers {
 			return games;
 		}
 
-		public async Task<Game> GetGame( Id<Game> gameId ) {
-			Game game = await _gameService.GetGame( gameId );
+		public async Task<Game?> GetGame( Id<Game> gameId ) {
+			Game? game = await _gameService.GetGame( gameId );
 
 			return game;
 		}
@@ -72,7 +72,7 @@ namespace RiftDrive.Server.Managers {
 			return players.Select( p => ToClientPlayer( p ) );
 		}
 
-		public async Task<Mothership> GetMothership( Id<Game> gameId ) {
+		public async Task<Mothership?> GetMothership( Id<Game> gameId ) {
 			return await _gameService.GetMothership( gameId );
 		}
 
@@ -93,7 +93,7 @@ namespace RiftDrive.Server.Managers {
 			return await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
 		}
 
-		public async Task<Mission> GetMission(
+		public async Task<Mission?> GetMission(
 			Id<Game> gameId
 		) {
 			return await _gameService.GetMission( gameId );

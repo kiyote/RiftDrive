@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,11 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.State {
 	public interface IAuthenticationState {
-		ClientUser User { get; }
+		ClientUser? User { get; }
 
-		string AccessToken { get; }
+		string? AccessToken { get; }
 
-		string RefreshToken { get; }
+		string? RefreshToken { get; }
 
 		DateTime TokensExpireAt { get; }
 

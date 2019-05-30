@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ namespace RiftDrive.Client.State {
 
 		Task<string> GetAsString( string name );
 
-		Task<T> Get<T>( string name );
+		Task<T?> Get<T>( string name ) where T: class;
 
 		Task Set( string name, DateTime value );
 

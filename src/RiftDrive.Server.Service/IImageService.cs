@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,7 @@ namespace RiftDrive.Server.Service {
 
 		Task<Image> Update( Id<Image> id, string contentType, string content );
 
-		Task<Image> Get( Id<Image> id );
+		Task<Image?> Get( Id<Image> id );
 
 		Task Remove( Id<Image> id );
 	}

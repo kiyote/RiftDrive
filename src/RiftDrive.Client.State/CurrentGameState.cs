@@ -27,8 +27,8 @@ namespace RiftDrive.Client.State {
 		}
 
 		public CurrentGameState(
-			Game game,
-			Mothership mothership,
+			Game? game,
+			Mothership? mothership,
 			IEnumerable<MothershipAttachedModule> modules,
 			IEnumerable<Actor> crew,
 			IEnumerable<string> actionLog
@@ -40,9 +40,9 @@ namespace RiftDrive.Client.State {
 			ActionLog = actionLog;
 		}
 
-		public Game Game { get; }
+		public Game? Game { get; }
 
-		public Mothership Mothership { get; }
+		public Mothership? Mothership { get; }
 
 		public IEnumerable<MothershipAttachedModule> Modules { get; }
 

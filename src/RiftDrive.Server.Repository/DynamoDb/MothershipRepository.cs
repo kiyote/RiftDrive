@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -91,7 +91,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMothershipAttachedModule( record );
 		}
 
-		async Task<Mothership> IMothershipRepository.GetMothership( Id<Game> gameId ) {
+		async Task<Mothership?> IMothershipRepository.GetMothership( Id<Game> gameId ) {
 			AsyncSearch<MothershipRecord> query = _context.QueryAsync<MothershipRecord>(
 				GameRecord.GetKey( gameId.Value ),
 				QueryOperator.BeginsWith,
@@ -100,7 +100,13 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				} );
 
 			List<MothershipRecord> records = await query.GetRemainingAsync();
-			return ToMothership( records.First() );
+			MothershipRecord mothershipRecord = records.FirstOrDefault();
+
+			if (mothershipRecord == default) {
+				return default;
+			}
+
+			return ToMothership( mothershipRecord );
 		}
 
 		async Task<IEnumerable<MothershipAttachedModule>> IMothershipRepository.GetAttachedModules( Id<Game> gameId, Id<Mothership> mothershipId ) {
@@ -131,8 +137,13 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMothership( mothership );
 		}
 
-		async Task<Mothership> IMothershipRepository.GetMothership( Id<Game> gameId, Id<Mothership> mothershipId ) {
+		async Task<Mothership?> IMothershipRepository.GetMothership( Id<Game> gameId, Id<Mothership> mothershipId ) {
 			MothershipRecord mothership = await _context.LoadAsync<MothershipRecord>( GameRecord.GetKey( gameId.Value ), MothershipRecord.GetKey( mothershipId.Value ) );
+
+			if (mothership == default) {
+				return default;
+			}
+
 			return ToMothership( mothership );
 		}
 
@@ -141,6 +152,10 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				MothershipRecord.GetKey( mothershipId.Value ),
 				MothershipAttachedModuleRecord.GetKey( moduleId.Value ) );
 
+			if (module == default) {
+				throw new ArgumentException();
+			}
+
 			return ToMothershipAttachedModule( module );
 		}
 
@@ -148,6 +163,10 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			MothershipAttachedModuleRecord module = await _context.LoadAsync<MothershipAttachedModuleRecord>(
 				MothershipRecord.GetKey( mothershipId.Value ),
 				MothershipAttachedModuleRecord.GetKey( moduleId.Value ) );
+
+			if (module == default) {
+				throw new ArgumentException();
+			}
 
 			module.RemainingPower = remainingPower;
 			await _context.SaveAsync( module );

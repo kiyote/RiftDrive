@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,19 +34,19 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			_context = context;
 		}
 
-		async Task<User> IUserRepository.GetByUsername(
+		async Task<User?> IUserRepository.GetByUsername(
 			string username
 		) {
-			var authentication = new AuthenticationRecord {
+			var loadRequest = new AuthenticationRecord {
 				Username = username
 			};
-			authentication = await _context.LoadAsync( authentication );
+			AuthenticationRecord? loadResult = await _context.LoadAsync( loadRequest );
 
-			if( !( authentication?.Status == AuthenticationRecord.StatusActive ) ) {
-				return User.None;
+			if ((loadResult == default) || (loadResult.Status != AuthenticationRecord.StatusActive)) {
+				return default;
 			}
 
-			string userKey = UserRecord.GetKey( authentication.UserId );
+			string userKey = UserRecord.GetKey( loadResult.UserId );
 			AsyncSearch<UserRecord> search = _context.QueryAsync<UserRecord>(
 				userKey,
 				QueryOperator.Equal,
@@ -57,7 +57,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			UserRecord userRecord = userRecords.FirstOrDefault();
 
 			if( userRecord == default ) {
-				return User.None;
+				return default;
 			}
 
 			return new User(
@@ -105,10 +105,15 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				name );
 		}
 
-		async Task<User> IUserRepository.GetUser(
+		async Task<User?> IUserRepository.GetUser(
 			Id<User> userId
 		) {
-			UserRecord userRecord = await GetById( userId );
+			UserRecord? userRecord = await GetById( userId );
+
+			if (userRecord == default) {
+				return default;
+			}
+
 			return ToUser( userId, userRecord );
 		}
 
@@ -116,7 +121,12 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			Id<User> userId,
 			bool hasAvatar
 		) {
-			UserRecord userRecord = await GetById( userId );
+			UserRecord? userRecord = await GetById( userId );
+
+			if (userRecord == default) {
+				throw new ArgumentException();
+			}
+
 			userRecord.HasAvatar = true;
 			await _context.SaveAsync( userRecord );
 
@@ -127,7 +137,12 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			Id<User> userId,
 			DateTime lastLogin
 		) {
-			UserRecord userRecord = await GetById( userId );
+			UserRecord? userRecord = await GetById( userId );
+
+			if (userRecord == default) {
+				throw new ArgumentException();
+			}
+
 			userRecord.PreviousLogin = userRecord.LastLogin;
 			userRecord.LastLogin = lastLogin.ToUniversalTime();
 			await _context.SaveAsync( userRecord );
@@ -135,7 +150,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToUser( userId, userRecord );
 		}
 
-		private async Task<UserRecord> GetById(
+		private async Task<UserRecord?> GetById(
 			Id<User> userId
 		) {
 			string userKey = UserRecord.GetKey( userId.Value );

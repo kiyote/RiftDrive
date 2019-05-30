@@ -45,11 +45,11 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override bool Equals( object obj ) {
-			if( obj is null ) {
+			if( !( obj is Ship target ) ) {
 				return false;
 			}
 
-			return Equals( obj as Ship );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {

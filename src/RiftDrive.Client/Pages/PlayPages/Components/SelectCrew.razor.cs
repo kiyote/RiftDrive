@@ -22,6 +22,12 @@ using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class SelectCrewComponent : ComponentBase {
+
+		public SelectCrewComponent() {
+			SelectedCrew = new List<Id<Actor>>();
+		}
+
+#nullable disable
 		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
@@ -29,12 +35,9 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 		[Parameter] protected Game Game { get; set; }
 
 		[Parameter] protected Mission Mission { get; set; }
+#nullable enable
 
 		protected List<Id<Actor>> SelectedCrew { get; set; }
-
-		protected override void OnInit() {
-			SelectedCrew = new List<Id<Actor>>();
-		}
 
 		protected async Task SelectClicked(UIMouseEventArgs args) {
 			if (SelectedCrew.Any()) {

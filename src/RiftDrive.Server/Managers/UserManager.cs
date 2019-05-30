@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,9 +45,13 @@ namespace RiftDrive.Server.Managers {
 			return ToClientUser( user, await GetAvatarUrl( user ) );
 		}
 
-		public async Task<ClientUser> GetUser( string userId ) {
+		public async Task<ClientUser?> GetUser( string userId ) {
 			var id = new Id<User>( userId );
-			User user = await _identificationService.GetUser( id );
+			User? user = await _identificationService.GetUser( id );
+
+			if (user == default) {
+				return default;
+			}
 
 			return ToClientUser( user, await GetAvatarUrl( user ) );
 		}
@@ -75,7 +79,7 @@ namespace RiftDrive.Server.Managers {
 			return avatar.Url;
 		}
 
-		private static ClientUser ToClientUser( User user, string avatarUrl ) {
+		private static ClientUser ToClientUser( User user, string? avatarUrl ) {
 			return new ClientUser(
 				new Id<ClientUser>(user.Id.Value),
 				user.Username,
@@ -86,10 +90,15 @@ namespace RiftDrive.Server.Managers {
 			);
 		}
 
-		private async Task<string> GetAvatarUrl( User user ) {
+		private async Task<string?> GetAvatarUrl( User user ) {
 			if( user.HasAvatar ) {
 				// Not a mistake, we're reusing the userId as the imageId for their avatar
-				return ( await _imageService.Get( new Id<Image>( user.Id.Value ) ) )?.Url;
+				Image? image = await _imageService.Get( new Id<Image>( user.Id.Value ) );
+				if (image == default) {
+					return default;
+				}
+
+				return image.Url;
 			}
 
 			return default;

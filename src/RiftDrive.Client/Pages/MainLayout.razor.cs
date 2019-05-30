@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,9 @@ using RiftDrive.Client.State;
 namespace RiftDrive.Client.Pages {
 	public class MainLayoutBase : LayoutComponentBase, IDisposable {
 
+#nullable disable
 		[Inject] protected IAppState State { get; set; }
+#nullable enable
 
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += AppState_OnStateChanged;

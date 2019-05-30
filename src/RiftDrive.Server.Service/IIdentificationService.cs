@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ namespace RiftDrive.Server.Service {
 	public interface IIdentificationService {
 		Task<User> RecordLogin( string username );
 
-		Task<User> GetUser( Id<User> userId );
+		Task<User?> GetUser( Id<User> userId );
 
 		Task<User> SetAvatarStatus( Id<User> userId, bool hasAvatar );
 	}

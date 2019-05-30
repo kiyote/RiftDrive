@@ -20,7 +20,7 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Client.State {
 	public interface IMissionState {
 
-		public Mission Mission { get; }
+		public Mission? Mission { get; }
 
 		public IEnumerable<Actor> Crew { get; }
 	}

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,7 @@ namespace RiftDrive.Shared.Model {
 		public ClientUser(
 			Id<ClientUser> id,
 			string username,
-			string avatarUrl,
+			string? avatarUrl,
 			DateTime lastLogin,
 			DateTime? previousLogin,
 			string name
@@ -40,7 +40,7 @@ namespace RiftDrive.Shared.Model {
 
 		public string Username { get; }
 
-		public string AvatarUrl { get; }
+		public string? AvatarUrl { get; }
 
 		public DateTime LastLogin { get; }
 

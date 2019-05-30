@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ namespace RiftDrive.Server.Repository {
 
 		Task<IEnumerable<Game>> GetGames( Id<User> userId );
 
-		Task<Game> GetGame( Id<Game> gameId );
+		Task<Game?> GetGame( Id<Game> gameId );
 
 		Task Delete( Id<Game> gameId );
 

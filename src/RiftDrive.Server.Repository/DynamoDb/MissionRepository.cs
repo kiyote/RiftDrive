@@ -37,7 +37,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			_context = context;
 		}
 
-		async Task<Mission> IMissionRepository.GetByGameId( Id<Game> gameId ) {
+		async Task<Mission?> IMissionRepository.GetByGameId( Id<Game> gameId ) {
 			AsyncSearch<GameMissionRecord> query = _context.QueryAsync<GameMissionRecord>(
 				GameRecord.GetKey( gameId.Value ),
 				QueryOperator.BeginsWith,
@@ -57,7 +57,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMission( missionRecord );
 		}
 
-		async Task<Mission> IMissionRepository.GetByMissionId( Id<Mission> missionId ) {
+		async Task<Mission?> IMissionRepository.GetByMissionId( Id<Mission> missionId ) {
 			MissionRecord missionRecord = await _context.LoadAsync<MissionRecord>(
 				MissionRecord.GetKey( missionId.Value ),
 				MissionRecord.GetKey( missionId.Value ) );

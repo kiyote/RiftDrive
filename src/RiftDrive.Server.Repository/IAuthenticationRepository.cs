@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,6 @@ using RiftDrive.Server.Model;
 namespace RiftDrive.Server.Repository {
 	public interface IAuthenticationRepository {
 
-		Task<AuthenticationUserInformation> GetUserInformation( string username );
+		Task<AuthenticationUserInformation?> GetUserInformation( string username );
 	}
 }
