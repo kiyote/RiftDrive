@@ -27,12 +27,16 @@ namespace RiftDrive.Client.State {
 
 		[JsonConstructor]
 		public AdministrationState(
-			IEnumerable<Game> games
+			IEnumerable<Game> games,
+			ClientUser? profile
 		) {
 			Games = games.ToList();
+			Profile = profile;
 		}
 
 
 		public IEnumerable<Game> Games { get; }
+
+		public ClientUser? Profile { get; }
 	}
 }

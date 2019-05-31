@@ -50,11 +50,11 @@ namespace RiftDrive.Client {
 			return int.Parse( value );
 		}
 
-		public async Task<T?> Get<T>(string name) where T: class {
+		public async Task<T> Get<T>(string name) {
 			IJSRuntime js = _jsProvider.Get();
 			string value = await js.InvokeAsync<string>( "appState.getItem", name );
 			if (string.IsNullOrWhiteSpace(value)) {
-				return default;
+				return default!;
 			}
 			return JsonConvert.DeserializeObject<T>( value );
 		}

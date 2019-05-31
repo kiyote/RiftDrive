@@ -16,24 +16,24 @@ limitations under the License.
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
-using RiftDrive.Shared.Model;
+
+#nullable enable
 
 namespace RiftDrive.Client.Pages.Components {
 	public class CreateGameComponent : ComponentBase {
 
 		public CreateGameComponent() {
+			Dispatch = NullDispatch.Instance;
+			UriHelper = NullUriHelper.Instance;
+
 			GameName = "";
 			PlayerName = "";
 			CreatingGame = false;
 		}
 
-#nullable disable
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
-
-		[Parameter] protected ClientUser User { get; set; }
-#nullable enable
 
 		protected string GameName { get; set; }
 
@@ -50,9 +50,8 @@ namespace RiftDrive.Client.Pages.Components {
 			CreatingGame = false;
 		}
 
-		protected Task ShowCreateClicked(UIMouseEventArgs args) {
+		protected void ShowCreateClicked(UIMouseEventArgs args) {
 			CreatingGame = true;
-			return Task.CompletedTask;
 		}
 	}
 }

@@ -20,27 +20,33 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 using RiftDrive.Shared.Model;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipModuleSummaryComponent : ComponentBase {
 
 		public MothershipModuleSummaryComponent() {
 			Modules = new List<MothershipAttachedModule>();
+			Dispatch = NullDispatch.Instance;
+			UriHelper = NullUriHelper.Instance;
 		}
 
-#nullable disable
 		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
 
-		[Parameter] protected Game Game { get; set; }
+		[Parameter] protected Game? Game { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
-#nullable enable
 
 		protected async Task ModuleButtonClicked(
 			MothershipAttachedModule module,
 			MothershipModuleAction action
 		) {
+			if (Game == default) {
+				return;
+			}
+
 			MothershipModule definition = MothershipModule.GetById( module.MothershipModuleId );
 			await Dispatch.TriggerModuleAction( Game.Id, module.MothershipId, module.MothershipModuleId, action.Id );
 

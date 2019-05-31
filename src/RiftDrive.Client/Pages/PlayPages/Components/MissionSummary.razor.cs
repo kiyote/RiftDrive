@@ -13,21 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
+
+#nullable enable
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MissionSummaryComponent : ComponentBase {
 
-#nullable disable
-		[Parameter] protected Mission Mission { get; set; }
+		public MissionSummaryComponent() {
+			UriHelper = NullUriHelper.Instance;
+		}
+
+		[Parameter] protected Mission? Mission { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
-#nullable enable
 
 		protected void ResumeClicked( UIMouseEventArgs args ) {
-			UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Mission.GameId ) );
+			if (Mission != default) {
+				UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Mission.GameId ) );
+			}
 		}
 	}
 }

@@ -3,7 +3,7 @@
 @inherits ProfilePageBase
 @layout MainLayout
 
-@if (User == default)
+@if (State.Administration.Profile == default)
 {
     <span>Loading ...</span>
 }
@@ -14,26 +14,26 @@ else
             <thead>
                 <tr>
                     <th colspan="2">
-                        @User.Name
+                        @State.Administration.Profile.Name
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td colspan="2">
-                        @if (!string.IsNullOrWhiteSpace(User.AvatarUrl))
+                        @if (!string.IsNullOrWhiteSpace(State.Administration.Profile.AvatarUrl))
                         {
-                            <img src=@User.AvatarUrl />
+                            <img src=@State.Administration.Profile.AvatarUrl />
                         }
                     </td>
                 </tr>
                 <tr>
                     <td>User Id:</td>
-                    <td>@User.Id.Value</td>
+                    <td>@State.Administration.Profile.Id.Value</td>
                 </tr>
                 <tr>
                     <td>Last Login:</td>
-                    <td>@FormatDate(User.LastLogin)</td>
+                    <td>@FormatDate(State.Administration.Profile.LastLogin)</td>
                 </tr>
                 <tr>
                     <td></td>

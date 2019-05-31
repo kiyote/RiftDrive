@@ -20,5 +20,7 @@ namespace RiftDrive.Client.State {
 	public interface IAdministrationState {
 
 		IEnumerable<Game> Games { get; }
+
+		ClientUser? Profile { get; }
 	}
 }

@@ -38,5 +38,13 @@ namespace RiftDrive.Client.Action {
 		Task LoadGames( Id<ClientUser> userId );
 
 		Task DeleteGame( Id<Game> gameId );
+
+		Task LoadProfile( Id<ClientUser> userId );
+
+		Task UpdateProfileAvatar( string mimeType, string content );
+
+		Task LoadUserInformation();
+
+		Task RecordLogin();
 	}
 }

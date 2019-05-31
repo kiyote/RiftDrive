@@ -20,26 +20,32 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 using RiftDrive.Shared.Model;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class SelectCrewComponent : ComponentBase {
 
 		public SelectCrewComponent() {
 			SelectedCrew = new List<Id<Actor>>();
+			Dispatch = NullDispatch.Instance;
+			Crew = new List<Actor>();
 		}
 
-#nullable disable
 		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		[Parameter] protected Game Game { get; set; }
+		[Parameter] protected Game? Game { get; set; }
 
-		[Parameter] protected Mission Mission { get; set; }
-#nullable enable
+		[Parameter] protected Mission? Mission { get; set; }
 
 		protected List<Id<Actor>> SelectedCrew { get; set; }
 
 		protected async Task SelectClicked(UIMouseEventArgs args) {
+			if ((Game == default) || (Mission == default)) {
+				return;
+			}
+
 			if (SelectedCrew.Any()) {
 				var selectedCrew = Crew.Where( c => SelectedCrew.Contains( c.Id ) );
 				await Dispatch.SelectMissionCrew( Game.Id, Mission.Id, selectedCrew );

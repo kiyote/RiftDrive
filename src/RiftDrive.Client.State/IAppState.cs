@@ -70,5 +70,9 @@ namespace RiftDrive.Client.State {
 		Task Update(
 			IAdministrationState initial,
 			IEnumerable<Game> games );
+
+		Task Update(
+			IAdministrationState initial,
+			ClientUser? profile );
 	}
 }

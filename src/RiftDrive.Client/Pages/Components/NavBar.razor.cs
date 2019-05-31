@@ -18,19 +18,27 @@ using RiftDrive.Shared.Model;
 using RiftDrive.Client.Pages.AuthPages;
 using RiftDrive.Client.Pages.UserPages;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages.Components {
 	public class NavBarComponent : ComponentBase {
 
-#nullable disable
+		public NavBarComponent() {
+			Config = NullConfig.Instance;
+		}
+
 		[Inject] protected IConfig Config { get; set; }
 
-		[Parameter] protected ClientUser User { get; set; }
+		[Parameter] protected ClientUser? User { get; set; }
 
 		[Parameter] protected bool IsAuthenticated { get; set; }
-#nullable enable
 
 		public string ProfileUrl {
 			get {
+				if (User == default) {
+					return "";
+				}
+
 				return ProfilePageBase.GetUrl( User.Id );
 			}
 		}

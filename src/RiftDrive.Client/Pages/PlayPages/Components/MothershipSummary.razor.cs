@@ -16,11 +16,11 @@ limitations under the License.
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipSummaryComponent : ComponentBase {
 
-#nullable disable
-		[Parameter] protected Mothership Mothership { get; set; }
-#nullable enable
+		[Parameter] protected Mothership? Mothership { get; set; }
 	}
 }

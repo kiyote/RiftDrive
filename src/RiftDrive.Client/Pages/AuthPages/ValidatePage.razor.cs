@@ -17,18 +17,26 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RiftDrive.Shared.Message;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
-using RiftDrive.Shared.Model;
-using RiftDrive.Client.Action;
+using RiftDrive.Shared.Message;
+
+#nullable enable
 
 namespace RiftDrive.Client.Pages.AuthPages {
 	public class ValidatePageBase : ComponentBase, IDisposable {
 
 		public static string Url = "/auth/validate";
 
-#nullable disable
+		public ValidatePageBase() {
+			Messages = new List<string>();
+			UriHelper = NullUriHelper.Instance;
+			Dispatch = NullDispatch.Instance;
+			State = NullAppState.Instance;
+			TokenService = NullTokenService.Instance;
+		}
+
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
@@ -37,16 +45,9 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 		[Inject] protected ITokenService TokenService { get; set; }
 
-		[Inject] protected IUserApiService UserService { get; set; }
-#nullable enable
-
 		protected List<string> Messages { get; set; }
 
 		protected int Progress { get; set; }
-
-		public ValidatePageBase() {
-			Messages = new List<string>();
-		}
 
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += AppStateHasChanged;
@@ -62,11 +63,10 @@ namespace RiftDrive.Client.Pages.AuthPages {
 			await Dispatch.UpdateTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
 			Update( "...recording login...", 50 );
-			await UserService.RecordLogin();
+			await Dispatch.RecordLogin();
 
 			Update( "...loading user information...", 75 );
-			ClientUser userInfo = await UserService.GetUserInformation();
-			await State.Update( State.Authentication, userInfo );
+			await Dispatch.LoadUserInformation();
 
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}

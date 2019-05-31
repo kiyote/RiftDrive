@@ -13,17 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
+
+#nullable enable
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class RaceEncounterComponent : ComponentBase {
 
-#nullable disable
-		[Parameter] protected Game Game { get; set; }
+		[Parameter] protected Game? Game { get; set; }
 
-		[Parameter] protected Mission Mission { get; set; }
-#nullable enable
+		[Parameter] protected Mission? Mission { get; set; }
 	}
 }

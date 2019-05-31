@@ -13,28 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Action;
+using RiftDrive.Shared.Message;
 
-#nullable enable
+namespace RiftDrive.Client.Service {
+	public sealed class NullTokenService : ITokenService {
 
-namespace RiftDrive.Client.Pages.AuthPages {
-	public class LogOutPageBase : ComponentBase {
-		public const string Url = "/auth/logout";
+		public static ITokenService Instance = new NullTokenService();
 
-		public LogOutPageBase() {
-			UriHelper = NullUriHelper.Instance;
-			Dispatch = NullDispatch.Instance;
+		Task<AuthorizationToken> ITokenService.GetToken( string code ) {
+			throw new NotImplementedException();
 		}
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
-
-		[Inject] protected IDispatch Dispatch { get; set; }
-
-		protected override async Task OnInitAsync() {
-			await Dispatch.LogOut();
-			UriHelper.NavigateTo( IndexPageBase.Url );
+		Task<AuthorizationToken> ITokenService.RefreshToken( string refreshToken ) {
+			throw new NotImplementedException();
 		}
 	}
 }

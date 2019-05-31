@@ -26,13 +26,16 @@ namespace RiftDrive.Client.Action {
 
 		private readonly IAppState _state;
 		private readonly IGameApiService _gameService;
+		private readonly IUserApiService _userService;
 
 		public Dispatch(
 			IAppState state,
-			IGameApiService gameService
+			IGameApiService gameService,
+			IUserApiService userService
 		) {
 			_state = state;
 			_gameService = gameService;
+			_userService = userService;
 		}
 
 		public async Task LoadCurrentGame( Id<Game> gameId ) {
@@ -108,6 +111,26 @@ namespace RiftDrive.Client.Action {
 			await _gameService.DeleteGame( gameId );
 			IEnumerable<Game> games = await _gameService.GetGames();
 			await _state.Update( _state.Administration, games );
+		}
+
+		public async Task LoadProfile( Id<ClientUser> userId ) {
+			ClientUser? user = await _userService.GetUserInformation();
+			await _state.Update( _state.Administration, user );
+		}
+
+		public async Task UpdateProfileAvatar( string mimeType, string content ) {
+			await _userService.SetAvatar( mimeType, content );
+			ClientUser? user = await _userService.GetUserInformation();
+			await _state.Update( _state.Administration, user );
+		}
+
+		public async Task LoadUserInformation() {
+			ClientUser userInfo = await _userService.GetUserInformation();
+			await _state.Update( _state.Authentication, userInfo );
+		}
+
+		public async Task RecordLogin() {
+			await _userService.RecordLogin();
 		}
 	}
 }

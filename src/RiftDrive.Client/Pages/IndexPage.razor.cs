@@ -19,15 +19,20 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages {
 	public class IndexPageBase : ComponentBase, IDisposable {
 		public static string Url = "/";
 
-#nullable disable
+		public IndexPageBase() {
+			State = NullAppState.Instance;
+			Dispatch = NullDispatch.Instance;
+		}
+
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
-#nullable enable
 
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += OnStateHasChanged;

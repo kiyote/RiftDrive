@@ -13,28 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using RiftDrive.Client.Action;
+using Microsoft.JSInterop;
 
-#nullable enable
+namespace RiftDrive.Client {
+	public class NullJSRuntime : IJSRuntime {
 
-namespace RiftDrive.Client.Pages.AuthPages {
-	public class LogOutPageBase : ComponentBase {
-		public const string Url = "/auth/logout";
+		public static IJSRuntime Instance = new NullJSRuntime();
 
-		public LogOutPageBase() {
-			UriHelper = NullUriHelper.Instance;
-			Dispatch = NullDispatch.Instance;
+		Task<T> IJSRuntime.InvokeAsync<T>( string identifier, params object[] args ) {
+			throw new NotImplementedException();
 		}
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
-
-		[Inject] protected IDispatch Dispatch { get; set; }
-
-		protected override async Task OnInitAsync() {
-			await Dispatch.LogOut();
-			UriHelper.NavigateTo( IndexPageBase.Url );
+		void IJSRuntime.UntrackObjectRef( DotNetObjectRef dotNetObjectRef ) {
+			throw new NotImplementedException();
 		}
 	}
 }

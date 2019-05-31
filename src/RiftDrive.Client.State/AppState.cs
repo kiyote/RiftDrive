@@ -142,9 +142,14 @@ namespace RiftDrive.Client.State {
 		}
 
 		public async Task Update( IAdministrationState initial, IEnumerable<Game> games ) {
-			Administration = new AdministrationState( games );
+			Administration = new AdministrationState( games, initial.Profile );
 			await _storage.Set( "State::Administration", Administration );
-			Console.WriteLine( "invoking state changed event" );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public async Task Update( IAdministrationState initial, ClientUser? profile ) {
+			Administration = new AdministrationState( initial.Games, profile );
+			await _storage.Set( "State::Administration", Administration );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 	}

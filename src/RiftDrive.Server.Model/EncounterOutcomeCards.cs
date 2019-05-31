@@ -14,18 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
+using System.Linq;
 using RiftDrive.Shared.Model;
 
-#nullable enable
+namespace RiftDrive.Server.Model {
+	public sealed partial class EncounterOutcomeCard {
 
-namespace RiftDrive.Client.Pages.PlayPages.Components {
-	public class CrewSummaryComponent : ComponentBase {
-
-		public CrewSummaryComponent() {
-			Crew = new List<Actor>();
+		public static EncounterOutcomeCard GetById( Id<EncounterOutcomeCard> cardId ) {
+			return All.First( c => c.Id.Equals( cardId ) );
 		}
 
-		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+		public static EncounterOutcomeCard Flaxian1 = new EncounterOutcomeCard(
+			new Id<EncounterOutcomeCard>( "4badd6372dc246cf9a8d242b591d8240" ),
+			new List<EncounterOutcome>() {
+				new EncounterOutcome( int.MinValue, 2, Ship.FlaxianScout.Id )
+			} );
+
+		public static List<EncounterOutcomeCard> All = new List<EncounterOutcomeCard>() {
+			Flaxian1
+		};
 	}
 }

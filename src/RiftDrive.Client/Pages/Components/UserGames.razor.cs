@@ -20,18 +20,24 @@ using RiftDrive.Client.Action;
 using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Shared.Model;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages.Components {
 	public class UserGamesComponent : ComponentBase {
 
-#nullable disable
+		public UserGamesComponent() {
+			Dispatch = NullDispatch.Instance;
+			UriHelper = NullUriHelper.Instance;
+			Games = new List<Game>();
+		}
+
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
 		[Parameter] protected IEnumerable<Game> Games { get; set; }
 
-		[Parameter] protected ClientUser User { get; set; }
-#nullable enable
+		[Parameter] protected ClientUser? User { get; set; }
 
 		public void PlayGame( Id<Game> gameId ) {
 			UriHelper.NavigateTo( GameViewPageBase.GetUrl( gameId ) );

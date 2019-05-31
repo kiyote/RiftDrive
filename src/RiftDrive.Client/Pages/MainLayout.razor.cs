@@ -19,12 +19,16 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Layouts;
 using RiftDrive.Client.State;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages {
 	public class MainLayoutBase : LayoutComponentBase, IDisposable {
 
-#nullable disable
+		public MainLayoutBase() {
+			State = NullAppState.Instance;
+		}
+
 		[Inject] protected IAppState State { get; set; }
-#nullable enable
 
 		protected override async Task OnInitAsync() {
 			State.OnStateChanged += AppState_OnStateChanged;

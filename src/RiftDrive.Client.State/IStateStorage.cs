@@ -24,7 +24,7 @@ namespace RiftDrive.Client.State {
 
 		Task<string> GetAsString( string name );
 
-		Task<T?> Get<T>( string name ) where T: class;
+		Task<T> Get<T>( string name );
 
 		Task Set( string name, DateTime value );
 

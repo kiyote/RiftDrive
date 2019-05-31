@@ -20,17 +20,23 @@ using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
 
+#nullable enable
+
 namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameViewPageBase : ComponentBase, IDisposable {
 		public const string Url = "/game/{0}/view";
 
-#nullable disable
+		public GameViewPageBase() {
+			State = NullAppState.Instance;
+			Dispatch = NullDispatch.Instance;
+			GameId = "";
+		}
+
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Parameter] protected string GameId { get; set; }
-#nullable enable
 
 		public static string GetUrl( Id<Game> gameId ) {
 			return string.Format( Url, gameId.Value );

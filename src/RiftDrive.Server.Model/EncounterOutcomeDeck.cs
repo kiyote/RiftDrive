@@ -4,9 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,39 +12,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Model {
-	public sealed class EncounterOutcome: IEquatable<EncounterOutcome> {
+	public sealed partial class EncounterOutcomeDeck: IEquatable<EncounterOutcomeDeck> {
 
-		public EncounterOutcome(
-			int low,
-			int high,
-			Id<Ship> shipId
+		public EncounterOutcomeDeck(
+			Id<Race> raceId,
+			IEnumerable<EncounterOutcomeCard> cards
 		) {
-			Low = low;
-			High = high;
-			ShipId = shipId;
+			RaceId = raceId;
+			Cards = cards;
 		}
 
-		public int Low { get; }
+		public Id<Race> RaceId { get; }
 
-		public int High { get; }
+		public IEnumerable<EncounterOutcomeCard> Cards { get; }
 
-		public Id<Ship> ShipId { get; }
-
-		public bool Equals( EncounterOutcome other ) {
-			if (ReferenceEquals( other, this )) {
+		public bool Equals( EncounterOutcomeDeck other ) {
+			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return Low == other.Low
-				&& High == other.High
-				&& ShipId == other.ShipId;
+			return RaceId.Equals( other.RaceId )
+				&& Cards.Similar( other.Cards );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is EncounterOutcome target ) ) {
+			if( !( obj is EncounterOutcomeDeck target ) ) {
 				return false;
 			}
 
@@ -56,9 +50,8 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Low.GetHashCode();
-				result = ( result * 31 ) + High.GetHashCode();
-				result = ( result * 31 ) + ShipId.GetHashCode();
+				result = ( result * 31 ) + RaceId.GetHashCode();
+				result = ( result * 31 ) + Cards.GetFinalHashCode();
 
 				return result;
 			}

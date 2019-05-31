@@ -18,25 +18,30 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using RiftDrive.Client.Service;
+using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
+
+#nullable enable
 
 namespace RiftDrive.Client.Pages.UserPages {
 	public class ProfilePageBase : ComponentBase {
 		public const string Url = "/user/profile";
 
-#nullable disable
+		public ProfilePageBase() {
+			UserId = "";
+			Dispatch = NullDispatch.Instance;
+			State = NullAppState.Instance;
+			JsRuntime = NullJSRuntime.Instance;
+		}
+
 		[Parameter] protected string UserId { get; set; }
 
-		[Inject] protected IUserApiService UserService { get; set; }
+		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Inject] protected IAppState State { get; set; }
 
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
-#nullable enable
-
-		protected ClientUser? User { get; set; }
 
 		protected ElementRef FileUploadRef { get; set; }
 
@@ -49,7 +54,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 				}
 
 				var targetId = new Id<ClientUser>( UserId );
-				return ( targetId == State.Authentication.User.Id );
+				return ( State.Authentication.User.Id.Equals( targetId ) );
 			}
 		}
 
@@ -58,7 +63,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 		}
 		protected override async Task OnParametersSetAsync() {
 			var userId = new Id<ClientUser>( UserId );
-			User = await UserService.GetUserInformation();
+			await Dispatch.LoadProfile( userId );
 		}
 
 		protected string FormatDate( DateTime? dateTime ) {
@@ -87,8 +92,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 			string content = parts[1];
 
 			if( mimeType.StartsWith( "image" ) ) {
-				await UserService.SetAvatar( mimeType, content );
-				User = await UserService.GetUserInformation();
+				await Dispatch.UpdateProfileAvatar( mimeType, content );
 			}
 		}
 	}

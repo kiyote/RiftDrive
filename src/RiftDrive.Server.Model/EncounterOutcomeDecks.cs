@@ -4,9 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,18 +12,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
+using System.Linq;
 using RiftDrive.Shared.Model;
 
-#nullable enable
+namespace RiftDrive.Server.Model {
+	public sealed partial class EncounterOutcomeDeck {
 
-namespace RiftDrive.Client.Pages.PlayPages.Components {
-	public class CrewSummaryComponent : ComponentBase {
-
-		public CrewSummaryComponent() {
-			Crew = new List<Actor>();
+		public static EncounterOutcomeDeck GetById( Id<Race> raceId ) {
+			return All.First( d => d.RaceId.Equals( raceId ) ); 
 		}
 
-		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+		public static EncounterOutcomeDeck Flaxian = new EncounterOutcomeDeck(
+			Race.Flaxian.Id,
+			new List<EncounterOutcomeCard>() {
+				EncounterOutcomeCard.Flaxian1
+			} );
+
+		public static List<EncounterOutcomeDeck> All = new List<EncounterOutcomeDeck>() {
+			Flaxian
+		};
 	}
 }
