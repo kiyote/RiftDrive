@@ -106,6 +106,12 @@ namespace RiftDrive.Server.Managers {
 			return await _gameService.AddCrewToMission( missionId, crew );
 		}
 
+		public async Task<EncounterCard> DrawEncounterCard(
+			Id<Game> gameId
+		) {
+			return await _gameService.DrawEncounterCard( gameId );
+		}
+
 		private ClientPlayer ToClientPlayer( Player player ) {
 			return new ClientPlayer(
 				new Id<ClientPlayer>( player.Id.Value ),

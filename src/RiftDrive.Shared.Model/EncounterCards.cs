@@ -15,12 +15,11 @@ limitations under the License.
 */
 using System.Collections.Generic;
 using System.Linq;
-using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared.Model {
 	public sealed partial class EncounterCard {
 
-		public EncounterCard GetById( Id<EncounterCard> encounterCardId ) {
+		public static EncounterCard GetById( Id<EncounterCard> encounterCardId ) {
 			return All.First( c => c.Id == encounterCardId );
 		}
 

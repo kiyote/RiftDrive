@@ -30,7 +30,6 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			State = NullAppState.Instance;
 			Dispatch = NullDispatch.Instance;
 			GameId = "";
-			MissionId = "";
 		}
 
 		[Inject] protected IAppState State { get; set; }
@@ -38,8 +37,6 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		[Inject] protected IDispatch Dispatch { get; set; }
 
 		[Parameter] protected string GameId { get; set; }
-
-		[Parameter] protected string MissionId { get; set; }
 
 		public static string GetUrl( Id<Game> gameId ) {
 			return $"game/{gameId.Value}/mission";
@@ -50,11 +47,10 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		}
 
 		protected override async Task OnInitAsync() {
-			Id<Mission> missionId = new Id<Mission>( MissionId );
-			if (( State.CurrentMission.Mission != default) && ( !State.CurrentMission.Mission.Id.Equals( missionId ))) {
-				Id<Game> gameId = new Id<Game>( GameId );
-				await Dispatch.LoadCurrentMission( gameId );
-			}
+			State.OnStateChanged += OnStateHasChanged;
+
+			Id<Game> gameId = new Id<Game>( GameId );
+			await Dispatch.LoadCurrentMission( gameId );
 		}
 
 		private void OnStateHasChanged( object sender, EventArgs args ) {

@@ -1,12 +1,10 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,34 +12,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
+using System.Collections.Generic;
 
-namespace RiftDrive.Server.Model {
-	public sealed class Deck : IEquatable<Deck> {
+namespace RiftDrive.Shared.Model {
+	public sealed partial class EncounterOutcomeDeck: IEquatable<EncounterOutcomeDeck> {
 
-		public Deck(
-			Id<Deck> id,
-			string name
+		public EncounterOutcomeDeck(
+			Id<Race> raceId,
+			IEnumerable<EncounterOutcomeCard> cards
 		) {
-			Id = id;
-			Name = name;
+			RaceId = raceId;
+			Cards = cards;
 		}
 
-		public Id<Deck> Id { get; }
+		public Id<Race> RaceId { get; }
 
-		public string Name { get; }
+		public IEnumerable<EncounterOutcomeCard> Cards { get; }
 
-		public bool Equals( Deck other ) {
+		public bool Equals( EncounterOutcomeDeck other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return Id.Equals( other.Id )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
+			return RaceId.Equals( other.RaceId )
+				&& Cards.Similar( other.Cards );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is Deck target ) ) {
+			if( !( obj is EncounterOutcomeDeck target ) ) {
 				return false;
 			}
 
@@ -51,8 +49,8 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + Name.GetHashCode();
+				result = ( result * 31 ) + RaceId.GetHashCode();
+				result = ( result * 31 ) + Cards.GetFinalHashCode();
 
 				return result;
 			}

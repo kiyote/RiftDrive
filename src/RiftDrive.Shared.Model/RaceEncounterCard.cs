@@ -14,39 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
-	public sealed class EncounterOutcome: IEquatable<EncounterOutcome> {
+namespace RiftDrive.Shared.Model {
+	public sealed partial class RaceEncounterCard : IEquatable<RaceEncounterCard> {
 
-		public EncounterOutcome(
-			int low,
-			int high,
-			Id<Ship> shipId
+		public RaceEncounterCard(
+			Id<RaceEncounterCard> id,
+			Id<Race> raceId
 		) {
-			Low = low;
-			High = high;
-			ShipId = shipId;
+			Id = id;
+			RaceId = raceId;
 		}
 
-		public int Low { get; }
+		public Id<RaceEncounterCard> Id { get; }
 
-		public int High { get; }
+		public Id<Race> RaceId { get; }
 
-		public Id<Ship> ShipId { get; }
+		public bool Equals( RaceEncounterCard other ) {
+			if (other is null) {
+				return false;
+			}
 
-		public bool Equals( EncounterOutcome other ) {
-			if (ReferenceEquals( other, this )) {
+			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
-			return Low == other.Low
-				&& High == other.High
-				&& ShipId == other.ShipId;
+			return Id.Equals( other.Id )
+				&& RaceId.Equals( other.Id );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is EncounterOutcome target ) ) {
+			if( !( obj is RaceEncounterCard target ) ) {
 				return false;
 			}
 
@@ -56,9 +54,8 @@ namespace RiftDrive.Server.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Low.GetHashCode();
-				result = ( result * 31 ) + High.GetHashCode();
-				result = ( result * 31 ) + ShipId.GetHashCode();
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + RaceId.GetHashCode();
 
 				return result;
 			}

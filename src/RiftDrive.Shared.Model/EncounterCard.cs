@@ -14,43 +14,50 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
-	public sealed class EncounterInteraction: IEquatable<EncounterInteraction> {
+namespace RiftDrive.Shared.Model {
+	public sealed partial class EncounterCard: IEquatable<EncounterCard> {
 
-		public EncounterInteraction(
-			Id<EncounterInteraction> id,
+		[JsonConstructor]
+		public EncounterCard(
+			Id<EncounterCard> id,
 			string description,
-			SkillCheckOutcomes outcomes
+			SkillCheck revealRace,
+			IEnumerable<EncounterInteraction> interactions
 		) {
 			Id = id;
 			Description = description;
-			Outcomes = outcomes;
+			RevealRace = revealRace;
+			Interactions = interactions;
 		}
 
-		public Id<EncounterInteraction> Id { get; }
+		public Id<EncounterCard> Id { get; }
 
 		public string Description { get; }
 
-		public SkillCheckOutcomes Outcomes { get; }
+		public SkillCheck RevealRace { get; }
 
-		bool IEquatable<EncounterInteraction>.Equals( EncounterInteraction other ) {
+		public IEnumerable<EncounterInteraction> Interactions { get; }
+
+		public bool Equals( EncounterCard other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Description, other.Description, StringComparison.Ordinal )
-				&& Equals( Outcomes, other.Outcomes );
+				&& RevealRace.Equals( other.RevealRace )
+				&& Interactions.Similar( other.Interactions );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is EncounterInteraction target ) ) {
+			if( !( obj is EncounterCard target ) ) {
 				return false;
 			}
 
-			return Equals( target as EncounterInteraction );
+			return Equals( target as EncounterCard );
 		}
 
 		public override int GetHashCode() {
@@ -58,7 +65,8 @@ namespace RiftDrive.Server.Model {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Description.GetHashCode();
-				result = ( result * 31 ) + Outcomes.GetHashCode();
+				result = ( result * 31 ) + RevealRace.GetHashCode();
+				result = ( result * 31 ) + Interactions.GetFinalHashCode();
 
 				return result;
 			}

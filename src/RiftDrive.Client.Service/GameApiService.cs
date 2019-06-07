@@ -185,5 +185,17 @@ namespace RiftDrive.Client.Service {
 
 			return response;
 		}
+
+		async Task<EncounterCard> IGameApiService.DrawEncounterCard( Id<Game> gameId, Id<Mission> missionId ) {
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			EncounterCard? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission/encounter",
+				( s ) => { return _json.Deserialize<EncounterCard>( s ); } );
+
+			if (response == default) {
+				throw new ArgumentException();
+			}
+
+			return response;
+		}
 	}
 }

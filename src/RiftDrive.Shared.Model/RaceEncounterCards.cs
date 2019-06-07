@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared.Model {
 	public sealed partial class RaceEncounterCard {
 	}
 }

@@ -51,19 +51,27 @@ namespace RiftDrive.Server.Service {
 			_missionRepository = missionRepository;
 		}
 
-		async Task<IEnumerable<Game>> IGameService.GetGames( Id<User> userId ) {
+		async Task<IEnumerable<Game>> IGameService.GetGames(
+			Id<User> userId
+		) {
 			return await _gameRepository.GetGames( userId );
 		}
 
-		async Task<Game?> IGameService.GetGame( Id<Game> gameId ) {
+		async Task<Game?> IGameService.GetGame(
+			Id<Game> gameId
+		) {
 			return await _gameRepository.GetGame( gameId );
 		}
 
-		async Task<Game> IGameService.StartGame( Id<Game> gameId ) {
+		async Task<Game> IGameService.StartGame(
+			Id<Game> gameId
+		) {
 			return await _gameRepository.StartGame( gameId );
 		}
 
-		async Task<Game> IGameService.CreateGame( CreateGameConfiguration config ) {
+		async Task<Game> IGameService.CreateGame(
+			CreateGameConfiguration config
+		) {
 			Game game = await _gameRepository.Create( new Id<Game>(), config.GameName, config.CreatedOn );
 			await _playerRepository.Create( game.Id, new Id<Player>(), config.CreatedBy, config.PlayerName, config.CreatedOn );
 
@@ -79,11 +87,15 @@ namespace RiftDrive.Server.Service {
 			return game;
 		}
 
-		async Task<IEnumerable<Player>> IGameService.GetPlayers( Id<Game> gameId ) {
+		async Task<IEnumerable<Player>> IGameService.GetPlayers(
+			Id<Game> gameId
+		) {
 			return await _playerRepository.GetPlayers( gameId );
 		}
 
-		async Task IGameService.DeleteGame( Id<Game> gameId ) {
+		async Task IGameService.DeleteGame(
+			Id<Game> gameId
+		) {
 			IEnumerable<Actor> actors = await _actorRepository.GetActors( gameId );
 			foreach( Actor actor in actors ) {
 				await _actorRepository.Delete( gameId, actor.Id );
@@ -97,11 +109,15 @@ namespace RiftDrive.Server.Service {
 			await _gameRepository.Delete( gameId );
 		}
 
-		async Task<Mothership?> IGameService.GetMothership( Id<Game> gameId ) {
+		async Task<Mothership?> IGameService.GetMothership(
+			Id<Game> gameId
+		) {
 			return await _mothershipRepository.GetMothership( gameId );
 		}
 
-		async Task<IEnumerable<Actor>> IGameService.GetCrew( Id<Game> gameId ) {
+		async Task<IEnumerable<Actor>> IGameService.GetCrew(
+			Id<Game> gameId
+		) {
 			return await _actorRepository.GetActors( gameId );
 		}
 
@@ -112,7 +128,9 @@ namespace RiftDrive.Server.Service {
 			return await _mothershipRepository.GetAttachedModules( gameId, mothershipId );
 		}
 
-		async Task<Mission?> IGameService.GetMission( Id<Game> gameId ) {
+		async Task<Mission?> IGameService.GetMission(
+			Id<Game> gameId
+		) {
 			return await _missionRepository.GetByGameId( gameId );
 		}
 
@@ -125,16 +143,16 @@ namespace RiftDrive.Server.Service {
 			List<string> result = new List<string>();
 			Mothership? mothership = await _mothershipRepository.GetMothership( gameId, mothershipId );
 
-			if (mothership == default) {
+			if( mothership == default ) {
 				throw new ArgumentException();
 			}
 
 			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( gameId, mothershipId, moduleId );
 			MothershipModule definition = MothershipModule.GetById( moduleId );
 			MothershipModuleAction action = definition.Actions.First( a => a.Id == actionId );
-			foreach (var effect in action.Effects) {
+			foreach( var effect in action.Effects ) {
 				int magnitude = CalculateMagnitude( effect );
-				switch( effect.Effect) {
+				switch( effect.Effect ) {
 					case ModuleEffect.AddCrew: {
 							result.Add( magnitude > 0 ? $"Revived {magnitude} additional crew." : "No viable crew found for revival" );
 							await _mothershipRepository.SetAvailableCrew( gameId, mothershipId, mothership.AvailableCrew + magnitude );
@@ -171,12 +189,24 @@ namespace RiftDrive.Server.Service {
 			return result;
 		}
 
-		async Task<Mission> IGameService.AddCrewToMission(Id<Mission> missionId, IEnumerable<Id<Actor>> crew) {
+		async Task<Mission> IGameService.AddCrewToMission(
+			Id<Mission> missionId,
+			IEnumerable<Id<Actor>> crew
+		) {
 			return await _missionRepository.AddCrewToMission( missionId, crew, MissionStatus.RaceEncounter );
 		}
 
+		Task<EncounterCard> IGameService.DrawEncounterCard(
+			Id<Game> gameId
+		) {
+			int cardIndex = _randomProvider.Next( EncounterCard.All.Count() );
+			EncounterCard card = EncounterCard.All.ElementAt( cardIndex );
+
+			return Task.FromResult( card );
+		}
+
 		private int CalculateMagnitude( MothershipModuleEffect effect ) {
-			if (effect.Magnitude == int.MinValue) {
+			if( effect.Magnitude == int.MinValue ) {
 				return _randomProvider.Next( effect.RandomMin, effect.RandomMax );
 			}
 

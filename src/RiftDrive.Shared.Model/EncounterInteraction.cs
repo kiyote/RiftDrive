@@ -14,49 +14,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
-	public sealed partial class RaceEncounterCard : IEquatable<RaceEncounterCard> {
+namespace RiftDrive.Shared.Model {
+	public sealed class EncounterInteraction: IEquatable<EncounterInteraction> {
 
-		public RaceEncounterCard(
-			Id<RaceEncounterCard> id,
-			Id<Race> raceId
+		[JsonConstructor]
+		public EncounterInteraction(
+			Id<EncounterInteraction> id,
+			string description,
+			SkillCheckOutcomes outcomes
 		) {
 			Id = id;
-			RaceId = raceId;
+			Description = description;
+			Outcomes = outcomes;
 		}
 
-		public Id<RaceEncounterCard> Id { get; }
+		public Id<EncounterInteraction> Id { get; }
 
-		public Id<Race> RaceId { get; }
+		public string Description { get; }
 
-		public bool Equals( RaceEncounterCard other ) {
-			if (other is null) {
-				return false;
-			}
+		public SkillCheckOutcomes Outcomes { get; }
 
+		bool IEquatable<EncounterInteraction>.Equals( EncounterInteraction other ) {
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
 
 			return Id.Equals( other.Id )
-				&& RaceId.Equals( other.Id );
+				&& string.Equals( Description, other.Description, StringComparison.Ordinal )
+				&& Equals( Outcomes, other.Outcomes );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is RaceEncounterCard target ) ) {
+			if( !( obj is EncounterInteraction target ) ) {
 				return false;
 			}
 
-			return Equals( target );
+			return Equals( target as EncounterInteraction );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + RaceId.GetHashCode();
+				result = ( result * 31 ) + Description.GetHashCode();
+				result = ( result * 31 ) + Outcomes.GetHashCode();
 
 				return result;
 			}

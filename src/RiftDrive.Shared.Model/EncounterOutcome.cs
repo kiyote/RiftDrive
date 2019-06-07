@@ -14,47 +14,50 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
-	public sealed class SkillCheck : IEquatable<SkillCheck> {
+namespace RiftDrive.Shared.Model {
+	public sealed class EncounterOutcome: IEquatable<EncounterOutcome> {
 
-		public static SkillCheck None = new SkillCheck( Skill.Unknown, int.MinValue );
-
-		public SkillCheck(
-			Skill skill,
-			int target
+		public EncounterOutcome(
+			int low,
+			int high,
+			Id<Ship> shipId
 		) {
-			Skill = skill;
-			Target = target;
+			Low = low;
+			High = high;
+			ShipId = shipId;
 		}
 
-		public Skill Skill { get; }
+		public int Low { get; }
 
-		public int Target { get; }
+		public int High { get; }
 
-		public bool Equals( SkillCheck other ) {
-			if( ReferenceEquals( other, this ) ) {
+		public Id<Ship> ShipId { get; }
+
+		public bool Equals( EncounterOutcome other ) {
+			if (ReferenceEquals( other, this )) {
 				return true;
 			}
 
-			return Skill == other.Skill
-				&& Target == other.Target;
+			return Low == other.Low
+				&& High == other.High
+				&& ShipId == other.ShipId;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is SkillCheck target ) ) {
+			if( !( obj is EncounterOutcome target ) ) {
 				return false;
 			}
 
-			return Equals( target as SkillCheck );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Target.GetHashCode();
+				result = ( result * 31 ) + Low.GetHashCode();
+				result = ( result * 31 ) + High.GetHashCode();
+				result = ( result * 31 ) + ShipId.GetHashCode();
 
 				return result;
 			}

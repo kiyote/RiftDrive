@@ -15,9 +15,8 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using RiftDrive.Shared.Model;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared.Model {
 	public sealed partial class EncounterOutcomeCard : IEquatable<EncounterOutcomeCard> {
 
 		public EncounterOutcomeCard(

@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using RiftDrive.Shared.Model;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
+namespace RiftDrive.Shared.Model {
 	public sealed class SkillCheckOutcomes : IEquatable<SkillCheckOutcomes> {
 
 		public static SkillCheckOutcomes None = new SkillCheckOutcomes( Skill.Unknown, int.MinValue, int.MinValue, int.MinValue );
 
+		[JsonConstructor]
 		public SkillCheckOutcomes(
 			Skill skill,
 			int target,

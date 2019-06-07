@@ -4,7 +4,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -12,46 +14,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using RiftDrive.Shared.Model;
+using Newtonsoft.Json;
 
-namespace RiftDrive.Server.Model {
-	public sealed partial class EncounterOutcomeDeck: IEquatable<EncounterOutcomeDeck> {
+namespace RiftDrive.Shared.Model {
+	public sealed class SkillCheck : IEquatable<SkillCheck> {
 
-		public EncounterOutcomeDeck(
-			Id<Race> raceId,
-			IEnumerable<EncounterOutcomeCard> cards
+		public static SkillCheck None = new SkillCheck( Skill.Unknown, int.MinValue );
+
+		[JsonConstructor]
+		public SkillCheck(
+			Skill skill,
+			int target
 		) {
-			RaceId = raceId;
-			Cards = cards;
+			Skill = skill;
+			Target = target;
 		}
 
-		public Id<Race> RaceId { get; }
+		public Skill Skill { get; }
 
-		public IEnumerable<EncounterOutcomeCard> Cards { get; }
+		public int Target { get; }
 
-		public bool Equals( EncounterOutcomeDeck other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( SkillCheck other ) {
+			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return RaceId.Equals( other.RaceId )
-				&& Cards.Similar( other.Cards );
+			return Skill == other.Skill
+				&& Target == other.Target;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is EncounterOutcomeDeck target ) ) {
+			if( !( obj is SkillCheck target ) ) {
 				return false;
 			}
 
-			return Equals( target );
+			return Equals( target as SkillCheck );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + RaceId.GetHashCode();
-				result = ( result * 31 ) + Cards.GetFinalHashCode();
+				result = ( result * 31 ) + Skill.GetHashCode();
+				result = ( result * 31 ) + Target.GetHashCode();
 
 				return result;
 			}
