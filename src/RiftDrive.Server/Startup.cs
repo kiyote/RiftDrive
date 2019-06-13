@@ -116,16 +116,15 @@ namespace RiftDrive.Server {
 			}
 
 			app.UseCors( "CorsPolicy" );
-			app.UseSignalR( routes => {
-				routes.MapHub<SignalHub>( SignalHub.Url );
-			} );
 
+			app.UseClientSideBlazorFiles<Client.Startup>();
 			app.UseRouting();
 			app.UseEndpoints( endpoints => {
+				endpoints.MapHub<SignalHub>( SignalHub.Url );
 				endpoints.MapDefaultControllerRoute();
+				endpoints.MapFallbackToClientSideBlazor<Client.Startup>( "index.html" );
 			} );
 
-			app.UseBlazor<Client.Startup>();
 		}
 
 		private void SetJwtBearerOptions( JwtBearerOptions options ) {

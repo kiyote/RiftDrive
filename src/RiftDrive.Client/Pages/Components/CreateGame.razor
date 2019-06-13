@@ -4,17 +4,17 @@
     <form>
         <div class="form-group">
             <label for="txtGameName">Game Name</label>
-            <input type="text" class="form-control" id="txtGameName" placeholder="Game name" bind=@GameName />
+            <input type="text" class="form-control" id="txtGameName" placeholder="Game name" @bind="@GameName" />
         </div>
         <div class="form-group">
             <label for="txtPlayerName">Player Name</label>
-            <input type="text" class="form-control" id="txtPlayerName" placeholder="Player name" bind=@PlayerName />
+            <input type="text" class="form-control" id="txtPlayerName" placeholder="Player name" @bind="@PlayerName" />
 
         </div>
-        <button type="button" class="btn btn-primary" onclick=@CreateGameClicked>Create</button>
+        <button type="button" class="btn btn-primary" @onclick="@CreateGameClicked">Create</button>
     </form>
 }
 else 
 {
-    <button type="button" class="btn btn-primary" onclick=@ShowCreateClicked>Create</button>
+    <button type="button" class="btn btn-primary" @onclick="@ShowCreateClicked">Create</button>
 }

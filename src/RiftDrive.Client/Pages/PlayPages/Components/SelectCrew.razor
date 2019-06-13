@@ -30,7 +30,7 @@ else
                 @foreach (var crew in Crew)
                 {
                     <tr>
-                        <td><input class="form-check-input" type="checkbox" value="" onchange=@( () => { SelectionChanged(crew.Id); }) /></td>
+                        <td><input class="form-check-input" type="checkbox" value="" @onchange="@( () => { SelectionChanged(crew.Id); })" /></td>
                         <td>@crew.Name</td>
                         <td>@crew.Intelligence</td>
                         <td>@crew.Talent</td>
@@ -44,6 +44,6 @@ else
         <span>
             Crew Selected : @(SelectedCrew.Count()) / 4
         </span>
-        <button type="button" class="btn btn-primary" disabled=@(SelectedCrew.Count() != 4) onclick=@SelectClicked>Launch</button>
+        <button type="button" class="btn btn-primary" disabled=@(SelectedCrew.Count() != 4) @onclick="@SelectClicked">Launch</button>
     </div>
 }

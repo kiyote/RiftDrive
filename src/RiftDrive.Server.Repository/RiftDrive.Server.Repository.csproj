@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.101.5" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.101.23" />
     <PackageReference Include="AWSSDK.Extensions.CognitoAuthentication" Version="0.9.4" />
-    <PackageReference Include="AWSSDK.S3" Version="3.3.101.13" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview5.19227.9" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.102.13" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview6.19304.6" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,13 +15,14 @@ limitations under the License.
 */
 using System;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace RiftDrive.Client {
 	public class NullUriHelper : IUriHelper {
 
 		public static IUriHelper Instance = new NullUriHelper();
 
-		event EventHandler<string> IUriHelper.OnLocationChanged {
+		event EventHandler<LocationChangedEventArgs> IUriHelper.OnLocationChanged {
 			add {
 				throw new NotImplementedException();
 			}

@@ -22,11 +22,7 @@ namespace RiftDrive.Client {
 
 		public static IJSRuntime Instance = new NullJSRuntime();
 
-		Task<T> IJSRuntime.InvokeAsync<T>( string identifier, params object[] args ) {
-			throw new NotImplementedException();
-		}
-
-		void IJSRuntime.UntrackObjectRef( DotNetObjectRef dotNetObjectRef ) {
+		Task<TValue> IJSRuntime.InvokeAsync<TValue>( string identifier, params object[] args ) {
 			throw new NotImplementedException();
 		}
 	}
