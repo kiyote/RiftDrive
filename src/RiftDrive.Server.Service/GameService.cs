@@ -179,7 +179,11 @@ namespace RiftDrive.Server.Service {
 						}
 						break;
 					case ModuleEffect.LaunchMission: {
-							await _missionRepository.Create( gameId, new Id<Mission>(), DateTime.UtcNow, MissionStatus.SelectCrew );
+							int cardIndex = _randomProvider.Next( EncounterCard.All.Count() );
+							EncounterCard card = EncounterCard.All.ElementAt( cardIndex );
+
+							Mission mission = await _missionRepository.Create( gameId, new Id<Mission>(), card.Id, DateTime.UtcNow, MissionStatus.SelectCrew );
+
 							result.Add( $"Launching mission." );
 						}
 						break;
@@ -196,8 +200,9 @@ namespace RiftDrive.Server.Service {
 			return await _missionRepository.AddCrewToMission( missionId, crew, MissionStatus.RaceEncounter );
 		}
 
-		Task<EncounterCard> IGameService.DrawEncounterCard(
-			Id<Game> gameId
+		Task<EncounterCard> IGameService.GetEncounterCard(
+			Id<Game> gameId,
+			Id<Mission> missionId
 		) {
 			int cardIndex = _randomProvider.Next( EncounterCard.All.Count() );
 			EncounterCard card = EncounterCard.All.ElementAt( cardIndex );

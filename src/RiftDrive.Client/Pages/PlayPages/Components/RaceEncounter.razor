@@ -1,3 +1,18 @@
 ﻿@inherits RaceEncounterComponent
 
-<span>Race Encounter</span>
+@if (Mission == default)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <div>
+        <span>@Card?.Description</span>
+        <ul>
+            @foreach (var interaction in Card!.Interactions)
+            {
+                <li>@interaction.Description</li>
+            }
+        </ul>
+    </div>
+}

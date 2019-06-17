@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
-using RiftDrive.Server.Service;
 using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
 
@@ -97,8 +96,13 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet( "{gamesId}/mission/encounter" )]
-		public async Task<ActionResult<EncounterCard>> DrawEncounterCard( string gameId ) {
-			return Ok( await _gameManager.DrawEncounterCard( new Id<Game>( gameId ) ) );
+		public async Task<ActionResult<EncounterCard>> GetEncounterCard( string gameId ) {
+			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
+			if (mission == default) {
+				return Ok( default );
+			}
+
+			return Ok( await _gameManager.GetEncounterCard( new Id<Game>( gameId ), mission.Id ) );
 		}
 
 		[HttpPost( "{gameId}/mission/crew" )]
@@ -116,7 +120,9 @@ namespace RiftDrive.Server.Controllers {
 
 		[HttpGet( "{gameId}/mothership/{mothershipId}/module" )]
 		public async Task<ActionResult<MothershipAttachedModule>> GetMothershipModules( string gameId, string mothershipId ) {
-			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules( new Id<Game>( gameId ), new Id<Mothership>( mothershipId ) );
+			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules(
+				new Id<Game>( gameId ),
+				new Id<Mothership>( mothershipId ) );
 
 			return Ok( modules );
 		}

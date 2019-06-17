@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
 
@@ -25,5 +24,13 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 		[Parameter] protected Game? Game { get; set; }
 
 		[Parameter] protected Mission? Mission { get; set; }
+
+		protected EncounterCard? Card { get; set; }
+
+		protected override void OnParametersSet() {
+			if( Mission != default ) {
+				Card = EncounterCard.GetById( Mission.EncounterCardId );
+			}
+		}
 	}
 }

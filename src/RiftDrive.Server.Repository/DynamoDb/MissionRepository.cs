@@ -68,12 +68,14 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		async Task<Mission> IMissionRepository.Create(
 			Id<Game> gameId,
 			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
 			DateTime createdOn,
 			MissionStatus status
 		) {
 			MissionRecord missionRecord = new MissionRecord() {
 				MissionId = missionId.Value,
 				GameId = gameId.Value,
+				EncounterCardId = encounterCardId.Value,
 				Status = status.ToString(),
 				CreatedOn = createdOn.ToUniversalTime()
 			};
@@ -117,6 +119,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return new Mission(
 				new Id<Mission>( r.MissionId ),
 				new Id<Game>( r.GameId ),
+				new Id<EncounterCard>( r.EncounterCardId ),
 				(MissionStatus)Enum.Parse(typeof(MissionStatus), r.Status));
 		}
 	}

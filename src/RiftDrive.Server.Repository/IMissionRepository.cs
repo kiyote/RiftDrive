@@ -24,7 +24,7 @@ namespace RiftDrive.Server.Repository {
 
 		Task<Mission?> GetByMissionId( Id<Mission> missionId );
 
-		Task<Mission> Create( Id<Game> gameId, Id<Mission> missionId, DateTime createdOn, MissionStatus status );
+		Task<Mission> Create( Id<Game> gameId, Id<Mission> missionId, Id<EncounterCard> encounterCardId, DateTime createdOn, MissionStatus status );
 
 		Task<Mission> AddCrewToMission( Id<Mission> missionId, IEnumerable<Id<Actor>> crew, MissionStatus status );
 	}

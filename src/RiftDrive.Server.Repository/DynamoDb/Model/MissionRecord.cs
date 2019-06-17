@@ -30,6 +30,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 			MissionId = "";
 			GameId = "";
 			Status = "";
+			EncounterCardId = "";
 			CreatedOn = DateTime.MinValue;
 		}
 
@@ -64,6 +65,9 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		[DynamoDBProperty( "CreatedOn" )]
 		public DateTime CreatedOn { get; set; }
+
+		[DynamoDBProperty( "EncounterCardId" )]
+		public string EncounterCardId { get; set; }
 
 		public static string GetKey( string missionId ) {
 			return $"{ItemType}{missionId}";
