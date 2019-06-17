@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,5 +28,22 @@ namespace RiftDrive.Shared.Model {
 		Engineer,
 
 		Science
+	}
+
+	public static class RoleExtensions {
+		public static Skill ToSkill( this Role role ) {
+			switch( role ) {
+				case Role.Command:
+					return Skill.Command;
+				case Role.Engineer:
+					return Skill.Engineering;
+				case Role.Science:
+					return Skill.Science;
+				case Role.Security:
+					return Skill.Security;
+				default:
+					return Skill.Unknown;
+			}
+		}
 	}
 }

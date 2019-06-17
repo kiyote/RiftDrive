@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
 
@@ -23,13 +24,26 @@ using RiftDrive.Shared.Model;
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class RaceEncounterComponent : ComponentBase {
 
+		public RaceEncounterComponent() {
+			Crew = new List<Actor>();
+			EncounterInteractionId = Id<EncounterInteraction>.Empty;
+		}
+
 		[Parameter] protected Game? Game { get; set; }
 
 		[Parameter] protected Mission? Mission { get; set; }
 
+		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+
 		protected EncounterCard? Card { get; set; }
 
-		protected bool SelectionMade { get; set; }
+		protected bool SelectionMade {
+			get {
+				return ( EncounterInteractionId != Id<EncounterInteraction>.Empty );
+			}
+		}
+
+		private Id<EncounterInteraction> EncounterInteractionId { get; set; }
 
 		protected override void OnParametersSet() {
 			if( Mission != default ) {
@@ -38,8 +52,28 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 		}
 
 		protected void SelectionChanged( Id<EncounterInteraction> encounterInteractionId ) {
-			Console.WriteLine( $"{encounterInteractionId.Value}" );
-			SelectionMade = true;
+			EncounterInteractionId = encounterInteractionId;
+		}
+
+		protected void InteractionSelected( UIMouseEventArgs args ) {
+			if( Mission == default || Card == default ) {
+				return;
+			}
+
+			int magnitude = 0;
+			EncounterInteraction interaction = Card.Interactions.First( i => i.Id.Equals( EncounterInteractionId ) );
+			if( interaction.Outcomes.Skill != Skill.None ) {
+				Role targetRole = interaction.Outcomes.Skill.ToRole();
+				Actor crew = Crew.First( c => c.Role == targetRole );
+				//TODO: Perform skill check
+				magnitude = interaction.Outcomes.Success; // TODO: Use result of skill check
+			} else {
+				magnitude = interaction.Outcomes.Success;
+			}
+
+			EncounterOutcomeCard outcome = EncounterOutcomeCard.GetById( Mission.EncounterOutcomeCardId );
+			EncounterOutcome result = outcome.GetResult( magnitude );
+			//TODO: Handle the result here
 		}
 	}
 }

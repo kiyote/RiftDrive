@@ -31,6 +31,8 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 			GameId = "";
 			Status = "";
 			EncounterCardId = "";
+			RaceId = "";
+			EncounterOutcomeCardId = "";
 			CreatedOn = DateTime.MinValue;
 		}
 
@@ -68,6 +70,12 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		[DynamoDBProperty( "EncounterCardId" )]
 		public string EncounterCardId { get; set; }
+
+		[DynamoDBProperty( "RaceId" )]
+		public string RaceId { get; set; }
+
+		[DynamoDBProperty( "EncounterOutcomeCardId ")]
+		public string EncounterOutcomeCardId { get; set; }
 
 		public static string GetKey( string missionId ) {
 			return $"{ItemType}{missionId}";

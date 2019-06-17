@@ -24,11 +24,15 @@ namespace RiftDrive.Shared.Model {
 			Id<Mission> id,
 			Id<Game> gameId,
 			Id<EncounterCard> encounterCardId,
+			Id<Race> raceId,
+			Id<EncounterOutcomeCard> encounterOutcomeCardId,
 			MissionStatus status
 		) {
 			Id = id;
 			GameId = gameId;
 			EncounterCardId = encounterCardId;
+			RaceId = raceId;
+			EncounterOutcomeCardId = encounterOutcomeCardId;
 			Status = status;
 		}
 
@@ -37,6 +41,10 @@ namespace RiftDrive.Shared.Model {
 		public Id<Game> GameId { get; }
 
 		public Id<EncounterCard> EncounterCardId { get; }
+
+		public Id<Race> RaceId { get; }
+
+		public Id<EncounterOutcomeCard> EncounterOutcomeCardId { get; }
 
 		public MissionStatus Status { get; }
 
@@ -48,6 +56,8 @@ namespace RiftDrive.Shared.Model {
 			return Id.Equals( other.Id )
 				&& GameId.Equals( other.GameId )
 				&& EncounterCardId.Equals( other.EncounterCardId )
+				&& RaceId.Equals( other.RaceId )
+				&& EncounterOutcomeCardId.Equals( other.EncounterOutcomeCardId )
 				&& Status == other.Status;
 		}
 
@@ -64,6 +74,8 @@ namespace RiftDrive.Shared.Model {
 				int result = Id.GetHashCode();
 				result = ( result * 31 ) + GameId.GetHashCode();
 				result = ( result * 31 ) + EncounterCardId.GetHashCode();
+				result = ( result * 31 ) + RaceId.GetHashCode();
+				result = ( result * 31 ) + EncounterOutcomeCardId.GetHashCode();
 				result = ( result * 31 ) + Status.GetHashCode();
 
 				return result;

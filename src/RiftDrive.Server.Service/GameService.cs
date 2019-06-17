@@ -181,8 +181,13 @@ namespace RiftDrive.Server.Service {
 					case ModuleEffect.LaunchMission: {
 							int cardIndex = _randomProvider.Next( EncounterCard.All.Count() );
 							EncounterCard card = EncounterCard.All.ElementAt( cardIndex );
+							int raceIndex = _randomProvider.Next( Race.All.Count() );
+							Race race = Race.All.ElementAt( raceIndex );
+							EncounterOutcomeDeck deck = EncounterOutcomeDeck.GetById( race.Id );
+							int outcomeIndex = _randomProvider.Next( deck.Cards.Count() );
+							EncounterOutcomeCard outcome = deck.Cards.ElementAt( outcomeIndex );
 
-							Mission mission = await _missionRepository.Create( gameId, new Id<Mission>(), card.Id, DateTime.UtcNow, MissionStatus.SelectCrew );
+							Mission mission = await _missionRepository.Create( gameId, new Id<Mission>(), card.Id, race.Id, outcome.Id, DateTime.UtcNow, MissionStatus.SelectCrew );
 
 							result.Add( $"Launching mission." );
 						}

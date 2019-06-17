@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RiftDrive.Shared.Model {
 	public sealed partial class EncounterOutcomeCard : IEquatable<EncounterOutcomeCard> {
@@ -30,6 +31,10 @@ namespace RiftDrive.Shared.Model {
 		public Id<EncounterOutcomeCard> Id { get; }
 
 		public IEnumerable<EncounterOutcome> Outcomes { get; }
+
+		public EncounterOutcome GetResult(int magnitude) {
+			return Outcomes.Last( o => o.Low <= magnitude && o.High >= magnitude );
+		}
 
 		public bool Equals( EncounterOutcomeCard other ) {
 			if (ReferenceEquals( other, this )) {

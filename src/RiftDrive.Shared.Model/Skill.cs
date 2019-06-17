@@ -23,10 +23,29 @@ namespace RiftDrive.Shared.Model {
 
 		None,
 
-		Science,
+		Command,
+
+		Security,
 
 		Engineering,
 
-		Command
+		Science
+	}
+
+	public static class SkillExtensions {
+		public static Role ToRole(this Skill skill) {
+			switch (skill) {
+				case Skill.Command:
+					return Role.Command;
+				case Skill.Engineering:
+					return Role.Engineer;
+				case Skill.Science:
+					return Role.Science;
+				case Skill.Security:
+					return Role.Security;
+				default:
+					return Role.Unknown;
+			}
+		}
 	}
 }
