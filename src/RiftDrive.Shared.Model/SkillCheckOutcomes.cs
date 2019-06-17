@@ -72,5 +72,19 @@ namespace RiftDrive.Shared.Model {
 				return result;
 			}
 		}
+
+		public string ToDisplay(bool includeParentheses = true) {
+			string result = "-";
+
+			if (this.Skill != Skill.None) {
+				result = $"{this.Skill} {this.Target}";
+			}
+
+			if (includeParentheses) {
+				return $"({result})";
+			} else {
+				return result;
+			}
+		}
 	}
 }

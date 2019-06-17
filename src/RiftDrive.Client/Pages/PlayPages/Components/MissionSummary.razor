@@ -2,9 +2,9 @@
 
 @if (Mission == default)
 {
-    <span>No current mission.</span>
+    <div class="fadein-content">No current mission.</div>
 }
 else
 {
-    <button type="button" class="btn btn-primary" @onclick="@ResumeClicked">Resume</button>
+    <button type="button" class="btn btn-primary fadein-content" @onclick="@ResumeClicked">Resume</button>
 }

@@ -25,7 +25,7 @@ namespace RiftDrive.Shared.Model {
 
 		public static EncounterCard Card1 = new EncounterCard(
 			new Id<EncounterCard>( "5f077957a5ad4d7b98c33c005e8a50fc" ),
-			"As the discharge from the Rift clears from your display it becomes clear that you are not alone.  Nearby, a vessel cruises towards you, clearly attracted by the disturbance your arrival has made.",
+			"As the discharge from the Rift fades from your display it becomes clear that you are not alone.  Nearby, a vessel cruises towards you, clearly attracted by the disturbance your arrival has made.",
 			new SkillCheck( Skill.Science, 5 ),
 			new List<EncounterInteraction>() {
 				new EncounterInteraction(
@@ -45,7 +45,7 @@ namespace RiftDrive.Shared.Model {
 				),
 				new EncounterInteraction(
 					new Id<EncounterInteraction>("982cc8cda6624c349851a86205e278ca"),
-					"Engage engines and flee the incoming target.",
+					"Engage engines and flee the incoming vessel.",
 					new SkillCheckOutcomes( Skill.None, 0, 3, 3 )
 				)
 			} );

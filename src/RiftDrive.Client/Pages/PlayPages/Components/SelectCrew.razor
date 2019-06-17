@@ -2,11 +2,11 @@
 
 @if (Crew == default)
 {
-    <span>Loading...</span>
+    <div class="fadein-content">Loading...</div>
 }
 else
 {
-    <div class="container container-rounded">
+    <div class="container container-rounded fadein-content">
         <h5>Crew</h5>
         <table class="table table-striped">
             <thead>
@@ -44,6 +44,6 @@ else
         <span>
             Crew Selected : @(SelectedCrew.Count()) / 4
         </span>
-        <button type="button" class="btn btn-primary" disabled=@(SelectedCrew.Count() != 4) @onclick="@SelectClicked">Launch</button>
+        <button type="button" class="btn btn-primary" disabled="@(SelectedCrew.Count() != 4)" @onclick="@SelectClicked">Launch</button>
     </div>
 }

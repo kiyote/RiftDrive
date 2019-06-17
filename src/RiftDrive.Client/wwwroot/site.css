@@ -3,7 +3,7 @@
     border: 2px solid #808080;
 }
 
-div {
+.fadein-content {
     animation: fadein 0.3s;
 }
 

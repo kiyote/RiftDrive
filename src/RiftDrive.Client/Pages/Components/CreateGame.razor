@@ -2,7 +2,7 @@
 
 @if ( CreatingGame ) {
     <form>
-        <div class="form-group">
+        <div class="form-group fadein-content">
             <label for="txtGameName">Game Name</label>
             <input type="text" class="form-control" id="txtGameName" placeholder="Game name" @bind="@GameName" />
         </div>
@@ -16,5 +16,5 @@
 }
 else 
 {
-    <button type="button" class="btn btn-primary" @onclick="@ShowCreateClicked">Create</button>
+    <button type="button" class="btn btn-primary fadein-content" @onclick="@ShowCreateClicked">Create</button>
 }
