@@ -92,8 +92,8 @@ namespace RiftDrive.Client.Action {
 			await _state.ClearState();
 		}
 
-		public async Task UpdateTokens( string accessToken, string refreshToken, DateTime tokensExpireAt ) {
-			await _state.Update( _state.Authentication, accessToken, refreshToken, tokensExpireAt );
+		public async Task UpdateTokens( string idToken, string refreshToken, DateTime tokensExpireAt ) {
+			await _state.Update( _state.Authentication, idToken, refreshToken, tokensExpireAt );
 		}
 
 		public async Task CreateGame( string gameName, string playerName ) {

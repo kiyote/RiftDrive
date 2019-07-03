@@ -24,13 +24,13 @@ namespace RiftDrive.Client.Service {
 	internal sealed class UserApiService : IUserApiService {
 		
 		private readonly HttpClient _http;
-		private readonly IAccessTokenProvider _accessTokenProvider;
+		private readonly IIdTokenProvider _accessTokenProvider;
 		private readonly IServiceConfig _config;
 		private readonly IJsonConverter _json;
 
 		public UserApiService(
 			HttpClient http,
-			IAccessTokenProvider accessTokenProvider,
+			IIdTokenProvider accessTokenProvider,
 			IServiceConfig config,
 			IJsonConverter json
 		) {
@@ -41,13 +41,13 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task IUserApiService.RecordLogin() {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			ClientUser? response = await _http.GetJsonAsync( $@"{_config.Host}/api/user/login",
 				( s ) => { return _json.Deserialize<ClientUser>( s ); } );
 		}
 
 		async Task<ClientUser> IUserApiService.GetUserInformation() {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			ClientUser? response = await _http.GetJsonAsync( $@"{_config.Host}/api/user",
 				( s ) => { return _json.Deserialize<ClientUser>( s ); } );
 
@@ -59,7 +59,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<string> IUserApiService.SetAvatar( string contentType, string content ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			var request = new SetAvatarRequest(
 				contentType,
 				content

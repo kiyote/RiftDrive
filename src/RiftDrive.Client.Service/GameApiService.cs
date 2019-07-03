@@ -25,13 +25,13 @@ namespace RiftDrive.Client.Service {
 	internal sealed class GameApiService : IGameApiService {
 
 		private readonly HttpClient _http;
-		private readonly IAccessTokenProvider _accessTokenProvider;
+		private readonly IIdTokenProvider _accessTokenProvider;
 		private readonly IServiceConfig _config;
 		private readonly IJsonConverter _json;
 
 		public GameApiService(
 			HttpClient http,
-			IAccessTokenProvider accessTokenProvider,
+			IIdTokenProvider accessTokenProvider,
 			IServiceConfig config,
 			IJsonConverter json
 		) {
@@ -45,7 +45,7 @@ namespace RiftDrive.Client.Service {
 			var gameInfo = new CreateGameRequest(
 				gameName,
 				playerName );
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Game? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game",
 				gameInfo,
 				( g ) => { return _json.Serialize( g ); },
@@ -59,14 +59,14 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task IGameApiService.DeleteGame( Id<Game> gameId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			await _http.DeleteAsync( $@"{_config.Host}/api/game/{gameId.Value}" );
 		}
 
 		async Task<Game> IGameApiService.StartGame( Id<Game> gameId, string message ) {
 			var startInfo = new StartGameRequest(
 				message );
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Game? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
 				startInfo,
 				( g ) => { return _json.Serialize( g ); },
@@ -80,7 +80,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<IEnumerable<Game>> IGameApiService.GetGames() {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Game[]? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game",
 				( s ) => { return _json.Deserialize<Game[]>( s ); } );
 
@@ -92,7 +92,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<Game?> IGameApiService.GetGame( Id<Game> gameId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Game? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}",
 				( s ) => { return _json.Deserialize<Game>( s ); } );
 
@@ -100,7 +100,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<IEnumerable<ClientPlayer>> IGameApiService.GetPlayers( Id<Game> gameId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			ClientPlayer[]? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/player",
 				( s ) => { return _json.Deserialize<ClientPlayer[]>( s ); } );
 
@@ -112,7 +112,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<Mothership?> IGameApiService.GetMothership( Id<Game> gameId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Mothership? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership",
 				( s ) => { return _json.Deserialize<Mothership>( s ); } );
 
@@ -120,7 +120,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<IEnumerable<Actor>> IGameApiService.GetCrew( Id<Game> gameId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Actor[]? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/crew",
 				( s ) => { return _json.Deserialize<Actor[]>( s ); } );
 
@@ -135,7 +135,7 @@ namespace RiftDrive.Client.Service {
 			Id<Game> gameId,
 			Id<Mothership> mothershipId
 		) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			MothershipAttachedModule[]? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module",
 				( s ) => { return _json.Deserialize<MothershipAttachedModule[]>( s ); } );
 
@@ -152,7 +152,7 @@ namespace RiftDrive.Client.Service {
 			Id<MothershipModule> mothershipModuleId,
 			Id<MothershipModuleAction> actionId
 		) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			string[]? result = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module/{mothershipModuleId.Value}/action/{actionId.Value}",
 				( s ) => { return _json.Deserialize<string[]>( s ); } );
 
@@ -164,7 +164,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<Mission?> IGameApiService.GetMission( Id<Game> gameId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Mission? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission",
 				( s ) => { return _json.Deserialize<Mission>( s ); } );
 
@@ -173,7 +173,7 @@ namespace RiftDrive.Client.Service {
 
 		async Task<Mission> IGameApiService.SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew ) {
 			SelectMissionCrewRequest request = new SelectMissionCrewRequest( missionId, crew );
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Mission? response = await _http.PostJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission/crew",
 				request,
 				( r ) => { return _json.Serialize( r ); },
@@ -187,7 +187,7 @@ namespace RiftDrive.Client.Service {
 		}
 
 		async Task<EncounterCard> IGameApiService.DrawEncounterCard( Id<Game> gameId, Id<Mission> missionId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetJwtToken() );
+			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			EncounterCard? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission/encounter",
 				( s ) => { return _json.Deserialize<EncounterCard>( s ); } );
 

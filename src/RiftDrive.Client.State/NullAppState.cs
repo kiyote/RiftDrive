@@ -55,7 +55,7 @@ namespace RiftDrive.Client.State {
 			throw new NotImplementedException();
 		}
 
-		Task IAppState.Update( IAuthenticationState initial, string? accessToken, string? refreshToken, DateTime tokensExpireAt ) {
+		Task IAppState.Update( IAuthenticationState initial, string? idToken, string? refreshToken, DateTime tokensExpireAt ) {
 			throw new NotImplementedException();
 		}
 

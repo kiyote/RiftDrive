@@ -20,7 +20,7 @@ namespace RiftDrive.Client.Service {
 
 		public static IServiceCollection RegisterServices<S>( this IServiceCollection services ) where S: class, IServiceConfig {
 			services.AddSingleton<IServiceConfig, S>();
-			services.AddSingleton<IAccessTokenProvider, AccessTokenProvider>();
+			services.AddSingleton<IIdTokenProvider, IdTokenProvider>();
 			services.AddSingleton<IJsonConverter, JsonConverter>();
 			services.AddSingleton<ITokenService, TokenService>();
 			services.AddSingleton<IUserApiService, UserApiService>();

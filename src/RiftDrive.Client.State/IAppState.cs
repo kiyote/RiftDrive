@@ -38,7 +38,7 @@ namespace RiftDrive.Client.State {
 
 		Task Update( IAuthenticationState initial, ClientUser? user );
 
-		Task Update( IAuthenticationState initial, string? accessToken, string? refreshToken, DateTime tokensExpireAt );
+		Task Update( IAuthenticationState initial, string? idToken, string? refreshToken, DateTime tokensExpireAt );
 
 		Task Update( ICurrentGameState initial, Game? game );
 

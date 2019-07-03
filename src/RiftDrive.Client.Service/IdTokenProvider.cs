@@ -19,12 +19,12 @@ using RiftDrive.Client.State;
 using RiftDrive.Shared.Message;
 
 namespace RiftDrive.Client.Service {
-	internal sealed class AccessTokenProvider : IAccessTokenProvider {
+	internal sealed class IdTokenProvider : IIdTokenProvider {
 
 		private readonly IAppState _state;
 		private readonly ITokenService _tokenService;
 
-		public AccessTokenProvider(
+		public IdTokenProvider(
 			IAppState state,
 			ITokenService tokenService
 		) {
@@ -32,19 +32,19 @@ namespace RiftDrive.Client.Service {
 			_tokenService = tokenService;
 		}
 
-		async Task<string> IAccessTokenProvider.GetJwtToken() {
+		async Task<string> IIdTokenProvider.GetIdToken() {
 
-			if (_state.Authentication.AccessToken == default) {
+			if ((_state.Authentication.IdToken == default) || (_state.Authentication.RefreshToken == default)) {
 				throw new InvalidOperationException();
 			}
 
 			if( _state.Authentication.TokensExpireAt < DateTimeOffset.Now ) {
-				AuthorizationToken tokens = await _tokenService.RefreshToken( _state.Authentication.AccessToken );
+				AuthorizationToken tokens = await _tokenService.RefreshToken( _state.Authentication.RefreshToken );
 				if( tokens != default ) {
-					await _state.Update( _state.Authentication, tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+					await _state.Update( _state.Authentication, tokens.id_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 				}
 			}
-			return _state.Authentication.AccessToken;
+			return _state.Authentication.IdToken;
 		}
 	}
 }

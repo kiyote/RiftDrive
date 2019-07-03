@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,8 @@ using System;
 using System.Threading.Tasks;
 
 namespace RiftDrive.Client.Service {
-	public interface IAccessTokenProvider {
+	public interface IIdTokenProvider {
 
-		Task<string> GetJwtToken();
+		Task<string> GetIdToken();
 	}
 }

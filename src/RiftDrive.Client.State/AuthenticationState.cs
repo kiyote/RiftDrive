@@ -27,12 +27,12 @@ namespace RiftDrive.Client.State {
 		[JsonConstructor]
         public AuthenticationState(
 			ClientUser? user,
-            string? accessToken,
+            string? idToken,
             string? refreshToken,
             DateTime tokensExpireAt
         ) {
 			User = user;
-            AccessToken = accessToken;
+            IdToken = idToken;
             RefreshToken = refreshToken;
             TokensExpireAt = tokensExpireAt;
         }
@@ -40,7 +40,7 @@ namespace RiftDrive.Client.State {
 
 		public ClientUser? User { get; }
 
-		public string? AccessToken { get; }
+		public string? IdToken { get; }
 
 		public string? RefreshToken { get; }
 

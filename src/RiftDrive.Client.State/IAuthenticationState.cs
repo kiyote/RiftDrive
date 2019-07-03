@@ -21,7 +21,7 @@ namespace RiftDrive.Client.State {
 	public interface IAuthenticationState {
 		ClientUser? User { get; }
 
-		string? AccessToken { get; }
+		string? IdToken { get; }
 
 		string? RefreshToken { get; }
 

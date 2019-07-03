@@ -64,14 +64,14 @@ namespace RiftDrive.Client.State {
 			await Initialize();
 		}
 
-		public async Task Update( IAuthenticationState initial, string? accessToken, string? refreshToken, DateTime tokensExpireAt ) {
-			Authentication = new AuthenticationState( Authentication.User, accessToken, refreshToken, tokensExpireAt );
+		public async Task Update( IAuthenticationState initial, string? idToken, string? refreshToken, DateTime tokensExpireAt ) {
+			Authentication = new AuthenticationState( Authentication.User, idToken, refreshToken, tokensExpireAt );
 			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task Update( IAuthenticationState initial, ClientUser? user ) {
-			Authentication = new AuthenticationState( user, initial.AccessToken, initial.RefreshToken, initial.TokensExpireAt );
+			Authentication = new AuthenticationState( user, initial.IdToken, initial.RefreshToken, initial.TokensExpireAt );
 			await _storage.Set( "State::Authentication", Authentication );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}

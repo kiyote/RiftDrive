@@ -42,7 +42,7 @@ namespace RiftDrive.Server.Middleware {
 				&& principal.Claims.Any()
 			) {
 				var userIdValue = principal.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier ).Value;
-				var username = principal.Claims.FirstOrDefault( c => c.Type == "username" ).Value;
+				var username = principal.Claims.FirstOrDefault( c => c.Type == "cognito:username" ).Value;
 
 				httpContext.Items["Username"] = username;
 

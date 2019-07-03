@@ -71,7 +71,7 @@ namespace RiftDrive.Client.Action {
 			throw new NotImplementedException();
 		}
 
-		Task IDispatch.UpdateTokens( string accessToken, string refreshToken, DateTime tokensExpireAt ) {
+		Task IDispatch.UpdateTokens( string idToken, string refreshToken, DateTime tokensExpireAt ) {
 			throw new NotImplementedException();
 		}
 	}

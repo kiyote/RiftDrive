@@ -60,7 +60,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 				//TODO: Do something here
 				throw new InvalidOperationException();
 			}
-			await Dispatch.UpdateTokens( tokens.access_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
+			await Dispatch.UpdateTokens( tokens.id_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 
 			Update( "...recording login...", 50 );
 			await Dispatch.RecordLogin();
