@@ -26,7 +26,10 @@ namespace RiftDrive.Shared.Model {
 		public static EncounterOutcomeCard Flaxian1 = new EncounterOutcomeCard(
 			new Id<EncounterOutcomeCard>( "4badd6372dc246cf9a8d242b591d8240" ),
 			new List<EncounterOutcome>() {
-				new EncounterOutcome( int.MinValue, 2, Ship.FlaxianScout.Id )
+				new EncounterOutcome( int.MinValue, 2, Ship.FlaxianScout.Id, EncounterBehaviour.Fight ),
+				new EncounterOutcome( 3, 6, Ship.FlaxianFrigate.Id, EncounterBehaviour.Fight ),
+				new EncounterOutcome( 7, 10, Ship.FlaxianDestroyer.Id, EncounterBehaviour.Fight ),
+				new EncounterOutcome( 11, int.MaxValue, Id<Ship>.Empty, EncounterBehaviour.Flee )
 			} );
 
 		public static List<EncounterOutcomeCard> All = new List<EncounterOutcomeCard>() {

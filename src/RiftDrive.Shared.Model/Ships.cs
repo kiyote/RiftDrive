@@ -35,8 +35,38 @@ namespace RiftDrive.Shared.Model {
 					0, 3)
 			});
 
+		public static Ship FlaxianFrigate = new Ship(
+			new Id<Ship>( "e6bdcdc7f91e4d29869058e17b840ffc" ),
+			"Frigate",
+			new List<ShipAttachedModule>() {
+				new ShipAttachedModule(
+					new Id<Ship>("e6bdcdc7f91e4d29869058e17b840ffc"),
+					new Id<ShipModule>("805cdfdf9f46495c8a03d8a16887eba9"), // Bridge
+					0, 0),
+				new ShipAttachedModule(
+					new Id<Ship>("e6bdcdc7f91e4d29869058e17b840ffc"),
+					new Id<ShipModule>("112255bf754545b085edaeb4ab5e84b1"), // Engine
+					0, 3)
+			} );
+
+		public static Ship FlaxianDestroyer = new Ship(
+			new Id<Ship>( "ebb20b5471b143eba824cfff6c569813" ),
+			"Frigate",
+			new List<ShipAttachedModule>() {
+				new ShipAttachedModule(
+					new Id<Ship>("ebb20b5471b143eba824cfff6c569813"),
+					new Id<ShipModule>("805cdfdf9f46495c8a03d8a16887eba9"), // Bridge
+					0, 0),
+				new ShipAttachedModule(
+					new Id<Ship>("ebb20b5471b143eba824cfff6c569813"),
+					new Id<ShipModule>("112255bf754545b085edaeb4ab5e84b1"), // Engine
+					0, 3)
+			} );
+
 		public static List<Ship> All = new List<Ship>() {
-			FlaxianScout
+			FlaxianScout,
+			FlaxianFrigate,
+			FlaxianDestroyer,
 		};
 	}
 }

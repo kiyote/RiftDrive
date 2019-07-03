@@ -21,11 +21,13 @@ namespace RiftDrive.Shared.Model {
 		public EncounterOutcome(
 			int low,
 			int high,
-			Id<Ship> shipId
+			Id<Ship> shipId,
+			EncounterBehaviour behaviour
 		) {
 			Low = low;
 			High = high;
 			ShipId = shipId;
+			Behaviour = behaviour;
 		}
 
 		public int Low { get; }
@@ -34,6 +36,8 @@ namespace RiftDrive.Shared.Model {
 
 		public Id<Ship> ShipId { get; }
 
+		public EncounterBehaviour Behaviour { get; }
+
 		public bool Equals( EncounterOutcome other ) {
 			if (ReferenceEquals( other, this )) {
 				return true;
@@ -41,7 +45,8 @@ namespace RiftDrive.Shared.Model {
 
 			return Low == other.Low
 				&& High == other.High
-				&& ShipId == other.ShipId;
+				&& ShipId == other.ShipId
+				&& Behaviour == other.Behaviour;
 		}
 
 		public override bool Equals( object obj ) {
@@ -58,6 +63,7 @@ namespace RiftDrive.Shared.Model {
 				result = ( result * 31 ) + Low.GetHashCode();
 				result = ( result * 31 ) + High.GetHashCode();
 				result = ( result * 31 ) + ShipId.GetHashCode();
+				result = ( result * 31 ) + Behaviour.GetHashCode();
 
 				return result;
 			}

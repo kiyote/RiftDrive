@@ -25,14 +25,18 @@ namespace RiftDrive.Shared.Model {
 
 		public static Race Flaxian = new Race( new Id<Race>( "35db9a380e4c40079891fe4a4ff55bda" ), "Flaxian" );
 
+		/*
 		public static Race Trellak = new Race( new Id<Race>( "adc789765eb34fcb95111ce23cbe0d89" ), "Trellak" );
 
 		public static Race Diylap = new Race( new Id<Race>( "479594f52e7747e0918c36f4b7aa737b" ), "Diylap" );
+		*/
 
 		public static List<Race> All = new List<Race>() {
 			Flaxian,
+			/*
 			Trellak,
 			Diylap
+			*/
 		};
 	}
 }
