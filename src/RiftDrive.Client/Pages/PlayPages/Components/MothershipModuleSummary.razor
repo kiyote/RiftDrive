@@ -27,7 +27,7 @@ else
                         <td>
                             @foreach (var action in definition.Actions)
                             {
-                                <button type="button" class="btn btn-primary" @onclick="@(async () => { await ModuleButtonClicked(module, action); })">@action.Name</button>
+                                <button type="button" class="btn btn-primary" @onclick="(async () => { await ModuleButtonClicked(module, action); })">@action.Name</button>
                             }
                         </td>
                     </tr>

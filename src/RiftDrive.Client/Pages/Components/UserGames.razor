@@ -23,10 +23,10 @@ else
                         @game.Name
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" @onclick="@(() => { PlayGame( game.Id ); })">
+                        <button type="button" class="btn btn-primary" @onclick="(() => { PlayGame( game.Id ); })">
                             Play
                         </button>
-                        <button type="button" class="btn btn-primary" @onclick="@(async () => { await DeleteGame( game.Id ); })">
+                        <button type="button" class="btn btn-primary" @onclick="(async () => { await DeleteGame( game.Id ); })">
                             Delete
                         </button>
                     </td>
