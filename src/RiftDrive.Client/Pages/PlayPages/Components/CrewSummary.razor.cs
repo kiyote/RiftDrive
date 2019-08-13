@@ -26,6 +26,6 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			Crew = new List<Actor>();
 		}
 
-		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+		[Parameter] public IEnumerable<Actor> Crew { get; set; }
 	}
 }

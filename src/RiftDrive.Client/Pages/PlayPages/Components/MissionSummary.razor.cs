@@ -25,7 +25,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			UriHelper = NullUriHelper.Instance;
 		}
 
-		[Parameter] protected Mission? Mission { get; set; }
+		[Parameter] public Mission? Mission { get; set; }
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 

@@ -49,7 +49,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 		protected int Progress { get; set; }
 
-		protected override async Task OnInitAsync() {
+		protected override async Task OnInitializedAsync() {
 			State.OnStateChanged += AppStateHasChanged;
 			await State.Initialize();
 

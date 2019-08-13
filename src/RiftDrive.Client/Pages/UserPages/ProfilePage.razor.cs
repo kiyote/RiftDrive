@@ -35,7 +35,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 			JsRuntime = NullJSRuntime.Instance;
 		}
 
-		[Parameter] protected string UserId { get; set; }
+		[Parameter] public string UserId { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
@@ -43,7 +43,7 @@ namespace RiftDrive.Client.Pages.UserPages {
 
 		[Inject] protected IJSRuntime JsRuntime { get; set; }
 
-		protected ElementRef FileUploadRef { get; set; }
+		protected ElementReference FileUploadRef { get; set; }
 
 		protected bool ChangingAvatar { get; set; }
 

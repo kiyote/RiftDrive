@@ -35,7 +35,7 @@ namespace RiftDrive.Client.State {
 			Administration = new AdministrationState();
 		}
 
-		public event EventHandler OnStateChanged;
+		public event EventHandler? OnStateChanged;
 
 		public bool IsInitialized { get; private set; }
 

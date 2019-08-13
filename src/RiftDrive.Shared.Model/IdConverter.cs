@@ -37,7 +37,9 @@ namespace RiftDrive.Shared.Model {
 				return Activator.CreateInstance( objectType, new object[] { Guid.Empty.ToString( "N" ) } );
 			}
 
+#pragma warning disable CS8601 // Possible null reference assignment.
 			return Activator.CreateInstance( objectType, new object[] { value } );
+#pragma warning restore CS8601 // Possible null reference assignment.
 		}
 	}
 }

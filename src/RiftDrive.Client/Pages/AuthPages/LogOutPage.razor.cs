@@ -32,7 +32,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		protected override async Task OnInitAsync() {
+		protected override async Task OnInitializedAsync() {
 			await Dispatch.LogOut();
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}

@@ -32,13 +32,13 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			Crew = new List<Actor>();
 		}
 
-		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+		[Parameter] public IEnumerable<Actor> Crew { get; set; }
+
+		[Parameter] public Game? Game { get; set; }
+
+		[Parameter] public Mission? Mission { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
-
-		[Parameter] protected Game? Game { get; set; }
-
-		[Parameter] protected Mission? Mission { get; set; }
 
 		protected List<Id<Actor>> SelectedCrew { get; set; }
 

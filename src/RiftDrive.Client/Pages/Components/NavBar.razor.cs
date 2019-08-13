@@ -29,9 +29,9 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IConfig Config { get; set; }
 
-		[Parameter] protected ClientUser? User { get; set; }
+		[Parameter] public ClientUser? User { get; set; }
 
-		[Parameter] protected bool IsAuthenticated { get; set; }
+		[Parameter] public bool IsAuthenticated { get; set; }
 
 		public string ProfileUrl {
 			get {

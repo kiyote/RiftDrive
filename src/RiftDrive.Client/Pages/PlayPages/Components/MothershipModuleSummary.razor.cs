@@ -31,9 +31,9 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			UriHelper = NullUriHelper.Instance;
 		}
 
-		[Parameter] protected IEnumerable<MothershipAttachedModule> Modules { get; set; }
+		[Parameter] public IEnumerable<MothershipAttachedModule> Modules { get; set; }
 
-		[Parameter] protected Game? Game { get; set; }
+		[Parameter] public Game? Game { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 

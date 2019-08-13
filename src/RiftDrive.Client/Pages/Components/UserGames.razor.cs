@@ -35,9 +35,9 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IUriHelper UriHelper { get; set; }
 
-		[Parameter] protected IEnumerable<Game> Games { get; set; }
+		[Parameter] public IEnumerable<Game> Games { get; set; }
 
-		[Parameter] protected ClientUser? User { get; set; }
+		[Parameter] public ClientUser? User { get; set; }
 
 		public void PlayGame( Id<Game> gameId ) {
 			UriHelper.NavigateTo( GameViewPageBase.GetUrl( gameId ) );

@@ -34,7 +34,7 @@ namespace RiftDrive.Client.Pages {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		protected override async Task OnInitAsync() {
+		protected override async Task OnInitializedAsync() {
 			State.OnStateChanged += OnStateHasChanged;
 			if (State.Authentication.User != default) {
 				await Dispatch.LoadGames( State.Authentication.User.Id );

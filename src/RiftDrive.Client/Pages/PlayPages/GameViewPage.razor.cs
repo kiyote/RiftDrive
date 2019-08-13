@@ -36,7 +36,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		[Parameter] protected string GameId { get; set; }
+		[Parameter] public string GameId { get; set; }
 
 		public static string GetUrl( Id<Game> gameId ) {
 			return string.Format( Url, gameId.Value );
@@ -46,7 +46,7 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			State.OnStateChanged -= OnStateHasChanged;
 		}
 
-		protected override async Task OnInitAsync() {
+		protected override async Task OnInitializedAsync() {
 			State.OnStateChanged += OnStateHasChanged;
 			var gameId = new Id<Game>( GameId );
 			await Dispatch.LoadCurrentMission( gameId );

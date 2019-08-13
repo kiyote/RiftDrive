@@ -16,7 +16,6 @@ limitations under the License.
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Layouts;
 using RiftDrive.Client.State;
 
 #nullable enable
@@ -30,7 +29,7 @@ namespace RiftDrive.Client.Pages {
 
 		[Inject] protected IAppState State { get; set; }
 
-		protected override async Task OnInitAsync() {
+		protected override async Task OnInitializedAsync() {
 			State.OnStateChanged += AppState_OnStateChanged;
 			await State.Initialize();
 		}

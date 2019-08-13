@@ -29,11 +29,11 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			EncounterInteractionId = Id<EncounterInteraction>.Empty;
 		}
 
-		[Parameter] protected Game? Game { get; set; }
+		[Parameter] public Game? Game { get; set; }
 
-		[Parameter] protected Mission? Mission { get; set; }
+		[Parameter] public Mission? Mission { get; set; }
 
-		[Parameter] protected IEnumerable<Actor> Crew { get; set; }
+		[Parameter] public IEnumerable<Actor> Crew { get; set; }
 
 		protected EncounterCard? Card { get; set; }
 
