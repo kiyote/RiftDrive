@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RiftDrive.Shared.Model;
 
 #nullable enable
@@ -55,7 +56,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			EncounterInteractionId = encounterInteractionId;
 		}
 
-		protected void InteractionSelected( UIMouseEventArgs args ) {
+		protected void InteractionSelected( MouseEventArgs args ) {
 			if( Mission == default || Card == default ) {
 				return;
 			}
@@ -68,6 +69,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 				//TODO: Perform skill check
 				magnitude = interaction.Outcomes.Success; // TODO: Use result of skill check
 			} else {
+				// No skill required so automatic success
 				magnitude = interaction.Outcomes.Success;
 			}
 

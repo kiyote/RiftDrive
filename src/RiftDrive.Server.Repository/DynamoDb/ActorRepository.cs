@@ -40,7 +40,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			string name,
 			Role role,
 			int intelligence,
-			int talent,
+			int expertise,
 			int training,
 			DateTime createdOn
 		) {
@@ -50,7 +50,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				Name = name,
 				Role = role.ToString(),
 				Intelligence = intelligence,
-				Talent = talent,
+				Expertise = expertise,
 				Training = training,
 				CreatedOn = createdOn.ToUniversalTime()
 			};
@@ -90,7 +90,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				r.Name,
 				(Role)Enum.Parse( typeof( Role ), r.Role ),
 				r.Intelligence,
-				r.Talent,
+				r.Expertise,
 				r.Training );
 		}
 	}

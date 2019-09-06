@@ -37,7 +37,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
+		[Inject] protected NavigationManager UriHelper { get; set; }
 
 		protected async Task ModuleButtonClicked(
 			MothershipAttachedModule module,

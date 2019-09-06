@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -71,8 +71,8 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty("Intelligence")]
 		public int Intelligence { get; set; }
 
-		[DynamoDBProperty( "Talent" )]
-		public int Talent { get; set; }
+		[DynamoDBProperty( "Expertise" )]
+		public int Expertise { get; set; }
 
 		[DynamoDBProperty( "Training" )]
 		public int Training { get; set; }

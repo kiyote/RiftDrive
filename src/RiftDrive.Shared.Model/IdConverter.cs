@@ -22,15 +22,15 @@ namespace RiftDrive.Shared.Model {
 			return true;
 		}
 
-		public override void WriteJson( JsonWriter writer, object value, JsonSerializer serializer ) {
-			writer.WriteValue( value.ToString() );
+		public override void WriteJson( JsonWriter writer, object? value, JsonSerializer serializer ) {
+			writer.WriteValue( value?.ToString() );
 		}
 
 		public override bool CanRead {
 			get { return true; }
 		}
 
-		public override object ReadJson( JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer ) {
+		public override object ReadJson( JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer ) {
 			string? value = reader.Value as string;
 
 			if( string.IsNullOrWhiteSpace( value ) ) {

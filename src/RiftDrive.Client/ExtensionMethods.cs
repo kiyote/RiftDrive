@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +21,8 @@ using Microsoft.Extensions.Primitives;
 
 namespace RiftDrive.Client {
 	public static class ExtensionMethods {
-		public static string GetParameter( this IUriHelper uriHelper, string name ) {
-			Uri uri = new Uri( uriHelper.GetAbsoluteUri() );
+		public static string GetParameter( this NavigationManager uriHelper, string name ) {
+			Uri uri = new Uri( uriHelper.Uri );
 			string value = QueryHelpers.ParseQuery( uri.Query ).TryGetValue( name, out StringValues values ) ? values.First() : string.Empty;
 
 			return value;

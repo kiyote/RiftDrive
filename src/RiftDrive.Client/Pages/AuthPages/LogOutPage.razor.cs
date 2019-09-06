@@ -28,7 +28,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 			Dispatch = NullDispatch.Instance;
 		}
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
+		[Inject] protected NavigationManager UriHelper { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 

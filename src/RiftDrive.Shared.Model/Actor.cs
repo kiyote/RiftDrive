@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ namespace RiftDrive.Shared.Model {
 			string name,
 			Role role,
 			int intelligence,
-			int talent,
+			int expertise,
 			int training
 		) {
 			Id = id;
@@ -35,7 +35,7 @@ namespace RiftDrive.Shared.Model {
 			Name = name;
 			Role = role;
 			Intelligence = intelligence;
-			Talent = talent;
+			Expertise = expertise;
 			Training = training;
 		}
 
@@ -48,17 +48,17 @@ namespace RiftDrive.Shared.Model {
 		public Role Role { get; }
 
 		/// <summary>
-		/// The number of cards you can draw.
+		/// How many cards you can hold.
 		/// </summary>
 		public int Intelligence { get; }
 
 		/// <summary>
-		/// The number of cards you can hold.
+		/// How many cards you can play.
 		/// </summary>
-		public int Talent { get; }
+		public int Expertise { get; }
 
 		/// <summary>
-		/// The number of cards you can play.
+		/// How many cards you can draw.
 		/// </summary>
 		public int Training { get; }
 
@@ -72,7 +72,7 @@ namespace RiftDrive.Shared.Model {
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& Role == other.Role
 				&& Intelligence == other.Intelligence
-				&& Talent == other.Talent
+				&& Expertise == other.Expertise
 				&& Training == other.Training;
 		}
 
@@ -92,7 +92,7 @@ namespace RiftDrive.Shared.Model {
 				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + Role.GetHashCode();
 				result = ( result * 31 ) + Intelligence.GetHashCode();
-				result = ( result * 31 ) + Talent.GetHashCode();
+				result = ( result * 31 ) + Expertise.GetHashCode();
 				result = ( result * 31 ) + Training.GetHashCode();
 
 				return result;

@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RiftDrive.Client.Action;
 
 #nullable enable
@@ -33,7 +34,7 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
+		[Inject] protected NavigationManager UriHelper { get; set; }
 
 		protected string GameName { get; set; }
 
@@ -41,7 +42,7 @@ namespace RiftDrive.Client.Pages.Components {
 
 		protected bool CreatingGame { get; set; }
 
-		public async Task CreateGameClicked(UIMouseEventArgs args) {
+		public async Task CreateGameClicked( MouseEventArgs args ) {
 			string gameName = GameName;
 			string playerName = PlayerName;
 			await Dispatch.CreateGame( gameName, playerName );
@@ -50,7 +51,7 @@ namespace RiftDrive.Client.Pages.Components {
 			CreatingGame = false;
 		}
 
-		protected void ShowCreateClicked(UIMouseEventArgs args) {
+		protected void ShowCreateClicked( MouseEventArgs args ) {
 			CreatingGame = true;
 		}
 	}

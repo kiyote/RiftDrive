@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RiftDrive.Client.Action;
 using RiftDrive.Shared.Model;
 
@@ -42,20 +43,20 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		protected List<Id<Actor>> SelectedCrew { get; set; }
 
-		protected async Task SelectClicked(UIMouseEventArgs args) {
-			if ((Game == default) || (Mission == default)) {
+		protected async Task SelectClicked( MouseEventArgs args ) {
+			if( ( Game == default ) || ( Mission == default ) ) {
 				Console.WriteLine( "What?" );
 				return;
 			}
 
-			if (SelectedCrew.Any()) {
-				var selectedCrew = Crew.Where( c => SelectedCrew.Contains( c.Id ) );
+			if( SelectedCrew.Any() ) {
+				IEnumerable<Actor> selectedCrew = Crew.Where( c => SelectedCrew.Contains( c.Id ) );
 				await Dispatch.SelectMissionCrew( Game.Id, Mission.Id, selectedCrew );
 			}
 		}
 
 		protected void SelectionChanged( Id<Actor> crewId ) {
-			if ( SelectedCrew.Contains(crewId)) {
+			if( SelectedCrew.Contains( crewId ) ) {
 				SelectedCrew.Remove( crewId );
 			} else {
 				SelectedCrew.Add( crewId );

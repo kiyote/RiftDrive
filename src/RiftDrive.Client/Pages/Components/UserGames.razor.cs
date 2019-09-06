@@ -33,7 +33,7 @@ namespace RiftDrive.Client.Pages.Components {
 
 		[Inject] protected IDispatch Dispatch { get; set; }
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
+		[Inject] protected NavigationManager UriHelper { get; set; }
 
 		[Parameter] public IEnumerable<Game> Games { get; set; }
 

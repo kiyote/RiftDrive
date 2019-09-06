@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RiftDrive.Shared.Model;
 
 #nullable enable
@@ -27,9 +28,9 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Parameter] public Mission? Mission { get; set; }
 
-		[Inject] protected IUriHelper UriHelper { get; set; }
+		[Inject] protected NavigationManager UriHelper { get; set; }
 
-		protected void ResumeClicked( UIMouseEventArgs args ) {
+		protected void ResumeClicked( MouseEventArgs args ) {
 			if (Mission != default) {
 				UriHelper.NavigateTo( GameMissionPageBase.GetUrl( Mission.GameId ) );
 			}
