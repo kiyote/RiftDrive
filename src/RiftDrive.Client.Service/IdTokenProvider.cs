@@ -39,7 +39,7 @@ namespace RiftDrive.Client.Service {
 			}
 
 			if( _state.Authentication.TokensExpireAt < DateTimeOffset.Now ) {
-				AuthorizationToken tokens = await _tokenService.RefreshToken( _state.Authentication.RefreshToken );
+				AuthorizationToken? tokens = await _tokenService.RefreshToken( _state.Authentication.RefreshToken );
 				if( tokens != default ) {
 					await _state.Update( _state.Authentication, tokens.id_token, tokens.refresh_token, DateTime.UtcNow.AddSeconds( tokens.expires_in ) );
 				}

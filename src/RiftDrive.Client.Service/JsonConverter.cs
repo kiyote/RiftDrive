@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,8 +28,10 @@ namespace RiftDrive.Client.Service {
 			};
 		}
 
-		T IJsonConverter.Deserialize<T>( string value ) {
+		T IJsonConverter.Deserialize<T>( string value ){
+#pragma warning disable CS8717 // A member returning a [MaybeNull] value introduces a null value for a type parameter.
 			return JsonConvert.DeserializeObject<T>( value, _settings );
+#pragma warning restore CS8717 // A member returning a [MaybeNull] value introduces a null value for a type parameter.
 		}
 
 		string IJsonConverter.Serialize( object value ) {

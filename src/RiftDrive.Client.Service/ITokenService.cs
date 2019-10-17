@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,8 @@ using RiftDrive.Shared.Message;
 
 namespace RiftDrive.Client.Service {
 	public interface ITokenService {
-		Task<AuthorizationToken> GetToken( string code );
+		Task<AuthorizationToken?> GetToken( string code );
 
-		Task<AuthorizationToken> RefreshToken( string refreshToken );
+		Task<AuthorizationToken?> RefreshToken( string refreshToken );
 	}
 }

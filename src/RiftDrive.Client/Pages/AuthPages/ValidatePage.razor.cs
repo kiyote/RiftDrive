@@ -28,6 +28,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 	public class ValidatePageBase : ComponentBase, IDisposable {
 
 		public static string Url = "/auth/validate";
+		private bool disposedValue = false; // To detect redundant calls
 
 		public ValidatePageBase() {
 			Messages = new List<string>();
@@ -55,7 +56,7 @@ namespace RiftDrive.Client.Pages.AuthPages {
 
 			string code = UriHelper.GetParameter( "code" );
 			Messages.Add( "...retrieving token..." );
-			AuthorizationToken tokens = await TokenService.GetToken( code );
+			AuthorizationToken? tokens = await TokenService.GetToken( code );
 			if( tokens == default ) {
 				//TODO: Do something here
 				throw new InvalidOperationException();
@@ -75,14 +76,24 @@ namespace RiftDrive.Client.Pages.AuthPages {
 			StateHasChanged();
 		}
 
-		public void Dispose() {
-			State.OnStateChanged -= AppStateHasChanged;
-		}
-
 		private void Update(string message, int progress) {
 			Messages.Add( message );
 			Progress = progress;
 			StateHasChanged();
+		}
+
+		protected virtual void Dispose( bool disposing ) {
+			if( !disposedValue ) {
+				if( disposing ) {
+					State.OnStateChanged -= AppStateHasChanged;
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		public void Dispose() {
+			Dispose( true );
 		}
 	}
 }

@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace RiftDrive.Client.Service {
 	public static class ExtensionMethods {
 		public static async Task<T?> GetJsonAsync<T>( this HttpClient httpClient, string requestUri, Func<string, T> fromJson ) where T: class {
-			string responseJson = await httpClient.GetStringAsync( requestUri );
+			string? responseJson = await httpClient.GetStringAsync( requestUri );
 			return fromJson( responseJson );
 		}
 

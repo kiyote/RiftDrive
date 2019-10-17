@@ -85,7 +85,7 @@ namespace RiftDrive.Client.Service {
 				( s ) => { return _json.Deserialize<Game[]>( s ); } );
 
 			if( response == default ) {
-				response = new Game[0];
+				response = Array.Empty<Game>();
 			}
 
 			return response;
@@ -105,7 +105,7 @@ namespace RiftDrive.Client.Service {
 				( s ) => { return _json.Deserialize<ClientPlayer[]>( s ); } );
 
 			if (response == default) {
-				response = new ClientPlayer[0];
+				response = Array.Empty<ClientPlayer>();
 			}
 
 			return response;
@@ -125,7 +125,7 @@ namespace RiftDrive.Client.Service {
 				( s ) => { return _json.Deserialize<Actor[]>( s ); } );
 
 			if (response == default) {
-				response = new Actor[0];
+				response = Array.Empty<Actor>();
 			}
 
 			return response;
@@ -140,7 +140,7 @@ namespace RiftDrive.Client.Service {
 				( s ) => { return _json.Deserialize<MothershipAttachedModule[]>( s ); } );
 
 			if (response == default) {
-				response = new MothershipAttachedModule[0];
+				response = Array.Empty<MothershipAttachedModule>();
 			}
 
 			return response;
@@ -157,7 +157,7 @@ namespace RiftDrive.Client.Service {
 				( s ) => { return _json.Deserialize<string[]>( s ); } );
 
 			if (result == default) {
-				result = new string[0];
+				result = Array.Empty<string>();
 			}
 
 			return result;

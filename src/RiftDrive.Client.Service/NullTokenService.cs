@@ -22,11 +22,11 @@ namespace RiftDrive.Client.Service {
 
 		public static ITokenService Instance = new NullTokenService();
 
-		Task<AuthorizationToken> ITokenService.GetToken( string code ) {
+		Task<AuthorizationToken?> ITokenService.GetToken( string code ) {
 			throw new NotImplementedException();
 		}
 
-		Task<AuthorizationToken> ITokenService.RefreshToken( string refreshToken ) {
+		Task<AuthorizationToken?> ITokenService.RefreshToken( string refreshToken ) {
 			throw new NotImplementedException();
 		}
 	}

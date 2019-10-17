@@ -36,7 +36,7 @@ namespace RiftDrive.Client.Service {
 			_json = json;
 		}
 
-		async Task<AuthorizationToken> ITokenService.GetToken( string code ) {
+		async Task<AuthorizationToken?> ITokenService.GetToken( string code ) {
 			var content = new FormUrlEncodedContent( new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("grant_type", "authorization_code"),
 				new KeyValuePair<string, string>("client_id", _config.CognitoClientId),
@@ -46,7 +46,7 @@ namespace RiftDrive.Client.Service {
 			HttpResponseMessage response = await _http.PostAsync( _config.TokenUrl, content );
 			if( response.IsSuccessStatusCode ) {
 				string payload = await response.Content.ReadAsStringAsync();
-				AuthorizationToken tokens = _json.Deserialize<AuthorizationToken>( payload );
+				AuthorizationToken? tokens = _json.Deserialize<AuthorizationToken>( payload );
 
 				return tokens;
 			}
@@ -54,7 +54,7 @@ namespace RiftDrive.Client.Service {
 			throw new ArgumentException();
 		}
 
-		async Task<AuthorizationToken> ITokenService.RefreshToken( string refreshToken ) {
+		async Task<AuthorizationToken?> ITokenService.RefreshToken( string refreshToken ) {
 			var content = new FormUrlEncodedContent( new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("grant_type", "refresh_token"),
 				new KeyValuePair<string, string>("client_id", _config.CognitoClientId),
@@ -63,7 +63,7 @@ namespace RiftDrive.Client.Service {
 			HttpResponseMessage response = await _http.PostAsync( _config.TokenUrl, content );
 			if( response.IsSuccessStatusCode ) {
 				string payload = await response.Content.ReadAsStringAsync();
-				AuthorizationToken tokens = _json.Deserialize<AuthorizationToken>( payload );
+				AuthorizationToken? tokens = _json.Deserialize<AuthorizationToken>( payload );
 
 				return tokens;
 			}

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
+
 namespace RiftDrive.Client.Service {
 	public interface IJsonConverter {
 		T Deserialize<T>( string value );
