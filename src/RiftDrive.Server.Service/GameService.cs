@@ -150,7 +150,7 @@ namespace RiftDrive.Server.Service {
 			MothershipAttachedModule module = await _mothershipRepository.GetAttachedModule( gameId, mothershipId, moduleId );
 			MothershipModule definition = MothershipModule.GetById( moduleId );
 			MothershipModuleAction action = definition.Actions.First( a => a.Id == actionId );
-			foreach( var effect in action.Effects ) {
+			foreach( MothershipModuleEffect effect in action.Effects ) {
 				int magnitude = CalculateMagnitude( effect );
 				switch( effect.Effect ) {
 					case ModuleEffect.AddCrew: {

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
 namespace RiftDrive.Server {
+#pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
 	public class Program {
+#pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
 		public static void Main( string[] args ) {
 			BuildWebHost( args ).Run();
 		}
