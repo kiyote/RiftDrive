@@ -38,6 +38,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RiftDrive.Server {
 	public class Startup {
@@ -59,6 +60,7 @@ namespace RiftDrive.Server {
 					policy.AddAuthenticationSchemes( JwtBearerDefaults.AuthenticationScheme );
 					policy.RequireClaim( ClaimTypes.NameIdentifier );
 				} );
+				options.DefaultPolicy = options.GetPolicy( JwtBearerDefaults.AuthenticationScheme );
 			} );
 
 			services
@@ -106,8 +108,6 @@ namespace RiftDrive.Server {
 		public void Configure( IApplicationBuilder app, IWebHostEnvironment env ) {
 #pragma warning restore CA1822 // Mark members as static
 
-			app.UseIdentificationMiddleware();
-
 			if( env.IsDevelopment() ) {
 				app.UseDeveloperExceptionPage();
 				app.UseBlazorDebugging();
@@ -117,18 +117,16 @@ namespace RiftDrive.Server {
 
 			app.UseClientSideBlazorFiles<Client.Startup>();
 			app.UseRouting();
-
-			app
-				.UseResponseCompression()
-				.UseAuthorization()
-				.UseAuthentication();
+			app.UseResponseCompression();
+			app.UseAuthorization();
+			app.UseAuthentication();
+			app.UseIdentificationMiddleware();
 
 			app.UseEndpoints( endpoints => {
 				endpoints.MapHub<SignalHub>( SignalHub.Url );
 				endpoints.MapDefaultControllerRoute();
 				endpoints.MapFallbackToClientSideBlazor<Client.Startup>( "index.html" );
 			} );
-
 		}
 
 		private void SetJwtBearerOptions( JwtBearerOptions options ) {
@@ -159,11 +157,12 @@ namespace RiftDrive.Server {
 					// If there is an access token supplied in the url, then
 					// we check to see if we're actually trying to service
 					// a SignalR request, and if so, we tuck the token in to
-					// the context so the request is property authenticated.
+					// the context so the request is properly authenticated.
 					if( !string.IsNullOrWhiteSpace( accessToken )
 						&& ( context.HttpContext.WebSockets.IsWebSocketRequest
 							|| context.HttpContext.Request.Path.StartsWithSegments( SignalHub.Url )
-							|| context.Request.Headers["Accept"] == "text/event-stream" ) ) {
+							|| context.Request.Headers["Accept"] == "text/event-stream" )
+					) {
 						context.Token = context.Request.Query["access_token"];
 					}
 					return Task.CompletedTask;
