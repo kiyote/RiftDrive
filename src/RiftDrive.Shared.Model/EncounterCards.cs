@@ -31,22 +31,22 @@ namespace RiftDrive.Shared.Model {
 				new EncounterInteraction(
 					new Id<EncounterInteraction>("d8926ed3ef89471cb2eae906504a58b1"),
 					"Attempt to disguise your vessel by altering its engine signature.",
-					new SkillCheckOutcomes( Skill.Engineering, 3, 2, 7 )
+					new EncounterInteractionSkillCheck( new SkillCheck( Skill.Engineering, 3 ), 2, 7 )
 				),
 				new EncounterInteraction(
 					new Id<EncounterInteraction>("a79d90a88a7e47baa37aa8996a027fdc"),
 					"Broadcast an aggressive warning that approaching vessels will be considered hostile.",
-					new SkillCheckOutcomes( Skill.Command, 5, 10, 4 )
+					new EncounterInteractionSkillCheck( new SkillCheck( Skill.Command, 5 ), 10, 4 )
 				),
 				new EncounterInteraction(
 					new Id<EncounterInteraction>("a12d1630f8cf43bebedac85df3ca7a74"),
 					"Hail the vessel and attempt to communicate.",
-					new SkillCheckOutcomes( Skill.None, 0, 1, 1 )
+					new EncounterInteractionSkillCheck( SkillCheck.None, 1, 1 )
 				),
 				new EncounterInteraction(
 					new Id<EncounterInteraction>("982cc8cda6624c349851a86205e278ca"),
 					"Engage engines and flee the incoming vessel.",
-					new SkillCheckOutcomes( Skill.None, 0, 3, 3 )
+					new EncounterInteractionSkillCheck( SkillCheck.None, 3, 3 )
 				)
 			} );
 

@@ -56,15 +56,15 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			EncounterInteractionId = encounterInteractionId;
 		}
 
-		protected void InteractionSelected( MouseEventArgs args ) {
+		protected void InteractionSelected( MouseEventArgs _ ) {
 			if( Mission == default || Card == default ) {
 				return;
 			}
 
 			int magnitude = 0;
 			EncounterInteraction interaction = Card.Interactions.First( i => i.Id.Equals( EncounterInteractionId ) );
-			if( interaction.Outcomes.Skill != Skill.None ) {
-				Role targetRole = interaction.Outcomes.Skill.ToRole();
+			if( interaction.Outcomes.SkillCheck != SkillCheck.None ) {
+				Role targetRole = interaction.Outcomes.SkillCheck.Skill.ToRole();
 				Actor crew = Crew.First( c => c.Role == targetRole );
 				//TODO: Perform skill check
 				magnitude = interaction.Outcomes.Success; // TODO: Use result of skill check

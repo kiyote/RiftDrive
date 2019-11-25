@@ -16,6 +16,7 @@ limitations under the License.
 using System;
 using Newtonsoft.Json;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.State {
 	public interface IAuthenticationState {

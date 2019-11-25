@@ -16,6 +16,7 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.Service {
 	public interface IGameApiService {

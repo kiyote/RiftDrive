@@ -14,25 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
 	public sealed partial class SkillCard: IEquatable<SkillCard> {
 
+		[JsonConstructor]
 		public SkillCard(
 			Id<SkillCard> id,
-			Skill skill,
-			int magnitude
+			IEnumerable<SkillValue> skillValues
 		) {
 			Id = id;
-			Skill = skill;
-			Magnitude = magnitude;
+			SkillValues = skillValues;
+		}
+
+		public SkillCard(
+			Id<SkillCard> id,
+			SkillValue skillValue
+		) {
+			Id = id;
+			SkillValues = new List<SkillValue>() { skillValue };
 		}
 
 		public Id<SkillCard> Id { get; set; }
 
-		public Skill Skill { get; set; }
-
-		public int Magnitude { get; set; }
+		public IEnumerable<SkillValue> SkillValues { get; set; }
 
 		public bool Equals( SkillCard other ) {
 			if (ReferenceEquals(other, this)) {
@@ -40,8 +47,7 @@ namespace RiftDrive.Shared.Model {
 			}
 
 			return Id.Equals( other.Id )
-				&& Skill == other.Skill
-				&& Magnitude == other.Magnitude;
+				&& SkillValues.Similar( other.SkillValues );
 		}
 
 		public override bool Equals( object obj ) {
@@ -57,8 +63,7 @@ namespace RiftDrive.Shared.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = Id.GetHashCode();
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Magnitude.GetHashCode();
+				result = ( result * 31 ) + SkillValues.GetFinalHashCode();
 
 				return result;
 			}

@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;

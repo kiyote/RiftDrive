@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using RiftDrive.Server.Model;
 using RiftDrive.Server.Service;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Server.Managers {
 	public class GameManager {

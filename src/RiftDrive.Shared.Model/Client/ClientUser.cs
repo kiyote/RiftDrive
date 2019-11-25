@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared.Model {
+namespace RiftDrive.Shared.Model.Client {
 	public class ClientUser : IEquatable<ClientUser> {
 
 		[JsonConstructor]

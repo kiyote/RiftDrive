@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 #nullable enable
 

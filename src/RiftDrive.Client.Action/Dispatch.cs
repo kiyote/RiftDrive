@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.Action {
 	internal sealed class Dispatch: IDispatch {
@@ -97,7 +98,7 @@ namespace RiftDrive.Client.Action {
 		}
 
 		public async Task CreateGame( string gameName, string playerName ) {
-			Game game = await _gameService.CreateGame( gameName, playerName );
+			await _gameService.CreateGame( gameName, playerName );
 			IEnumerable<Game> games = await _gameService.GetGames();
 			await _state.Update( _state.Administration, games );
 		}

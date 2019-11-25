@@ -16,50 +16,54 @@ limitations under the License.
 using System;
 using Newtonsoft.Json;
 
-namespace RiftDrive.Shared.Model {
-	/*
-	 * Defines a check to be made against a particular skill.  It defines
-	 * the skill value to be tested and the magnitude required for success.
-	 */
-	public sealed class SkillCheck : IEquatable<SkillCheck> {
-
-		public static SkillCheck None = new SkillCheck( Skill.Unknown, int.MinValue );
+namespace RiftDrive.Shared.Model.Client {
+	public class ClientPlayer : IEquatable<ClientPlayer> {
 
 		[JsonConstructor]
-		public SkillCheck(
-			Skill skill,
-			int target
+		public ClientPlayer(
+			Id<ClientPlayer> id,
+			Id<Game> gameId,
+			string name
 		) {
-			Skill = skill;
-			Target = target;
+			Id = id;
+			GameId = gameId;
+			Name = name;
 		}
 
-		public Skill Skill { get; }
+		public Id<ClientPlayer> Id { get; }
 
-		public int Target { get; }
+		public Id<Game> GameId { get; }
 
-		public bool Equals( SkillCheck other ) {
+		public string Name { get; }
+
+		public bool Equals( ClientPlayer other ) {
+			if( other is null ) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return Skill == other.Skill
-				&& Target == other.Target;
+			return Id.Equals( other.Id )
+				&& GameId.Equals( other.GameId )
+				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is SkillCheck target ) ) {
+			if( !( obj is ClientPlayer target ) ) {
 				return false;
 			}
 
-			return Equals( target as SkillCheck );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Target.GetHashCode();
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + GameId.GetHashCode();
+				result = ( result * 13 ) + Name.GetHashCode();
 
 				return result;
 			}

@@ -15,7 +15,6 @@ limitations under the License.
 */
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RiftDrive.Shared.Model {
 	public sealed class SkillDeck {
@@ -28,13 +27,28 @@ namespace RiftDrive.Shared.Model {
 			_discard = new Stack<SkillCard>();
 		}
 
-		public IEnumerable<SkillCard> Draw(int count) {
+		public IEnumerable<SkillCard> Draw( int count ) {
 			var result = new List<SkillCard>();
 
-			for (int i = 0; i < count; i++) {
+			for( int i = 0; i < count; i++ ) {
 				_discard.Push( _cards.Peek() );
 				result.Add( _cards.Pop() );
-			}			
+			}
+
+			return result;
+		}
+
+		public int CheckSkill( Skill skill, int drawCount ) {
+			int result = 0;
+			IEnumerable<SkillCard> cards = Draw( drawCount );
+			foreach ( SkillCard card in cards) {
+				foreach (SkillValue skillValue in card.SkillValues) {
+					if( skillValue.Skill == skill ) {
+						result += skillValue.Value;
+					}
+
+				}
+			}
 
 			return result;
 		}

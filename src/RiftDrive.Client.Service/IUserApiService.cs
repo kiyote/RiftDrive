@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Threading.Tasks;
-using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.Service {
 	public interface IUserApiService {

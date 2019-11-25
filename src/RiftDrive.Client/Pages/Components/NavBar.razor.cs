@@ -15,6 +15,7 @@ limitations under the License.
 */
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 using RiftDrive.Client.Pages.AuthPages;
 using RiftDrive.Client.Pages.UserPages;
 

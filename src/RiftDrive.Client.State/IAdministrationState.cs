@@ -15,6 +15,7 @@ limitations under the License.
 */
 using System.Collections.Generic;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.State {
 	public interface IAdministrationState {

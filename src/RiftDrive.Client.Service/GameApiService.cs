@@ -20,6 +20,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.Service {
 	internal sealed class GameApiService : IGameApiService {

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,53 +17,47 @@ using System;
 using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
-	public class ClientPlayer : IEquatable<ClientPlayer> {
+	public sealed class SkillValue: IEquatable<SkillValue> {
+
+		public static SkillValue None = new SkillValue( Skill.None, int.MinValue );
 
 		[JsonConstructor]
-		public ClientPlayer(
-			Id<ClientPlayer> id,
-			Id<Game> gameId,
-			string name
+		public SkillValue(
+			Skill skill,
+			int value
 		) {
-			Id = id;
-			GameId = gameId;
-			Name = name;
+			Skill = skill;
+			Value = value;
 		}
 
-		public Id<ClientPlayer> Id { get; }
+		public Skill Skill { get; }
 
-		public Id<Game> GameId { get; }
+		public int Value { get; }
 
-		public string Name { get; }
-
-		public bool Equals( ClientPlayer other ) {
-			if( other is null ) {
-				return false;
-			}
-
+		public bool Equals( SkillValue other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return Id.Equals( other.Id )
-				&& GameId.Equals( other.GameId )
-				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
+			return Skill == other.Skill
+				&& Value == other.Value;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is ClientPlayer target ) ) {
+			SkillValue? card = obj as SkillValue;
+
+			if( card == default ) {
 				return false;
 			}
 
-			return Equals( target );
+			return Equals( card );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + GameId.GetHashCode();
-				result = ( result * 13 ) + Name.GetHashCode();
+				result = ( result * 31 ) + Skill.GetHashCode();
+				result = ( result * 31 ) + Value.GetHashCode();
 
 				return result;
 			}

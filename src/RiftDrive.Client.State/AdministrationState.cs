@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Client.State {
 	internal sealed class AdministrationState : IAdministrationState {

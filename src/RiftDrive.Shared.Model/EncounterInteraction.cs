@@ -23,7 +23,7 @@ namespace RiftDrive.Shared.Model {
 		public EncounterInteraction(
 			Id<EncounterInteraction> id,
 			string description,
-			SkillCheckOutcomes outcomes
+			EncounterInteractionSkillCheck outcomes
 		) {
 			Id = id;
 			Description = description;
@@ -34,7 +34,7 @@ namespace RiftDrive.Shared.Model {
 
 		public string Description { get; }
 
-		public SkillCheckOutcomes Outcomes { get; }
+		public EncounterInteractionSkillCheck Outcomes { get; }
 
 		bool IEquatable<EncounterInteraction>.Equals( EncounterInteraction other ) {
 			if (ReferenceEquals(other, this)) {

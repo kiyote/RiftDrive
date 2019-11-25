@@ -21,6 +21,7 @@ using Microsoft.JSInterop;
 using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 #nullable enable
 

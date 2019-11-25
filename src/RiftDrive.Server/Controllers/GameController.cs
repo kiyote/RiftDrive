@@ -21,6 +21,7 @@ using RiftDrive.Server.Managers;
 using RiftDrive.Server.Model;
 using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Server.Controllers {
 	[ResponseCache( Location = ResponseCacheLocation.None, NoStore = true )]

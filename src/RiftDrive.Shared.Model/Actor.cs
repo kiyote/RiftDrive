@@ -15,7 +15,6 @@ limitations under the License.
 */
 using System;
 using Newtonsoft.Json;
-using RiftDrive.Shared;
 
 namespace RiftDrive.Shared.Model {
 	public sealed class Actor: IEquatable<Actor> {

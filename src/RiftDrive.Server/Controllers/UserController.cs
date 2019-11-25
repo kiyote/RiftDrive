@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
 using RiftDrive.Shared.Message;
-using RiftDrive.Shared.Model;
+using RiftDrive.Shared.Model.Client;
 
 namespace RiftDrive.Server.Controllers {
 	[ResponseCache( Location = ResponseCacheLocation.None, NoStore = true )]
@@ -40,14 +39,14 @@ namespace RiftDrive.Server.Controllers {
 
 		[HttpGet( "login" )]
 		public async Task<ActionResult> RecordLogin() {
-			var user = await _userManager.RecordLogin( _contextInformation.Username );
+			ClientUser user = await _userManager.RecordLogin( _contextInformation.Username );
 
 			return Ok( user );
 		}
 
 		[HttpGet]
 		public async Task<ActionResult<ClientUser>> GetUserInformation() {
-			var result = await _userManager.GetUser( _contextInformation.UserId );
+			ClientUser? result = await _userManager.GetUser( _contextInformation.UserId );
 
 			if( result != default ) {
 				return Ok( result );
@@ -59,7 +58,7 @@ namespace RiftDrive.Server.Controllers {
 
 		[HttpGet("{userId}")]
 		public async Task<ActionResult<ClientUser>> GetUserInformation( string userId ) {
-			var result = await _userManager.GetUser( userId );
+			ClientUser? result = await _userManager.GetUser( userId );
 
 			if( result != default ) {
 				return Ok( result );
@@ -72,7 +71,7 @@ namespace RiftDrive.Server.Controllers {
 		[HttpPost( "avatar" )]
 		public async Task<ActionResult<SetAvatarResponse>> SetAvatar( [FromBody] SetAvatarRequest request ) {
 
-			var url = await _userManager.SetAvatar( _contextInformation.UserId, request.ContentType, request.Content );
+			string url = await _userManager.SetAvatar( _contextInformation.UserId, request.ContentType, request.Content );
 			return Ok( new SetAvatarResponse( url ) );
 		}
 	}
