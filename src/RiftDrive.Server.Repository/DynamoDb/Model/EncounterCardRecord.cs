@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		public EncounterCardRecord() {
 			EncounterCardId = "";
 			Description = "";
-			RevealRaceSkill = "";
+			RevealRaceFocus = "";
 		}
 
 		[DynamoDBHashKey( "PK" )]
@@ -58,8 +58,8 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty( "Description" )]
 		public string Description { get; set; }
 
-		[DynamoDBProperty( "RevealRaceSkill" )]
-		public string RevealRaceSkill { get; set; }
+		[DynamoDBProperty( "RevealRaceFocus" )]
+		public string RevealRaceFocus { get; set; }
 
 		[DynamoDBProperty( "RevealRaceTarget" )]
 		public int RevealRaceTarget { get; set; }

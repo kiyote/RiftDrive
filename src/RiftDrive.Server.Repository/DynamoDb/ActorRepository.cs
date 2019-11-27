@@ -19,7 +19,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
-using RiftDrive.Server.Model;
 using RiftDrive.Server.Repository.DynamoDb.Model;
 using RiftDrive.Shared.Model;
 
@@ -39,7 +38,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			Id<Actor> actorId,
 			string name,
 			Role role,
-			int intelligence,
+			int discipline,
 			int expertise,
 			int training,
 			DateTime createdOn
@@ -49,7 +48,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				ActorId = actorId.Value,
 				Name = name,
 				Role = role.ToString(),
-				Intelligence = intelligence,
+				Discipline = discipline,
 				Expertise = expertise,
 				Training = training,
 				CreatedOn = createdOn.ToUniversalTime()
@@ -89,7 +88,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				new Id<Game>( r.GameId ),
 				r.Name,
 				(Role)Enum.Parse( typeof( Role ), r.Role ),
-				r.Intelligence,
+				r.Discipline,
 				r.Expertise,
 				r.Training );
 		}

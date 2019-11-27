@@ -68,8 +68,8 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty("Role")]
 		public string Role { get; set; }
 
-		[DynamoDBProperty("Intelligence")]
-		public int Intelligence { get; set; }
+		[DynamoDBProperty("Discipline")]
+		public int Discipline { get; set; }
 
 		[DynamoDBProperty( "Expertise" )]
 		public int Expertise { get; set; }

@@ -18,7 +18,7 @@ using Newtonsoft.Json.Converters;
 
 namespace RiftDrive.Shared.Model {
 	[JsonConverter( typeof( StringEnumConverter ) )]
-	public enum Skill {
+	public enum Focus {
 		Unknown,
 
 		None,
@@ -32,14 +32,14 @@ namespace RiftDrive.Shared.Model {
 		Science
 	}
 
-	public static class SkillExtensions {
-		public static Role ToRole( this Skill skill ) {
-			return skill switch
+	public static class FocusExtensions {
+		public static Role ToRole( this Focus focus ) {
+			return focus switch
 			{
-				Skill.Command => Role.Command,
-				Skill.Engineering => Role.Engineer,
-				Skill.Science => Role.Science,
-				Skill.Security => Role.Security,
+				Focus.Command => Role.Command,
+				Focus.Engineering => Role.Engineer,
+				Focus.Science => Role.Science,
+				Focus.Security => Role.Security,
 				_ => Role.Unknown,
 			};
 		}

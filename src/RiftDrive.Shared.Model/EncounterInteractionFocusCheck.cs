@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
 	/*
-	 * Defines the parameters for a given skill check, indicating the skill
+	 * Defines the parameters for a given focus check, indicating the focus
 	 * to be tested, the value that is required and the magnitude rewarded
 	 * depending on whether the target was met or exceeded (scucess) otherwise
 	 * the failure.
@@ -29,39 +29,39 @@ namespace RiftDrive.Shared.Model {
 	 * The success and failure values are what will be used to determine
 	 * the encounter outcome value.
 	 */
-	public sealed class EncounterInteractionSkillCheck : IEquatable<EncounterInteractionSkillCheck> {
+	public sealed class EncounterInteractionFocusCheck : IEquatable<EncounterInteractionFocusCheck> {
 
-		public static EncounterInteractionSkillCheck None = new EncounterInteractionSkillCheck( SkillCheck.None, int.MinValue, int.MinValue );
+		public static EncounterInteractionFocusCheck None = new EncounterInteractionFocusCheck( FocusCheck.None, int.MinValue, int.MinValue );
 
 		[JsonConstructor]
-		public EncounterInteractionSkillCheck(
-			SkillCheck skillCheck,
+		public EncounterInteractionFocusCheck(
+			FocusCheck focusCheck,
 			int success,
 			int failure
 		) {
-			SkillCheck = skillCheck;
+			FocusCheck = focusCheck;
 			Success = success;
 			Failure = failure;
 		}
 
-		public SkillCheck SkillCheck { get; }
+		public FocusCheck FocusCheck { get; }
 
 		public int Success { get; }
 
 		public int Failure { get; }
 
-		public bool Equals( EncounterInteractionSkillCheck other ) {
+		public bool Equals( EncounterInteractionFocusCheck other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return SkillCheck == other.SkillCheck
+			return FocusCheck == other.FocusCheck
 				&& Success == other.Success
 				&& Failure == other.Failure;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is EncounterInteractionSkillCheck target ) ) {
+			if( !( obj is EncounterInteractionFocusCheck target ) ) {
 				return false;
 			}
 
@@ -71,7 +71,7 @@ namespace RiftDrive.Shared.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + SkillCheck.GetHashCode();
+				result = ( result * 31 ) + FocusCheck.GetHashCode();
 				result = ( result * 31 ) + Success.GetHashCode();
 				result = ( result * 31 ) + Failure.GetHashCode();
 
@@ -82,8 +82,8 @@ namespace RiftDrive.Shared.Model {
 		public string ToDisplay(bool includeParentheses = true) {
 			string result = "-";
 
-			if (this.SkillCheck != SkillCheck.None) {
-				result = $"{this.SkillCheck.Skill} {this.SkillCheck.Target}";
+			if (this.FocusCheck != FocusCheck.None) {
+				result = $"{this.FocusCheck.Focus} {this.FocusCheck.Target}";
 			}
 
 			if (includeParentheses) {

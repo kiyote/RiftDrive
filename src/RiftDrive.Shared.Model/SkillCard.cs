@@ -23,23 +23,23 @@ namespace RiftDrive.Shared.Model {
 		[JsonConstructor]
 		public SkillCard(
 			Id<SkillCard> id,
-			IEnumerable<SkillValue> skillValues
+			IEnumerable<FocusValue> focusValues
 		) {
 			Id = id;
-			SkillValues = skillValues;
+			SkillValues = focusValues;
 		}
 
 		public SkillCard(
 			Id<SkillCard> id,
-			SkillValue skillValue
+			FocusValue skillValue
 		) {
 			Id = id;
-			SkillValues = new List<SkillValue>() { skillValue };
+			SkillValues = new List<FocusValue>() { skillValue };
 		}
 
 		public Id<SkillCard> Id { get; set; }
 
-		public IEnumerable<SkillValue> SkillValues { get; set; }
+		public IEnumerable<FocusValue> SkillValues { get; set; }
 
 		public bool Equals( SkillCard other ) {
 			if (ReferenceEquals(other, this)) {

@@ -38,13 +38,13 @@ namespace RiftDrive.Shared.Model {
 			return result;
 		}
 
-		public int CheckSkill( Skill skill, int drawCount ) {
+		public int CheckFocus( Focus focus, int drawCount ) {
 			int result = 0;
 			IEnumerable<SkillCard> cards = Draw( drawCount );
 			foreach ( SkillCard card in cards) {
-				foreach (SkillValue skillValue in card.SkillValues) {
-					if( skillValue.Skill == skill ) {
-						result += skillValue.Value;
+				foreach (FocusValue focusValue in card.SkillValues) {
+					if( focusValue.Focus == focus ) {
+						result += focusValue.Value;
 					}
 
 				}

@@ -31,18 +31,18 @@ namespace RiftDrive.Shared.Model {
 	}
 
 	public static class RoleExtensions {
-		public static Skill ToSkill( this Role role ) {
+		public static Focus ToSkill( this Role role ) {
 			switch( role ) {
 				case Role.Command:
-					return Skill.Command;
+					return Focus.Command;
 				case Role.Engineer:
-					return Skill.Engineering;
+					return Focus.Engineering;
 				case Role.Science:
-					return Skill.Science;
+					return Focus.Science;
 				case Role.Security:
-					return Skill.Security;
+					return Focus.Security;
 				default:
-					return Skill.Unknown;
+					return Focus.Unknown;
 			}
 		}
 	}

@@ -24,7 +24,7 @@ namespace RiftDrive.Shared.Model {
 		public EncounterCard(
 			Id<EncounterCard> id,
 			string description,
-			SkillCheck revealRace,
+			FocusCheck revealRace,
 			IEnumerable<EncounterInteraction> interactions
 		) {
 			Id = id;
@@ -37,7 +37,7 @@ namespace RiftDrive.Shared.Model {
 
 		public string Description { get; }
 
-		public SkillCheck RevealRace { get; }
+		public FocusCheck RevealRace { get; }
 
 		public IEnumerable<EncounterInteraction> Interactions { get; }
 

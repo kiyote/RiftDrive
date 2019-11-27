@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 			EncounterCardId = "";
 			InteractionId = "";
 			Description = "";
-			OutcomeSkill = "";
+			OutcomeFocus = "";
 		}
 
 		[DynamoDBHashKey( "PK" )]
@@ -62,8 +62,8 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBProperty("Description")]
 		public string Description { get; set; }
 
-		[DynamoDBProperty("OutcomeSkill")]
-		public string OutcomeSkill { get; set; }
+		[DynamoDBProperty("OutcomeFocus")]
+		public string OutcomeFocus { get; set; }
 
 		[DynamoDBProperty( "OutcomeTarget" )]
 		public int OutcomeTarget { get; set; }

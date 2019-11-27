@@ -25,7 +25,7 @@ namespace RiftDrive.Shared.Model {
 			Id<Game> gameId,
 			string name,
 			Role role,
-			int intelligence,
+			int discipline,
 			int expertise,
 			int training
 		) {
@@ -33,7 +33,7 @@ namespace RiftDrive.Shared.Model {
 			GameId = gameId;
 			Name = name;
 			Role = role;
-			Intelligence = intelligence;
+			Discipline = discipline;
 			Expertise = expertise;
 			Training = training;
 		}
@@ -49,7 +49,7 @@ namespace RiftDrive.Shared.Model {
 		/// <summary>
 		/// How many cards you can hold.
 		/// </summary>
-		public int Intelligence { get; }
+		public int Discipline { get; }
 
 		/// <summary>
 		/// How many cards you can play.
@@ -70,7 +70,7 @@ namespace RiftDrive.Shared.Model {
 				&& GameId.Equals( other.GameId )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& Role == other.Role
-				&& Intelligence == other.Intelligence
+				&& Discipline == other.Discipline
 				&& Expertise == other.Expertise
 				&& Training == other.Training;
 		}
@@ -90,7 +90,7 @@ namespace RiftDrive.Shared.Model {
 				result = ( result * 31 ) + GameId.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + Role.GetHashCode();
-				result = ( result * 31 ) + Intelligence.GetHashCode();
+				result = ( result * 31 ) + Discipline.GetHashCode();
 				result = ( result * 31 ) + Expertise.GetHashCode();
 				result = ( result * 31 ) + Training.GetHashCode();
 

@@ -17,47 +17,49 @@ using System;
 using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
-	public sealed class SkillValue: IEquatable<SkillValue> {
+	/*
+	 * Defines a check to be made against a particular focus.  It defines
+	 * the focus value to be tested and the magnitude required for success.
+	 */
+	public sealed class FocusCheck : IEquatable<FocusCheck> {
 
-		public static SkillValue None = new SkillValue( Skill.None, int.MinValue );
+		public static FocusCheck None = new FocusCheck( Focus.Unknown, int.MinValue );
 
 		[JsonConstructor]
-		public SkillValue(
-			Skill skill,
-			int value
+		public FocusCheck(
+			Focus focus,
+			int target
 		) {
-			Skill = skill;
-			Value = value;
+			Focus = focus;
+			Target = target;
 		}
 
-		public Skill Skill { get; }
+		public Focus Focus { get; }
 
-		public int Value { get; }
+		public int Target { get; }
 
-		public bool Equals( SkillValue other ) {
+		public bool Equals( FocusCheck other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return Skill == other.Skill
-				&& Value == other.Value;
+			return Focus == other.Focus
+				&& Target == other.Target;
 		}
 
 		public override bool Equals( object obj ) {
-			SkillValue? card = obj as SkillValue;
-
-			if( card == default ) {
+			if( !( obj is FocusCheck target ) ) {
 				return false;
 			}
 
-			return Equals( card );
+			return Equals( target as FocusCheck );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + Skill.GetHashCode();
-				result = ( result * 31 ) + Value.GetHashCode();
+				result = ( result * 31 ) + Focus.GetHashCode();
+				result = ( result * 31 ) + Target.GetHashCode();
 
 				return result;
 			}
