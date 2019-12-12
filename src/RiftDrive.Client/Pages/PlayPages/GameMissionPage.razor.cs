@@ -20,8 +20,6 @@ using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameMissionPageBase: ComponentBase {
 		public const string Url = "/game/{GameId}/mission";

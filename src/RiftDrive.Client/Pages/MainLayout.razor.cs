@@ -18,10 +18,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.State;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages {
 	public class MainLayoutBase : LayoutComponentBase, IDisposable {
+
+		private bool _disposed = false;
 
 		public MainLayoutBase() {
 			State = NullAppState.Instance;
@@ -29,17 +29,30 @@ namespace RiftDrive.Client.Pages {
 
 		[Inject] protected IAppState State { get; set; }
 
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
 		protected override async Task OnInitializedAsync() {
 			State.OnStateChanged += AppState_OnStateChanged;
 			await State.Initialize();
 		}
 
-		private void AppState_OnStateChanged( object sender, EventArgs e ) {
-			StateHasChanged();
+		protected virtual void Dispose( bool disposing ) {
+			if (_disposed) {
+				return;
+			}
+
+			if (disposing) {
+				State.OnStateChanged -= AppState_OnStateChanged;
+			}
+
+			_disposed = true;
 		}
 
-		public void Dispose() {
-			State.OnStateChanged -= AppState_OnStateChanged;
+		private void AppState_OnStateChanged( object sender, EventArgs e ) {
+			StateHasChanged();
 		}
 	}
 }

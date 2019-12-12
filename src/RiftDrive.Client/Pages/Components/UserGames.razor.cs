@@ -21,8 +21,6 @@ using RiftDrive.Client.Pages.PlayPages;
 using RiftDrive.Shared.Model;
 using RiftDrive.Shared.Model.Client;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.Components {
 	public class UserGamesComponent : ComponentBase {
 

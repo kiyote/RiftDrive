@@ -19,8 +19,6 @@ using RiftDrive.Shared.Model.Client;
 using RiftDrive.Client.Pages.AuthPages;
 using RiftDrive.Client.Pages.UserPages;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.Components {
 	public class NavBarComponent : ComponentBase {
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RiftDrive.Shared.Model {
 	public sealed class Skill : IEquatable<Skill> {
@@ -28,8 +27,7 @@ namespace RiftDrive.Shared.Model {
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& AllowedRoles.Count() == other.AllowedRoles.Count()
-				&& AllowedRoles.Intersect( other.AllowedRoles ).Count() == AllowedRoles.Count();
+				&& AllowedRoles.Similar( other.AllowedRoles );
 		}
 
 		public override bool Equals( object obj ) {
@@ -45,9 +43,7 @@ namespace RiftDrive.Shared.Model {
 				int result = 17;
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
-				foreach (Role role in AllowedRoles) {
-					result = ( result * 31 ) + role.GetHashCode();
-				}
+				result = ( result * 31 ) + AllowedRoles.GetFinalHashCode();
 
 				return result;
 			}

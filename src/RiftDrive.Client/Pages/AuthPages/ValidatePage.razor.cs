@@ -22,13 +22,11 @@ using RiftDrive.Client.Service;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Message;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.AuthPages {
 	public class ValidatePageBase : ComponentBase, IDisposable {
 
 		public static string Url = "/auth/validate";
-		private bool disposedValue = false; // To detect redundant calls
+		private bool _disposed = false;
 
 		public ValidatePageBase() {
 			Messages = new List<string>();
@@ -49,6 +47,11 @@ namespace RiftDrive.Client.Pages.AuthPages {
 		protected List<string> Messages { get; set; }
 
 		protected int Progress { get; set; }
+
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
 
 		protected override async Task OnInitializedAsync() {
 			State.OnStateChanged += AppStateHasChanged;
@@ -72,28 +75,27 @@ namespace RiftDrive.Client.Pages.AuthPages {
 			UriHelper.NavigateTo( IndexPageBase.Url );
 		}
 
+		protected virtual void Dispose( bool disposing ) {
+			if (_disposed) {
+				return;
+			}
+
+
+			if( disposing ) {
+				State.OnStateChanged -= AppStateHasChanged;
+			}
+
+			_disposed = true;
+		}
+
 		private void AppStateHasChanged( object sender, EventArgs e ) {
 			StateHasChanged();
 		}
 
-		private void Update(string message, int progress) {
+		private void Update( string message, int progress ) {
 			Messages.Add( message );
 			Progress = progress;
 			StateHasChanged();
-		}
-
-		protected virtual void Dispose( bool disposing ) {
-			if( !disposedValue ) {
-				if( disposing ) {
-					State.OnStateChanged -= AppStateHasChanged;
-				}
-
-				disposedValue = true;
-			}
-		}
-
-		public void Dispose() {
-			Dispose( true );
 		}
 	}
 }

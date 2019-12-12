@@ -17,8 +17,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.AuthPages {
 	public class LogOutPageBase : ComponentBase {
 		public const string Url = "/auth/logout";

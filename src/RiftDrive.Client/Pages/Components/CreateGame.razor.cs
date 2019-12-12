@@ -18,8 +18,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using RiftDrive.Client.Action;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.Components {
 	public class CreateGameComponent : ComponentBase {
 

@@ -20,8 +20,6 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 using RiftDrive.Shared.Model;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MothershipModuleSummaryComponent : ComponentBase {
 

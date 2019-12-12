@@ -20,11 +20,11 @@ using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 using RiftDrive.Shared.Model;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.PlayPages {
 	public class GameViewPageBase : ComponentBase, IDisposable {
 		public const string Url = "/game/{0}/view";
+
+		private bool _disposed = false;
 
 		public GameViewPageBase() {
 			State = NullAppState.Instance;
@@ -43,7 +43,8 @@ namespace RiftDrive.Client.Pages.PlayPages {
 		}
 
 		public void Dispose() {
-			State.OnStateChanged -= OnStateHasChanged;
+			Dispose( true );
+			GC.SuppressFinalize( this );
 		}
 
 		protected override async Task OnInitializedAsync() {
@@ -51,6 +52,18 @@ namespace RiftDrive.Client.Pages.PlayPages {
 			var gameId = new Id<Game>( GameId );
 			await Dispatch.LoadCurrentMission( gameId );
 			await Dispatch.LoadCurrentGame( gameId );
+		}
+
+		protected virtual void Dispose( bool disposing ) {
+			if (_disposed) {
+				return;
+			}
+
+			if (disposing) {
+				State.OnStateChanged -= OnStateHasChanged;
+			}
+
+			_disposed = true;
 		}
 
 		private void OnStateHasChanged(object sender, EventArgs args) {

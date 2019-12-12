@@ -17,8 +17,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using RiftDrive.Shared.Model;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class MissionSummaryComponent : ComponentBase {
 

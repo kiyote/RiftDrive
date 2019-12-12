@@ -19,11 +19,11 @@ using Microsoft.AspNetCore.Components;
 using RiftDrive.Client.Action;
 using RiftDrive.Client.State;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages {
 	public class IndexPageBase : ComponentBase, IDisposable {
 		public static string Url = "/";
+
+		private bool _disposed = false;
 
 		public IndexPageBase() {
 			State = NullAppState.Instance;
@@ -42,7 +42,20 @@ namespace RiftDrive.Client.Pages {
 		}
 
 		public void Dispose() {
-			State.OnStateChanged -= OnStateHasChanged;
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		protected virtual void Dispose( bool disposing ) {
+			if (_disposed) {
+				return;
+			}
+
+			if (disposing) {
+				State.OnStateChanged -= OnStateHasChanged;
+			}
+
+			_disposed = true;
 		}
 
 		private void OnStateHasChanged( object sender, EventArgs args ) {

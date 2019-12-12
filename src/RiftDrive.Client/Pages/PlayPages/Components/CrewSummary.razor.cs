@@ -17,8 +17,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using RiftDrive.Shared.Model;
 
-#nullable enable
-
 namespace RiftDrive.Client.Pages.PlayPages.Components {
 	public class CrewSummaryComponent : ComponentBase {
 
