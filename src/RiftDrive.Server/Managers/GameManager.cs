@@ -33,7 +33,11 @@ namespace RiftDrive.Server.Managers {
 			_gameService = gameService;
 		}
 
-		public async Task<Game> CreateGame( Id<User> userId, string gameName, string playerName ) {
+		public async Task<Game> CreateGame(
+			Id<User> userId,
+			string gameName,
+			string playerName
+		) {
 			var config = new CreateGameConfiguration(
 				userId,
 				DateTime.UtcNow,

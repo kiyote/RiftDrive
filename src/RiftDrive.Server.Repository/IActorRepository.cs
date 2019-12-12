@@ -16,7 +16,6 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RiftDrive.Server.Model;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Repository {
@@ -26,7 +25,7 @@ namespace RiftDrive.Server.Repository {
 			Id<Actor> actorId,
 			string name,
 			Role role,
-			int intelligence,
+			int discipline,
 			int talent,
 			int training,
 			DateTime createdOn );

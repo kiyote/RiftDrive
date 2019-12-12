@@ -63,8 +63,8 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 			int magnitude = 0;
 			EncounterInteraction interaction = Card.Interactions.First( i => i.Id.Equals( EncounterInteractionId ) );
-			if( interaction.Outcomes.FocusCheck != FocusCheck.None ) {
-				Role targetRole = interaction.Outcomes.FocusCheck.Focus.ToRole();
+			if( interaction.Outcomes.RoleFocusCheck != RoleFocusCheck.None ) {
+				Role targetRole = interaction.Outcomes.RoleFocusCheck.Role;
 				Actor crew = Crew.First( c => c.Role == targetRole );
 				//TODO: Perform skill check
 				magnitude = interaction.Outcomes.Success; // TODO: Use result of skill check

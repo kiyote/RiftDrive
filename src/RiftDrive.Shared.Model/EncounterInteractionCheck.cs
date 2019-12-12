@@ -29,39 +29,39 @@ namespace RiftDrive.Shared.Model {
 	 * The success and failure values are what will be used to determine
 	 * the encounter outcome value.
 	 */
-	public sealed class EncounterInteractionFocusCheck : IEquatable<EncounterInteractionFocusCheck> {
+	public sealed class EncounterInteractionCheck : IEquatable<EncounterInteractionCheck> {
 
-		public static EncounterInteractionFocusCheck None = new EncounterInteractionFocusCheck( FocusCheck.None, int.MinValue, int.MinValue );
+		public static EncounterInteractionCheck None = new EncounterInteractionCheck( RoleFocusCheck.None, int.MinValue, int.MinValue );
 
 		[JsonConstructor]
-		public EncounterInteractionFocusCheck(
-			FocusCheck focusCheck,
+		public EncounterInteractionCheck(
+			RoleFocusCheck roleFocusCheck,
 			int success,
 			int failure
 		) {
-			FocusCheck = focusCheck;
+			RoleFocusCheck = roleFocusCheck;
 			Success = success;
 			Failure = failure;
 		}
 
-		public FocusCheck FocusCheck { get; }
+		public RoleFocusCheck RoleFocusCheck { get; }
 
 		public int Success { get; }
 
 		public int Failure { get; }
 
-		public bool Equals( EncounterInteractionFocusCheck other ) {
+		public bool Equals( EncounterInteractionCheck other ) {
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
 
-			return FocusCheck == other.FocusCheck
+			return RoleFocusCheck.Equals( other.RoleFocusCheck )
 				&& Success == other.Success
 				&& Failure == other.Failure;
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is EncounterInteractionFocusCheck target ) ) {
+			if( !( obj is EncounterInteractionCheck target ) ) {
 				return false;
 			}
 
@@ -71,7 +71,7 @@ namespace RiftDrive.Shared.Model {
 		public override int GetHashCode() {
 			unchecked {
 				int result = 17;
-				result = ( result * 31 ) + FocusCheck.GetHashCode();
+				result = ( result * 31 ) + RoleFocusCheck.GetHashCode();
 				result = ( result * 31 ) + Success.GetHashCode();
 				result = ( result * 31 ) + Failure.GetHashCode();
 
@@ -80,13 +80,13 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public string ToDisplay(bool includeParentheses = true) {
-			string result = "-";
+			string result = "";
 
-			if (this.FocusCheck != FocusCheck.None) {
-				result = $"{this.FocusCheck.Focus} {this.FocusCheck.Target}";
+			if (this.RoleFocusCheck != RoleFocusCheck.None) {
+				result = $"{this.RoleFocusCheck.Role.ToString()}: {this.RoleFocusCheck.FocusCheck.Focus} {this.RoleFocusCheck.FocusCheck.Target}";
 			}
 
-			if (includeParentheses) {
+			if (includeParentheses && !string.IsNullOrWhiteSpace(result)) {
 				return $"({result})";
 			} else {
 				return result;

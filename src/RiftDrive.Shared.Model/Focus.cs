@@ -31,17 +31,4 @@ namespace RiftDrive.Shared.Model {
 
 		Science
 	}
-
-	public static class FocusExtensions {
-		public static Role ToRole( this Focus focus ) {
-			return focus switch
-			{
-				Focus.Command => Role.Command,
-				Focus.Engineering => Role.Engineer,
-				Focus.Science => Role.Science,
-				Focus.Security => Role.Security,
-				_ => Role.Unknown,
-			};
-		}
-	}
 }
