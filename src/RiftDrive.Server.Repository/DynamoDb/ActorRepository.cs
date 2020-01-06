@@ -41,6 +41,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			int discipline,
 			int expertise,
 			int training,
+			IEnumerable<Skill> skills,
 			DateTime createdOn
 		) {
 			var actorRecord = new ActorRecord {
@@ -55,7 +56,16 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			};
 			await _context.SaveAsync( actorRecord );
 
-			return ToActor( actorRecord );
+			foreach ( Skill skill in skills) {
+				var actorSkillRecord = new ActorSkillRecord {
+					GameId = gameId.Value,
+					ActorId = actorId.Value,
+					SkillId = skill.Id.Value
+				};
+				await _context.SaveAsync( actorSkillRecord );
+			}
+
+			return ToActor( actorRecord, skills );
 		}
 
 		async Task<IEnumerable<Actor>> IActorRepository.GetActors( Id<Game> gameId ) {
@@ -65,7 +75,11 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 
 			List<ActorRecord> actors = await query.GetRemainingAsync();
 
-			return actors.Select( a => ToActor( a ) );
+			IActorRepository repository = this;
+			return await Task.WhenAll(actors.Select( async( a ) => {
+				IEnumerable<Skill> skills = await repository.GetActorSkills( gameId, new Id<Actor>( a.ActorId ) );
+				return ToActor( a, skills );
+			} ));
 		}
 
 		async Task<Actor?> IActorRepository.GetActor( Id<Game> gameId, Id<Actor> actorId ) {
@@ -75,22 +89,53 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				return default;
 			}
 
-			return ToActor( actorRecord );
+			IActorRepository repository = this;
+			IEnumerable<Skill> skills = await repository.GetActorSkills( gameId, actorId );
+			return ToActor( actorRecord, skills );
 		}
 
 		async Task IActorRepository.Delete( Id<Game> gameId, Id<Actor> actorId ) {
 			await _context.DeleteAsync<ActorRecord>( GameRecord.GetKey( gameId.Value ), ActorRecord.GetKey( actorId.Value ) );
+
+			AsyncSearch<ActorSkillRecord> query = _context.QueryAsync<ActorSkillRecord>(
+				ActorRecord.GetKey( actorId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					ActorSkillRecord.ItemType
+				} );
+
+			List<ActorSkillRecord> records = await query.GetRemainingAsync();
+			foreach( ActorSkillRecord r in records ) {
+				await _context.DeleteAsync( r );
+			}
 		}
 
-		private static Actor ToActor( ActorRecord r ) {
+		async Task<IEnumerable<Skill>> IActorRepository.GetActorSkills( Id<Game> gameId, Id<Actor> actorId ) {
+			AsyncSearch<ActorSkillRecord> query = _context.QueryAsync<ActorSkillRecord>(
+				ActorRecord.GetKey( actorId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					ActorSkillRecord.ItemType
+				} );
+
+			List<ActorSkillRecord> records = await query.GetRemainingAsync();
+
+			return records.Select( r => Skill.GetById( new Id<Skill>( r.SkillId ) ) );
+		}
+
+		private static Actor ToActor(
+			ActorRecord r,
+			IEnumerable<Skill> skills
+		) {
 			return new Actor(
 				new Id<Actor>( r.ActorId ),
 				new Id<Game>( r.GameId ),
 				r.Name,
-				(Role)Enum.Parse( typeof( Role ), r.Role ),
+				Enum.Parse<Role>( r.Role ),
 				r.Discipline,
 				r.Expertise,
-				r.Training );
+				r.Training,
+				skills );
 		}
 	}
 }

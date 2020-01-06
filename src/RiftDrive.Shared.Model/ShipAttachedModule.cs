@@ -56,15 +56,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override int GetHashCode() {
-			unchecked {
-				int result = 17;
-				result = ( result * 31 ) + ShipId.GetHashCode();
-				result = ( result * 31 ) + ShipModuleId.GetHashCode();
-				result = ( result * 31 ) + TileRow.GetHashCode();
-				result = ( result * 31 ) + TileColumn.GetHashCode();
-
-				return result;
-			}
+			return HashCode.Combine( ShipId, ShipModuleId, TileRow, TileColumn );
 		}
 	}
 }

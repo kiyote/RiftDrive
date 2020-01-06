@@ -54,13 +54,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override int GetHashCode() {
-			unchecked {
-				int result = 17;
-				result = ( result * 31 ) + Role.GetHashCode();
-				result = ( result * 31 ) + FocusCheck.GetHashCode();
-
-				return result;
-			}
+			return HashCode.Combine( Role, FocusCheck );
 		}
 	}
 }

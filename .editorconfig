@@ -75,6 +75,8 @@ csharp_style_conditional_delegate_call                                   = true:
 
 csharp_prefer_braces                                                     = true:error
 
+dotnet_code_quality.ca1802.api_surface									 = private, internal
+
 # Formatting conventions (https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference?view=vs-2017#formatting-conventions)
 dotnet_sort_system_directives_first                                      = true                                 # default
 

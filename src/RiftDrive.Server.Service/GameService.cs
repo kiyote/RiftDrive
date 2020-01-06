@@ -79,10 +79,57 @@ namespace RiftDrive.Server.Service {
 			await _mothershipRepository.CreateModule( mothership.Id, MothershipModule.Hanger.Id, 5, config.CreatedOn );
 			await _mothershipRepository.CreateModule( mothership.Id, MothershipModule.Cryogenics.Id, 5, config.CreatedOn );
 
-			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Command, 0, 2, 2, config.CreatedOn );
-			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Engineer, 0, 2, 2, config.CreatedOn );
-			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Science, 0, 2, 2, config.CreatedOn );
-			await _actorRepository.Create( game.Id, new Id<Actor>(), _nameProvider.CreateActorName(), Role.Security, 0, 2, 2, config.CreatedOn );
+			await _actorRepository.Create(
+				game.Id,
+				new Id<Actor>(),
+				_nameProvider.CreateActorName(),
+				Role.Command,
+				discipline: 0,
+				talent: 2,
+				training: 2,
+				new List<Skill>() {
+					Skill.Command
+				},
+				config.CreatedOn );
+
+			await _actorRepository.Create(
+				game.Id,
+				new Id<Actor>(),
+				_nameProvider.CreateActorName(),
+				Role.Engineer,
+				discipline: 0,
+				talent: 2,
+				training: 2,
+				new List<Skill>() {
+					Skill.Engineer
+				},
+				config.CreatedOn );
+
+			await _actorRepository.Create(
+				game.Id,
+				new Id<Actor>(),
+				_nameProvider.CreateActorName(),
+				Role.Science,
+				discipline: 0,
+				talent: 2,
+				training: 2,
+				new List<Skill>() {
+					Skill.Science
+				},
+				config.CreatedOn );
+
+			await _actorRepository.Create(
+				game.Id,
+				new Id<Actor>(),
+				_nameProvider.CreateActorName(),
+				Role.Security,
+				discipline: 0,
+				talent: 2,
+				training: 2,
+				new List<Skill>() {
+					Skill.Security
+				},
+				config.CreatedOn );
 
 			return game;
 		}

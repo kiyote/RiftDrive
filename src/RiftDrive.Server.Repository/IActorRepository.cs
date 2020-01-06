@@ -28,6 +28,7 @@ namespace RiftDrive.Server.Repository {
 			int discipline,
 			int talent,
 			int training,
+			IEnumerable<Skill> skills,
 			DateTime createdOn );
 
 		Task<IEnumerable<Actor>> GetActors( Id<Game> gameId );
@@ -35,5 +36,7 @@ namespace RiftDrive.Server.Repository {
 		Task<Actor?> GetActor( Id<Game> gameId, Id<Actor> actorId );
 
 		Task Delete( Id<Game> gameId, Id<Actor> actorId );
+
+		Task<IEnumerable<Skill>> GetActorSkills( Id<Game> gameId, Id<Actor> actorId );
 	}
 }

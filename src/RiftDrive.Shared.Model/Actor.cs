@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
@@ -27,7 +28,8 @@ namespace RiftDrive.Shared.Model {
 			Role role,
 			int discipline,
 			int expertise,
-			int training
+			int training,
+			IEnumerable<Skill> skills
 		) {
 			Id = id;
 			GameId = gameId;
@@ -36,6 +38,7 @@ namespace RiftDrive.Shared.Model {
 			Discipline = discipline;
 			Expertise = expertise;
 			Training = training;
+			Skills = skills;
 		}
 
 		public Id<Actor> Id { get; }
@@ -45,6 +48,8 @@ namespace RiftDrive.Shared.Model {
 		public string Name { get; }
 
 		public Role Role { get; }
+
+		public IEnumerable<Skill> Skills { get; }
 
 		/// <summary>
 		/// How many cards you can hold.
@@ -72,7 +77,8 @@ namespace RiftDrive.Shared.Model {
 				&& Role == other.Role
 				&& Discipline == other.Discipline
 				&& Expertise == other.Expertise
-				&& Training == other.Training;
+				&& Training == other.Training
+				&& Skills.Similar( other.Skills );
 		}
 
 		public override bool Equals( object obj ) {
@@ -93,6 +99,7 @@ namespace RiftDrive.Shared.Model {
 				result = ( result * 31 ) + Discipline.GetHashCode();
 				result = ( result * 31 ) + Expertise.GetHashCode();
 				result = ( result * 31 ) + Training.GetHashCode();
+				result = ( result * 31 ) + Skills.GetFinalHashCode();
 
 				return result;
 			}

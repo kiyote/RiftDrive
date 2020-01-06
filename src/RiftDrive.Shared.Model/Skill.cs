@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 
 namespace RiftDrive.Shared.Model {
-	public sealed class Skill : IEquatable<Skill> {
+	public sealed partial class Skill : IEquatable<Skill> {
 
 		public Skill(
 			Id<Skill> id,
 			string name,
-			IEnumerable<Role> allowedRoles
+			IEnumerable<Role> allowedRoles,
+			Id<SkillDeck> deckId
 		) {
 			Id = id;
 			Name = name;
 			AllowedRoles = allowedRoles;
+			DeckId = deckId;
 		}
 
 		public Id<Skill> Id { get; }
@@ -20,6 +22,8 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<Role> AllowedRoles { get; }
 
+		public Id<SkillDeck> DeckId { get; }
+
 		public bool Equals( Skill other ) {
 			if (ReferenceEquals( other, this )) {
 				return false;
@@ -27,7 +31,8 @@ namespace RiftDrive.Shared.Model {
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
-				&& AllowedRoles.Similar( other.AllowedRoles );
+				&& AllowedRoles.Similar( other.AllowedRoles )
+				&& DeckId.Equals( other.DeckId );
 		}
 
 		public override bool Equals( object obj ) {
@@ -35,7 +40,7 @@ namespace RiftDrive.Shared.Model {
 				return false;
 			}
 
-			return Equals( target as Skill );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
@@ -44,6 +49,7 @@ namespace RiftDrive.Shared.Model {
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + AllowedRoles.GetFinalHashCode();
+				result = ( result * 31 ) + DeckId.GetHashCode();
 
 				return result;
 			}

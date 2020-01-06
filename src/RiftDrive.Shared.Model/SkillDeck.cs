@@ -17,22 +17,35 @@ using System;
 using System.Collections.Generic;
 
 namespace RiftDrive.Shared.Model {
-	public sealed class SkillDeck {
+	public sealed partial class SkillDeck {
 
-		private readonly Stack<SkillCard> _cards;
+		private readonly Stack<SkillCard> _draw;
 		private readonly Stack<SkillCard> _discard;
 
-		public SkillDeck() {
-			_cards = new Stack<SkillCard>();
+		public SkillDeck( Id<SkillDeck> id ):
+			this(id, new List<SkillCard>() ) {
+		}
+
+		internal SkillDeck(
+			Id<SkillDeck> id,
+			IEnumerable<SkillCard> cards
+		) {
+			Id = id;
+			Cards = cards;
+			_draw = new Stack<SkillCard>( cards );
 			_discard = new Stack<SkillCard>();
 		}
+
+		public Id<SkillDeck> Id { get; }
+
+		public IEnumerable<SkillCard> Cards { get; }
 
 		public IEnumerable<SkillCard> Draw( int count ) {
 			var result = new List<SkillCard>();
 
 			for( int i = 0; i < count; i++ ) {
-				_discard.Push( _cards.Peek() );
-				result.Add( _cards.Pop() );
+				_discard.Push( _draw.Peek() );
+				result.Add( _draw.Pop() );
 			}
 
 			return result;
@@ -42,7 +55,7 @@ namespace RiftDrive.Shared.Model {
 			int result = 0;
 			IEnumerable<SkillCard> cards = Draw( drawCount );
 			foreach ( SkillCard card in cards) {
-				foreach (FocusValue focusValue in card.SkillValues) {
+				foreach (FocusValue focusValue in card.FocusValues) {
 					if( focusValue.Focus == focus ) {
 						result += focusValue.Value;
 					}

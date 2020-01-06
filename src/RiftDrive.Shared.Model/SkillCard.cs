@@ -26,20 +26,20 @@ namespace RiftDrive.Shared.Model {
 			IEnumerable<FocusValue> focusValues
 		) {
 			Id = id;
-			SkillValues = focusValues;
+			FocusValues = focusValues;
 		}
 
 		public SkillCard(
 			Id<SkillCard> id,
-			FocusValue skillValue
+			FocusValue focusValue
 		) {
 			Id = id;
-			SkillValues = new List<FocusValue>() { skillValue };
+			FocusValues = new List<FocusValue>() { focusValue };
 		}
 
 		public Id<SkillCard> Id { get; set; }
 
-		public IEnumerable<FocusValue> SkillValues { get; set; }
+		public IEnumerable<FocusValue> FocusValues { get; set; }
 
 		public bool Equals( SkillCard other ) {
 			if (ReferenceEquals(other, this)) {
@@ -47,23 +47,21 @@ namespace RiftDrive.Shared.Model {
 			}
 
 			return Id.Equals( other.Id )
-				&& SkillValues.Similar( other.SkillValues );
+				&& FocusValues.Similar( other.FocusValues );
 		}
 
 		public override bool Equals( object obj ) {
-			SkillCard? card = obj as SkillCard;
-
-			if (card == default) {
+			if( !( obj is SkillCard target ) ) {
 				return false;
 			}
 
-			return Equals( card );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
 			unchecked {
 				int result = Id.GetHashCode();
-				result = ( result * 31 ) + SkillValues.GetFinalHashCode();
+				result = ( result * 31 ) + FocusValues.GetFinalHashCode();
 
 				return result;
 			}
