@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace RiftDrive.Shared.Message.Tests {
 	[TestFixture]
-	public class AuthorizationTokenTests {
+	public sealed class AuthorizationTokenTests {
 
 		[Test]
 		public void Ctor_ValidProperties_PropertiesSet() {
