@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2019 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,10 +33,13 @@ namespace RiftDrive.Shared.Message {
 			this.refresh_token = refresh_token;
 		}
 
+#pragma warning disable IDE1006
+// These names are specifically this way so they serialize in a manner that matches the spec
 		public string id_token { get; }
 		public string access_token { get; }
 		public string token_type { get; }
 		public int expires_in { get; }
 		public string refresh_token { get; }
+#pragma warning restore IDE1006
 	}
 }

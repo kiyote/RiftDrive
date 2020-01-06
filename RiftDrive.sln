@@ -45,6 +45,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Message", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiftDrive.Shared.Model", "src\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj", "{6D73A0C8-9052-42A4-8E06-45AB11E6EB78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Shared.Model.Tests", "test\RiftDrive.Shared.Model.Tests\RiftDrive.Shared.Model.Tests.csproj", "{07046DAC-75EA-43D9-B54F-1229625694E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiftDrive.Shared.Message.Tests", "test\RiftDrive.Shared.Message.Tests\RiftDrive.Shared.Message.Tests.csproj", "{010020BE-1124-4DFC-B42C-EC91CA55B9A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{6D73A0C8-9052-42A4-8E06-45AB11E6EB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D73A0C8-9052-42A4-8E06-45AB11E6EB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D73A0C8-9052-42A4-8E06-45AB11E6EB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07046DAC-75EA-43D9-B54F-1229625694E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07046DAC-75EA-43D9-B54F-1229625694E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07046DAC-75EA-43D9-B54F-1229625694E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07046DAC-75EA-43D9-B54F-1229625694E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{010020BE-1124-4DFC-B42C-EC91CA55B9A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010020BE-1124-4DFC-B42C-EC91CA55B9A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010020BE-1124-4DFC-B42C-EC91CA55B9A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010020BE-1124-4DFC-B42C-EC91CA55B9A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +130,8 @@ Global
 		{D169B71F-AA84-43D7-8AFD-9275B0BA521A} = {23FC03EC-29C9-44F5-B821-EEFF2C0001B1}
 		{95DF6D40-2608-450B-8917-0EB720C34744} = {FCD5BBAC-9F19-4228-B452-7E9CA4E8EB43}
 		{6D73A0C8-9052-42A4-8E06-45AB11E6EB78} = {FCD5BBAC-9F19-4228-B452-7E9CA4E8EB43}
+		{07046DAC-75EA-43D9-B54F-1229625694E7} = {90AF1B1D-9E8F-47D1-AA7D-F50FA8883116}
+		{010020BE-1124-4DFC-B42C-EC91CA55B9A8} = {90AF1B1D-9E8F-47D1-AA7D-F50FA8883116}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {53BDC3F8-66BE-4BFB-8628-ABFE69E1BB45}
