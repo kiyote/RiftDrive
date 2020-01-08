@@ -8,12 +8,12 @@ namespace RiftDrive.Shared.Model {
 			Id<Skill> id,
 			string name,
 			IEnumerable<Role> allowedRoles,
-			Id<SkillDeck> deckId
+			Id<SkillCardPack> packId
 		) {
 			Id = id;
 			Name = name;
 			AllowedRoles = allowedRoles;
-			DeckId = deckId;
+			PackId = packId;
 		}
 
 		public Id<Skill> Id { get; }
@@ -22,17 +22,17 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<Role> AllowedRoles { get; }
 
-		public Id<SkillDeck> DeckId { get; }
+		public Id<SkillCardPack> PackId { get; }
 
 		public bool Equals( Skill other ) {
 			if (ReferenceEquals( other, this )) {
-				return false;
+				return true;
 			}
 
 			return Id.Equals( other.Id )
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal )
 				&& AllowedRoles.Similar( other.AllowedRoles )
-				&& DeckId.Equals( other.DeckId );
+				&& PackId.Equals( other.PackId );
 		}
 
 		public override bool Equals( object obj ) {
@@ -49,7 +49,7 @@ namespace RiftDrive.Shared.Model {
 				result = ( result * 31 ) + Id.GetHashCode();
 				result = ( result * 31 ) + Name.GetHashCode();
 				result = ( result * 31 ) + AllowedRoles.GetFinalHashCode();
-				result = ( result * 31 ) + DeckId.GetHashCode();
+				result = ( result * 31 ) + PackId.GetHashCode();
 
 				return result;
 			}

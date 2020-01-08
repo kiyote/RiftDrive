@@ -27,9 +27,10 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		public const string ItemType = "ActorSkillDeck-";
 
 		public ActorSkillDeckRecord() {
-			GameId = "";
 			ActorId = "";
-			SkillId = "";
+			SkillCardId = "";
+			GameId = "";
+			InstanceId = "";
 		}
 
 		[DynamoDBHashKey( "PK" )]
@@ -45,24 +46,29 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		[DynamoDBRangeKey( "SK" )]
 		private string SK {
 			get {
-				return GetKey( SkillId );
+				return GetKey( SkillCardId, InstanceId );
 			}
 			set {
-				SkillId = GetIdFromKey( value );
+				string[] ids = GetIdFromKey( value ).Split("-");
+				SkillCardId = ids[0];
+				InstanceId = ids[1];
 			}
 		}
-
-		[DynamoDBProperty]
-		public string GameId { get; set; }
 
 		[DynamoDBIgnore]
 		public string ActorId { get; set; }
 
 		[DynamoDBIgnore]
-		public string SkillId { get; set; }
+		public string SkillCardId { get; set; }
 
-		public static string GetKey( string skillId ) {
-			return $"{ItemType}{skillId}";
+		[DynamoDBIgnore]
+		public string InstanceId { get; set; }
+
+		[DynamoDBProperty]
+		public string GameId { get; set; }
+
+		public static string GetKey( string skillCardId, string instanceId ) {
+			return $"{ItemType}{skillCardId}-{instanceId}";
 		}
 
 		public static string GetIdFromKey( string key ) {

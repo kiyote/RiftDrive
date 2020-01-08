@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2020 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,10 +42,6 @@ namespace RiftDrive.Shared.Model {
 		public GameState State { get; }
 
 		public bool Equals( Game other ) {
-			if (other is null) {
-				return false;
-			}
-
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}

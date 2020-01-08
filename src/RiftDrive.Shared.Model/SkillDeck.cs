@@ -19,29 +19,29 @@ using System.Collections.Generic;
 namespace RiftDrive.Shared.Model {
 	public sealed partial class SkillDeck {
 
-		private readonly Stack<SkillCard> _draw;
-		private readonly Stack<SkillCard> _discard;
+		private readonly Stack<SkillDeckCard> _draw;
+		private readonly Stack<SkillDeckCard> _discard;
 
 		public SkillDeck( Id<SkillDeck> id ):
-			this(id, new List<SkillCard>() ) {
+			this(id, new List<SkillDeckCard>() ) {
 		}
 
 		internal SkillDeck(
 			Id<SkillDeck> id,
-			IEnumerable<SkillCard> cards
+			IEnumerable<SkillDeckCard> cards
 		) {
 			Id = id;
 			Cards = cards;
-			_draw = new Stack<SkillCard>( cards );
-			_discard = new Stack<SkillCard>();
+			_draw = new Stack<SkillDeckCard>( cards );
+			_discard = new Stack<SkillDeckCard>();
 		}
 
 		public Id<SkillDeck> Id { get; }
 
-		public IEnumerable<SkillCard> Cards { get; }
+		public IEnumerable<SkillDeckCard> Cards { get; }
 
-		public IEnumerable<SkillCard> Draw( int count ) {
-			var result = new List<SkillCard>();
+		public IEnumerable<SkillDeckCard> Draw( int count ) {
+			var result = new List<SkillDeckCard>();
 
 			for( int i = 0; i < count; i++ ) {
 				_discard.Push( _draw.Peek() );
@@ -53,9 +53,10 @@ namespace RiftDrive.Shared.Model {
 
 		public int CheckFocus( Focus focus, int drawCount ) {
 			int result = 0;
-			IEnumerable<SkillCard> cards = Draw( drawCount );
-			foreach ( SkillCard card in cards) {
-				foreach (FocusValue focusValue in card.FocusValues) {
+			IEnumerable<SkillDeckCard> cards = Draw( drawCount );
+			foreach ( SkillDeckCard card in cards) {
+				SkillCard skillCard = SkillCard.GetById( card.SkillCardId );
+				foreach (FocusValue focusValue in skillCard.FocusValues) {
 					if( focusValue.Focus == focus ) {
 						result += focusValue.Value;
 					}

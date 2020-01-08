@@ -14,43 +14,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 
 namespace RiftDrive.Shared.Model {
-	public sealed class RoleFocusCheck: IEquatable<RoleFocusCheck> {
+	public sealed partial class SkillCardPack: IEquatable<SkillCardPack> {
 
-		public static RoleFocusCheck None = new RoleFocusCheck( Role.Unknown, FocusCheck.None );
-
-		public RoleFocusCheck(
-			Role role,
-			FocusCheck focusCheck
+		public SkillCardPack(
+			Id<SkillCardPack> id,
+			IEnumerable<Id<SkillCard>> cards
 		) {
-			Role = role;
-			FocusCheck = focusCheck;
+			Id = id;
+			Cards = cards;
 		}
 
-		public Role Role { get; }
+		public Id<SkillCardPack> Id { get; }
 
-		public FocusCheck FocusCheck { get; }
+		public IEnumerable<Id<SkillCard>> Cards { get; }
 
-		public bool Equals( RoleFocusCheck other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( SkillCardPack other ) {
+			if (ReferenceEquals( other, this)) {
 				return true;
 			}
 
-			return Role == other.Role
-				&& FocusCheck.Equals( other.FocusCheck );
+			return Id.Equals( other.Id )
+				&& Cards.Similar( other.Cards );
 		}
 
 		public override bool Equals( object obj ) {
-			if( !( obj is RoleFocusCheck target ) ) {
+			if( !( obj is SkillCardPack target ) ) {
 				return false;
 			}
 
-			return Equals( target as RoleFocusCheck );
+			return Equals( target );
 		}
 
 		public override int GetHashCode() {
-			return HashCode.Combine( Role, FocusCheck );
+			unchecked {
+				int result = 17;
+				result = ( result * 31 ) + Id.GetHashCode();
+				result = ( result * 31 ) + Cards.GetFinalHashCode();
+
+				return result;
+			}
 		}
 	}
 }
