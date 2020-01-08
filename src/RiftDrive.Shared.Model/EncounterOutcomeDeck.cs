@@ -47,13 +47,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override int GetHashCode() {
-			unchecked {
-				int result = 17;
-				result = ( result * 31 ) + RaceId.GetHashCode();
-				result = ( result * 31 ) + Cards.GetFinalHashCode();
-
-				return result;
-			}
+			return HashCode.Combine( RaceId, Cards );
 		}
 	}
 }

@@ -61,15 +61,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override int GetHashCode() {
-			unchecked {
-				int result = 17;
-				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 13 ) + Name.GetHashCode();
-				result = ( result * 31 ) + CreatedOn.GetHashCode();
-				result = ( result * 31 ) + State.GetHashCode();
-
-				return result;
-			}
+			return HashCode.Combine( Id, Name, CreatedOn, State );
 		}
 	}
 }

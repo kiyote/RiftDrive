@@ -15,7 +15,7 @@ namespace RiftDrive.Shared.Model {
 			new List<Role>() {
 				Role.Command
 			},
-			new Id<SkillDeck>( "51786b69bbde4fd482e26dfab968f482" ) );
+			new Id<SkillCardPack>( "51786b69bbde4fd482e26dfab968f482" ) );
 
 		public static Skill Engineer = new Skill(
 			new Id<Skill>( "d130ababbd88494d8442dbf07a841f8f" ),
@@ -23,7 +23,7 @@ namespace RiftDrive.Shared.Model {
 			new List<Role>() {
 				Role.Engineer
 			},
-			new Id<SkillDeck>( "77d18b9d2ff54fc8b7c928c829f31f91" ) );
+			new Id<SkillCardPack>( "77d18b9d2ff54fc8b7c928c829f31f91" ) );
 
 		public static Skill Science = new Skill(
 			new Id<Skill>( "1554b99ad8444627b413f2101baf4923" ),
@@ -31,7 +31,7 @@ namespace RiftDrive.Shared.Model {
 			new List<Role>() {
 				Role.Science
 			},
-			new Id<SkillDeck>( "a36fad9838384afe9e238c994e482d49" ) );
+			new Id<SkillCardPack>( "a36fad9838384afe9e238c994e482d49" ) );
 
 		public static Skill Security = new Skill(
 			new Id<Skill>( "091e4551f8844075af80b6c8ece57f9b" ),
@@ -39,7 +39,7 @@ namespace RiftDrive.Shared.Model {
 			new List<Role>() {
 				Role.Security
 			},
-			new Id<SkillDeck>( "fa71b8ce820f462d9b7ef6efe188e583" ) );
+			new Id<SkillCardPack>( "fa71b8ce820f462d9b7ef6efe188e583" ) );
 
 		public static List<Skill> All = new List<Skill>() {
 			Command,

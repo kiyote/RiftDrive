@@ -74,17 +74,7 @@ namespace RiftDrive.Shared.Model.Client {
 		}
 
 		public override int GetHashCode() {
-			unchecked {
-				int result = 17;
-				result = ( result * 31 ) + Id.GetHashCode();
-				result = ( result * 31 ) + Username.GetHashCode();
-				result = ( result * 31 ) + AvatarUrl?.GetHashCode() ?? 0;
-				result = ( result * 31 ) + LastLogin.GetHashCode();
-				result = ( result * 31 ) + PreviousLogin?.GetHashCode() ?? 0;
-				result = ( result * 13 ) + Name.GetHashCode();
-
-				return result;
-			}
+			return HashCode.Combine( Id, Username, AvatarUrl, LastLogin, PreviousLogin, Name );
 		}
 	}
 }

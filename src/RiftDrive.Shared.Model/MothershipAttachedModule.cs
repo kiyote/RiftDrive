@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2020 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,14 +56,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override int GetHashCode() {
-			unchecked {
-				int result = 17;
-				result = ( result * 31 ) + MothershipId.GetHashCode();
-				result = ( result * 31 ) + MothershipModuleId.GetHashCode();
-				result = ( result * 31 ) + RemainingPower.GetHashCode();
-
-				return result;
-			}
+			return HashCode.Combine( MothershipId, MothershipModuleId, RemainingPower );
 		}
 	}
 }
