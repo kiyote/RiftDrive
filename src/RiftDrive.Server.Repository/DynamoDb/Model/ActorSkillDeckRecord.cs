@@ -22,60 +22,47 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #else
 	[DynamoDBTable( "RiftDrive" )]
 #endif
-	internal sealed class EncounterCardInteractionRecord {
+	internal sealed class ActorSkillDeckRecord {
 
-		public const string ItemType = "Interaction-";
+		public const string ItemType = "ActorSkillDeck-";
 
-		public EncounterCardInteractionRecord() {
-			EncounterCardId = "";
-			InteractionId = "";
-			Description = "";
-			OutcomeFocus = "";
+		public ActorSkillDeckRecord() {
+			GameId = "";
+			ActorId = "";
+			SkillId = "";
 		}
 
 		[DynamoDBHashKey( "PK" )]
 		private string PK {
 			get {
-				return GetKey( EncounterCardId );
+				return ActorRecord.GetKey( ActorId );
 			}
 			set {
-				EncounterCardId = GetIdFromKey( value );
+				ActorId = ActorRecord.GetIdFromKey( value );
 			}
 		}
 
 		[DynamoDBRangeKey( "SK" )]
 		private string SK {
 			get {
-				return GetKey( InteractionId );
+				return GetKey( SkillId );
 			}
 			set {
-				InteractionId = GetIdFromKey( value );
+				SkillId = GetIdFromKey( value );
 			}
 		}
 
-		[DynamoDBIgnore]
-		public string EncounterCardId { get; set; }
+		[DynamoDBProperty]
+		public string GameId { get; set; }
 
 		[DynamoDBIgnore]
-		public string InteractionId { get; set; }
+		public string ActorId { get; set; }
 
-		[DynamoDBProperty("Description")]
-		public string Description { get; set; }
+		[DynamoDBIgnore]
+		public string SkillId { get; set; }
 
-		[DynamoDBProperty("OutcomeFocus")]
-		public string OutcomeFocus { get; set; }
-
-		[DynamoDBProperty( "OutcomeTarget" )]
-		public int OutcomeTarget { get; set; }
-
-		[DynamoDBProperty( "OutcomeSuccess" )]
-		public int OutcomeSuccess { get; set; }
-
-		[DynamoDBProperty( "OutcomeFailure" )]
-		public int OutcomeFailure { get; set; }
-
-		public static string GetKey( string interactionId ) {
-			return $"{ItemType}{interactionId}";
+		public static string GetKey( string skillId ) {
+			return $"{ItemType}{skillId}";
 		}
 
 		public static string GetIdFromKey( string key ) {

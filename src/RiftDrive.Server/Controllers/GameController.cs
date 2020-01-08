@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Todd Lang
+ * Copyright 2018-2020 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,7 +41,9 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpPost()]
-		public async Task<ActionResult<Game>> CreateGame( [FromBody] CreateGameRequest gameInfo ) {
+		public async Task<ActionResult<Game>> CreateGame(
+			[FromBody] CreateGameRequest gameInfo
+		) {
 			var userId = new Id<User>( _context.UserId );
 			Game result = await _gameManager.CreateGame( userId, gameInfo.GameName, gameInfo.PlayerName );
 
@@ -58,46 +60,61 @@ namespace RiftDrive.Server.Controllers {
 
 
 		[HttpPost( "{gameId}" )]
-		public async Task<ActionResult<Game>> StartGame( string gameId, [FromBody] StartGameRequest gameInfo ) {
+		public async Task<ActionResult<Game>> StartGame(
+			string gameId,
+			[FromBody] StartGameRequest gameInfo
+		) {
 			Game game = await _gameManager.StartGame( new Id<Game>( gameId ) );
 
 			return Ok( game );
 		}
 
 		[HttpGet( "{gameId}" )]
-		public async Task<ActionResult<Game?>> GetGame( string gameId ) {
+		public async Task<ActionResult<Game?>> GetGame(
+			string gameId
+		) {
 			Game? game = await _gameManager.GetGame( new Id<Game>( gameId ) );
 
 			return Ok( game );
 		}
 
 		[HttpDelete( "{gameId}" )]
-		public async Task<ActionResult> DeleteGame( string gameId ) {
+		public async Task<ActionResult> DeleteGame(
+			string gameId
+		) {
 			await _gameManager.DeleteGame( new Id<Game>( gameId ) );
 			return Ok();
 		}
 
 		[HttpGet( "{gameId}/player" )]
-		public async Task<ActionResult<IEnumerable<ClientPlayer>>> GetPlayers( string gameId ) {
+		public async Task<ActionResult<IEnumerable<ClientPlayer>>> GetPlayers(
+			string gameId
+		) {
 			IEnumerable<ClientPlayer> players = await _gameManager.GetPlayers( new Id<Game>( gameId ) );
 
 			return Ok( players );
 		}
 
 		[HttpGet( "{gameId}/crew" )]
-		public async Task<ActionResult<IEnumerable<Actor>>> GetCrew( string gameId ) {
+		public async Task<ActionResult<IEnumerable<Actor>>> GetCrew(
+			string gameId
+		) {
 			IEnumerable<Actor> crew = await _gameManager.GetCrew( new Id<Game>( gameId ) );
 			return Ok( crew );
 		}
 
 		[HttpGet( "{gameId}/mission" )]
-		public async Task<ActionResult<Mission?>> GetMission( string gameId ) {
+		public async Task<ActionResult<Mission?>> GetMission(
+			string gameId
+		) {
 			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
 			return Ok( mission );
 		}
 
 		[HttpGet( "{gamesId}/mission/encounter" )]
-		public async Task<ActionResult<EncounterCard>> GetEncounterCard( string gameId ) {
+		public async Task<ActionResult<EncounterCard>> GetEncounterCard(
+			string gameId
+		) {
 			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
 			if (mission == default) {
 				return Ok( default );
@@ -107,20 +124,39 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpPost( "{gameId}/mission/crew" )]
-		public async Task<ActionResult<Mission>> SelectMissionCrew( string gameId, [FromBody] SelectMissionCrewRequest request ) {
+		public async Task<ActionResult<Mission>> SelectMissionCrew(
+			string gameId,
+			[FromBody] SelectMissionCrewRequest request
+		) {
 			Mission mission = await _gameManager.AddCrewToMission( request.MissionId, request.Crew );
 			return Ok( mission );
 		}
 
+		/*
+		[HttpGet( "{gameId}/mission/crew/{crewId}/skill/{skillId}" )]
+		public async Task<ActionResult> PerformSkillCheck(
+			Id<Actor> crewId,
+			Skill skill
+		) {
+
+		}
+		*/
+
+
 		[HttpGet( "{gameId}/mothership" )]
-		public async Task<ActionResult<Mothership?>> GetMothership( string gameId ) {
+		public async Task<ActionResult<Mothership?>> GetMothership(
+			string gameId
+		) {
 			Mothership? mothership = await _gameManager.GetMothership( new Id<Game>( gameId ) );
 
 			return Ok( mothership );
 		}
 
 		[HttpGet( "{gameId}/mothership/{mothershipId}/module" )]
-		public async Task<ActionResult<MothershipAttachedModule>> GetMothershipModules( string gameId, string mothershipId ) {
+		public async Task<ActionResult<MothershipAttachedModule>> GetMothershipModules(
+			string gameId,
+			string mothershipId
+		) {
 			IEnumerable<MothershipAttachedModule> modules = await _gameManager.GetMothershipModules(
 				new Id<Game>( gameId ),
 				new Id<Mothership>( mothershipId ) );
