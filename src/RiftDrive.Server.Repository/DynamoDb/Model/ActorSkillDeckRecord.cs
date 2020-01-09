@@ -24,13 +24,14 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 #endif
 	internal sealed class ActorSkillDeckRecord {
 
-		public const string ItemType = "ActorSkillDeck-";
+		public const string ItemType = "SkillDeckCard-";
 
 		public ActorSkillDeckRecord() {
 			ActorId = "";
 			SkillCardId = "";
-			GameId = "";
 			InstanceId = "";
+			GameId = "";
+			CardPile = "";
 		}
 
 		[DynamoDBHashKey( "PK" )]
@@ -66,6 +67,9 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 
 		[DynamoDBProperty]
 		public string GameId { get; set; }
+
+		[DynamoDBProperty]
+		public string CardPile { get; set; }
 
 		public static string GetKey( string skillCardId, string instanceId ) {
 			return $"{ItemType}{skillCardId}-{instanceId}";

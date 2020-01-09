@@ -38,5 +38,12 @@ namespace RiftDrive.Server.Repository {
 		Task Delete( Id<Game> gameId, Id<Actor> actorId );
 
 		Task<IEnumerable<Skill>> GetActorSkills( Id<Game> gameId, Id<Actor> actorId );
+
+		Task<SkillDeck> GetSkillDeck( Id<Game> gameId, Id<Actor> actorId );
+
+		Task<SkillDeck> CreateSkillDeck(
+			Id<Game> gameId,
+			Id<Actor> actorId,
+			IEnumerable<SkillDeckCard> skillCards );
 	}
 }

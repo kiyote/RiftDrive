@@ -38,7 +38,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace RiftDrive.Server {
 	public class Startup {

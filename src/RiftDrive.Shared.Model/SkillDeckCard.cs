@@ -16,7 +16,7 @@ limitations under the License.
 using System;
 
 namespace RiftDrive.Shared.Model {
-	public class SkillDeckCard: IEquatable<SkillDeckCard> {
+	public sealed class SkillDeckCard: IEquatable<SkillDeckCard> {
 
 		public SkillDeckCard(
 			Id<SkillCard> skillCardId,
@@ -31,7 +31,7 @@ namespace RiftDrive.Shared.Model {
 		public Id<SkillDeckCard> InstanceId { get; }
 
 		public bool Equals( SkillDeckCard other ) {
-			if (ReferenceEquals( other, this)) {
+			if (ReferenceEquals( other, this )) {
 				return true;
 			}
 

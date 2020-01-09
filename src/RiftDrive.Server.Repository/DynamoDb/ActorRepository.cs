@@ -123,6 +123,42 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return records.Select( r => Skill.GetById( new Id<Skill>( r.SkillId ) ) );
 		}
 
+		async Task<SkillDeck> IActorRepository.GetSkillDeck( Id<Game> gameId, Id<Actor> actorId ) {
+			AsyncSearch<ActorSkillDeckRecord> query = _context.QueryAsync<ActorSkillDeckRecord>(
+				ActorRecord.GetKey( actorId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					ActorSkillDeckRecord.ItemType
+				} );
+
+			List<ActorSkillDeckRecord> records = await query.GetRemainingAsync();
+
+			return new SkillDeck(
+				actorId,
+				records
+					.Where( r => string.Equals( r.CardPile, DeckPile.Draw.ToString(), StringComparison.OrdinalIgnoreCase ) )
+					.Select( r => new SkillDeckCard( new Id<SkillCard>( r.SkillCardId ), new Id<SkillDeckCard>( r.InstanceId ) ) ),
+				records
+					.Where( r => string.Equals( r.CardPile, DeckPile.Discard.ToString(), StringComparison.OrdinalIgnoreCase ) )
+					.Select( r => new SkillDeckCard( new Id<SkillCard>( r.SkillCardId ), new Id<SkillDeckCard>( r.InstanceId ) ) )
+				);
+		}
+
+		async Task<SkillDeck> IActorRepository.CreateSkillDeck( Id<Game> gameId, Id<Actor> actorId, IEnumerable<SkillDeckCard> skillCards ) {
+			foreach( SkillDeckCard card in skillCards ) {
+				var actorSkillCardRecord = new ActorSkillDeckRecord {
+					ActorId = actorId.Value,
+					SkillCardId = card.SkillCardId.Value,
+					InstanceId = card.InstanceId.Value,
+					GameId = gameId.Value,
+					CardPile = DeckPile.Draw.ToString()
+				};
+				await _context.SaveAsync( actorSkillCardRecord );
+			}
+
+			return new SkillDeck( actorId, skillCards );
+		}
+
 		private static Actor ToActor(
 			ActorRecord r,
 			IEnumerable<Skill> skills
