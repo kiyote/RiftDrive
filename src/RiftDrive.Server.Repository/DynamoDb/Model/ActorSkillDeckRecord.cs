@@ -30,7 +30,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 			ActorId = "";
 			SkillCardId = "";
 			InstanceId = "";
-			GameId = "";
+			MissionId = "";
 			CardPile = "";
 		}
 
@@ -66,7 +66,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		public string InstanceId { get; set; }
 
 		[DynamoDBProperty]
-		public string GameId { get; set; }
+		public string MissionId { get; set; }
 
 		[DynamoDBProperty]
 		public string CardPile { get; set; }

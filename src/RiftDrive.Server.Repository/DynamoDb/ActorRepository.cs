@@ -123,7 +123,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return records.Select( r => Skill.GetById( new Id<Skill>( r.SkillId ) ) );
 		}
 
-		async Task<SkillDeck> IActorRepository.GetSkillDeck( Id<Game> gameId, Id<Actor> actorId ) {
+		async Task<SkillDeck> IActorRepository.GetSkillDeck( Id<Mission> missionId, Id<Actor> actorId ) {
 			AsyncSearch<ActorSkillDeckRecord> query = _context.QueryAsync<ActorSkillDeckRecord>(
 				ActorRecord.GetKey( actorId.Value ),
 				QueryOperator.BeginsWith,
@@ -144,19 +144,45 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				);
 		}
 
-		async Task<SkillDeck> IActorRepository.CreateSkillDeck( Id<Game> gameId, Id<Actor> actorId, IEnumerable<SkillDeckCard> skillCards ) {
+		async Task<SkillDeck> IActorRepository.CreateSkillDeck( Id<Mission> missionId, Id<Actor> actorId, IEnumerable<SkillDeckCard> skillCards ) {
 			foreach( SkillDeckCard card in skillCards ) {
 				var actorSkillCardRecord = new ActorSkillDeckRecord {
 					ActorId = actorId.Value,
 					SkillCardId = card.SkillCardId.Value,
 					InstanceId = card.InstanceId.Value,
-					GameId = gameId.Value,
+					MissionId = missionId.Value,
 					CardPile = DeckPile.Draw.ToString()
 				};
 				await _context.SaveAsync( actorSkillCardRecord );
 			}
 
 			return new SkillDeck( actorId, skillCards );
+		}
+
+		async Task<SkillDeck> IActorRepository.UpdateSkillDeck( Id<Mission> missionId, Id<Actor> actorId, IEnumerable<SkillDeckCard> drawCards, IEnumerable<SkillDeckCard> discardCards ) {
+			foreach( SkillDeckCard card in drawCards ) {
+				var actorSkillCardRecord = new ActorSkillDeckRecord {
+					ActorId = actorId.Value,
+					SkillCardId = card.SkillCardId.Value,
+					InstanceId = card.InstanceId.Value,
+					MissionId = missionId.Value,
+					CardPile = DeckPile.Draw.ToString()
+				};
+				await _context.SaveAsync( actorSkillCardRecord );
+			}
+
+			foreach( SkillDeckCard card in discardCards ) {
+				var actorSkillCardRecord = new ActorSkillDeckRecord {
+					ActorId = actorId.Value,
+					SkillCardId = card.SkillCardId.Value,
+					InstanceId = card.InstanceId.Value,
+					MissionId = missionId.Value,
+					CardPile = DeckPile.Discard.ToString()
+				};
+				await _context.SaveAsync( actorSkillCardRecord );
+			}
+
+			return new SkillDeck( actorId, drawCards, discardCards );
 		}
 
 		private static Actor ToActor(

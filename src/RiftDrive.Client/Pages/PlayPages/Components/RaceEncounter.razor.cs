@@ -16,8 +16,10 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using RiftDrive.Client.Action;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Client.Pages.PlayPages.Components {
@@ -26,6 +28,7 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 		public RaceEncounterComponent() {
 			Crew = new List<Actor>();
 			EncounterInteractionId = Id<EncounterInteraction>.Empty;
+			Dispatch = NullDispatch.Instance;
 		}
 
 		[Parameter] public Game? Game { get; set; }
@@ -33,6 +36,8 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 		[Parameter] public Mission? Mission { get; set; }
 
 		[Parameter] public IEnumerable<Actor> Crew { get; set; }
+
+		[Inject] protected IDispatch Dispatch { get; set; }
 
 		protected EncounterCard? Card { get; set; }
 
@@ -54,26 +59,13 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 			EncounterInteractionId = encounterInteractionId;
 		}
 
-		protected void InteractionSelected( MouseEventArgs _ ) {
-			if( Mission == default || Card == default ) {
+		protected async Task InteractionSelected( MouseEventArgs _ ) {
+			if( Game == default || Mission == default || Card == default ) {
 				return;
 			}
 
-			int magnitude = 0;
 			EncounterInteraction interaction = Card.Interactions.First( i => i.Id.Equals( EncounterInteractionId ) );
-			if( interaction.Outcomes.RoleFocusCheck != RoleFocusCheck.None ) {
-				Role targetRole = interaction.Outcomes.RoleFocusCheck.Role;
-				Actor crew = Crew.First( c => c.Role == targetRole );
-				//TODO: Perform skill check
-				magnitude = interaction.Outcomes.Success; // TODO: Use result of skill check
-			} else {
-				// No skill required so automatic success
-				magnitude = interaction.Outcomes.Success;
-			}
-
-			EncounterOutcomeCard outcome = EncounterOutcomeCard.GetById( Mission.EncounterOutcomeCardId );
-			EncounterOutcome result = outcome.GetResult( magnitude );
-			//TODO: Handle the result here
+			await Dispatch.ResolveEncounterCard( Game.Id, Mission.Id, Card.Id, interaction.Id );
 		}
 	}
 }

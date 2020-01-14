@@ -111,16 +111,36 @@ namespace RiftDrive.Server.Controllers {
 			return Ok( mission );
 		}
 
-		[HttpGet( "{gamesId}/mission/encounter" )]
+		[HttpGet( "{gameId}/mission/encounter" )]
 		public async Task<ActionResult<EncounterCard>> GetEncounterCard(
 			string gameId
 		) {
 			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
-			if (mission == default) {
+			if( mission == default ) {
 				return Ok( default );
 			}
 
 			return Ok( await _gameManager.GetEncounterCard( new Id<Game>( gameId ), mission.Id ) );
+		}
+
+		[HttpGet( "{gameId}/mission/encounter/{encounterCardId}/interaction/{encounterInteractionId}" )]
+		public async Task<ActionResult> ResolveEncounter(
+			string gameId,
+			string encounterCardId,
+			string encounterInteractionId
+		) {
+			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
+			if( mission == default ) {
+				return Ok( default );
+			}
+
+			await _gameManager.ResolveEncounter(
+				new Id<Game>( gameId ),
+				mission.Id,
+				new Id<EncounterCard>( encounterCardId ),
+				new Id<EncounterInteraction>( encounterInteractionId ) );
+
+			return Ok();
 		}
 
 		[HttpPost( "{gameId}/mission/crew" )]
@@ -128,20 +148,9 @@ namespace RiftDrive.Server.Controllers {
 			string gameId,
 			[FromBody] SelectMissionCrewRequest request
 		) {
-			Mission mission = await _gameManager.AddCrewToMission( request.MissionId, request.Crew );
+			Mission mission = await _gameManager.AddCrewToMission( new Id<Game>( gameId ), request.MissionId, request.Crew );
 			return Ok( mission );
 		}
-
-		/*
-		[HttpGet( "{gameId}/mission/crew/{crewId}/skill/{skillId}" )]
-		public async Task<ActionResult> PerformSkillCheck(
-			Id<Actor> crewId,
-			Skill skill
-		) {
-
-		}
-		*/
-
 
 		[HttpGet( "{gameId}/mothership" )]
 		public async Task<ActionResult<Mothership?>> GetMothership(
@@ -165,7 +174,7 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet( "{gameId}/mothership/{mothershipId}/module/{moduleId}/action/{actionId}" )]
-		public async Task<ActionResult> TriggerModuleAction(
+		public async Task<ActionResult<IEnumerable<string>>> TriggerModuleAction(
 			string gameId,
 			string mothershipId,
 			string moduleId,

@@ -75,5 +75,14 @@ namespace RiftDrive.Client.Action {
 		Task IDispatch.UpdateTokens( string idToken, string refreshToken, DateTime tokensExpireAt ) {
 			throw new NotImplementedException();
 		}
+
+		Task IDispatch.ResolveEncounterCard(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
+			Id<EncounterInteraction> encounterInteractionId
+		) {
+			throw new NotImplementedException();
+		}
 	}
 }

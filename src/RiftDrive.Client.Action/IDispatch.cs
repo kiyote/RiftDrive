@@ -47,5 +47,12 @@ namespace RiftDrive.Client.Action {
 		Task LoadUserInformation();
 
 		Task RecordLogin();
+
+		Task ResolveEncounterCard(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
+			Id<EncounterInteraction> encounterInteractionId
+		);
 	}
 }

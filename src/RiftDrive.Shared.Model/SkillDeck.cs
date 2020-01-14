@@ -47,6 +47,10 @@ namespace RiftDrive.Shared.Model {
 
 		public Id<Actor> ActorId { get; }
 
+		public IEnumerable<SkillDeckCard> DrawPile => _draw;
+
+		public IEnumerable<SkillDeckCard> DiscardPile => _discard;
+
 		public IEnumerable<SkillDeckCard> Draw( int count ) {
 			var result = new List<SkillDeckCard>();
 

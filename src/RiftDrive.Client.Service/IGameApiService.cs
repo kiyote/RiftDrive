@@ -49,5 +49,11 @@ namespace RiftDrive.Client.Service {
 		Task<Mission> SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
 
 		Task<EncounterCard> DrawEncounterCard( Id<Game> gameId, Id<Mission> missionId );
+
+		Task ResolveEncounterCard(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
+			Id<EncounterInteraction> encounterInteractionId );
 	}
 }

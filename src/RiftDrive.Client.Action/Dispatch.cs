@@ -133,5 +133,14 @@ namespace RiftDrive.Client.Action {
 		public async Task RecordLogin() {
 			await _userService.RecordLogin();
 		}
+
+		public async Task ResolveEncounterCard(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
+			Id<EncounterInteraction> encounterInteractionId
+		) {
+			await _gameService.ResolveEncounterCard( gameId, missionId, encounterCardId, encounterInteractionId );
+		}
 	}
 }

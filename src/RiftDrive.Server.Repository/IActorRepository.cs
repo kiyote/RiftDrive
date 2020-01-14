@@ -39,11 +39,19 @@ namespace RiftDrive.Server.Repository {
 
 		Task<IEnumerable<Skill>> GetActorSkills( Id<Game> gameId, Id<Actor> actorId );
 
-		Task<SkillDeck> GetSkillDeck( Id<Game> gameId, Id<Actor> actorId );
+		Task<SkillDeck> GetSkillDeck(
+			Id<Mission> missionId,
+			Id<Actor> actorId );
 
 		Task<SkillDeck> CreateSkillDeck(
-			Id<Game> gameId,
+			Id<Mission> missionId,
 			Id<Actor> actorId,
 			IEnumerable<SkillDeckCard> skillCards );
+
+		Task<SkillDeck> UpdateSkillDeck(
+			Id<Mission> missionId,
+			Id<Actor> actorId,
+			IEnumerable<SkillDeckCard> drawCards,
+			IEnumerable<SkillDeckCard> discardCards );
 	}
 }

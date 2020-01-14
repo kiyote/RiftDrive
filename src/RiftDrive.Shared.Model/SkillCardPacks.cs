@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RiftDrive.Shared.Model {
 	public sealed partial class SkillCardPack {
+
+		public static SkillCardPack GetById( Id<SkillCardPack> id ) {
+			return All.First( p => p.Id.Equals( id ) );
+		}
 
 		public readonly static SkillCardPack Command = new SkillCardPack(
 			new Id<SkillCardPack>( "51786b69bbde4fd482e26dfab968f482" ),
@@ -81,5 +86,12 @@ namespace RiftDrive.Shared.Model {
 				SkillCard.Security1.Id
 			}
 		);
+
+		public readonly static IEnumerable<SkillCardPack> All = new List<SkillCardPack>() {
+			Command,
+			Science,
+			Engineering,
+			Security
+		};
 	}
 }

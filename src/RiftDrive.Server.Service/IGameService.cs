@@ -44,8 +44,10 @@ namespace RiftDrive.Server.Service {
 
 		Task<Mission?> GetMission( Id<Game> gameId );
 
-		Task<Mission> AddCrewToMission( Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
+		Task<Mission> AddCrewToMission( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
 
-		Task<EncounterCard> GetEncounterCard( Id<Game> gameId, Id<Mission> missionId );
+		Task<SkillDeck> GetSkillDeck( Id<Mission> missionId, Id<Actor> actorId );
+
+		Task UpdateSkillDeck( Id<Mission> missionId, Id<Actor> actorId, SkillDeck skillDeck );
 	}
 }

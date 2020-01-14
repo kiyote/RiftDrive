@@ -246,20 +246,32 @@ namespace RiftDrive.Server.Service {
 		}
 
 		async Task<Mission> IGameService.AddCrewToMission(
+			Id<Game> gameId,
 			Id<Mission> missionId,
 			IEnumerable<Id<Actor>> crew
 		) {
+			foreach ( Id<Actor> crewId in crew) {
+				IEnumerable<Skill> skills = await _actorRepository.GetActorSkills( gameId, crewId );
+				IEnumerable<SkillCardPack> packs = skills.Select( s => SkillCardPack.GetById( s.PackId ) );
+				IEnumerable<SkillDeckCard> cards = packs.SelectMany( p => p.Cards ).Select( c => new SkillDeckCard( c, new Id<SkillDeckCard>() ) );
+				await _actorRepository.CreateSkillDeck( missionId, crewId, cards );
+			}
 			return await _missionRepository.AddCrewToMission( missionId, crew, MissionStatus.RaceEncounter );
 		}
 
-		Task<EncounterCard> IGameService.GetEncounterCard(
-			Id<Game> gameId,
-			Id<Mission> missionId
+		async Task<SkillDeck> IGameService.GetSkillDeck(
+			Id<Mission> missionId,
+			Id<Actor> actorId
 		) {
-			int cardIndex = _randomProvider.Next( EncounterCard.All.Count() );
-			EncounterCard card = EncounterCard.All.ElementAt( cardIndex );
+			return await _actorRepository.GetSkillDeck( missionId, actorId );
+		}
 
-			return Task.FromResult( card );
+		async Task IGameService.UpdateSkillDeck(
+			Id<Mission> missionId,
+			Id<Actor> actorId,
+			SkillDeck skillDeck
+		) {
+			await _actorRepository.UpdateSkillDeck( missionId, actorId, skillDeck.DrawPile, skillDeck.DiscardPile );
 		}
 
 		private int CalculateMagnitude( MothershipModuleEffect effect ) {
