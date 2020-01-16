@@ -55,6 +55,8 @@ namespace RiftDrive.Client.State {
 
 		Task Update( IMissionState initial, IEnumerable<Actor> crew );
 
+		Task Update( IMissionState initial, EncounterOutcome? encounterOutcome );
+
 		Task Update(
 			ICurrentGameState initial,
 			Game? game,

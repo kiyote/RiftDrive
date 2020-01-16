@@ -50,7 +50,7 @@ namespace RiftDrive.Client.Service {
 
 		Task<EncounterCard> DrawEncounterCard( Id<Game> gameId, Id<Mission> missionId );
 
-		Task ResolveEncounterCard(
+		Task<EncounterOutcome> ResolveEncounterCard(
 			Id<Game> gameId,
 			Id<Mission> missionId,
 			Id<EncounterCard> encounterCardId,

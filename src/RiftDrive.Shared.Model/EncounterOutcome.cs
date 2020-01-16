@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
+using Newtonsoft.Json;
 
 namespace RiftDrive.Shared.Model {
 	public sealed class EncounterOutcome: IEquatable<EncounterOutcome> {
 
+		[JsonConstructor]
 		public EncounterOutcome(
 			int low,
 			int high,

@@ -124,7 +124,7 @@ namespace RiftDrive.Server.Managers {
 			return card;
 		}
 
-		public async Task ResolveEncounter(
+		public async Task<EncounterOutcome> ResolveEncounter(
 			Id<Game> gameId,
 			Id<Mission> missionId,
 			Id<EncounterCard> encounterCardId,
@@ -135,32 +135,9 @@ namespace RiftDrive.Server.Managers {
 				throw new InvalidOperationException();
 			}
 
-			IEnumerable<Actor> crew = await _gameService.GetCrew( gameId );
-			int magnitude = 0;
-			EncounterCard encounterCard = EncounterCard.GetById( encounterCardId );
-			EncounterInteraction interaction = encounterCard.Interactions.First( i => i.Id.Equals( encounterInteractionId ) );
-			if( interaction.Outcomes.RoleFocusCheck != RoleFocusCheck.None ) {
-				// Determine who is to make the check and get their skill deck
-				Role targetRole = interaction.Outcomes.RoleFocusCheck.Role;
-				Actor targetCrew = crew.First( c => c.Role == targetRole );
-				SkillDeck skillDeck = await _gameService.GetSkillDeck( missionId, targetCrew.Id );
+			EncounterOutcome outcome = await _gameService.ResolveEncounter( gameId, missionId, encounterCardId, encounterInteractionId );
 
-				// Perform the check and note success or failure
-				FocusCheck focusCheck = interaction.Outcomes.RoleFocusCheck.FocusCheck;
-				if( skillDeck.CheckFocus( focusCheck.Focus, targetCrew.Training ) >= focusCheck.Target ) {
-					magnitude = interaction.Outcomes.Success;
-				} else {
-					magnitude = interaction.Outcomes.Failure;
-				}
-				await _gameService.UpdateSkillDeck( missionId, targetCrew.Id, skillDeck );
-			} else {
-				// No skill required so automatic success
-				magnitude = interaction.Outcomes.Success;
-			}
-
-			EncounterOutcomeCard outcome = EncounterOutcomeCard.GetById( mission.EncounterOutcomeCardId );
-			EncounterOutcome result = outcome.GetResult( magnitude );
-			//TODO: Handle the result here
+			return outcome;
 		}
 
 		private ClientPlayer ToClientPlayer( Player player ) {

@@ -88,6 +88,10 @@ namespace RiftDrive.Client.State {
 			throw new NotImplementedException();
 		}
 
+		Task IAppState.Update( IMissionState initial, EncounterOutcome? encounterOutcome ) {
+			throw new NotImplementedException();
+		}
+
 		Task IAppState.Update( ICurrentGameState initial, Game? game, IEnumerable<Actor> crew, Mothership? mothership, IEnumerable<MothershipAttachedModule> modules ) {
 			throw new NotImplementedException();
 		}

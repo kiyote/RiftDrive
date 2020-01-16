@@ -69,8 +69,6 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			Id<Game> gameId,
 			Id<Mission> missionId,
 			Id<EncounterCard> encounterCardId,
-			Id<Race> raceId,
-			Id<EncounterOutcomeCard> encounterOutcomeCardId,
 			DateTime createdOn,
 			MissionStatus status
 		) {
@@ -78,8 +76,6 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				MissionId = missionId.Value,
 				GameId = gameId.Value,
 				EncounterCardId = encounterCardId.Value,
-				RaceId = raceId.Value,
-				EncounterOutcomeCardId = encounterOutcomeCardId.Value,
 				Status = status.ToString(),
 				CreatedOn = createdOn.ToUniversalTime()
 			};
@@ -119,13 +115,32 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMission( missionRecord );
 		}
 
+		async Task<Mission> IMissionRepository.UpdateMissionEncounter(
+			Id<Mission> missionId,
+			Id<Race> raceId,
+			Id<EncounterOutcomeCard> encounterOutcomeCardId,
+			MissionStatus status
+		) {
+			MissionRecord missionRecord = await _context.LoadAsync<MissionRecord>(
+				MissionRecord.GetKey( missionId.Value ),
+				MissionRecord.GetKey( missionId.Value ) );
+
+			missionRecord.EncounterOutcomeCardId = encounterOutcomeCardId.Value;
+			missionRecord.RaceId = raceId.Value;
+			missionRecord.Status = status.ToString();
+
+			await _context.SaveAsync( missionRecord );
+
+			return ToMission( missionRecord );
+		}
+
 		private static Mission ToMission( MissionRecord r ) {
 			return new Mission(
 				new Id<Mission>( r.MissionId ),
 				new Id<Game>( r.GameId ),
 				new Id<EncounterCard>( r.EncounterCardId ),
 				new Id<Race>( r.RaceId ),
-				new Id<EncounterOutcomeCard>( r.EncounterCardId ),
+				new Id<EncounterOutcomeCard>( r.EncounterOutcomeCardId ),
 				(MissionStatus)Enum.Parse(typeof(MissionStatus), r.Status));
 		}
 	}

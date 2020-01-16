@@ -35,6 +35,8 @@ namespace RiftDrive.Client.Pages.PlayPages.Components {
 
 		[Parameter] public Mission? Mission { get; set; }
 
+		[Parameter] public EncounterOutcome? EncounterOutcome { get; set; }
+
 		[Parameter] public IEnumerable<Actor> Crew { get; set; }
 
 		[Inject] protected IDispatch Dispatch { get; set; }

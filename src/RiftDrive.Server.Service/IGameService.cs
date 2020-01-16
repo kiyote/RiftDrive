@@ -49,5 +49,11 @@ namespace RiftDrive.Server.Service {
 		Task<SkillDeck> GetSkillDeck( Id<Mission> missionId, Id<Actor> actorId );
 
 		Task UpdateSkillDeck( Id<Mission> missionId, Id<Actor> actorId, SkillDeck skillDeck );
+
+		Task<EncounterOutcome> ResolveEncounter(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
+			Id<EncounterInteraction> encounterInteractionId );
 	}
 }

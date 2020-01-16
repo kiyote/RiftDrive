@@ -228,13 +228,8 @@ namespace RiftDrive.Server.Service {
 					case ModuleEffect.LaunchMission: {
 							int cardIndex = _randomProvider.Next( EncounterCard.All.Count() );
 							EncounterCard card = EncounterCard.All.ElementAt( cardIndex );
-							int raceIndex = _randomProvider.Next( Race.All.Count() );
-							Race race = Race.All.ElementAt( raceIndex );
-							EncounterOutcomeDeck deck = EncounterOutcomeDeck.GetById( race.Id );
-							int outcomeIndex = _randomProvider.Next( deck.Cards.Count() );
-							EncounterOutcomeCard outcome = deck.Cards.ElementAt( outcomeIndex );
 
-							Mission mission = await _missionRepository.Create( gameId, new Id<Mission>(), card.Id, race.Id, outcome.Id, DateTime.UtcNow, MissionStatus.SelectCrew );
+							Mission mission = await _missionRepository.Create( gameId, new Id<Mission>(), card.Id, DateTime.UtcNow, MissionStatus.SelectCrew );
 
 							result.Add( $"Launching mission." );
 						}
@@ -257,6 +252,56 @@ namespace RiftDrive.Server.Service {
 				await _actorRepository.CreateSkillDeck( missionId, crewId, cards );
 			}
 			return await _missionRepository.AddCrewToMission( missionId, crew, MissionStatus.RaceEncounter );
+		}
+
+		async Task<EncounterOutcome> IGameService.ResolveEncounter(
+			Id<Game> gameId,
+			Id<Mission> missionId,
+			Id<EncounterCard> encounterCardId,
+			Id<EncounterInteraction> encounterInteractionId
+		) {
+			IEnumerable<Actor> crew = await _actorRepository.GetActors( gameId );
+
+			int magnitude = 0;
+			EncounterCard encounterCard = EncounterCard.GetById( encounterCardId );
+			EncounterInteraction interaction = encounterCard.Interactions.First( i => i.Id.Equals( encounterInteractionId ) );
+			if( interaction.Outcomes.RoleFocusCheck != RoleFocusCheck.None ) {
+				// Determine who is to make the check and get their skill deck
+				Role targetRole = interaction.Outcomes.RoleFocusCheck.Role;
+				Actor targetCrew = crew.First( c => c.Role == targetRole );
+				SkillDeck skillDeck = await _actorRepository.GetSkillDeck( missionId, targetCrew.Id );
+
+				// Perform the check and note success or failure
+				FocusCheck focusCheck = interaction.Outcomes.RoleFocusCheck.FocusCheck;
+				if( skillDeck.CheckFocus( focusCheck.Focus, targetCrew.Training ) >= focusCheck.Target ) {
+					magnitude = interaction.Outcomes.Success;
+				} else {
+					magnitude = interaction.Outcomes.Failure;
+				}
+				await _actorRepository.UpdateSkillDeck( missionId, targetCrew.Id, skillDeck.DrawPile, skillDeck.DiscardPile );
+			} else {
+				// No skill required so automatic success
+				magnitude = interaction.Outcomes.Success;
+			}
+
+			int raceIndex = _randomProvider.Next( Race.All.Count() );
+			Race race = Race.All.ElementAt( raceIndex );
+			EncounterOutcomeDeck deck = EncounterOutcomeDeck.GetById( race.Id );
+			int outcomeIndex = _randomProvider.Next( deck.Cards.Count() );
+			EncounterOutcomeCard outcomeCard = deck.Cards.ElementAt( outcomeIndex );
+
+			EncounterOutcome outcome = outcomeCard.GetResult( magnitude );
+			MissionStatus status;
+			switch (outcome.Behaviour) {
+				case EncounterBehaviour.Fight:
+					status = MissionStatus.Battle;
+					break;
+				default:
+					throw new InvalidOperationException();
+			}
+			await _missionRepository.UpdateMissionEncounter( missionId, race.Id, outcomeCard.Id, status );
+
+			return outcome;
 		}
 
 		async Task<SkillDeck> IGameService.GetSkillDeck(

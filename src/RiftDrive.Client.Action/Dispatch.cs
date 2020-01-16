@@ -140,7 +140,8 @@ namespace RiftDrive.Client.Action {
 			Id<EncounterCard> encounterCardId,
 			Id<EncounterInteraction> encounterInteractionId
 		) {
-			await _gameService.ResolveEncounterCard( gameId, missionId, encounterCardId, encounterInteractionId );
+			EncounterOutcome outcome = await _gameService.ResolveEncounterCard( gameId, missionId, encounterCardId, encounterInteractionId );
+			await _state.Update( _state.CurrentMission, outcome );
 		}
 	}
 }

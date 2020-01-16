@@ -23,6 +23,8 @@ namespace RiftDrive.Shared.Model {
 
 		SelectCrew = 1,
 
-		RaceEncounter = 2
+		RaceEncounter = 2,
+
+		Battle = 3
 	}
 }

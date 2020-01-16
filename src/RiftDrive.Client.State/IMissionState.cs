@@ -23,5 +23,7 @@ namespace RiftDrive.Client.State {
 		public Mission? Mission { get; }
 
 		public IEnumerable<Actor> Crew { get; }
+
+		public EncounterOutcome? EncounterOutcome { get; }
 	}
 }

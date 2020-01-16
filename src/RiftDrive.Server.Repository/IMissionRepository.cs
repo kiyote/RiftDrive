@@ -28,11 +28,18 @@ namespace RiftDrive.Server.Repository {
 			Id<Game> gameId,
 			Id<Mission> missionId,
 			Id<EncounterCard> encounterCardId,
-			Id<Race> raceId,
-			Id<EncounterOutcomeCard> encounterOutcomeCardId,
 			DateTime createdOn,
 			MissionStatus status );
 
-		Task<Mission> AddCrewToMission( Id<Mission> missionId, IEnumerable<Id<Actor>> crew, MissionStatus status );
+		Task<Mission> AddCrewToMission(
+			Id<Mission> missionId,
+			IEnumerable<Id<Actor>> crew,
+			MissionStatus status );
+
+		Task<Mission> UpdateMissionEncounter(
+			Id<Mission> missionId,
+			Id<Race> raceId,
+			Id<EncounterOutcomeCard> encounterOutcomeCardId,
+			MissionStatus status );
 	}
 }

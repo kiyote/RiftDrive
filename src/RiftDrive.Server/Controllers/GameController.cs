@@ -124,7 +124,7 @@ namespace RiftDrive.Server.Controllers {
 		}
 
 		[HttpGet( "{gameId}/mission/encounter/{encounterCardId}/interaction/{encounterInteractionId}" )]
-		public async Task<ActionResult> ResolveEncounter(
+		public async Task<ActionResult<EncounterOutcome>> ResolveEncounter(
 			string gameId,
 			string encounterCardId,
 			string encounterInteractionId
@@ -134,13 +134,13 @@ namespace RiftDrive.Server.Controllers {
 				return Ok( default );
 			}
 
-			await _gameManager.ResolveEncounter(
+			EncounterOutcome outcome = await _gameManager.ResolveEncounter(
 				new Id<Game>( gameId ),
 				mission.Id,
 				new Id<EncounterCard>( encounterCardId ),
 				new Id<EncounterInteraction>( encounterInteractionId ) );
 
-			return Ok();
+			return Ok(outcome);
 		}
 
 		[HttpPost( "{gameId}/mission/crew" )]

@@ -26,14 +26,18 @@ namespace RiftDrive.Client.State {
 
 		public MissionState(
 			Mission? mission,
-			IEnumerable<Actor> crew
+			IEnumerable<Actor> crew,
+			EncounterOutcome? encounterOutcome
 		) {
 			Mission = mission;
 			Crew = crew;
+			EncounterOutcome = encounterOutcome;
 		}
 
 		public Mission? Mission { get; }
 
 		public IEnumerable<Actor> Crew { get; }
+
+		public EncounterOutcome? EncounterOutcome { get; }
 	}
 }

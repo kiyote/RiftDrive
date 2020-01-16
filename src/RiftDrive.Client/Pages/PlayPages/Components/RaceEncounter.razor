@@ -4,6 +4,13 @@
 {
     <div class="fadein-content">Loading...</div>
 }
+else if (EncounterOutcome != default)
+{
+    <div class="container container-rounded fadein-content">
+        <span>@EncounterOutcome.ShipId.Value</span>
+        <span>@EncounterOutcome.Behaviour.ToString()</span>
+    </div>
+}
 else
 {
     <div class="container container-rounded fadein-content">

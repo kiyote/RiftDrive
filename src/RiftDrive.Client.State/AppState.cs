@@ -131,13 +131,19 @@ namespace RiftDrive.Client.State {
 		}
 
 		public async Task Update( IMissionState initial, Mission? mission ) {
-			CurrentMission = new MissionState( mission, initial.Crew );
+			CurrentMission = new MissionState( mission, initial.Crew, initial.EncounterOutcome );
 			await _storage.Set( "State::CurrentMission", CurrentMission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
 
 		public async Task Update( IMissionState initial, IEnumerable<Actor> crew ) {
-			CurrentMission = new MissionState( initial.Mission, crew );
+			CurrentMission = new MissionState( initial.Mission, crew, initial.EncounterOutcome );
+			await _storage.Set( "State::CurrentMission", CurrentMission );
+			OnStateChanged?.Invoke( this, EventArgs.Empty );
+		}
+
+		public async Task Update( IMissionState initial, EncounterOutcome? encounterOutcome ) {
+			CurrentMission = new MissionState( initial.Mission, initial.Crew, encounterOutcome );
 			await _storage.Set( "State::CurrentMission", CurrentMission );
 			OnStateChanged?.Invoke( this, EventArgs.Empty );
 		}
