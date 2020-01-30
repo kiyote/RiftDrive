@@ -17,7 +17,7 @@ using System;
 
 namespace RiftDrive.Client.Service {
 	public interface IJsonConverter {
-		T Deserialize<T>( string value );
+		T? Deserialize<T>( string value ) where T: class;
 
 		string Serialize( object value );
 	}

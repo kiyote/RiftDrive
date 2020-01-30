@@ -114,7 +114,7 @@ namespace RiftDrive.Server {
 
 			app.UseCors( "CorsPolicy" );
 
-			app.UseClientSideBlazorFiles<Client.Startup>();
+			app.UseClientSideBlazorFiles<Client.Program>();
 			app.UseRouting();
 			app.UseResponseCompression();
 			app.UseAuthorization();
@@ -124,7 +124,7 @@ namespace RiftDrive.Server {
 			app.UseEndpoints( endpoints => {
 				endpoints.MapHub<SignalHub>( SignalHub.Url );
 				endpoints.MapDefaultControllerRoute();
-				endpoints.MapFallbackToClientSideBlazor<Client.Startup>( "index.html" );
+				endpoints.MapFallbackToClientSideBlazor<Client.Program>( "index.html" );
 			} );
 		}
 

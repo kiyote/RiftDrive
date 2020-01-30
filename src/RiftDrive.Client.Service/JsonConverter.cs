@@ -28,10 +28,8 @@ namespace RiftDrive.Client.Service {
 			};
 		}
 
-		T IJsonConverter.Deserialize<T>( string value ){
-#pragma warning disable CS8717 // A member returning a [MaybeNull] value introduces a null value for a type parameter.
+		T? IJsonConverter.Deserialize<T>( string value ) where T: class {
 			return JsonConvert.DeserializeObject<T>( value, _settings );
-#pragma warning restore CS8717 // A member returning a [MaybeNull] value introduces a null value for a type parameter.
 		}
 
 		string IJsonConverter.Serialize( object value ) {
