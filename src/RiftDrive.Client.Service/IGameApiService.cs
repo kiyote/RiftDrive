@@ -38,22 +38,8 @@ namespace RiftDrive.Client.Service {
 
 		Task<IEnumerable<MothershipAttachedModule>> GetMothershipModules( Id<Game> gameId, Id<Mothership> mothershipId );
 
-		Task<IEnumerable<string>> TriggerAction(
-			Id<Game> gameId,
-			Id<Mothership> mothershipId,
-			Id<MothershipModule> mothershipModuleId,
-			Id<MothershipModuleAction> actionId );
-
 		Task<Mission?> GetMission( Id<Game> gameId );
 
 		Task<Mission> SelectMissionCrew( Id<Game> gameId, Id<Mission> missionId, IEnumerable<Id<Actor>> crew );
-
-		Task<EncounterCard> DrawEncounterCard( Id<Game> gameId, Id<Mission> missionId );
-
-		Task<EncounterOutcome> ResolveEncounterCard(
-			Id<Game> gameId,
-			Id<Mission> missionId,
-			Id<EncounterCard> encounterCardId,
-			Id<EncounterInteraction> encounterInteractionId );
 	}
 }

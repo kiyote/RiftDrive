@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2020 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +25,7 @@ namespace RiftDrive.Client.Service {
 			services.AddSingleton<ITokenService, TokenService>();
 			services.AddSingleton<IUserApiService, UserApiService>();
 			services.AddSingleton<IGameApiService, GameApiService>();
+			services.AddSingleton<IActionApiService, ActionApiService>();
 
 			return services;
 		}

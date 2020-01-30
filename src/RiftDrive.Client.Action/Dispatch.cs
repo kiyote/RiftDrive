@@ -28,15 +28,18 @@ namespace RiftDrive.Client.Action {
 		private readonly IAppState _state;
 		private readonly IGameApiService _gameService;
 		private readonly IUserApiService _userService;
+		private readonly IActionApiService _actionService;
 
 		public Dispatch(
 			IAppState state,
 			IGameApiService gameService,
-			IUserApiService userService
+			IUserApiService userService,
+			IActionApiService actionService
 		) {
 			_state = state;
 			_gameService = gameService;
 			_userService = userService;
+			_actionService = actionService;
 		}
 
 		public async Task LoadCurrentGame( Id<Game> gameId ) {
@@ -71,7 +74,7 @@ namespace RiftDrive.Client.Action {
 		}
 
 		public async Task TriggerModuleAction( Id<Game> gameId, Id<Mothership> mothershipId, Id<MothershipModule> moduleId, Id<MothershipModuleAction> actionId ) {
-			IEnumerable<string> log = await _gameService.TriggerAction( gameId, mothershipId, moduleId, actionId );
+			IEnumerable<string> log = await _actionService.TriggerAction( gameId, mothershipId, moduleId, actionId );
 			Mothership? mothership = await _gameService.GetMothership( gameId );
 
 			if (mothership == default) {
@@ -140,7 +143,7 @@ namespace RiftDrive.Client.Action {
 			Id<EncounterCard> encounterCardId,
 			Id<EncounterInteraction> encounterInteractionId
 		) {
-			EncounterOutcome outcome = await _gameService.ResolveEncounterCard( gameId, missionId, encounterCardId, encounterInteractionId );
+			EncounterOutcome outcome = await _actionService.ResolveEncounterCard( gameId, missionId, encounterCardId, encounterInteractionId );
 			await _state.Update( _state.CurrentMission, outcome );
 		}
 	}

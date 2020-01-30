@@ -26,7 +26,7 @@ using RiftDrive.Shared.Model.Client;
 namespace RiftDrive.Server.Controllers {
 	[ResponseCache( Location = ResponseCacheLocation.None, NoStore = true )]
 	[Authorize]
-	[Route( "api/game" )]
+	[Route( "api/game/" )]
 	public class GameController : Controller {
 
 		private readonly GameManager _gameManager;
@@ -109,18 +109,6 @@ namespace RiftDrive.Server.Controllers {
 		) {
 			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
 			return Ok( mission );
-		}
-
-		[HttpGet( "{gameId}/mission/encounter" )]
-		public async Task<ActionResult<EncounterCard>> GetEncounterCard(
-			string gameId
-		) {
-			Mission? mission = await _gameManager.GetMission( new Id<Game>( gameId ) );
-			if( mission == default ) {
-				return Ok( default );
-			}
-
-			return Ok( await _gameManager.GetEncounterCard( new Id<Game>( gameId ), mission.Id ) );
 		}
 
 		[HttpGet( "{gameId}/mission/encounter/{encounterCardId}/interaction/{encounterInteractionId}" )]

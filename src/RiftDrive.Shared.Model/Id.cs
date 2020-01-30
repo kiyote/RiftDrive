@@ -69,7 +69,7 @@ namespace RiftDrive.Shared.Model {
 		}
 
 		public override int GetHashCode() {
-			return StringComparer.Ordinal.GetHashCode( Value );
+			return HashCode.Combine( Value );
 		}
 
 		public override bool Equals( object obj ) {

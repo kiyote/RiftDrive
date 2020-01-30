@@ -147,23 +147,6 @@ namespace RiftDrive.Client.Service {
 			return response;
 		}
 
-		async Task<IEnumerable<string>> IGameApiService.TriggerAction(
-			Id<Game> gameId,
-			Id<Mothership> mothershipId,
-			Id<MothershipModule> mothershipModuleId,
-			Id<MothershipModuleAction> actionId
-		) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
-			string[]? result = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mothership/{mothershipId.Value}/module/{mothershipModuleId.Value}/action/{actionId.Value}",
-				( s ) => { return _json.Deserialize<string[]>( s ); } );
-
-			if (result == default) {
-				result = Array.Empty<string>();
-			}
-
-			return result;
-		}
-
 		async Task<Mission?> IGameApiService.GetMission( Id<Game> gameId ) {
 			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
 			Mission? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission",
@@ -182,35 +165,6 @@ namespace RiftDrive.Client.Service {
 
 			if (response == default) {
 				throw new ArgumentException();
-			}
-
-			return response;
-		}
-
-		async Task<EncounterCard> IGameApiService.DrawEncounterCard( Id<Game> gameId, Id<Mission> missionId ) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
-			EncounterCard? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission/encounter",
-				( s ) => { return _json.Deserialize<EncounterCard>( s ); } );
-
-			if (response == default) {
-				throw new ArgumentException();
-			}
-
-			return response;
-		}
-
-		async Task<EncounterOutcome> IGameApiService.ResolveEncounterCard(
-			Id<Game> gameId,
-			Id<Mission> missionId,
-			Id<EncounterCard> encounterCardId,
-			Id<EncounterInteraction> encounterInteractionId
-		) {
-			_http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", await _accessTokenProvider.GetIdToken() );
-			EncounterOutcome? response = await _http.GetJsonAsync( $@"{_config.Host}/api/game/{gameId.Value}/mission/encounter/{encounterCardId.Value}/interaction/{encounterInteractionId.Value}",
-				( s ) => { return _json.Deserialize<EncounterOutcome>( s ); } );
-
-			if (response == default) {
-				throw new InvalidOperationException();
 			}
 
 			return response;
