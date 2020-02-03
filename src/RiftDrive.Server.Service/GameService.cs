@@ -152,7 +152,11 @@ namespace RiftDrive.Server.Service {
 			foreach( Player player in players ) {
 				await _playerRepository.Delete( gameId, player.Id );
 			}
-			// TODO: Delete missions
+			Mission? mission = await _missionRepository.GetByGameId( gameId );
+			if (mission != default) {
+				await _missionRepository.Delete( mission.Id );
+			}
+
 			await _gameRepository.Delete( gameId );
 		}
 

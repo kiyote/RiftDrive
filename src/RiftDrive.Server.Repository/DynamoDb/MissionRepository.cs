@@ -134,6 +134,32 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 			return ToMission( missionRecord );
 		}
 
+		async Task IMissionRepository.Delete(
+			Id<Mission> missionId
+		) {
+			// Remove the mission itself
+			await _context.DeleteAsync<MissionRecord>(
+				MissionRecord.GetKey( missionId.Value ),
+				MissionRecord.GetKey( missionId.Value ) );
+
+
+			// Remove the associated crew
+			AsyncSearch<MissionCrewRecord> missionCrewQuery= _context.QueryAsync<MissionCrewRecord>(
+				MissionRecord.GetKey( missionId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					ActorRecord.ItemType
+				} );
+
+			BatchWrite<MissionCrewRecord> batch = _context.CreateBatchWrite<MissionCrewRecord>();
+			List<MissionCrewRecord> missionCrewRecords = await missionCrewQuery.GetRemainingAsync();
+			foreach( MissionCrewRecord r in missionCrewRecords ) {
+				batch.AddDeleteKey( r.PK, r.SK );
+			}
+			await _context.ExecuteBatchWriteAsync( new BatchWrite[] { batch } );
+
+		}
+
 		private static Mission ToMission( MissionRecord r ) {
 			return new Mission(
 				new Id<Mission>( r.MissionId ),

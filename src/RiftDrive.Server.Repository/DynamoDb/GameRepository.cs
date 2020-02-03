@@ -60,6 +60,22 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		async Task IGameRepository.Delete( Id<Game> gameId ) {
 			await _context.DeleteAsync<GameRecord>( GameRecord.GetKey( gameId.Value ), GameRecord.GetKey( gameId.Value ) );
 
+			// Remove mission records
+			AsyncSearch<GameMissionRecord> missionQuery = _context.QueryAsync<GameMissionRecord>(
+				GameRecord.GetKey( gameId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					MissionRecord.ItemType
+				} );
+
+			BatchWrite<GameMissionRecord> batch = _context.CreateBatchWrite<GameMissionRecord>();
+			List<GameMissionRecord> missionRecords = await missionQuery.GetRemainingAsync();
+			foreach( GameMissionRecord r in missionRecords ) {
+				batch.AddDeleteKey( r.PK, r.SK );
+			}
+			await _context.ExecuteBatchWriteAsync( new BatchWrite[] { batch } );
+
+			// Finally, update the statistics
 			await AddStatistic( "TotalCount", -1 );
 		}
 

@@ -95,19 +95,39 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 		}
 
 		async Task IActorRepository.Delete( Id<Game> gameId, Id<Actor> actorId ) {
+			// Remove the actor themselves
 			await _context.DeleteAsync<ActorRecord>( GameRecord.GetKey( gameId.Value ), ActorRecord.GetKey( actorId.Value ) );
 
-			AsyncSearch<ActorSkillRecord> query = _context.QueryAsync<ActorSkillRecord>(
+			// Remove their skill records
+			AsyncSearch<ActorSkillRecord> skillRecordQuery = _context.QueryAsync<ActorSkillRecord>(
 				ActorRecord.GetKey( actorId.Value ),
 				QueryOperator.BeginsWith,
 				new List<object>() {
 					ActorSkillRecord.ItemType
 				} );
 
-			List<ActorSkillRecord> records = await query.GetRemainingAsync();
-			foreach( ActorSkillRecord r in records ) {
-				await _context.DeleteAsync( r );
+			BatchWrite<ActorSkillRecord> skillBatch = _context.CreateBatchWrite<ActorSkillRecord>();
+			List<ActorSkillRecord> skillRecords = await skillRecordQuery.GetRemainingAsync();
+			foreach( ActorSkillRecord r in skillRecords ) {
+				skillBatch.AddDeleteKey( r.PK, r.SK );
 			}
+			await _context.ExecuteBatchWriteAsync( new BatchWrite[] { skillBatch } );
+
+			// Remove their skill deck
+			AsyncSearch<ActorSkillDeckRecord> skillDeckQuery = _context.QueryAsync<ActorSkillDeckRecord>(
+				ActorRecord.GetKey( actorId.Value ),
+				QueryOperator.BeginsWith,
+				new List<object>() {
+					ActorSkillDeckRecord.ItemType
+				} );
+
+			BatchWrite<ActorSkillDeckRecord> skillDeckBatch = _context.CreateBatchWrite<ActorSkillDeckRecord>();
+			List<ActorSkillDeckRecord> skillDeckRecords = await skillDeckQuery.GetRemainingAsync();
+			foreach( ActorSkillDeckRecord r in skillDeckRecords ) {
+				skillDeckBatch.AddDeleteKey( r.PK, r.SK );
+			}
+
+			await _context.ExecuteBatchWriteAsync( new BatchWrite[] { skillDeckBatch } );
 		}
 
 		async Task<IEnumerable<Skill>> IActorRepository.GetActorSkills( Id<Game> gameId, Id<Actor> actorId ) {

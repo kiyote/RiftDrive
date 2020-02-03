@@ -41,5 +41,8 @@ namespace RiftDrive.Server.Repository {
 			Id<Race> raceId,
 			Id<EncounterOutcomeCard> encounterOutcomeCardId,
 			MissionStatus status );
+
+		Task Delete(
+			Id<Mission> missionId );
 	}
 }

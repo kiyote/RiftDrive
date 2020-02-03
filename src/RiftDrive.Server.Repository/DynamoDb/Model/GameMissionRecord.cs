@@ -30,7 +30,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		}
 
 		[DynamoDBHashKey( "PK" )]
-		private string PK {
+		internal string PK {
 			get {
 				return GameRecord.GetKey( GameId );
 			}
@@ -40,7 +40,7 @@ namespace RiftDrive.Server.Repository.DynamoDb.Model {
 		}
 
 		[DynamoDBRangeKey( "SK" )]
-		private string SK {
+		internal string SK {
 			get {
 				return MissionRecord.GetKey( MissionId );
 			}
