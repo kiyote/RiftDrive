@@ -35,7 +35,7 @@ namespace RiftDrive.Server.Repository.Cognito {
 		}
 
 		async Task<AuthenticationUserInformation?> IAuthenticationRepository.GetUserInformation( string username ) {
-			var response = await _client.AdminGetUserAsync( new AdminGetUserRequest() {
+			AdminGetUserResponse response = await _client.AdminGetUserAsync( new AdminGetUserRequest() { 
 				Username = username,
 				UserPoolId = _cognitoOptions.UserPoolId
 			} );
@@ -44,9 +44,9 @@ namespace RiftDrive.Server.Repository.Cognito {
 				return default;
 			}
 
-			var sub = response.UserAttributes.First( ua => ua.Name == "sub" );
-			var email = response.UserAttributes.First( ua => ua.Name == "email" );
-			var name = response.UserAttributes.FirstOrDefault( ua => ua.Name == "name" );
+			AttributeType sub = response.UserAttributes.First( ua => ua.Name == "sub" );
+			AttributeType email = response.UserAttributes.First( ua => ua.Name == "email" );
+			AttributeType name = response.UserAttributes.FirstOrDefault( ua => ua.Name == "name" );
 
 			return new AuthenticationUserInformation(
 				new Guid( sub.Value ).ToString( "N" ),

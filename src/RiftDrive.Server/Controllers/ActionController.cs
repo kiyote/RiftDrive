@@ -18,8 +18,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiftDrive.Server.Managers;
-using RiftDrive.Server.Model;
-using RiftDrive.Shared.Message;
 using RiftDrive.Shared.Model;
 
 namespace RiftDrive.Server.Controllers {

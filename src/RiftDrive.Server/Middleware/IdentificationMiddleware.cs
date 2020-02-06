@@ -35,18 +35,18 @@ namespace RiftDrive.Server.Middleware {
 		}
 
 		public async Task InvokeAsync( HttpContext httpContext ) {
-			var principal = httpContext.User?.Identities?.FirstOrDefault();
+			ClaimsIdentity? principal = httpContext.User?.Identities?.FirstOrDefault();
 
 			if( ( principal != default )
 				&& (principal.Claims != default)
 				&& principal.Claims.Any()
 			) {
-				var userIdValue = principal.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier ).Value;
-				var username = principal.Claims.FirstOrDefault( c => c.Type == "cognito:username" ).Value;
+				string userIdValue = principal.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier ).Value;
+				string username = principal.Claims.FirstOrDefault( c => c.Type == "cognito:username" ).Value;
 
 				httpContext.Items["Username"] = username;
 
-				var user = await _userRepository.GetByUsername( username );
+				Model.User? user = await _userRepository.GetByUsername( username );
 				if( user != default ) {
 					httpContext.Items["UserId"] = user.Id.Value;
 					httpContext.Items["Name"] = user.Name;

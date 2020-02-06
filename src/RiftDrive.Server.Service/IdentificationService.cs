@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using RiftDrive.Server.Repository;
 using RiftDrive.Server.Model;
 using RiftDrive.Shared.Model;
+using System.Diagnostics;
 
 namespace RiftDrive.Server.Service {
 	internal sealed class IdentificationService : IIdentificationService {
@@ -34,14 +35,14 @@ namespace RiftDrive.Server.Service {
 		}
 
 		async Task<User> IIdentificationService.RecordLogin( string username ) {
-			var authenticationInformation = await _authenticationRepository.GetUserInformation( username );
+			AuthenticationUserInformation? authenticationInformation = await _authenticationRepository.GetUserInformation( username );
 
 			if (authenticationInformation == default) {
 				throw new ArgumentException();
 			}
 
-			var user = await _userRepository.GetByUsername( username );
-			var lastLogin = DateTime.UtcNow;
+			User? user = await _userRepository.GetByUsername( username );
+			DateTime lastLogin = DateTime.UtcNow;
 
 			// If they don't have a local record, create one
 			if( user == default ) {

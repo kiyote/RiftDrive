@@ -1,4 +1,5 @@
-﻿
+﻿"use strict";
+
 window.profile = {
     readUploadedFileAsText: function (inputFile) {
         const temporaryFileReader = new FileReader();
