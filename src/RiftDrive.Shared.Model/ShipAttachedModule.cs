@@ -36,7 +36,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int TileColumn { get; }
 
-		public bool Equals( ShipAttachedModule other ) {
+		public bool Equals( ShipAttachedModule? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -47,7 +51,7 @@ namespace RiftDrive.Shared.Model {
 				&& TileColumn == other.TileColumn;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is ShipAttachedModule target ) ) {
 				return false;
 			}

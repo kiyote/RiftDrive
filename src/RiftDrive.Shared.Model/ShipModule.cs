@@ -32,7 +32,11 @@ namespace RiftDrive.Shared.Model {
 
 		public bool[,] Layout { get; }
 
-		public bool Equals( ShipModule other ) {
+		public bool Equals( ShipModule? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals( other, this )) {
 				return true;
 			}
@@ -43,7 +47,7 @@ namespace RiftDrive.Shared.Model {
 				&& Layout.IsEqualTo( other.Layout );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is ShipModule target ) ) {
 				return false;
 			}

@@ -34,7 +34,11 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<ShipAttachedModule> Modules { get; }
 
-		public bool Equals( Ship other ) {
+		public bool Equals( Ship? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -44,7 +48,7 @@ namespace RiftDrive.Shared.Model {
 				&& Modules.SequenceEqual( other.Modules );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Ship target ) ) {
 				return false;
 			}

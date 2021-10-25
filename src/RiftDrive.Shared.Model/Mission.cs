@@ -48,7 +48,11 @@ namespace RiftDrive.Shared.Model {
 
 		public MissionStatus Status { get; }
 
-		public bool Equals( Mission other ) {
+		public bool Equals( Mission? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -61,7 +65,7 @@ namespace RiftDrive.Shared.Model {
 				&& Status == other.Status;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Mission target ) ) {
 				return false;
 			}

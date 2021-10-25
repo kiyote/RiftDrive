@@ -41,7 +41,11 @@ namespace RiftDrive.Shared.Model {
 
 		public GameState State { get; }
 
-		public bool Equals( Game other ) {
+		public bool Equals( Game? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -52,7 +56,7 @@ namespace RiftDrive.Shared.Model {
 				&& State == other.State;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Game target ) ) {
 				return false;
 			}

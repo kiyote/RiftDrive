@@ -37,7 +37,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int RemainingPower { get; }
 
-		public bool Equals( MothershipAttachedModule other ) {
+		public bool Equals( MothershipAttachedModule? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -47,7 +51,7 @@ namespace RiftDrive.Shared.Model {
 				&& RemainingPower == other.RemainingPower;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is MothershipAttachedModule target ) ) {
 				return false;
 			}

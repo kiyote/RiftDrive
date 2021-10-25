@@ -41,8 +41,12 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<FocusValue> FocusValues { get; set; }
 
-		public bool Equals( SkillCard other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( SkillCard? other ) {
+			if( other is null ) {
+				return false;
+			}
+
+			if( ReferenceEquals(other, this)) {
 				return true;
 			}
 
@@ -50,7 +54,7 @@ namespace RiftDrive.Shared.Model {
 				&& FocusValues.Similar( other.FocusValues );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is SkillCard target ) ) {
 				return false;
 			}

@@ -36,7 +36,11 @@ namespace RiftDrive.Shared.Model {
 
 		public EncounterInteractionCheck Outcomes { get; }
 
-		bool IEquatable<EncounterInteraction>.Equals( EncounterInteraction other ) {
+		bool IEquatable<EncounterInteraction>.Equals( EncounterInteraction? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -46,7 +50,7 @@ namespace RiftDrive.Shared.Model {
 				&& Equals( Outcomes, other.Outcomes );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is EncounterInteraction target ) ) {
 				return false;
 			}

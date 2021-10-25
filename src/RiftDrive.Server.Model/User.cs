@@ -51,7 +51,11 @@ namespace RiftDrive.Server.Model {
 			return Guid.NewGuid().ToString( "N" );
 		}
 
-		public bool Equals( User other ) {
+		public bool Equals( User? other ) {
+			if( other is null ) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -64,7 +68,7 @@ namespace RiftDrive.Server.Model {
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is User target ) ) {
 				return false;
 			}

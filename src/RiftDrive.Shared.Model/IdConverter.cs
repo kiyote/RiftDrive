@@ -34,12 +34,14 @@ namespace RiftDrive.Shared.Model {
 			string? value = reader.Value as string;
 
 			if( string.IsNullOrWhiteSpace( value ) ) {
+#pragma warning disable CS8603 // Possible null reference return.
 				return Activator.CreateInstance( objectType, new object[] { Guid.Empty.ToString( "N" ) } );
+#pragma warning restore CS8603 // Possible null reference return.
 			}
 
-#pragma warning disable CS8601 // Possible null reference assignment.
+#pragma warning disable CS8603 // Possible null reference return.
 			return Activator.CreateInstance( objectType, new object[] { value } );
-#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore CS8603 // Possible null reference return.
 		}
 	}
 }

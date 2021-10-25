@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 namespace RiftDrive.Shared.Model {
 	public sealed class FocusValue: IEquatable<FocusValue> {
 
-		public static FocusValue None = new FocusValue( Focus.None, int.MinValue );
+		public readonly static FocusValue None = new FocusValue( Focus.None, int.MinValue );
 
 		[JsonConstructor]
 		public FocusValue(
@@ -34,7 +34,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int Value { get; }
 
-		public bool Equals( FocusValue other ) {
+		public bool Equals( FocusValue? other ) {
+			if( other is null ) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -43,7 +47,7 @@ namespace RiftDrive.Shared.Model {
 				&& Value == other.Value;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			FocusValue? card = obj as FocusValue;
 
 			if( card == default ) {

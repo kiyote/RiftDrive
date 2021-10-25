@@ -44,7 +44,7 @@ namespace RiftDrive.Server.Repository.DynamoDb {
 				new List<object>() { MissionRecord.ItemType } );
 
 			List<GameMissionRecord> records = await query.GetRemainingAsync();
-			GameMissionRecord record = records.FirstOrDefault();
+			GameMissionRecord? record = records.FirstOrDefault();
 
 			if (record == default) {
 				return default;

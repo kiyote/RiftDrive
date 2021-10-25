@@ -31,8 +31,12 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<Id<SkillCard>> Cards { get; }
 
-		public bool Equals( SkillCardPack other ) {
-			if (ReferenceEquals( other, this)) {
+		public bool Equals( SkillCardPack? other ) {
+			if( other is null ) {
+				return false;
+			}
+
+			if( ReferenceEquals( other, this)) {
 				return true;
 			}
 
@@ -40,7 +44,7 @@ namespace RiftDrive.Shared.Model {
 				&& Cards.Similar( other.Cards );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is SkillCardPack target ) ) {
 				return false;
 			}

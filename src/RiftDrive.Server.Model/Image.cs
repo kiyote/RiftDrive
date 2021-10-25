@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2018-2020 Todd Lang
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,8 +31,12 @@ namespace RiftDrive.Server.Model {
 
 		public string Url { get; }
 
-		public bool Equals( Image other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( Image? other ) {
+			if( other is null ) {
+				return false;
+			}
+
+			if( ReferenceEquals(other, this)) {
 				return true;
 			}
 
@@ -40,7 +44,7 @@ namespace RiftDrive.Server.Model {
 				&& string.Equals( Url, other.Url, StringComparison.OrdinalIgnoreCase );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Image target ) ) {
 				return false;
 			}

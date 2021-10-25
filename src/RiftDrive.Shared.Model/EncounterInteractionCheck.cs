@@ -31,7 +31,7 @@ namespace RiftDrive.Shared.Model {
 	 */
 	public sealed class EncounterInteractionCheck : IEquatable<EncounterInteractionCheck> {
 
-		public static EncounterInteractionCheck None = new EncounterInteractionCheck( RoleFocusCheck.None, int.MinValue, int.MinValue );
+		public readonly static EncounterInteractionCheck None = new EncounterInteractionCheck( RoleFocusCheck.None, int.MinValue, int.MinValue );
 
 		[JsonConstructor]
 		public EncounterInteractionCheck(
@@ -50,7 +50,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int Failure { get; }
 
-		public bool Equals( EncounterInteractionCheck other ) {
+		public bool Equals( EncounterInteractionCheck? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -60,7 +64,7 @@ namespace RiftDrive.Shared.Model {
 				&& Failure == other.Failure;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is EncounterInteractionCheck target ) ) {
 				return false;
 			}
@@ -76,7 +80,7 @@ namespace RiftDrive.Shared.Model {
 			string result = "";
 
 			if (this.RoleFocusCheck != RoleFocusCheck.None) {
-				result = $"{this.RoleFocusCheck.Role.ToString()}: {this.RoleFocusCheck.FocusCheck.Focus} {this.RoleFocusCheck.FocusCheck.Target}";
+				result = $"{this.RoleFocusCheck.Role}: {this.RoleFocusCheck.FocusCheck.Focus} {this.RoleFocusCheck.FocusCheck.Target}";
 			}
 
 			if (includeParentheses && !string.IsNullOrWhiteSpace(result)) {

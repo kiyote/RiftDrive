@@ -30,7 +30,11 @@ namespace RiftDrive.Shared.Model {
 
 		public string Name { get; }
 
-		public bool Equals( Race other ) {
+		public bool Equals( Race? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -39,7 +43,7 @@ namespace RiftDrive.Shared.Model {
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Race target ) ) {
 				return false;
 			}

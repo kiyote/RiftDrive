@@ -18,7 +18,7 @@ using System;
 namespace RiftDrive.Shared.Model {
 	public sealed class RoleFocusCheck: IEquatable<RoleFocusCheck> {
 
-		public static RoleFocusCheck None = new RoleFocusCheck( Role.Unknown, FocusCheck.None );
+		public readonly static RoleFocusCheck None = new RoleFocusCheck( Role.Unknown, FocusCheck.None );
 
 		public RoleFocusCheck(
 			Role role,
@@ -32,7 +32,11 @@ namespace RiftDrive.Shared.Model {
 
 		public FocusCheck FocusCheck { get; }
 
-		public bool Equals( RoleFocusCheck other ) {
+		public bool Equals( RoleFocusCheck? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -41,7 +45,7 @@ namespace RiftDrive.Shared.Model {
 				&& FocusCheck.Equals( other.FocusCheck );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is RoleFocusCheck target ) ) {
 				return false;
 			}

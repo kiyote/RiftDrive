@@ -30,8 +30,12 @@ namespace RiftDrive.Shared.Model {
 
 		public Id<SkillDeckCard> InstanceId { get; }
 
-		public bool Equals( SkillDeckCard other ) {
-			if (ReferenceEquals( other, this )) {
+		public bool Equals( SkillDeckCard? other ) {
+			if( other is null ) {
+				return false;
+			}
+
+			if( ReferenceEquals( other, this )) {
 				return true;
 			}
 
@@ -39,7 +43,7 @@ namespace RiftDrive.Shared.Model {
 				&& InstanceId.Equals( other.InstanceId );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is SkillDeckCard target ) ) {
 				return false;
 			}

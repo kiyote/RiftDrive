@@ -45,8 +45,12 @@ namespace RiftDrive.Server.Model {
 
 		public DateTime CreatedOn { get; }
 
-		public bool Equals( Player other ) {
-			if (ReferenceEquals(other, this)) {
+		public bool Equals( Player? other ) {
+			if( other is null ) {
+				return false;
+			}
+
+			if( ReferenceEquals(other, this)) {
 				return true;
 			}
 
@@ -57,7 +61,7 @@ namespace RiftDrive.Server.Model {
 				&& DateTime.Equals( CreatedOn, other.CreatedOn );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Player target ) ) {
 				return false;
 			}

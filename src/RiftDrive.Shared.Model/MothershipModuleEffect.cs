@@ -49,7 +49,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int RandomMax { get; }
 
-		public bool Equals( MothershipModuleEffect other ) {
+		public bool Equals( MothershipModuleEffect? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -60,7 +64,7 @@ namespace RiftDrive.Shared.Model {
 				&& RandomMax == other.RandomMax;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is MothershipModuleEffect target ) ) {
 				return false;
 			}

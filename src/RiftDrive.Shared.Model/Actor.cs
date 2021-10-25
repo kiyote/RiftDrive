@@ -66,7 +66,11 @@ namespace RiftDrive.Shared.Model {
 		/// </summary>
 		public int Training { get; }
 
-		public bool Equals( Actor other ) {
+		public bool Equals( Actor? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -81,7 +85,7 @@ namespace RiftDrive.Shared.Model {
 				&& Skills.Similar( other.Skills );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Actor target ) ) {
 				return false;
 			}

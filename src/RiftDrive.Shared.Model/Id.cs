@@ -31,7 +31,7 @@ namespace RiftDrive.Shared.Model {
 
 		public Id( Guid id ) {
 			if( id == Guid.Empty ) {
-				throw new ArgumentException( nameof( id ) );
+				throw new ArgumentException( "Parameter must not be empty GUID.", nameof( id ) );
 			}
 
 			Value = id.ToString( "N" );
@@ -50,11 +50,11 @@ namespace RiftDrive.Shared.Model {
 				}
 
 				if( !Guid.TryParse( value, out Guid id ) ) {
-					throw new ArgumentException( nameof( value ) );
+					throw new ArgumentException( "Parameter must be a valid GUID.", nameof( value ) );
 				}
 
 				if( id == Guid.Empty ) {
-					throw new ArgumentException( nameof( value ) );
+					throw new ArgumentException( "Parameter must not be empty GUID.", nameof( value ) );
 				}
 
 				Value = id.ToString( "N" );
@@ -72,7 +72,7 @@ namespace RiftDrive.Shared.Model {
 			return HashCode.Combine( Value );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Id<T> target ) ) {
 				return false;
 			}
@@ -80,7 +80,11 @@ namespace RiftDrive.Shared.Model {
 			return Equals( target );
 		}
 
-		public bool Equals( Id<T> other ) {
+		public bool Equals( Id<T>? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}

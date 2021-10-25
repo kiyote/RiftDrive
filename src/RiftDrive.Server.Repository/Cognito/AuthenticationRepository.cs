@@ -46,7 +46,7 @@ namespace RiftDrive.Server.Repository.Cognito {
 
 			AttributeType sub = response.UserAttributes.First( ua => ua.Name == "sub" );
 			AttributeType email = response.UserAttributes.First( ua => ua.Name == "email" );
-			AttributeType name = response.UserAttributes.FirstOrDefault( ua => ua.Name == "name" );
+			AttributeType name = response.UserAttributes.First( ua => ua.Name == "name" );
 
 			return new AuthenticationUserInformation(
 				new Guid( sub.Value ).ToString( "N" ),

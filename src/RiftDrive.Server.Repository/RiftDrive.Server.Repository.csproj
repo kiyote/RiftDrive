@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.104.23" />
-    <PackageReference Include="AWSSDK.Extensions.CognitoAuthentication" Version="0.9.4" />
-    <PackageReference Include="AWSSDK.S3" Version="3.3.110.19" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="2.2.2" />
+		<PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.85" />
+		<PackageReference Include="AWSSDK.S3" Version="3.7.3.17" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0-rc.2.21480.5" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RiftDrive.Server.Model\RiftDrive.Server.Model.csproj" />
-    <ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\RiftDrive.Server.Model\RiftDrive.Server.Model.csproj" />
+		<ProjectReference Include="..\RiftDrive.Shared.Model\RiftDrive.Shared.Model.csproj" />
+	</ItemGroup>
 
 </Project>

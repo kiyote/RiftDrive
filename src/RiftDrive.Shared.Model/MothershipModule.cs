@@ -45,7 +45,11 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<MothershipModuleEffect> Effects { get; }
 
-		public bool Equals( MothershipModule other ) {
+		public bool Equals( MothershipModule? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -56,7 +60,7 @@ namespace RiftDrive.Shared.Model {
 				&& Effects.Similar( other.Effects );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is MothershipModule target ) ) {
 				return false;
 			}

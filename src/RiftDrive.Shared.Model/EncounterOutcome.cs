@@ -40,7 +40,11 @@ namespace RiftDrive.Shared.Model {
 
 		public EncounterBehaviour Behaviour { get; }
 
-		public bool Equals( EncounterOutcome other ) {
+		public bool Equals( EncounterOutcome? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals( other, this )) {
 				return true;
 			}
@@ -51,7 +55,7 @@ namespace RiftDrive.Shared.Model {
 				&& Behaviour == other.Behaviour;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is EncounterOutcome target ) ) {
 				return false;
 			}

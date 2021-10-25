@@ -41,7 +41,11 @@ namespace RiftDrive.Shared.Model {
 
 		public IEnumerable<EncounterInteraction> Interactions { get; }
 
-		public bool Equals( EncounterCard other ) {
+		public bool Equals( EncounterCard? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals(other, this)) {
 				return true;
 			}
@@ -52,7 +56,7 @@ namespace RiftDrive.Shared.Model {
 				&& Interactions.Similar( other.Interactions );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is EncounterCard target ) ) {
 				return false;
 			}

@@ -23,7 +23,7 @@ namespace RiftDrive.Shared.Model {
 	 */
 	public sealed class FocusCheck : IEquatable<FocusCheck> {
 
-		public static FocusCheck None = new FocusCheck( Focus.Unknown, int.MinValue );
+		public readonly static FocusCheck None = new FocusCheck( Focus.Unknown, int.MinValue );
 
 		[JsonConstructor]
 		public FocusCheck(
@@ -38,7 +38,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int Target { get; }
 
-		public bool Equals( FocusCheck other ) {
+		public bool Equals( FocusCheck? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -47,7 +51,7 @@ namespace RiftDrive.Shared.Model {
 				&& Target == other.Target;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is FocusCheck target ) ) {
 				return false;
 			}

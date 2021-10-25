@@ -44,7 +44,11 @@ namespace RiftDrive.Shared.Model {
 
 		public int RemainingFuel { get; }
 
-		public bool Equals( Mothership other ) {
+		public bool Equals( Mothership? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if( ReferenceEquals( other, this ) ) {
 				return true;
 			}
@@ -56,7 +60,7 @@ namespace RiftDrive.Shared.Model {
 				&& RemainingFuel == other.RemainingFuel;
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is Mothership target ) ) {
 				return false;
 			}

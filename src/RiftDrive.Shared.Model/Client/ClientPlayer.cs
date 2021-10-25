@@ -36,7 +36,7 @@ namespace RiftDrive.Shared.Model.Client {
 
 		public string Name { get; }
 
-		public bool Equals( ClientPlayer other ) {
+		public bool Equals( ClientPlayer? other ) {
 			if( other is null ) {
 				return false;
 			}
@@ -50,7 +50,7 @@ namespace RiftDrive.Shared.Model.Client {
 				&& string.Equals( Name, other.Name, StringComparison.Ordinal );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is ClientPlayer target ) ) {
 				return false;
 			}

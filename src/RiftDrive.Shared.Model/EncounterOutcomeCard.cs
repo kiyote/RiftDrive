@@ -36,7 +36,11 @@ namespace RiftDrive.Shared.Model {
 			return Outcomes.Last( o => o.Low <= magnitude && o.High >= magnitude );
 		}
 
-		public bool Equals( EncounterOutcomeCard other ) {
+		public bool Equals( EncounterOutcomeCard? other ) {
+			if (other is null) {
+				return false;
+			}
+
 			if (ReferenceEquals( other, this )) {
 				return true;
 			}
@@ -45,7 +49,7 @@ namespace RiftDrive.Shared.Model {
 				&& Outcomes.Similar( other.Outcomes );
 		}
 
-		public override bool Equals( object obj ) {
+		public override bool Equals( object? obj ) {
 			if( !( obj is EncounterOutcomeCard target ) ) {
 				return false;
 			}
