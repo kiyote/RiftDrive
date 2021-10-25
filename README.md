@@ -1,2 +1,1 @@
-# RiftDrive
-Blazor-based web game
+Code lives in "old" or "rewrite" now.
