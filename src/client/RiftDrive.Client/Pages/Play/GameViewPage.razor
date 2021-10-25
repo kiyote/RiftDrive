@@ -1,0 +1,11 @@
+﻿@page "/game/{GameIdValue}/view"
+@inherits GameViewPageBase
+
+@if (GameId != default && State.Games.ContainsKey(GameId))
+{
+    <span>@State.Games[GameId].Name</span>
+}
+else
+{
+    <span>Loading...</span>
+}

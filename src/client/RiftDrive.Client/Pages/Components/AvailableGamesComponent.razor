@@ -1,0 +1,26 @@
+﻿@inherits AvailableGamesComponentBase
+
+    <div class="container container-rounded fadein-content">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="2">
+                        Available games for @User.Name
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var game in Games)
+                {
+                    <tr>
+                        <td>
+                            @game.Name
+                        </td>
+                        <td>
+                            Stuff
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

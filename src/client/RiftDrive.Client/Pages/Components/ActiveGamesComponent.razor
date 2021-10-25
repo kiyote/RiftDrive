@@ -1,0 +1,31 @@
+﻿@inherits ActiveGamesComponentBase
+
+<div class="container container-rounded fadein-content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2">
+                    Active games for @User.Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Games)
+            {
+                <tr>
+                    <td>
+                        @game.Name
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" @onclick="(() => { PlayGame( game.Id ); })">
+                            Play
+                        </button>
+                        <button type="button" class="btn btn-primary" @onclick="(async () => { await DeleteGame( game.Id ); })">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

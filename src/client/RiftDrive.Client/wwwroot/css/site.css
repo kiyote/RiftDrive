@@ -1,0 +1,19 @@
+﻿
+.container-rounded {
+    border-radius: 15px;
+    border: 2px solid #808080;
+}
+
+.fadein-content {
+    animation: fadein 0.3s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

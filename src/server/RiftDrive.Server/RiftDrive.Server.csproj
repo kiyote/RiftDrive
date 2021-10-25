@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-rc.1.21452.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.0-rc.1.21452.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\client\RiftDrive.Client\RiftDrive.Client.csproj" />
+    <ProjectReference Include="..\..\common\RiftDrive.Common\RiftDrive.Common.csproj" />
+    <ProjectReference Include="..\services\RiftDrive.Server.Services.Bouncer\RiftDrive.Server.Services.Bouncer.csproj" />
+    <ProjectReference Include="..\services\RiftDrive.Server.Services.PitBoss\RiftDrive.Server.Services.PitBoss.csproj" />
+  </ItemGroup>
+
+
+</Project>

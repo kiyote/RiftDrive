@@ -1,0 +1,15 @@
+﻿@page "/"
+@inherits IndexPageBase
+
+@if (IdentificationState.IsAuthenticated)
+{
+    <CreateGameComponent></CreateGameComponent>
+
+    <ActiveGamesComponent 
+        Games="@GameManagementState.ActiveGames" 
+        User="@IdentificationState.User" />
+
+    <AvailableGamesComponent 
+        Games="@GameManagementState.AvailableGames" 
+        User="@IdentificationState.User" />
+}
