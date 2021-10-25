@@ -1,1 +1,0 @@
-﻿DynamoDB repository how-to:
